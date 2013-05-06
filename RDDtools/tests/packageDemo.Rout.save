@@ -411,11 +411,24 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 z1 0.001423447 0.006434915 0.005011469 -0.2005416 0.8410639
 z2 20.0026     19.97715    -0.02544849 0.5065413  0.6124957
 z3 1.978102    1.989785    0.01168304  -0.5762938 0.5644386
+> covarTest_mean(Lee2008_rdd_z, bw=0.1)
+   mean of x  mean of y  Difference   statistic  p.value  
+z1 0.04586551 0.04336096 -0.002504545 0.04416868 0.9647773
+z2 19.9098    20.02098   0.1111845    -0.9421677 0.3462983
+z3 1.963605   2.006329   0.04272426   -0.9146029 0.3605844
 > covarTest_dis(Lee2008_rdd_z)
    statistic   p.value  
 z1 0.02251666  0.3936811
 z2 0.02684002  0.2006513
 z3 0.007305005 0.9999956
+Message d'avis :
+In ks.test(x[regime], x[!regime], exact = exact) :
+  p-values will be approximate in the presence of ties
+> covarTest_dis(Lee2008_rdd_z, bw=0.1)
+   statistic  p.value  
+z1 0.03544633 0.8429655
+z2 0.04718864 0.512701 
+z3 0.02398646 0.9950799
 Message d'avis :
 In ks.test(x[regime], x[!regime], exact = exact) :
   p-values will be approximate in the presence of ties

@@ -2,7 +2,7 @@
 \alias{covarTest_dis}
 \title{Testing for balanced covariates: equality of distribution}
 \usage{
-  covarTest_dis(object, h, exact = NULL,
+  covarTest_dis(object, bw, exact = NULL,
     p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel", "bonferroni"))
 }
 \arguments{

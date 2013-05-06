@@ -3,7 +3,7 @@
 #' Tests equality of means by a t-test for each covariate, between the two full groups or around the discontinuity threshold 
 #' 
 #' @param object object of class RDDdata
-#' @param h a bandwidth
+#' @param bw a bandwidth
 #' @param paired Argument of the \code{\link{t.test}} function: logical indicating whether you want paired t-tests.
 #' @param var.equal Argument of the \code{\link{t.test}} function:  logical variable indicating whether to treat the two variances as being equal
 #' @param p.adjust Whether to adjust the p-values for multiple testing. Uses the \code{\link{p.adjust}} function
@@ -15,20 +15,33 @@
 
 
 #' @export
-covarTest_mean <- function(object, h, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) 
+covarTest_mean <- function(object, bw=NULL, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) 
   UseMethod("covarTest_mean")
 
+
 #' @S3method covarTest_mean RDDdata
-covarTest_mean.RDDdata <- function(object, h, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
+covarTest_mean.RDDdata <- function(object, bw=NULL, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
+
+  cutpoint <- getCutpoint(object)
+  covar <- getCovar(object)
+  cutvar <- object$x
+
+  covarTest_mean_low(covar=covar,cutvar=cutvar,cutpoint=cutpoint, bw=bw, paired = paired, var.equal = var.equal, p.adjust=p.adjust)
+
+}
+
+covarTest_mean_low <- function(covar,cutvar, cutpoint, bw=NULL, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
 
   p.adjust <- match.arg(p.adjust)
 
+## subset
+  if(!is.null(bw)){
+    isInH <- cutvar >= cutpoint -bw & cutvar <= cutpoint +bw
+    covar <- covar[isInH,]
+    cutvar <- cutvar[isInH]
+  }
+  regime <- cutvar < cutpoint
 
-  RDDobject <- object
-  cutpoint <- getCutpoint(RDDobject)
-  covar <- getCovar(RDDobject)
-
-  regime <- RDDobject$x<cutpoint
 ## Split data
   covar_num <- sapply(covar, as.numeric)
 
@@ -47,6 +60,8 @@ covarTest_mean.RDDdata <- function(object, h, paired = FALSE, var.equal = FALSE,
 }
 
 
+
+
 #' Testing for balanced covariates: equality of distribution
 #' 
 #' Tests equality of distribution with a Kolmogorov-Smirnov for each covariates, between the two full groups or around the discontinuity threshold 
@@ -60,20 +75,35 @@ covarTest_mean.RDDdata <- function(object, h, paired = FALSE, var.equal = FALSE,
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 
 #' @export
-covarTest_dis <- function(object, h,  exact=NULL, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni"))
+covarTest_dis <- function(object, bw,  exact=NULL, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni"))
   UseMethod("covarTest_dis")
 
 #' @S3method covarTest_dis RDDdata
-covarTest_dis.RDDdata <- function(object, h,  exact=NULL, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
+covarTest_dis.RDDdata <- function(object, bw=NULL, exact = FALSE,  p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
+
+  cutpoint <- getCutpoint(object)
+  covar <- getCovar(object)
+  cutvar <- object$x
+
+  covarTest_dis_low(covar=covar,cutvar=cutvar,cutpoint=cutpoint, bw=bw, exact= exact, p.adjust=p.adjust)
+
+}
+
+
+covarTest_dis_low <- function(covar,cutvar, cutpoint, bw=NULL, exact=NULL, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
 
   p.adjust <- match.arg(p.adjust)
 
+## subset
+  if(!is.null(bw)){
+    isInH <- cutvar >= cutpoint -bw & cutvar <= cutpoint +bw
+    covar <- covar[isInH,]
+    cutvar <- cutvar[isInH]
+  }
+  regime <- cutvar < cutpoint
 
-  RDDobject <- object
-  cutpoint <- getCutpoint(RDDobject)
-  covar <- getCovar(RDDobject)
 
-  regime <- RDDobject$x<cutpoint
+
 ## Split data
   covar_num <- sapply(covar, as.numeric)
 

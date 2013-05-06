@@ -126,4 +126,6 @@ dens_test(Lee2008_rdd)
 
 ## Covariates tests
 covarTest_mean(Lee2008_rdd_z)
+covarTest_mean(Lee2008_rdd_z, bw=0.1)
 covarTest_dis(Lee2008_rdd_z)
+covarTest_dis(Lee2008_rdd_z, bw=0.1)
