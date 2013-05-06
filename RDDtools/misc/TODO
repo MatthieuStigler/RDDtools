@@ -1,0 +1,24 @@
+
+
+-plot.RDDreg_np: use np with confidence interval instead!
+-plot.RDDreg_np: option one/two sided
+
+-plot.RDDreg_np: understand differences in plotSensi and plot.RDDreg_np !! see slides 29
+
+-plotSensi: legend: LATE and CI
+-plotSensi: also compare slope specifications?
+
+-PLACEBO Y: change y, at true cutoff
+
+-RDDreg_lm: info on bw
+
+-labels
+
+-Check McCary var estimate
+-
+
+## Long term
+-CI? clustering?! eventually bootstrap?
+-covariate: in param reg! see fröhlich, extend to plotSensi/placebo!
+-median/quantile LATE, see fröhlich
+-GLM parametric

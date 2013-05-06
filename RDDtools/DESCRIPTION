@@ -1,0 +1,20 @@
+Package: RDDtools
+Type: Package
+Title: A toolbox for regression discontinuity design (RDD)
+Version: 0.1
+Date: 29/04/2013
+Authors@R: person("Matthieu", "Stigler", role = c("aut","cre"),
+    email="Matthieu.Stigler@iheid.ch")
+Maintainer: Matthieu Stigler <Matthieu.Stigler@iheid.ch>
+Depends:
+    sandwich
+Imports:
+    KernSmooth,
+    ggplot2,
+    rdd,
+    np,
+    sandwich,
+    lmtest
+Description: Provides a set of functions for RDD, from data visualisation,
+    estimation and testing.
+License: GPL (>= 2)

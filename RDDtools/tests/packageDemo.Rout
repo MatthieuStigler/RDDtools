@@ -1,0 +1,434 @@
+
+R version 2.15.2 (2012-10-26) -- "Trick or Treat"
+Copyright (C) 2012 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R est un logiciel libre livré sans AUCUNE GARANTIE.
+Vous pouvez le redistribuer sous certaines conditions.
+Tapez 'license()' ou 'licence()' pour plus de détails.
+
+R est un projet collaboratif avec de nombreux contributeurs.
+Tapez 'contributors()' pour plus d'information et
+'citation()' pour la façon de le citer dans les publications.
+
+Tapez 'demo()' pour des démonstrations, 'help()' pour l'aide
+en ligne ou 'help.start()' pour obtenir l'aide au format HTML.
+Tapez 'q()' pour quitter R.
+
+> library(RDDtools)
+Le chargement a nécessité le package : sandwich
+Le chargement a nécessité le package : zoo
+
+Attachement du package : ‘zoo’
+
+The following object(s) are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+KernSmooth 2.23 loaded
+Copyright M. P. Wand 1997-2009
+
+RDDtools 0.1 (rev jeudi 2013-05-02). PLEASE NOTE THIS is currently only a development version. 
+Run vignette('RDDtools') for the documentation
+> 
+> 
+> 
+> 
+> ############################################
+> ### STEP 0: Data Manipulation
+> ############################################
+> data(Lee2008)
+> head(Lee2008)
+        x      y
+1  0.1049 0.5810
+2  0.1393 0.4611
+3 -0.0736 0.5434
+4  0.0868 0.5846
+5  0.3994 0.5803
+6  0.1681 0.6244
+> 
+> Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+> 
+> head(Lee2008_rdd)
+        x      y
+1  0.1049 0.5810
+2  0.1393 0.4611
+3 -0.0736 0.5434
+4  0.0868 0.5846
+5  0.3994 0.5803
+6  0.1681 0.6244
+> 
+> summary(Lee2008_rdd)
+### RDDdata object ###
+
+Cutpoint: 0 
+Sample size: 
+	-Full : 6558 
+	-Left : 2740 
+	-Right: 3818
+Covariates: no 
+> 
+> ## With covariates
+> 
+> n_Lee <- nrow(Lee2008)
+> 
+> set.seed(123)
+> Z<- data.frame(z1=rnorm(n_Lee), z2=rnorm(n_Lee, mean=20, sd=2), z3=sample(letters[1:3], size=n_Lee, replace=TRUE))
+> Lee2008_rdd_z <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z,cutpoint=0)
+> 
+> head(Lee2008_rdd_z )
+        x      y          z1       z2 z3
+1  0.1049 0.5810 -0.56047565 22.19827  a
+2  0.1393 0.4611 -0.23017749 20.63967  a
+3 -0.0736 0.5434  1.55870831 20.66365  a
+4  0.0868 0.5846  0.07050839 19.47992  c
+5  0.3994 0.5803  0.12928774 20.19964  a
+6  0.1681 0.6244  1.71506499 20.01448  c
+> summary(Lee2008_rdd_z )
+### RDDdata object ###
+
+Cutpoint: 0 
+Sample size: 
+	-Full : 6558 
+	-Left : 2740 
+	-Right: 3818
+Covariates: yes 
+> 
+> 
+> 
+> 
+> ############################################
+> ### STEP 2: Graphical inspection
+> ############################################
+> 
+> ### Plot 
+> plot(Lee2008_rdd)
+> plot(Lee2008_rdd, nplot=3, h=c(0.02, 0.03, 0.04))
+> plot(Lee2008_rdd, nplot=1, h=0.1)
+> 
+> plot(Lee2008_rdd, xlim=c(-0.5, 0.5))
+> 
+> # plot(Lee2008_rdd, xlim=c(-0.5, 0.5), type="ggplot")
+> 
+> 
+> ############################################
+> ### STEP 2: Regression
+> ############################################
+> 
+> ## few bandwidths:
+> RDDbw_RSW(Lee2008_rdd)
+[1] 0.03863514
+> RDDbw_IK(Lee2008_rdd)
+    h_opt 
+0.2938561 
+> 
+> 
+> ## Parametric regression
+> # Simple polynomial of order 1:
+> reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
+> print(reg_para)
+### RDD regression: parametric ###
+	Polynomial order:  1 
+	Slopes:  separate 
+	Number of obs: 6558 (left: 2740, right: 3818)
+
+	Coefficient:
+   Estimate Std. Error t value  Pr(>|t|)    
+D 0.1182314  0.0056799  20.816 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+> summary(reg_para)
+
+Call:
+lm(formula = y ~ ., data = dat_step1, subset = isIn)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.89406 -0.06189  0.00231  0.07129  0.86396 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.432948   0.004276 101.254  < 2e-16 ***
+D           0.118231   0.005680  20.816  < 2e-16 ***
+`x^1`       0.296906   0.011546  25.714  < 2e-16 ***
+`x^1_right` 0.045978   0.013501   3.405 0.000665 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+Residual standard error: 0.1384 on 6554 degrees of freedom
+Multiple R-squared: 0.6707,	Adjusted R-squared: 0.6706 
+F-statistic:  4450 on 3 and 6554 DF,  p-value: < 2.2e-16 
+
+> plot(reg_para)
+> 
+> # plotSensi(reg_para)
+> 
+> # Simple polynomial of order 4:
+> reg_para4 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=4)
+> reg_para4
+### RDD regression: parametric ###
+	Polynomial order:  4 
+	Slopes:  separate 
+	Number of obs: 6558 (left: 2740, right: 3818)
+
+	Coefficient:
+  Estimate Std. Error t value  Pr(>|t|)    
+D 0.076590   0.013239  5.7851 7.582e-09 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+> plot(reg_para4)
+> 
+> # Restrict sample to bandwidth area:
+> bw_ik <- RDDbw_IK(Lee2008_rdd)
+> reg_para_ik <- RDDreg_lm(RDDobject=Lee2008_rdd, bw=bw_ik, order=4)
+> reg_para_ik
+### RDD regression: parametric ###
+	Polynomial order:  4 
+	Slopes:  separate 
+	Bandwidth:  0.2938561 
+	Number of obs: 3200 (left: 1594, right: 1606)
+
+	Coefficient:
+  Estimate Std. Error t value Pr(>|t|)   
+D 0.059164   0.020596  2.8726 0.004098 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+> plot(reg_para_ik)
+> 
+> plSe_reg_para <- plotSensi(reg_para_ik, order=4:6)
+> plSe_reg_para_fac <- plotSensi(reg_para_ik, type="facet", order=4:6)
+> plSe_reg_para
+          bw order       LATE         se       CI_low    CI_high
+1  0.1938561     4 0.07247223 0.02382386  0.025778327 0.11916613
+2  0.2438561     4 0.04629929 0.02199743  0.003185119 0.08941345
+3  0.2938561     4 0.05916354 0.02059588  0.018796358 0.09953073
+4  0.3438561     4 0.05275995 0.01937224  0.014791068 0.09072884
+5  0.3938561     4 0.05989365 0.01843283  0.023765971 0.09602133
+6  0.1938561     5 0.08018637 0.02844931  0.024426748 0.13594599
+7  0.2438561     5 0.07228197 0.02645597  0.020429214 0.12413472
+8  0.2938561     5 0.04568221 0.02486321 -0.003048781 0.09441320
+9  0.3438561     5 0.05146888 0.02340468  0.005596542 0.09734122
+10 0.3938561     5 0.04623271 0.02228736  0.002550286 0.08991513
+11 0.1938561     6 0.10243475 0.03299585  0.037764063 0.16710544
+12 0.2438561     6 0.09506766 0.03067462  0.034946512 0.15518880
+13 0.2938561     6 0.08500551 0.02891942  0.028324485 0.14168653
+14 0.3438561     6 0.06514312 0.02737691  0.011485362 0.11880089
+15 0.3938561     6 0.06054718 0.02609533  0.009401274 0.11169308
+> plSe_reg_para_fac
+          bw order       LATE         se       CI_low    CI_high
+1  0.1938561     4 0.07247223 0.02382386  0.025778327 0.11916613
+2  0.2438561     4 0.04629929 0.02199743  0.003185119 0.08941345
+3  0.2938561     4 0.05916354 0.02059588  0.018796358 0.09953073
+4  0.3438561     4 0.05275995 0.01937224  0.014791068 0.09072884
+5  0.3938561     4 0.05989365 0.01843283  0.023765971 0.09602133
+6  0.1938561     5 0.08018637 0.02844931  0.024426748 0.13594599
+7  0.2438561     5 0.07228197 0.02645597  0.020429214 0.12413472
+8  0.2938561     5 0.04568221 0.02486321 -0.003048781 0.09441320
+9  0.3438561     5 0.05146888 0.02340468  0.005596542 0.09734122
+10 0.3938561     5 0.04623271 0.02228736  0.002550286 0.08991513
+11 0.1938561     6 0.10243475 0.03299585  0.037764063 0.16710544
+12 0.2438561     6 0.09506766 0.03067462  0.034946512 0.15518880
+13 0.2938561     6 0.08500551 0.02891942  0.028324485 0.14168653
+14 0.3438561     6 0.06514312 0.02737691  0.011485362 0.11880089
+15 0.3938561     6 0.06054718 0.02609533  0.009401274 0.11169308
+> 
+> ## Non-parametric regression
+> reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
+> print(reg_nonpara)
+### RDD regression: nonparametric local linear###
+	Bandwidth:  0.2938561 
+	Number of obs: 3200 (left: 1594, right: 1606)
+
+	Coefficient:
+   Estimate Std. Error t value  Pr(>|t|)    
+D 0.0799245  0.0068213  11.717 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+> summary(reg_nonpara)
+
+Call:
+lm(formula = y ~ ., data = dat_step1, weights = kernel_w)
+
+Weighted Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.5235 -0.0015  0.0000  0.0000  0.4605 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.453283   0.004909  92.329   <2e-16 ***
+x           0.390895   0.042042   9.298   <2e-16 ***
+D           0.079925   0.006821  11.717   <2e-16 ***
+x_right     0.053445   0.059155   0.903    0.366    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+Residual standard error: 0.08159 on 3196 degrees of freedom
+Multiple R-squared: 0.3563,	Adjusted R-squared: 0.3557 
+F-statistic: 589.7 on 3 and 3196 DF,  p-value: < 2.2e-16 
+
+> plot(x=reg_nonpara)
+> 
+> reg_nonpara_sameSl <- RDDreg_np(RDDobject=Lee2008_rdd, slope="same")
+> print(reg_nonpara_sameSl)
+### RDD regression: nonparametric local linear###
+	Bandwidth:  0.2938561 
+	Number of obs: 3200 (left: 1594, right: 1606)
+
+	Coefficient:
+   Estimate Std. Error t value  Pr(>|t|)    
+D 0.0797792  0.0068192  11.699 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+> summary(reg_nonpara_sameSl)
+
+Call:
+lm(formula = y ~ ., data = dat_step1, weights = kernel_w)
+
+Weighted Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.52538 -0.00078  0.00000  0.00000  0.45821 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.455856   0.003999  113.98   <2e-16 ***
+x           0.417891   0.029575   14.13   <2e-16 ***
+D           0.079779   0.006819   11.70   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+Residual standard error: 0.08159 on 3197 degrees of freedom
+Multiple R-squared: 0.3562,	Adjusted R-squared: 0.3558 
+F-statistic: 884.3 on 2 and 3197 DF,  p-value: < 2.2e-16 
+
+> 
+> 
+> 
+> plSe_reg_nonpara <- plotSensi(reg_nonpara)
+> plSe_reg_nonpara
+         bw       LATE          se      p_value     CI_low    CI_high
+1 0.1938561 0.07369768 0.008226172 6.804965e-19 0.05756583 0.08982952
+2 0.2438561 0.07661912 0.007390799 1.010948e-24 0.06212695 0.09111130
+3 0.2938561 0.07992454 0.006821266 4.467779e-31 0.06655004 0.09329904
+4 0.3438561 0.08182321 0.006393962 1.014472e-36 0.06928717 0.09435925
+5 0.3938561 0.08398642 0.006131746 8.631145e-42 0.07196488 0.09600795
+> 
+> plSe_reg_nonpara_HC <- plotSensi(reg_nonpara, vcov. =function(x) vcovCluster(x, clusterVar=model.frame(x)$x))
+> plSe_reg_nonpara_HC
+         bw       LATE          se      p_value     CI_low    CI_high
+1 0.1938561 0.07369768 0.004630858 4.552671e-54 0.06461638 0.08277897
+2 0.2438561 0.07661912 0.005058104 8.123591e-50 0.06670099 0.08653726
+3 0.2938561 0.07992454 0.005387560 3.368324e-48 0.06936111 0.09048796
+4 0.3438561 0.08182321 0.005704170 1.875255e-45 0.07063958 0.09300684
+5 0.3938561 0.08398642 0.005899981 6.376696e-45 0.07241926 0.09555357
+> 
+> ### Post-inference:
+> 
+> clusterInf(reg_para, clusterVar=model.frame(reg_para)$x, type="df-adj")
+
+z test of coefficients:
+
+             Estimate Std. Error  z value  Pr(>|z|)    
+(Intercept) 0.4329479  0.0042758 101.2544 < 2.2e-16 ***
+D           0.1182314  0.0056799  20.8159 < 2.2e-16 ***
+`x^1`       0.2969065  0.0115464  25.7142 < 2.2e-16 ***
+`x^1_right` 0.0459776  0.0135015   3.4054 0.0006607 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+> clusterInf(reg_para, clusterVar=model.frame(reg_para)[, "x^1"], type="HC")
+
+t test of coefficients:
+
+            Estimate Std. Error t value  Pr(>|t|)    
+(Intercept) 0.432948   0.014242 30.3995 < 2.2e-16 ***
+D           0.118231   0.015255  7.7502 1.056e-14 ***
+`x^1`       0.296906   0.063726  4.6591 3.239e-06 ***
+`x^1_right` 0.045978   0.066170  0.6948    0.4872    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+> 
+> 
+> ############################################
+> ### STEP 3: Validty tests
+> ############################################
+> 
+> ## Placebo test:
+> placeb_dat_reg_nonpara <- computePlacebo(reg_nonpara)
+> 
+> plotPlacebo(placeb_dat_reg_nonpara)
+> plotPlacebo(placeb_dat_reg_nonpara, device="base")
+> 
+> plotPlaceboDens(placeb_dat_reg_nonpara)
+> 
+> ptPl_reg_nonpara <- plotPlacebo(reg_nonpara)
+> ptPl_reg_nonpara
+   cutpoint position         LATE          se      p_value       CI_low
+1 -0.403200     left -0.024718935 0.012533485 4.879388e-02 -0.049306901
+2 -0.303200     left -0.006342468 0.010056335 5.283311e-01 -0.026067500
+3 -0.203200     left -0.002383527 0.010235087 8.158879e-01 -0.022460150
+9  0.000000     True  0.079924537 0.006821266 4.467779e-31  0.066550036
+4  0.163925    right  0.014895056 0.010908299 1.723064e-01 -0.006502015
+5  0.263925    right  0.005435061 0.009215405 5.553875e-01 -0.012634901
+6  0.363925    right -0.011887068 0.008770348 1.754002e-01 -0.029083471
+7  0.463925    right  0.006736746 0.008791850 4.435866e-01 -0.010501705
+8  0.563925    right  0.010152920 0.010744342 3.447728e-01 -0.010915767
+        CI_high
+1 -0.0001309692
+2  0.0133825629
+3  0.0176930958
+9  0.0932990377
+4  0.0362921259
+5  0.0235050226
+6  0.0053093358
+7  0.0239751977
+8  0.0312216063
+> 
+> # with HC:
+> ptPl_reg_nonpara_HC <- plotPlacebo(reg_nonpara, vcov. =function(x) vcovCluster(x, clusterVar=model.frame(x)$x))
+> ptPl_reg_nonpara_HC
+   cutpoint position         LATE          se      p_value       CI_low
+1 -0.403200     left -0.024718935 0.007273330 6.977930e-04 -0.038987624
+2 -0.303200     left -0.006342468 0.007828474 4.179580e-01 -0.021697654
+3 -0.203200     left -0.002383527 0.007608807 7.541275e-01 -0.017308574
+9  0.000000     True  0.079924537 0.005387560 3.368324e-48  0.069361114
+4  0.163925    right  0.014895056 0.005079721 3.415885e-03  0.004930978
+5  0.263925    right  0.005435061 0.009521907 5.681858e-01 -0.013235904
+6  0.363925    right -0.011887068 0.009213640 1.970932e-01 -0.029952653
+7  0.463925    right  0.006736746 0.009332790 4.704497e-01 -0.011562342
+8  0.563925    right  0.010152920 0.008135788 2.121720e-01 -0.005800628
+       CI_high
+1 -0.010450246
+2  0.009012717
+3  0.012541520
+9  0.090487960
+4  0.024859133
+5  0.024106025
+6  0.006178517
+7  0.025035834
+8  0.026106467
+> 
+> 
+> ## density tests
+> dens_test(Lee2008_rdd)
+[1] 0.1952357
+> 
+> ## Covariates tests
+> covarTest_mean(Lee2008_rdd_z)
+   mean of x   mean of y   Difference  statistic  p.value  
+z1 0.001423447 0.006434915 0.005011469 -0.2005416 0.8410639
+z2 20.0026     19.97715    -0.02544849 0.5065413  0.6124957
+z3 1.978102    1.989785    0.01168304  -0.5762938 0.5644386
+> covarTest_dis(Lee2008_rdd_z)
+   statistic   p.value  
+z1 0.02251666  0.3936811
+z2 0.02684002  0.2006513
+z3 0.007305005 0.9999956
+Message d'avis :
+In ks.test(x[regime], x[!regime], exact = exact) :
+  p-values will be approximate in the presence of ties
+> 
+> proc.time()
+utilisateur     système      écoulé 
+     22.670       0.090      22.893 

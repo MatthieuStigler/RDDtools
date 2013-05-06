@@ -1,0 +1,70 @@
+\name{plotPlacebo}
+\alias{computePlacebo}
+\alias{plotPlacebo}
+\alias{plotPlacebo.RDDreg}
+\alias{plotPlaceboDens}
+\alias{plotPlaceboDens.RDDreg}
+\title{Draw a (density) plot of placebo tests}
+\usage{
+  plotPlacebo(object, device = c("ggplot", "base"), ...)
+
+  \method{plotPlacebo}{RDDreg} (object,
+    device = c("ggplot", "base"), from = 0.25, to = 0.75,
+    by = 0.1, level = 0.95, same_bw = FALSE, vcov. = NULL,
+    ...)
+
+  plotPlaceboDens(object, device = c("ggplot", "base"),
+    ...)
+
+  \method{plotPlaceboDens}{RDDreg} (object,
+    device = c("ggplot", "base"), from = 0.25, to = 0.75,
+    by = 0.1, level = 0.95, same_bw = FALSE, vcov. = NULL,
+    ...)
+
+  computePlacebo(object, from = 0.25, to = 0.75, by = 0.1,
+    level = 0.95, same_bw = FALSE, vcov. = NULL)
+}
+\arguments{
+  \item{object}{the output of an RDD regression}
+
+  \item{device}{Whether to draw a base or a ggplot graph.}
+
+  \item{\ldots}{Further arguments passed to specific
+  methods.}
+
+  \item{vcov.}{TSpecific covariance function to pass to
+  coeftest. See help of package
+  \code{\link[sandwich]{sandwich}}}
+
+  \item{from}{Starting point of the fake cutpoints
+  sequence. Refers ot the quantile of each side of the true
+  cutpoint}
+
+  \item{to}{Ending point of the fake cutpoints sequence.
+  Refers ot the quantile of each side of the true cutpoint}
+
+  \item{by}{Increments of the from-to sequence}
+
+  \item{level}{Level of the confidence interval shown}
+
+  \item{same_bw}{Whether to re-estimate the bandwidth at
+  each point}
+}
+\value{
+  A data frame containing the cutpoints and corresponding
+  estimates and confidence intervals.
+}
+\description{
+  Draw a plot of placebo tests, estimating the impact on
+  fake cutpoints
+}
+\examples{
+data(Lee2008)
+Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
+plotPlacebo(reg_nonpara)
+}
+\author{
+  Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
+}
+

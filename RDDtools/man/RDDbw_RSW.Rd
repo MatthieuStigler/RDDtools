@@ -1,0 +1,31 @@
+\name{RDDbw_RSW}
+\alias{RDDbw_RSW}
+\title{Global bandwidth selector of Ruppert, Sheather and Wand (1995) from package \pkg{KernSmooth}}
+\usage{
+  RDDbw_RSW(object, type = c("global", "sided"))
+}
+\arguments{
+  \item{object}{object of class RDDdata created by
+  \code{\link{RDDdata}}}
+
+  \item{type}{Whether to choose a global bandwidth for the
+  whole function (\code{global}) or for each side
+  (\code{sided})}
+}
+\value{
+  One (or two for \code{sided}) bandwidth value.
+}
+\description{
+  Uses the global bandwidth selector of Ruppert, Sheather
+  and Wand (1995) either to the whole function, or to the
+  functions below and above the cutpoint.
+}
+\examples{
+data(Lee2008)
+rd<- RDDdata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
+RDDbw_RSW(rd)
+}
+\references{
+  See \code{\link[KernSmooth]{dpill}}
+}
+
