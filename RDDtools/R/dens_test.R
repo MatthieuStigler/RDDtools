@@ -18,10 +18,21 @@
 dens_test <- function(RDDobject, bin=NULL, bw=NULL){
   checkIsRDD(RDDobject)
   cutpoint <- getCutpoint(RDDobject)
-  DCdensity(RDDobject$x, cutpoint, bin = bin, bw = bw)
+  test <- try(DCdensity(RDDobject$x, cutpoint, bin = bin, bw = bw), silent=TRUE)
+  if(inherits(test, "try-error")){
+    warning("Error in computing the density, returning a simple histogram", if(is.null(bin)) " with arbitrary bin" else NULL)
+    if(is.null(bin)) {
+      test2 <- try(DCdensity(RDDobject$x, cutpoint, bin = bin, bw = 0.2, ext.out=TRUE, plot=FALSE), silent=TRUE)
+      bin <- test2$binsize
+    }
+    max_x <- max(RDDobject$x, na.rm=TRUE)
+    seq_breaks <- seq(from=min(RDDobject$x, na.rm=TRUE), to=max_x, by=bin)
+    if(max_x>max(seq_breaks)) seq_breaks <- c(seq_breaks, max_x+0.001)
+    hist(RDDobject$x, breaks=seq_breaks)
+    abline(v=cutpoint, col=2, lty=2)
+  }
 
 }
-
 
 if(FALSE){
 
