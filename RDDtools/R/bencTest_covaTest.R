@@ -67,7 +67,7 @@ covarTest_mean_low <- function(covar,cutvar, cutpoint, bw=NULL, paired = FALSE, 
 #' Tests equality of distribution with a Kolmogorov-Smirnov for each covariates, between the two full groups or around the discontinuity threshold 
 #' 
 #' @param object object of class RDDdata
-#' @param h a bandwidth
+#' @param bw a bandwidth
 #' @param exact Argument of the \code{\link{ks.test}} function: NULL or a logical indicating whether an exact p-value should be computed.
 #' @param p.adjust Whether to adjust the p-values for multiple testing. Uses the \code{\link{p.adjust}} function
 #' @param \ldots currently not used
