@@ -40,10 +40,6 @@
 
   \item{device}{Whether to draw a base or a ggplot graph.}
 
-  \item{vcov.}{TSpecific covariance function to pass to
-  coeftest. See help of package
-  \code{\link[sandwich]{sandwich}}}
-
   \item{\ldots}{Further arguments passed to specific
   methods}
 
@@ -51,7 +47,7 @@
   the bandwidths and corresponding estimates, or the ggplot
   object}
 
-  \item{vcov.}{TSpecific covariance function to pass to
+  \item{vcov.}{Specific covariance function to pass to
   coeftest. See help of package
   \code{\link[sandwich]{sandwich}}}
 }

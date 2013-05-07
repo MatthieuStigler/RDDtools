@@ -42,7 +42,7 @@ plotSensi <- function(RDDregobject, from, to, by=0.01, level=0.95, ...)
 #' @method plotSensi RDDreg_np
 #' @S3method plotSensi RDDreg_np
 #' @param output Whether return the data frame containing the bandwidths and corresponding estimates, or the ggplot object
-#' @param vcov. TSpecific covariance function to pass to coeftest. See help of package \code{\link[sandwich]{sandwich}}
+#' @param vcov. Specific covariance function to pass to coeftest. See help of package \code{\link[sandwich]{sandwich}}
 plotSensi.RDDreg_np <- function(RDDregobject, from, to, by=0.05, level=0.95, device=c("ggplot", "base"), output=c("data", "ggplot"),vcov.=NULL, ...){
 
   device <- match.arg(device)
