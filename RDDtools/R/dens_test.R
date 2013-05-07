@@ -22,8 +22,8 @@ dens_test <- function(RDDobject, bin=NULL, bw=NULL){
   if(inherits(test, "try-error")){
     warning("Error in computing the density, returning a simple histogram", if(is.null(bin)) " with arbitrary bin" else NULL)
     if(is.null(bin)) {
-      test2 <- try(DCdensity(RDDobject$x, cutpoint, bin = bin, bw = 0.2, ext.out=TRUE, plot=FALSE), silent=TRUE)
-      bin <- test2$binsize
+      test <- try(DCdensity(RDDobject$x, cutpoint, bin = bin, bw = 0.2, ext.out=TRUE, plot=FALSE), silent=TRUE)
+      bin <- test$binsize
     }
     max_x <- max(RDDobject$x, na.rm=TRUE)
     seq_breaks <- seq(from=min(RDDobject$x, na.rm=TRUE), to=max_x, by=bin)
@@ -32,6 +32,7 @@ dens_test <- function(RDDobject, bin=NULL, bw=NULL){
     abline(v=cutpoint, col=2, lty=2)
   }
 
+  return(test)
 }
 
 if(FALSE){
