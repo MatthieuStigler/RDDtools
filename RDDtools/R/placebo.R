@@ -7,7 +7,6 @@
 #' @param vcov. TSpecific covariance function to pass to coeftest. See help of package \code{\link[sandwich]{sandwich}}
 #' @return A data frame containing the cutpoints and corresponding estimates and confidence intervals. 
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
-#' @include waldci 
 #' @examples
 #' data(Lee2008)
 #' Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
