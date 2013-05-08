@@ -6,6 +6,7 @@
 #' @param covariates TODO
 #' @param order Order of the polynomial regression. 
 #' @param bw A bandwidth to specify the subset on which the parametric regression is estimated
+#' @param weights Optional weights to pass to the lm function. Note this cannot be entered together with \code{bw}
 #' @param slope Whether slopes should be different on left or right (separate), or the same.
 #' @return An object of class RDDreg_lm and class lm, with specific print and plot methods
 #' @references TODO
@@ -34,12 +35,13 @@
 #' plot(reg_para_ik)
 
 
-RDDreg_lm <- function(RDDobject, covariates=".", order=1, bw=NULL, slope=c("separate", "same")){
+RDDreg_lm <- function(RDDobject, covariates=".", order=1, bw=NULL, slope=c("separate", "same"), weights){
 
   slope <- match.arg(slope)
   checkIsRDD(RDDobject)
   cutpoint <- getCutpoint(RDDobject)
-
+  if(!missing(weights)&!is.null(bw)) stop("Cannot give both 'bw' and 'weights'")
+  
 ## Construct data
   dat <- as.data.frame(RDDobject)
 
@@ -62,13 +64,15 @@ RDDreg_lm <- function(RDDobject, covariates=".", order=1, bw=NULL, slope=c("sepa
 
 ## Subsetting
   if(!is.null(bw)){
-    isIn <- dat$x >= cutpoint -bw & dat$x <= cutpoint +bw
+    weights <- ifelse(dat$x >= cutpoint -bw & dat$x <= cutpoint +bw, 1, 0)
+  } else if(!missing(weights)){
+    weights <- weights
   } else {
-    isIn <- rep(TRUE, length(dat$x))
+    weights <- NULL
   }
 
 ## Regression
-  reg <- lm(y~., data=dat_step1, subset=isIn)
+  reg <- lm(y~., data=dat_step1, weights=weights)
 
 ##Return
   reg$RDDslot <- list()
@@ -114,18 +118,12 @@ plot.RDDreg_lm <- function(x,...) {
 
 ## data
   dat <- getOriginalData(x)
-  if(!is.null(getBW(x))) {
-    bw <- getBW(x)
-    cutpoint <- getCutpoint(x)
-    datax <- subset(dat, x >= cutpoint -bw & dat$x <= cutpoint +bw, "x")
-  } else {
-    datax <- dat$x
-  }
-  pred <- cbind(datax,fitted(x))[order(datax),]
+  subw <-   if(!is.null(x$weights)) x$weights>0 else rep(TRUE, nrow(dat))
+  pred <- data.frame(x=dat$x,y=fitted(x))[subw,]
   
 ##plot
   plotBin(dat$x, dat$y, ...)
-  lines(pred)
+  lines(pred[order(pred$x),])
 }
 
 

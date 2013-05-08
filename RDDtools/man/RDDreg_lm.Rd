@@ -3,7 +3,7 @@
 \title{Parametric polynomial estimator of the regression discontinuity}
 \usage{
   RDDreg_lm(RDDobject, covariates = ".", order = 1,
-    bw = NULL, slope = c("separate", "same"))
+    bw = NULL, slope = c("separate", "same"), weights)
 }
 \arguments{
   \item{RDDobject}{Object of class RDDdata created by
@@ -15,6 +15,10 @@
 
   \item{bw}{A bandwidth to specify the subset on which the
   parametric regression is estimated}
+
+  \item{weights}{Optional weights to pass to the lm
+  function. Note this cannot be entered together with
+  \code{bw}}
 
   \item{slope}{Whether slopes should be different on left
   or right (separate), or the same.}

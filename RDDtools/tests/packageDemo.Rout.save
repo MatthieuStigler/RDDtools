@@ -141,7 +141,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > summary(reg_para)
 
 Call:
-lm(formula = y ~ ., data = dat_step1, subset = isIn)
+lm(formula = y ~ ., data = dat_step1, weights = weights)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
@@ -180,7 +180,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > summary(reg_para_0)
 
 Call:
-lm(formula = y ~ ., data = dat_step1, subset = isIn)
+lm(formula = y ~ ., data = dat_step1, weights = weights)
 
 Residuals:
      Min       1Q   Median       3Q      Max 

@@ -12,8 +12,7 @@
     output = c("data", "ggplot"), vcov. = NULL, ...)
 
   \method{plotSensi}{RDDreg_lm} (RDDregobject, from, to,
-    by = 0.05, level = 0.95,
-    order = 1:(getOrder(RDDregobject) + 2),
+    by = 0.05, level = 0.95, order,
     type = c("colour", "facet"), ...)
 }
 \arguments{
