@@ -114,10 +114,17 @@ plot.RDDreg_lm <- function(x,...) {
 
 ## data
   dat <- getOriginalData(x)
-  pred <- cbind(dat[,"x^1"],fitted(x))[order(dat[,"x^1"]),]
+  if(!is.null(getBW(x))) {
+    bw <- getBW(x)
+    cutpoint <- getCutpoint(x)
+    datax <- subset(dat, x >= cutpoint -bw & dat$x <= cutpoint +bw, "x")
+  } else {
+    datax <- dat$x
+  }
+  pred <- cbind(datax,fitted(x))[order(datax),]
   
 ##plot
-  plotBin(dat[,"x^1"], dat$y, ...)
+  plotBin(dat$x, dat$y, ...)
   lines(pred)
 }
 
