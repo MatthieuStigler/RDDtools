@@ -59,6 +59,16 @@ print(reg_para)
 summary(reg_para)
 plot(reg_para)
 
+
+## Difference in means regression:
+# Simple polynomial of order 0:
+reg_para_0 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=0)
+print(reg_para_0)
+summary(reg_para_0)
+plot(reg_para_0)
+
+
+
 # plotSensi(reg_para)
 
 # Simple polynomial of order 4:
@@ -88,12 +98,16 @@ print(reg_nonpara_sameSl)
 summary(reg_nonpara_sameSl)
 
 
-
+### PLOT SENSI
 plSe_reg_nonpara <- plotSensi(reg_nonpara)
 plSe_reg_nonpara
 
 plSe_reg_nonpara_HC <- plotSensi(reg_nonpara, vcov. =function(x) vcovCluster(x, clusterVar=model.frame(x)$x))
 plSe_reg_nonpara_HC
+
+plSe_reg_para_0 <- plotSensi(reg_para_0)
+plSe_reg_para_0
+
 
 ### Post-inference:
 
@@ -111,6 +125,7 @@ placeb_dat_reg_nonpara <- computePlacebo(reg_nonpara)
 plotPlacebo(placeb_dat_reg_nonpara)
 plotPlacebo(placeb_dat_reg_nonpara, device="base")
 
+
 plotPlaceboDens(placeb_dat_reg_nonpara)
 
 ptPl_reg_nonpara <- plotPlacebo(reg_nonpara)
@@ -119,6 +134,10 @@ ptPl_reg_nonpara
 # with HC:
 ptPl_reg_nonpara_HC <- plotPlacebo(reg_nonpara, vcov. =function(x) vcovCluster(x, clusterVar=model.frame(x)$x))
 ptPl_reg_nonpara_HC
+
+ptPl_reg_para_0 <- plotPlacebo(reg_para_0)
+ptPl_reg_para_0
+
 
 
 ## density tests

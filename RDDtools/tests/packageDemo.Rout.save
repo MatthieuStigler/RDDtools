@@ -17,6 +17,15 @@ en ligne ou 'help.start()' pour obtenir l'aide au format HTML.
 Tapez 'q()' pour quitter R.
 
 > library(RDDtools)
+Le chargement a nécessité le package : sandwich
+Le chargement a nécessité le package : zoo
+
+Attachement du package : ‘zoo’
+
+The following object(s) are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
 KernSmooth 2.23 loaded
 Copyright M. P. Wand 1997-2009
 
@@ -152,6 +161,45 @@ Multiple R-squared: 0.6707,	Adjusted R-squared: 0.6706
 F-statistic:  4450 on 3 and 6554 DF,  p-value: < 2.2e-16 
 
 > plot(reg_para)
+> 
+> 
+> ## Difference in means regression:
+> # Simple polynomial of order 0:
+> reg_para_0 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=0)
+> print(reg_para_0)
+### RDD regression: parametric ###
+	Polynomial order:  0 
+	Slopes:  separate 
+	Number of obs: 6558 (left: 2740, right: 3818)
+
+	Coefficient:
+   Estimate Std. Error t value  Pr(>|t|)    
+D 0.3513582  0.0041954  83.748 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+> summary(reg_para_0)
+
+Call:
+lm(formula = y ~ ., data = dat_step1, subset = isIn)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.69788 -0.10061 -0.00360  0.09631  0.65348 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.346522   0.003201  108.25   <2e-16 ***
+D           0.351358   0.004195   83.75   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+Residual standard error: 0.1676 on 6556 degrees of freedom
+Multiple R-squared: 0.5169,	Adjusted R-squared: 0.5168 
+F-statistic:  7014 on 1 and 6556 DF,  p-value: < 2.2e-16 
+
+> plot(reg_para_0)
+> 
+> 
 > 
 > # plotSensi(reg_para)
 > 
@@ -294,7 +342,7 @@ F-statistic: 884.3 on 2 and 3197 DF,  p-value: < 2.2e-16
 
 > 
 > 
-> 
+> ### PLOT SENSI
 > plSe_reg_nonpara <- plotSensi(reg_nonpara)
 > plSe_reg_nonpara
          bw       LATE          se      p_value     CI_low    CI_high
@@ -312,6 +360,14 @@ F-statistic: 884.3 on 2 and 3197 DF,  p-value: < 2.2e-16
 3 0.2938561 0.07992454 0.005387560 3.368324e-48 0.06936111 0.09048796
 4 0.3438561 0.08182321 0.005704170 1.875255e-45 0.07063958 0.09300684
 5 0.3938561 0.08398642 0.005899981 6.376696e-45 0.07241926 0.09555357
+> 
+> plSe_reg_para_0 <- plotSensi(reg_para_0)
+> plSe_reg_para_0
+  bw order       LATE          se     CI_low    CI_high
+1  1     0 0.35135822 0.004195424 0.34313534 0.35958110
+2  1     1 0.11823144 0.005679859 0.10709913 0.12936376
+3  1     2 0.05186868 0.008087038 0.03601838 0.06771898
+> 
 > 
 > ### Post-inference:
 > 
@@ -350,6 +406,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > plotPlacebo(placeb_dat_reg_nonpara)
 > plotPlacebo(placeb_dat_reg_nonpara, device="base")
+> 
 > 
 > plotPlaceboDens(placeb_dat_reg_nonpara)
 > 
@@ -399,6 +456,30 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 6  0.006178517
 7  0.025035834
 8  0.026106467
+> 
+> ptPl_reg_para_0 <- plotPlacebo(reg_para_0)
+> ptPl_reg_para_0
+   cutpoint position         LATE          se    p_value       CI_low
+1 -0.403200     left -0.024718935 0.012533485 0.04879388 -0.049306901
+2 -0.303200     left -0.006342468 0.010056335 0.52833114 -0.026067500
+3 -0.203200     left -0.002383527 0.010235087 0.81588791 -0.022460150
+9  0.000000     True  0.351358219 0.004195424 0.00000000  0.343133821
+4  0.163925    right  0.014895056 0.010908299 0.17230640 -0.006502015
+5  0.263925    right  0.005435061 0.009215405 0.55538753 -0.012634901
+6  0.363925    right -0.011887068 0.008770348 0.17540021 -0.029083471
+7  0.463925    right  0.006736746 0.008791850 0.44358662 -0.010501705
+8  0.563925    right  0.010152920 0.010744342 0.34477284 -0.010915767
+        CI_high
+1 -0.0001309692
+2  0.0133825629
+3  0.0176930958
+9  0.3595826164
+4  0.0362921259
+5  0.0235050226
+6  0.0053093358
+7  0.0239751977
+8  0.0312216063
+> 
 > 
 > 
 > ## density tests
