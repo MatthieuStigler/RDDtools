@@ -8,7 +8,7 @@
 \arguments{
   \item{object}{object of class RDDdata}
 
-  \item{h}{a bandwidth}
+  \item{bw}{a bandwidth}
 
   \item{exact}{Argument of the \code{\link{ks.test}}
   function: NULL or a logical indicating whether an exact
