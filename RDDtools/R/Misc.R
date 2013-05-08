@@ -96,7 +96,10 @@ getOriginalX.RDDreg_np <- function(object){
 }
 
 
-getOriginalData <- function(object){
+getOriginalData <- function(object)
+  UseMethod("getOriginalData")
+
+getOriginalData.RDDreg_np <- function(object){
 
   cutpoint <- getCutpoint(object)
   Xnam <- getXname(object) 
@@ -104,6 +107,14 @@ getOriginalData <- function(object){
   if(cutpoint!=0)  dat[,Xnam] <- dat[,Xnam] +cutpoint
   dat
 }
+
+
+
+getOriginalData.RDDreg_lm <- function(object){
+  object$RDDslot$RDDdata
+}
+
+
 
 
 getCall.RDDreg_np <- function(x,...) attr(x, "RDDcall")
