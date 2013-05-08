@@ -78,6 +78,24 @@ getOriginalX <- function(object){
   x
 }
 
+getOriginalX <- function(object)
+  UseMethod("getOriginalX")
+
+
+getOriginalX.RDDreg_lm <- function(object){
+  object$RDDslot$RDDdata[, "x"]
+}
+
+getOriginalX.RDDreg_np <- function(object){
+
+  cutpoint <- getCutpoint(object)
+  Xnam <- getXname(object) 
+  x <- object$model[,Xnam]
+  if(cutpoint!=0)  x <- x+cutpoint
+  x
+}
+
+
 getOriginalData <- function(object){
 
   cutpoint <- getCutpoint(object)
