@@ -130,7 +130,7 @@ plotSensi.RDDreg_np <- function(RDDregobject, from, to, by=0.05, level=0.95, dev
 #' @rdname plotSensi
 #' @method plotSensi RDDreg_lm
 #' @S3method plotSensi RDDreg_lm
-plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, order=1:(getOrder(RDDregobject)+2), type=c("colour", "facet"), ...){
+plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, order, type=c("colour", "facet"), ...){
 
   type <- match.arg(type)
   object <- RDDregobject
@@ -151,6 +151,7 @@ plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, ord
     seq_bw <- n_seq_bw <- 1
   }
 
+  if(missing(order)) order <- 0:(getOrder(RDDregobject)+2)
   seq_ord <- order
   n_seq_ord <- length(seq_ord)
 
