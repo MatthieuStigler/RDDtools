@@ -1207,7 +1207,7 @@ status open
 
 \begin_layout Plain Layout
 
-reg_linear_2 <- RDDreg_lm(Lee2008_rdd, slope="separate")
+reg_linear_2 <- RDDreg_lm(Lee2008_rdd, slope="same")
 \end_layout
 
 \begin_layout Plain Layout

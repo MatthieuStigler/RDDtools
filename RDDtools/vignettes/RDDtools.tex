@@ -219,9 +219,17 @@ function, we look at the first rows of the dataset:
 \end{alltt}
 
 
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: sandwich}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: zoo}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# \\\#\# Attaching package: 'zoo'}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The following object(s) are masked from 'package:base':\\\#\# \\\#\#\ \ \ \  as.Date, as.Date.numeric}}
+
 {\ttfamily\noindent\itshape\color{messagecolor}{\#\# KernSmooth 2.23 loaded\\\#\# Copyright M. P. Wand 1997-2009}}
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# \\\#\# RDDtools 0.1 (rev Wednesday 2013-04-24). PLEASE NOTE THIS is currently only a development version. \\\#\# Run vignette('RDDtools') for the documentation}}\begin{alltt}
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# \\\#\# RDDtools 0.1 (rev Monday 2013-05-06). PLEASE NOTE THIS is currently only a development version. \\\#\# Run vignette('RDDtools') for the documentation}}\begin{alltt}
 \hlfunctioncall{data}(Lee2008)
 \hlfunctioncall{head}(Lee2008)
 \end{alltt}
@@ -301,9 +309,7 @@ is shown, using non-overlapping averages:
 \begin{alltt}
 \hlfunctioncall{plot}(Lee2008_rdd)
 \end{alltt}
-
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: font width unknown for character 0x9}}\end{kframe}
+\end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-4} 
 
 \end{knitrout}
@@ -322,13 +328,7 @@ which allows to plot multiple plots with different bandwidths:
 \begin{alltt}
 \hlfunctioncall{plot}(Lee2008_rdd, nplot = 3, h = \hlfunctioncall{c}(0.02, 0.03, 0.04))
 \end{alltt}
-
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: font width unknown for character 0x9}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: font width unknown for character 0x9}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: font width unknown for character 0x9}}\end{kframe}
+\end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-5} 
 
 \end{knitrout}
@@ -443,7 +443,7 @@ window:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-reg_linear_2 <- \hlfunctioncall{RDDreg_lm}(Lee2008_rdd, slope = \hlstring{"separate"})
+reg_linear_2 <- \hlfunctioncall{RDDreg_lm}(Lee2008_rdd, slope = \hlstring{"same"})
 reg_linear_3 <- \hlfunctioncall{RDDreg_lm}(Lee2008_rdd, order = 3)
 reg_linear_4 <- \hlfunctioncall{RDDreg_lm}(Lee2008_rdd, bw = 0.4)
 \end{alltt}
@@ -504,12 +504,12 @@ reg_linear_2
 \begin{verbatim}
 ## ### RDD regression: parametric ###
 ## 	Polynomial order:  1 
-## 	Slopes:  separate 
+## 	Slopes:  same 
 ## 	Number of obs: 6558 (left: 2740, right: 3818)
 ## 
 ## 	Coefficient:
 ##   Estimate Std. Error t value Pr(>|t|)    
-## D  0.11823    0.00568    20.8   <2e-16 ***
+## D  0.11373    0.00553    20.6   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}
@@ -557,15 +557,9 @@ with polynomial of order 1 and order 3:
 \begin{alltt}
 \hlfunctioncall{par}(mfrow = \hlfunctioncall{c}(2, 1))
 \hlfunctioncall{plot}(reg_linear_1)
-\end{alltt}
-
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: font width unknown for character 0x9}}\begin{alltt}
 \hlfunctioncall{plot}(reg_linear_3)
 \end{alltt}
-
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: font width unknown for character 0x9}}\end{kframe}
+\end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-9} 
 \begin{kframe}\begin{alltt}
 \hlfunctioncall{par}(mfrow = \hlfunctioncall{c}(1, 1))
@@ -723,9 +717,7 @@ the parametric plots, which show the curve $y=f(x)=\hat{\alpha}+\hat{\beta}(x-c)
 \begin{alltt}
 \hlfunctioncall{plot}(reg_nonpara)
 \end{alltt}
-
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: font width unknown for character 0x9}}\end{kframe}
+\end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-12} 
 
 \end{knitrout}
@@ -870,9 +862,9 @@ We run here the equality in means test:
 \end{alltt}
 \begin{verbatim}
 ##    mean of x mean of y Difference statistic p.value
-## z1 0.005348  0.0358    0.03045    -1.226    0.2202 
-## z2 20.05     20        -0.04979   0.9974    0.3186 
-## z3 2.003     1.997     -0.005801  0.2826    0.7775
+## z1 -0.01352  0.01004   0.02357    -0.9278   0.3536 
+## z2 20.04     19.97     -0.07224   1.426     0.1539 
+## z3 2.001     2.015     0.01373    -0.6683   0.504
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -889,9 +881,9 @@ as well as the equality in distribution test:
 
 {\ttfamily\noindent\color{warningcolor}{\#\# Warning: p-values will be approximate in the presence of ties}}\begin{verbatim}
 ##    statistic p.value
-## z1 0.01921   0.5985 
-## z2 0.02843   0.1518 
-## z3 0.0153    0.849
+## z1 0.02257   0.391  
+## z2 0.02777   0.1706 
+## z3 0.009861  0.9978
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
