@@ -12,6 +12,7 @@
 #' @references TODO
 #' @include plotBin.R
 #' @include Misc.R
+#' @import Formula
 #' @export
 #' @examples
 #' ## Step 0: prepare data
@@ -35,13 +36,15 @@
 #' plot(reg_para_ik)
 
 
-RDDreg_lm <- function(RDDobject, covariates=".", order=1, bw=NULL, slope=c("separate", "same"), weights){
+RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.strat=c("include", "residual"), weights){
 
   slope <- match.arg(slope)
+  covar.strat <- match.arg(covar.strat)
   checkIsRDD(RDDobject)
   cutpoint <- getCutpoint(RDDobject)
   if(!missing(weights)&!is.null(bw)) stop("Cannot give both 'bw' and 'weights'")
-  
+  if(!is.null(covariates) & !hasCovar(RDDobject))  stop("Arg 'covariates' was specified, but no covariates found in 'RDDobject'.")
+
 ## Construct data
   dat <- as.data.frame(RDDobject)
 
@@ -71,12 +74,28 @@ RDDreg_lm <- function(RDDobject, covariates=".", order=1, bw=NULL, slope=c("sepa
     weights <- NULL
   }
 
+## Covariates
+  if(!is.null(covariates)){
+    covar <- getCovar(RDDobject)
+    formu <- as.Formula(paste("y", covariates, sep="~"))
+    mod_frame_cov <- model.frame(formu, covar, lhs=FALSE)
+
+    if(covar.strat=="residual"){
+      mod_frame_cov$y <- dat_step1$y
+      first_stage <- lm(formu, data=mod_frame_cov) ## regress y on covariates only
+      dat_step1$y <- residuals(first_stage) ## change in original data
+    } else {
+      dat_step1 <- cbind(dat_step1, mod_frame_cov) ## add covar as regressors
+    }
+  } 
+
 ## Regression
   reg <- lm(y~., data=dat_step1, weights=weights)
 
 ##Return
-  reg$RDDslot <- list()
-  reg$RDDslot$RDDdata <- RDDobject
+  RDDslot <- list()
+  RDDslot$RDDdata <- RDDobject
+  reg$RDDslot <- RDDslot 
   class(reg) <- c("RDDreg_lm", "RDDreg", "lm")
   attr(reg, "PolyOrder") <- order
   attr(reg, "cutpoint") <- cutpoint

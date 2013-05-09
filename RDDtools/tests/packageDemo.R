@@ -52,7 +52,7 @@ RDDbw_RSW(Lee2008_rdd)
 RDDbw_IK(Lee2008_rdd)
 
 
-## Parametric regression
+###### Parametric regression ######
 # Simple polynomial of order 1:
 reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
 print(reg_para)
@@ -68,26 +68,33 @@ summary(reg_para_0)
 plot(reg_para_0)
 
 
-
-# plotSensi(reg_para)
-
-# Simple polynomial of order 4:
+## Simple polynomial of order 4:
 reg_para4 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=4)
 reg_para4
 plot(reg_para4)
 
-# Restrict sample to bandwidth area:
+## Restrict sample to bandwidth area:
 bw_ik <- RDDbw_IK(Lee2008_rdd)
 reg_para_ik <- RDDreg_lm(RDDobject=Lee2008_rdd, bw=bw_ik, order=4)
 reg_para_ik
 plot(reg_para_ik)
 
-plSe_reg_para <- plotSensi(reg_para_ik, order=4:6)
-plSe_reg_para_fac <- plotSensi(reg_para_ik, type="facet", order=4:6)
-plSe_reg_para
-plSe_reg_para_fac
+## Covariates:
+reg_para4_cov <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".")
+reg_para4_cov
+summary(reg_para4_cov)
 
-## Non-parametric regression
+reg_para4_cov_startR <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.strat="residual")
+reg_para4_cov_startR
+summary(reg_para4_cov_startR)
+
+plot(reg_para4_cov)
+
+reg_para4_cov_2 <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates="z3+I(z1^2)")
+reg_para4_cov_2
+summary(reg_para4_cov_2)
+
+###### Non-parametric regression ######
 reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
 print(reg_nonpara)
 summary(reg_nonpara)
@@ -98,7 +105,13 @@ print(reg_nonpara_sameSl)
 summary(reg_nonpara_sameSl)
 
 
-### PLOT SENSI
+###### PLOT SENSI ######
+plSe_reg_para <- plotSensi(reg_para_ik, order=4:6)
+plSe_reg_para_fac <- plotSensi(reg_para_ik, type="facet", order=4:6)
+plSe_reg_para
+plSe_reg_para_fac
+
+
 plSe_reg_nonpara <- plotSensi(reg_nonpara)
 plSe_reg_nonpara
 
@@ -109,7 +122,7 @@ plSe_reg_para_0 <- plotSensi(reg_para_0)
 plSe_reg_para_0
 
 
-### Post-inference:
+###### Post-inference: ######
 
 clusterInf(reg_para, clusterVar=model.frame(reg_para)$x, type="df-adj")
 clusterInf(reg_para, clusterVar=model.frame(reg_para)[, "x^1"], type="HC")
