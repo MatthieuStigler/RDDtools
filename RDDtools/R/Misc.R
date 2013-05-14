@@ -96,22 +96,25 @@ getOriginalX.RDDreg_np <- function(object){
 }
 
 
-getOriginalData <- function(object)
+getOriginalData <- function(object, na.rm=TRUE)
   UseMethod("getOriginalData")
 
-getOriginalData.RDDreg_np <- function(object){
+getOriginalData.RDDreg_np <- function(object, na.rm=TRUE){
 
   cutpoint <- getCutpoint(object)
   Xnam <- getXname(object) 
   dat <- object$model[,c("y",Xnam)]
   if(cutpoint!=0)  dat[,Xnam] <- dat[,Xnam] +cutpoint
+  if(na.rm) dat <- dat[apply(dat, 1, function(x) all(!is.na(x))),] # remove na rows
   dat
 }
 
 
 
-getOriginalData.RDDreg_lm <- function(object){
-  object$RDDslot$RDDdata
+getOriginalData.RDDreg_lm <- function(object, na.rm=TRUE){
+  res <- object$RDDslot$RDDdata
+  if(na.rm) res <- res[apply(res, 1, function(x) all(!is.na(x))),] # remove na rows
+  res
 }
 
 
