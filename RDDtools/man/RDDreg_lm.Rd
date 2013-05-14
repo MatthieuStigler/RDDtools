@@ -2,8 +2,9 @@
 \alias{RDDreg_lm}
 \title{Parametric polynomial estimator of the regression discontinuity}
 \usage{
-  RDDreg_lm(RDDobject, covariates = ".", order = 1,
-    bw = NULL, slope = c("separate", "same"), weights)
+  RDDreg_lm(RDDobject, covariates = NULL, order = 1,
+    bw = NULL, slope = c("separate", "same"),
+    covar.strat = c("include", "residual"), weights)
 }
 \arguments{
   \item{RDDobject}{Object of class RDDdata created by
