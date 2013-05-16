@@ -3,13 +3,28 @@
 #' Compute a parametric polynomial regression of the ATE, 
 #' possibly on the range specified by bandwidth
 #' @param RDDobject Object of class RDDdata created by \code{\link{RDDdata}}
-#' @param covariates TODO
+#' @param covariates Formula to include covariates
 #' @param order Order of the polynomial regression. 
 #' @param bw A bandwidth to specify the subset on which the parametric regression is estimated
+#' @param covar.strat Way to include covariates, either in the main regression (\code{include}) or as regressors of y in a first step (\code{residual}). 
 #' @param weights Optional weights to pass to the lm function. Note this cannot be entered together with \code{bw}
 #' @param slope Whether slopes should be different on left or right (separate), or the same.
 #' @return An object of class RDDreg_lm and class lm, with specific print and plot methods
-#' @references TODO
+#' @references This function estimates the standard \emph{discontinuity regression}:
+#' \deqn{Y=\alpha+\tau D+\beta_{1}(X-c)+\beta_{2}D(X-c)+\epsilon}
+#' with \eqn{\tau} the main parameter of interest. Several versions of the regression can be estimated, either restricting the slopes to be the same, 
+#' i.e \eqn{\beta_{1}=\beta_{2}} (argument \code{slope}). The order of the polynomial in \eqn{X-c} can also be adjusted with argument \code{order}. 
+#' Note that a value of zero can be used, which corresponds to the simple \emph{difference in means}, that one would use if the samples were random. 
+#' Covariates can also be added in the regression, according to the two strategies discussed in Lee and Lemieux (2010, sec 4.5), through argument \code{covar.strat}:
+#' \describe{
+#' \item{include}{Covariates are simply added as supplementary regressors in the RD equation}
+#' \item{residual}{The dependent variable is first regressed on the covariates only, then the RDD equation is applied on the residuals from this first step}}
+#' The regression can also be estimated in a neighborhood of the cutpoint with the argument \code{bw}. This make the parametric regression resemble 
+#' the non-parametric local kernel \code{\link{RDDreg_np}}. Similarly, weights can also be provided (but not simultaneously to \code{bw}). 
+#'
+#' The returned object is a classical \code{lm} object, augmented with a \code{RDDslot}, so usual methods can be applied. As is done in general in R, 
+#' heteroskeadsticity-robust inference can be done later on with the usual function from package \pkg{sandwich}. For the case of clustered observations
+#' a specific function \code{\link{clusterInf}} is provided.  
 #' @include plotBin.R
 #' @include Misc.R
 #' @import Formula
