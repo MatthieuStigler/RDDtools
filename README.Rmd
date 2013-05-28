@@ -31,7 +31,7 @@ Using RDDtools: a quick example
 Load the package, and load the built-in dataset from Lee (2008):
 
 ```{r options, echo=FALSE}
-opts_chunk$set(warning= FALSE, message=FALSE, fig.align="center")
+opts_chunk$set(warning= FALSE, message=FALSE, fig.align="center", fig.path='figuresREADME/')
 ```
 
 
@@ -49,14 +49,14 @@ Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 
 You can now directly summarise and visualise this data:
 
-```{r}
+```{r dataPlot}
 summary(Lee2008_rdd)
 plot(Lee2008_rdd)
 ```
 
 
 As well as run a simple local regression, using the Imbens and Kalyanaraman bandwidth:
-```{r}
+```{r RegPlot}
 bw_ik <- RDDbw_IK(Lee2008_rdd)
 reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd, bw=bw_ik)
 print(reg_nonpara)
@@ -66,7 +66,7 @@ plot(x=reg_nonpara)
 
 
 One can easily check the sensitivity of the estimate to different bandwidths:
-```{r}
+```{r SensiPlot}
 plotSensi(reg_nonpara, from=0.05)
 ```
 

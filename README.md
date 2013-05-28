@@ -74,7 +74,7 @@ summary(Lee2008_rdd)
 plot(Lee2008_rdd)
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
+![plot of chunk dataPlot](figuresREADME/dataPlot.png) 
 
 
 
@@ -102,7 +102,7 @@ print(reg_nonpara)
 plot(x = reg_nonpara)
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
+![plot of chunk RegPlot](figuresREADME/RegPlot.png) 
 
 
 
@@ -112,7 +112,7 @@ One can easily check the sensitivity of the estimate to different bandwidths:
 plotSensi(reg_nonpara, from = 0.05)
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
+![plot of chunk SensiPlot](figuresREADME/SensiPlot.png) 
 
 
 
