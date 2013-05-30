@@ -50,7 +50,7 @@ gen_MC_IK_1 <- function(n=200,  sd=0.1295){
   Y[!ind_below] <- 0.52 +  0.84*X_up - 3*   X_up^2 +  7.99* X_up^3 - 9.01*X_up^4 +3.56*X_up^5 + error[!ind_below]
 
 ## Result:
-  res <- data.frame(x=X, y=X)
+  res <- data.frame(x=X, y=Y)
   return(res)
 }
 
@@ -69,7 +69,7 @@ gen_MC_IK_2 <- function(n=200,  sd=0.1295){
   Y <- ifelse(X<0, 3*X^2, 4*X^2) + error
 
 ## Result:
-  res <- data.frame(x=X, y=X)
+  res <- data.frame(x=X, y=Y)
   return(res)
 }
 
@@ -89,7 +89,7 @@ gen_MC_IK_3 <- function(n=200,  sd=0.1295){
   Y <- 0.42 + ifelse(X<0, 0, 0.1) + 0.84*X - 3*X^2 +7.99 * X^3-9.01*X^4+3.56*X^5 + error
 
 ## Result:
-  res <- data.frame(x=X, y=X)
+  res <- data.frame(x=X, y=Y)
   return(res)
 }
 
@@ -108,7 +108,7 @@ gen_MC_IK_4 <- function(n=200,  sd=0.1295){
   Y <- 0.42 + ifelse(X<0, 0, 0.1) + 0.84*X  +7.99 * X^3-9.01*X^4+3.56*X^5 + error
 
 ## Result:
-  res <- data.frame(x=X, y=X)
+  res <- data.frame(x=X, y=Y)
   return(res)
 }
 
