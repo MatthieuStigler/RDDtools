@@ -21,13 +21,15 @@ RDD_bw <- RDDbw_IK(input_mc)
 
 RDD_np_sep <- RDDreg_np(input_mc, bw=RDD_bw)
 RDD_np_same <- RDDreg_np(input_mc, slope="same", bw=RDD_bw)
+RDD_np_sep_inflm <- RDDreg_np(input_mc, bw=RDD_bw, inf="lm")
+RDD_np_same_inflm <- RDDreg_np(input_mc, slope="same", bw=RDD_bw, inf="lm")
 RDD_lm_sep <- RDDreg_lm(input_mc, bw=RDD_bw)
 RDD_lm_same <- RDDreg_lm(input_mc, slope="same", bw=RDD_bw)
 rdd_RDe <- RDestimate(y~x, data=input_mc, cutpoint=20, model=TRUE, bw=RDD_bw)
 
 
-printCoefmat(coef(summary(RDD_np_sep)))
-printCoefmat(coef(summary(RDD_np_same)))
+printCoefmat(coef(summary(RDD_np_sep_inflm$RDDslot$model)))
+printCoefmat(coef(summary(RDD_np_same_inflm$RDDslot$model)))
 printCoefmat(coef(summary(RDD_lm_sep)))
 printCoefmat(coef(summary(RDD_lm_same)))
 printCoefmat(coef(summary(rdd_RDe $model[[1]])))

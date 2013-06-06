@@ -100,6 +100,12 @@ print(reg_nonpara)
 summary(reg_nonpara)
 plot(x=reg_nonpara)
 
+reg_nonpara_inflm <- RDDreg_np(RDDobject=Lee2008_rdd, inference="lm")
+print(reg_nonpara_inflm)
+summary(reg_nonpara_inflm)
+plot(x=reg_nonpara_inflm)
+
+
 reg_nonpara_sameSl <- RDDreg_np(RDDobject=Lee2008_rdd, slope="same")
 print(reg_nonpara_sameSl)
 summary(reg_nonpara_sameSl)
@@ -115,7 +121,7 @@ plSe_reg_para_fac
 plSe_reg_nonpara <- plotSensi(reg_nonpara)
 plSe_reg_nonpara
 
-plSe_reg_nonpara_HC <- plotSensi(reg_nonpara, vcov. =function(x) vcovCluster(x, clusterVar=model.frame(x)$x))
+plSe_reg_nonpara_HC <- plotSensi(reg_nonpara_inflm, vcov. =function(x) vcovCluster(x, clusterVar=model.frame(x)$x))
 plSe_reg_nonpara_HC
 
 plSe_reg_para_0 <- plotSensi(reg_para_0)
@@ -145,7 +151,7 @@ ptPl_reg_nonpara <- plotPlacebo(reg_nonpara)
 ptPl_reg_nonpara
 
 # with HC:
-ptPl_reg_nonpara_HC <- plotPlacebo(reg_nonpara, vcov. =function(x) vcovCluster(x, clusterVar=model.frame(x)$x))
+ptPl_reg_nonpara_HC <- plotPlacebo(reg_nonpara_inflm, vcov. =function(x) vcovCluster(x, clusterVar=model.frame(x)$x))
 ptPl_reg_nonpara_HC
 
 ptPl_reg_para_0 <- plotPlacebo(reg_para_0)

@@ -18,12 +18,6 @@ Tapez 'q()' pour quitter R.
 
 > 
 > library(RDDtools)
-KernSmooth 2.23 loaded
-Copyright M. P. Wand 1997-2009
-
-RDDtools 0.1 (rev mercredi 2013-04-24). PLEASE NOTE THIS is currently only a development version. 
-Run vignette('RDDtools') for the documentation
-> library(rdd)
 Le chargement a nécessité le package : sandwich
 Le chargement a nécessité le package : zoo
 
@@ -33,6 +27,13 @@ The following object(s) are masked from ‘package:base’:
 
     as.Date, as.Date.numeric
 
+KernSmooth 2.23 loaded
+Copyright M. P. Wand 1997-2009
+
+RDDtools 0.1 (rev Thursday 2013-06-0, opened on jeu. 06 juin 2013 00:00:00 CET). 
+PLEASE NOTE THIS is currently only a development version. 
+Run vignette('RDDtools') for the documentation
+> library(rdd)
 Le chargement a nécessité le package : lmtest
 Le chargement a nécessité le package : AER
 Le chargement a nécessité le package : car
@@ -63,12 +64,14 @@ effect 2.4
 > 
 > RDD_np_sep <- RDDreg_np(input_mc, bw=RDD_bw)
 > RDD_np_same <- RDDreg_np(input_mc, slope="same", bw=RDD_bw)
+> RDD_np_sep_inflm <- RDDreg_np(input_mc, bw=RDD_bw, inf="lm")
+> RDD_np_same_inflm <- RDDreg_np(input_mc, slope="same", bw=RDD_bw, inf="lm")
 > RDD_lm_sep <- RDDreg_lm(input_mc, bw=RDD_bw)
 > RDD_lm_same <- RDDreg_lm(input_mc, slope="same", bw=RDD_bw)
 > rdd_RDe <- RDestimate(y~x, data=input_mc, cutpoint=20, model=TRUE, bw=RDD_bw)
 > 
 > 
-> printCoefmat(coef(summary(RDD_np_sep)))
+> printCoefmat(coef(summary(RDD_np_sep_inflm$RDDslot$model)))
              Estimate Std. Error t value  Pr(>|t|)    
 (Intercept) 6.7943125  0.0074768 908.722 < 2.2e-16 ***
 x           0.2984534  0.0022980 129.876 < 2.2e-16 ***
@@ -76,7 +79,7 @@ D           2.4175554  0.0106230 227.578 < 2.2e-16 ***
 x_right     0.1007346  0.0032831  30.683 < 2.2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-> printCoefmat(coef(summary(RDD_np_same)))
+> printCoefmat(coef(summary(RDD_np_same_inflm$RDDslot$model)))
              Estimate Std. Error t value  Pr(>|t|)    
 (Intercept) 6.9205374  0.0088024  786.21 < 2.2e-16 ***
 x           0.3478051  0.0023140  150.31 < 2.2e-16 ***
