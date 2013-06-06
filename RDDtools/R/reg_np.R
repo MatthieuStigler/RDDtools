@@ -5,6 +5,7 @@
 #' @param RDDobject Object of class RDDdata created by \code{\link{RDDdata}}
 #' @param covariates TODO
 #' @param bw A bandwidth to specify the subset on which the parametric regression is estimated
+#' @param inference Type of inference to conduct: non-parametric one (\code{np}) or standard (\code{lm}). See details. 
 #' @param slope Whether slopes should be different on left or right (separate), or the same.
 #' @return An object of class RDDreg_np and class lm, with specific print and plot methods
 #' @references TODO
@@ -22,9 +23,10 @@
 #'
 
 
-RDDreg_np <- function(RDDobject, covariates=".", bw=RDDbw_IK(RDDobject), slope=c("separate", "same")){
+RDDreg_np <- function(RDDobject, covariates=".", bw=RDDbw_IK(RDDobject), slope=c("separate", "same"), inference=c("np", "lm")){
 
   slope <- match.arg(slope)
+  inference <- match.arg(inference)
   checkIsRDD(RDDobject)
   cutpoint <- getCutpoint(RDDobject)
 
@@ -43,18 +45,44 @@ RDDreg_np <- function(RDDobject, covariates=".", bw=RDDbw_IK(RDDobject), slope=c
 
 ## Regression
   reg <- lm(y~., data=dat_step1, weights=kernel_w)
+  coefD <- coef(reg)["D"]
+
+## Non-para inference:
+  if(inference=="np"){
+    var <- var_estim(x=dat$x, y=dat$y, point=cutpoint, bw=bw, eachSide=TRUE)
+    dens <- dens_estim(x=dat$x, point=cutpoint, bw=bw, eachSide=TRUE)
+
+    const <- 4.8/(nrow(dat)*bw)
+    all <- const*sum(var)/dens
+    se <- sqrt(all)
+    tval <- coefD/se
+    pval <- 2 * pnorm(abs(tval), lower.tail = FALSE)
+    coefmat <- matrix(c(coefD, se,tval, pval), nrow=1, dimnames=list("D", c("Estimate", "Std. Error", "z value", "Pr(>|z|)")))
+  } else {
+    coefmat <- coef(summary(reg))["D",]
+  }
 
 ##Return
-  class(reg) <- c("RDDreg_np", "RDDreg", "lm")
-  attr(reg, "RDDcall") <- match.call()
-  attr(reg, "cutpoint") <- cutpoint
-  attr(reg, "bw") <- bw
-  reg
+  res <- list()
+  RDDslot <- list()
+  RDDslot$RDDdata <- RDDobject
+  RDDslot$model <- reg
+  res$coefficients <- coef(reg)["D"]
+  res$coefMat <- if(inference=="np") coefmat else coef(summary(reg))["D",, drop=FALSE]
+  res$residuals <- residuals(reg)
+  res$fitted <- fitted(reg)
+  res$RDDslot <- RDDslot
+
+  class(res) <- c("RDDreg_np", "RDDreg", "lm")
+  attr(res, "RDDcall") <- match.call()
+  attr(res, "cutpoint") <- cutpoint
+  attr(res, "bw") <- bw
+  res
 }
 
 
 #' @S3method print RDDreg_np
-print.RDDreg_np <- function(x,...) {
+print.RDDreg_np <- function(x, signif.stars = getOption("show.signif.stars"), ...) {
 
   RDDcall <- attr(x, "RDDcall")
   bw <- getBW(x)
@@ -70,7 +98,39 @@ print.RDDreg_np <- function(x,...) {
 
   cat("\n\tCoefficient:\n")
 
-  printCoefmat(coef(summary(x))["D",, drop=FALSE])
+  printCoefmat(x$coefMat, signif.stars=signif.stars)
+
+}
+
+#' @S3method summary RDDreg_np
+summary.RDDreg_np <- function(object, digits = max(3, getOption("digits") - 3), signif.stars = getOption("show.signif.stars"), ...) {
+
+  x <- object
+
+  RDDcall <- attr(x, "RDDcall")
+  bw <- getBW(x)
+  cutpoint <- getCutpoint(x)
+  x_var <- getOriginalX(x)
+
+  n_left  <- sum(x_var >= cutpoint -bw & x_var < cutpoint)
+  n_right <- sum(x_var >= cutpoint & x_var <= cutpoint+bw)
+
+  cat("### RDD regression: nonparametric local linear###\n")
+  cat("\tBandwidth: ", bw, "\n")
+  cat("\tNumber of obs: ", sum(n_left+n_right), " (left: ", n_left, ", right: ", n_right, ")\n", sep="")
+
+  cat("\n\tResiduals:\n")
+  res_quant <- quantile(residuals(x))
+  names(res_quant) <- c("Min", "1Q", "Median", "3Q", "Max")
+  res_quant <- zapsmall(res_quant, digits + 1)
+  print(res_quant)
+
+
+  cat("\n\tCoefficient:\n")
+
+  printCoefmat(x$coefMat, signif.stars=signif.stars)
+
+  cat("\n\tLocal R squared:",  formatC(summary(x$RDDslot$model)$r.squared, digits = digits), "\n")
 
 }
 
@@ -83,7 +143,7 @@ plot.RDDreg_np <- function(x,binwidth,chart=c("locpoly", "np"), ...) {
   if(missing(binwidth)) binwidth <- bw/5 # binwidth!=bandwidth
 
 ## data
-  dat <- getOriginalData(x) 
+  dat <- getOriginalData(x, classRDD=FALSE) 
 
 ## Use locpoly:
   dat_left <- subset(dat, x<cutpoint)
@@ -124,18 +184,34 @@ plot.RDDreg_np <- function(x,binwidth,chart=c("locpoly", "np"), ...) {
 
 
 if(FALSE){
-
+  library(RDDtools)
+  data(Lee2008)
   Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+
+  environment(RDDreg_np) <- environment(RDDdata)
+  environment(plot.RDDreg_np) <- environment(RDDdata)
+  environment(print.RDDreg_np) <- environment(RDDdata)
+  environment(summary.RDDreg_np) <- environment(RDDdata)
 
 
   reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
-  getCutpoint(reg_nonpara)
+  reg_nonpara_inflm <- RDDreg_np(RDDobject=Lee2008_rdd, inference="lm")
+  RDDtools:::getCutpoint(reg_nonpara)
+  head(RDDtools:::getOriginalX.RDDreg(reg_nonpara))
+
   print(reg_nonpara)
+  print(reg_nonpara_inflm)
   summary(reg_nonpara)
   plot(x=reg_nonpara)
   plot(x=reg_nonpara, chart="np")
   plot(x=reg_nonpara, binwidth=0.05)
 
+
+  RDDtools:::waldci.RDDreg_np(reg_nonpara)
+  RDDtools:::waldci.RDDreg_np(reg_nonpara_inflm)
+
+environment(waldci.RDDreg_np) <- environment(RDDdata)
+waldci.RDDreg_np(reg_nonpara)
 
 plotSensi(reg_nonpara)
 
