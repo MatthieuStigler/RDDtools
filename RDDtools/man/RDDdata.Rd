@@ -21,7 +21,8 @@
   \code{data.frame}
 }
 \description{
-  Do a "scatterplot bin smoothing"
+  Construct the base RDD object, containing x, y and the
+  cutpoint, eventuallay covariates.
 }
 \examples{
 data(Lee2008)

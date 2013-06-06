@@ -4,7 +4,8 @@
 \usage{
   RDDreg_np(RDDobject, covariates = ".",
     bw = RDDbw_IK(RDDobject),
-    slope = c("separate", "same"))
+    slope = c("separate", "same"),
+    inference = c("np", "lm"))
 }
 \arguments{
   \item{RDDobject}{Object of class RDDdata created by
@@ -14,6 +15,10 @@
 
   \item{bw}{A bandwidth to specify the subset on which the
   parametric regression is estimated}
+
+  \item{inference}{Type of inference to conduct:
+  non-parametric one (\code{np}) or standard (\code{lm}).
+  See details.}
 
   \item{slope}{Whether slopes should be different on left
   or right (separate), or the same.}
