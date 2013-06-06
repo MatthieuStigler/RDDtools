@@ -147,6 +147,7 @@ plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, ord
     seq_bw <- unique(sort(c(bw,seq(from=from, to=to, by=by))))
     n_seq_bw <- length(seq_bw)
   } else {
+    if(!all(c(missing(from), missing(to)))) warning("Args 'from' and 'to' not considered since original input has no bw")
     n_seq_bw <- 1
     seq_bw <- NULL
   }
