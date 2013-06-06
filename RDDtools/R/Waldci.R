@@ -59,6 +59,30 @@ if(is.character(parm)) parm <- which(names(est)%in% parm )
   return(ci)
 } 
 
+
+waldci.RDDreg_np <- function(x, level = 0.95, vcov. = NULL, df = Inf, ...){
+
+  inf_met <- infType(x) ## def in Misc.R
+  if(inf_met=="se"){
+    if(!is.null(vcov.)|!is.infinite(df)) {warning("Arg 'vcov.' and 'df' only work for RDDreg with inf='lm'")
+    }
+    ## code recycled from stats:::confint.default
+    co <- getEst(x, allInfo=TRUE)
+    a <- (1 - level)/2
+    a <- c(a, 1 - a)
+    fac <- qnorm(a)
+    pct <- stats:::format.perc(a, 3) ## import!!
+    ci <- array(NA, dim = c(1, 2L), dimnames = list("D",   pct))
+    ci[] <- co[,"Estimate"] + co[,"Std. Error"] %o% fac
+    return(ci)
+  } else {
+    waldci.default(x$RDDslot$model, parm = "D", level = level, vcov. = vcov., df = df, ...)  
+  }
+}
+
+
+
+
 waldci.glm <- function(x, parm = NULL, level = 0.95, vcov. = NULL, df = Inf, ...)
   waldci.default(x, parm = parm, level = level, vcov. = vcov., df = df, ...)  
 

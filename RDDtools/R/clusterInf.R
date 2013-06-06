@@ -44,6 +44,30 @@ clusterInf <- function(object, clusterVar, vcov. = NULL, type=c("df-adj", "HC"),
   return(res)
 }
 
+#' @S3method estfun RDDreg_np
+estfun.RDDreg_np <- function(x,...){
+  inf_met <- infType(x) ## def in Misc.R
+  if(inf_met=="se") stop("No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference estimators")
+  estfun(x$RDDslot$model)
+}
+
+#' @S3method bread RDDreg_np
+bread.RDDreg_np <- function(x,...){
+  inf_met <- infType(x) ## def in Misc.R
+  if(inf_met=="se") stop("No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference estimators")
+  bread(x$RDDslot$model)
+} 
+
+
+# sandwich.RDDreg_np <- function (x, bread. = bread, meat. = meat, ...){
+#   inf_met <- infType(x) ## def in Misc.R
+#   if(inf_met=="se") stop("No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference estimators")
+#   sandwich(x$RDDslot$model, bread.=bread., meat.=meat., ...)
+# }
+
+#' @S3method model.frame RDDreg_np
+model.frame.RDDreg_np <- function (formula, ...) 
+  model.frame.lm(formula$RDDslot$model)
 
 #' Cluster Heteroskedasticity-consistent estimation of the covariance matrix. 
 #' 
@@ -53,16 +77,21 @@ clusterInf <- function(object, clusterVar, vcov. = NULL, type=c("df-adj", "HC"),
 #' @return A matrix containing the covariance matrix estimate.
 #' @export
 
-
 vcovCluster   <- function(object, clusterVar){
   M <- length(unique(clusterVar))   
   N <- length(clusterVar)  	        
-  K <- object$rank		             
+  K <- getModelRank(object)
   dfc <- (M/(M-1))*((N-1)/(N-K))  
   uj  <- apply(estfun(object),2, function(x) tapply(x, clusterVar, sum))
   dfc*sandwich(object, meat.=crossprod(uj)/N)
 }
 
+getModelRank <- function(object,...)
+  UseMethod("getModelRank")
+
+getModelRank.default <- function(object,...) object$rank
+
+getModelRank.RDDreg_np <- function(object,...) getModelRank.default(object$RDDslot$model)
 
 if(FALSE){
 

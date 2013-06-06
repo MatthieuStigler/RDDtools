@@ -42,13 +42,25 @@ getBW <- function(object){
   attr(object, "bw")
 }
 
-getEst <- function(object, all=FALSE){
+getEst <- function(object, allInfo=FALSE)
+  UseMethod("getEst")
+
+getEst.default <- function(object, allInfo=FALSE){
   res <- coef(summary(object))["D",, drop=FALSE]
-  if(!all) res <- res[,1]
+  if(!allInfo) res <- res[,"Estimate"]
   res
 }
 
+getEst.RDDreg_np <- function(object, allCo=FALSE, allInfo=FALSE){
+  res<- object$coefMat
+  if(!allInfo) res <- res[,"Estimate"]
+  res
+}
 
+## return the typoe of inference used by RDDreg_np
+infType <- function(x) {
+  if(is.null(getCall(x)$inference)) "se" else getCall(x)$inference
+}
 
 
 hasCovar <- function(object){
@@ -61,7 +73,7 @@ getCovar <- function(object){
   if(!hasCovar(object)) stop("object has no covariates")
 
   res <- object[,-c(1,2)]
-  res
+  as.data.frame(res)
 }
 
 getXname <- function(object){
@@ -82,45 +94,46 @@ getOriginalX <- function(object)
   UseMethod("getOriginalX")
 
 
-getOriginalX.RDDreg_lm <- function(object){
+getOriginalX.RDDreg <- function(object){
   object$RDDslot$RDDdata[, "x"]
 }
 
-getOriginalX.RDDreg_np <- function(object){
+# getOriginalX.RDDreg_np <- function(object){
+# 
+#   cutpoint <- getCutpoint(object)
+#   Xnam <- getXname(object) 
+#   x <- object$model[,Xnam]
+#   if(cutpoint!=0)  x <- x+cutpoint
+#   x
+# }
 
-  cutpoint <- getCutpoint(object)
-  Xnam <- getXname(object) 
-  x <- object$model[,Xnam]
-  if(cutpoint!=0)  x <- x+cutpoint
-  x
-}
 
-
-getOriginalData <- function(object, na.rm=TRUE)
+getOriginalData <- function(object, na.rm=TRUE, classRDD=TRUE)
   UseMethod("getOriginalData")
 
-getOriginalData.RDDreg_np <- function(object, na.rm=TRUE){
+# getOriginalData.RDDreg_np <- function(object, na.rm=TRUE){
+# 
+#   cutpoint <- getCutpoint(object)
+#   Xnam <- getXname(object) 
+#   dat <- object$model[,c("y",Xnam)]
+#   if(cutpoint!=0)  dat[,Xnam] <- dat[,Xnam] +cutpoint
+#   if(na.rm) dat <- dat[apply(dat, 1, function(x) all(!is.na(x))),] # remove na rows
+#   dat
+# }
 
-  cutpoint <- getCutpoint(object)
-  Xnam <- getXname(object) 
-  dat <- object$model[,c("y",Xnam)]
-  if(cutpoint!=0)  dat[,Xnam] <- dat[,Xnam] +cutpoint
-  if(na.rm) dat <- dat[apply(dat, 1, function(x) all(!is.na(x))),] # remove na rows
-  dat
-}
 
 
-
-getOriginalData.RDDreg_lm <- function(object, na.rm=TRUE){
+getOriginalData.RDDreg <- function(object, na.rm=TRUE, classRDD=TRUE){
   res <- object$RDDslot$RDDdata
   if(na.rm) res <- res[apply(res, 1, function(x) all(!is.na(x))),] # remove na rows
+  if(!classRDD) res <- as.data.frame(res)
   res
 }
 
 
 
-
-getCall.RDDreg_np <- function(x,...) attr(x, "RDDcall")
+#' @S3method getCall RDDreg
+getCall.RDDreg <- function(x,...) attr(x, "RDDcall")
 
 .onLoad <- function(libname, pkgname)
    packageStartupMessage("\nRDDtools ", utils:::packageVersion("RDDtools"), " (rev Thursday 2013-05-16, opened on ", format(Sys.Date(), "%c"),"). 
