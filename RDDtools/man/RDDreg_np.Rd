@@ -2,7 +2,7 @@
 \alias{RDDreg_np}
 \title{Parametric polynomial estimator of the regression discontinuity}
 \usage{
-  RDDreg_np(RDDobject, covariates = ".",
+  RDDreg_np(RDDobject, covariates = NULL,
     bw = RDDbw_IK(RDDobject),
     slope = c("separate", "same"),
     inference = c("np", "lm"))
