@@ -147,7 +147,8 @@ plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, ord
     seq_bw <- unique(sort(c(bw,seq(from=from, to=to, by=by))))
     n_seq_bw <- length(seq_bw)
   } else {
-    seq_bw <- n_seq_bw <- 1
+    n_seq_bw <- 1
+    seq_bw <- NULL
   }
 
   if(missing(order)) order <- 0:(getOrder(RDDregobject)+2)
@@ -155,10 +156,8 @@ plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, ord
   n_seq_ord <- length(seq_ord)
 
 ## set matrix for results:
-  seq_names <- c(outer(round(seq_bw,4), seq_ord, FUN=paste, sep=":"))
-
-  seq_vals <- matrix(NA, nrow=n_seq_bw*n_seq_ord, ncol=4, dimnames=list(seq_names, c("LATE", "se", "CI_low", "CI_high")))
-  seq_vals <- matrix(NA, nrow=n_seq_bw*n_seq_ord, ncol=6, dimnames=list(seq_names, c("bw", "order", "LATE", "se", "CI_low", "CI_high")))
+  seq_vals <- matrix(NA, nrow=n_seq_bw*n_seq_ord, ncol=6)
+  colnames(seq_vals) <- c("bw", "order", "LATE", "se", "CI_low", "CI_high")
 
 ## get call:
   object_call <- attr(object, "RDDcall")
@@ -168,14 +167,17 @@ plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, ord
 
 ## run each time:
   for(j in 1:length(seq_ord)){
-    for(i in seq_along(seq_bw)){
+    for(i in 1:n_seq_bw){
+      # assign new order/bw, and estimate:
       object_call$bw <- seq_bw[i]
       object_call$order <- seq_ord[j]
       object_new <- try(eval(object_call), silent=TRUE)
 
-      seq_vals[i+(j-1)*n_seq_bw,"bw"] <- seq_bw[i]
+      # put parameters bw/order into matrix:
+      seq_vals[i+(j-1)*n_seq_bw,"bw"] <- if(is.null(seq_bw[i])) NA else seq_bw[i]
       seq_vals[i+(j-1)*n_seq_bw,"order"] <- seq_ord[j]
 
+      # put output estim/se into matrix:
       if(!inherits(object_new, "try-error")){
 	co <- RDDcoef(object_new, allInfo=TRUE)
 	seq_vals[i+(j-1)*n_seq_bw,"LATE"] <- co[,1]
@@ -193,7 +195,6 @@ plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, ord
   seq_vals[,"CI_low"] <- seq_vals[,"LATE"] +quants[1]*seq_vals[,"se"]
   seq_vals[,"CI_high"] <- seq_vals[,"LATE"] +quants[2]*seq_vals[,"se"]
 
-# print(seq_vals)
 
 ## plot results:
   seq_vals_df <- as.data.frame(seq_vals)
