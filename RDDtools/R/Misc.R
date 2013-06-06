@@ -132,11 +132,12 @@ getOriginalData.RDDreg <- function(object, na.rm=TRUE, classRDD=TRUE){
 
 
 
+#' @importFrom stats getCall
 #' @S3method getCall RDDreg
 getCall.RDDreg <- function(x,...) attr(x, "RDDcall")
 
 .onLoad <- function(libname, pkgname)
-   packageStartupMessage("\nRDDtools ", utils:::packageVersion("RDDtools"), " (rev Thursday 2013-05-16, opened on ", format(Sys.Date(), "%c"),"). 
+   packageStartupMessage("\nRDDtools ", utils:::packageVersion("RDDtools"), " (rev Thursday 2013-06-0, opened on ", format(Sys.Date(), "%c"),"). 
 PLEASE NOTE THIS is currently only a development version. \nRun vignette('RDDtools') for the documentation")
 
 #format(Sys.Date(), "%A %Y-%m-%d")
