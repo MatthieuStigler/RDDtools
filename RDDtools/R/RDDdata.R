@@ -1,6 +1,6 @@
 #'Construct RDDdata
 #' 
-#' Do a "scatterplot bin smoothing"
+#' Construct the base RDD object, containing x, y and the cutpoint, eventuallay covariates. 
 #' 
 #' @param x Forcing variable
 #' @param y Output
@@ -69,6 +69,80 @@ RDDdata <- function(y, x, z, cutpoint, labels){
   RDDdat
 }
 
+
+### Specific subsetting methods
+
+#####  @S3method as.data.frame RDDdata
+# as.data.frame.RDDdata <- function(x) {
+# subset(x, y>
+# }as.data.frame.default(x)
+
+#' @S3method "[" RDDdata
+'[.RDDdata' <- function(x,i,...){
+  attr_x <- attributes(x)
+  r <- NextMethod("[", object=as.data.frame(x))
+
+## keep attributes only if remains a data frame!
+  if(inherits(r, "data.frame")){
+    attr_x$row.names <- attr(r, "row.names")
+    attr_x$names <- attr(r, "names")
+    mostattributes(r) <- attr_x
+    attributes(r) <- attributes(r)[match(names(attr_x), names(attributes(r)))]
+  }
+#   newCla <- class(r)
+#   if(any(grepl("RDDdata", newCla))) newCla <- newCla[-grepl("RDDdata", newCla)]
+#   print(names(attributes(newCla)))
+# 
+#   if(!inherits(newCla, "data.frame")) attr(r, "class")[which(attr(r, "class")=="data.frame")] <- newCla
+  r
+}
+
+#' @S3method subset RDDdata
+subset.RDDdata <- function (x, subset, select, drop = FALSE, ...) {
+  attr_x <- attributes(x)
+
+### subset code: start
+    if (missing(subset)) 
+        r <- TRUE
+    else {
+        e <- substitute(subset)
+        r <- eval(e, x, parent.frame())
+        if (!is.logical(r)) 
+            stop("'subset' must evaluate to logical")
+        r <- r & !is.na(r)
+    }
+    if (missing(select)) 
+        vars <- TRUE
+    else {
+        nl <- as.list(seq_along(x))
+        names(nl) <- names(x)
+        vars <- eval(substitute(select), nl, parent.frame())
+    }
+    res <- x[r, vars, drop = drop]
+### subset code: end
+#   r <- subset.data.frame(x,...)
+#   r <- NextMethod("subset")
+
+## keep attributes only if remainsa  data frame!
+  if(inherits(r, "data.frame")){
+    attr_x$row.names <- attr(res, "row.names")
+    attr_x$names <- attr(res, "names")
+    mostattributes(res) <- attr_x
+    attributes(res) <- attributes(res)[match(names(attr_x), names(attributes(res)))]
+  }
+  res
+}
+
+#' @S3method as.data.frame RDDdata
+as.data.frame.RDDdata <- function(x,...){
+  class(x) <- "data.frame"
+  attr(x, "hasCovar") <- NULL
+  attr(x, "labels")   <- NULL 
+  attr(x, "cutpoint") <- NULL
+  x
+}
+
+
 if(FALSE){
 
 library(RDDtools)
@@ -76,14 +150,14 @@ data(Lee2008)
 
 ### wrong covariate setting, legitimate warnings:
 Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0, labels=c("a","bb"))
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0, labels=list("a","bb"))
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0, labels=list(x="a",u="bb"))
+Lee2008_rdd_lab1 <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0, labels=c("a","bb"))
+Lee2008_rdd_lab2 <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0, labels=list("a","bb"))
+Lee2008_rdd_lab3 <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0, labels=list(x="a",u="bb"))
 
 ### Covariate setting:
 Z <- data.frame(z_con=runif(nrow(Lee2008)), z_dic=factor(sample(letters[1:3], size=nrow(Lee2008), replace=TRUE)))
 
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z, cutpoint=0)
+Lee2008_rdd_Z <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z, cutpoint=0)
 Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z, cutpoint=0, labels=c("a","bb"))
 
 Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z, cutpoint=0, labels=list(x="aha"))
@@ -92,6 +166,32 @@ Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z, cutpoint=0, labels=list(x=
 Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z, cutpoint=0, labels=list(x="aha", z="aa"))
 Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z, cutpoint=0, labels=list(x="aha", z=c("aa", "hj")))
 
+### subsetting
+dat <- Lee2008_rdd
+dat_sub <- subset(Lee2008_rdd, x<1000)
+dat_ind <- Lee2008_rdd[1:nrow(Lee2008_rdd),]
+dat_ind_1 <- Lee2008_rdd[,1]
+dat_ind_2 <- Lee2008_rdd[1:5,]
 
 
+all.equal(dat, dat_sub)
+all.equal(attributes(dat), attributes(dat_sub))
+
+all.equal(dat, dat_ind)
+all.equal(attributes(dat), attributes(dat_ind))
+
+df<- as.data.frame(Lee2008_rdd)
+head(df)
+
+
+head(Lee2008_rdd_Z)
+colnames(Lee2008_rdd_Z[, -c(1,2)])
+attributes(Lee2008_rdd_Z[, -c(1,2)])
+
+colnames(subset(Lee2008_rdd_Z,select= c("z1","z2")))
+
+colnames(dat_sub)
+colnames(dat_ind)
+colnames(dat_ind_1)
+colnames(dat_ind_2)
 }
