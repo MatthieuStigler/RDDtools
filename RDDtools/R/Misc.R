@@ -42,16 +42,16 @@ getBW <- function(object){
   attr(object, "bw")
 }
 
-getEst <- function(object, allInfo=FALSE)
-  UseMethod("getEst")
+RDDcoef <- function(object, allInfo=FALSE)
+  UseMethod("RDDcoef")
 
-getEst.default <- function(object, allInfo=FALSE){
+RDDcoef.default <- function(object, allInfo=FALSE){
   res <- coef(summary(object))["D",, drop=FALSE]
   if(!allInfo) res <- res[,"Estimate"]
   res
 }
 
-getEst.RDDreg_np <- function(object, allCo=FALSE, allInfo=FALSE){
+RDDcoef.RDDreg_np <- function(object, allCo=FALSE, allInfo=FALSE){
   res<- object$coefMat
   if(!allInfo) res <- res[,"Estimate"]
   res

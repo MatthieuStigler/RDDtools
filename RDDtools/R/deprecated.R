@@ -52,8 +52,8 @@ plotPlacebo_OLD<- function(RDDregobject, from, to, by=0.1, level=0.95, same_bw=F
   abline(h=0)
   
 ## add optim in case: 
-  est <- getEst(object)
-  points(cutpoint, getEst(RDDregobject), col=2)
+  est <- RDDcoef(object)
+  points(cutpoint, RDDcoef(RDDregobject), col=2)
   segments(cutpoint,ra[1]-1, cutpoint, est, col="red", lty=2)
   segments(min(seqi,na.rm=TRUE)-1, est, cutpoint, est, col="red", lty=2)
 
@@ -132,7 +132,7 @@ plotPlacebo_OTHER_OLD <- function(RDDregobject, from=0.25, to=0.75, by=0.1, leve
   seq_vals$position <- ifelse(seq_vals$cutpoint < cutpoint, "left", "right")
 
   # get estimates at true cutpoint :
-  est <- getEst(object)
+  est <- RDDcoef(object)
   est_conf <- confint(RDDregobject, level=level)["D",]
 
   if(device=="base"){

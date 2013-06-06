@@ -67,7 +67,7 @@ waldci.RDDreg_np <- function(x, level = 0.95, vcov. = NULL, df = Inf, ...){
     if(!is.null(vcov.)|!is.infinite(df)) {warning("Arg 'vcov.' and 'df' only work for RDDreg with inf='lm'")
     }
     ## code recycled from stats:::confint.default
-    co <- getEst(x, allInfo=TRUE)
+    co <- RDDcoef(x, allInfo=TRUE)
     a <- (1 - level)/2
     a <- c(a, 1 - a)
     fac <- qnorm(a)

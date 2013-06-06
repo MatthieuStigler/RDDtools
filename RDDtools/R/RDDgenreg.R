@@ -89,9 +89,9 @@ mc <- gen_MC_binom()
   reg_bin_glm <- RDDgenreg(RDDobject=mc, fun= glm, family=binomial(link="probit"))
   reg_bin_glm_log <- RDDgenreg(RDDobject=mc, fun= glm, family=binomial(link="logit"))
 
-a<- RDDtools:::getEst(reg_bin_glm)/2.5
-b<- RDDtools:::getEst(reg_bin_glm_log)/4
-d<- RDDtools:::getEst(reg_bin_np)
+a<- RDDtools:::RDDcoef(reg_bin_glm)/2.5
+b<- RDDtools:::RDDcoef(reg_bin_glm_log)/4
+d<- RDDtools:::RDDcoef(reg_bin_np)
 
 res <- c(a, b, d)
 names(res) <- c("Probit", "Logit", "LPM")
