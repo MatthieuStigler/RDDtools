@@ -189,37 +189,41 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
   colnames(seq_vals) <- c("cutpoint", "position", "LATE", "se", "p_value", "CI_low", "CI_high")
   seq_vals[, "cutpoint"] <- seqi
 
-## get call:
-  object_call <- attr(object, "RDDcall")
+## get original call:
+  object_call <- getCall(object)
 
 ## original dataset:
   dat_orig <- eval(object_call$RDDobject)
+  hasCov <- hasCovar(dat_orig)
 
 ## run each time:
   for(i in seq_along(seqi)){
 
-    ## select sample:
+    ## select sample
     if(seqi[i]<cutpoint){
       dat_sides <- subset(dat_orig, x<cutpoint)
     } else {
       dat_sides <- subset(dat_orig, x>cutpoint) ## exclude x>cutpoint
     }
 
-    ## change the cutpoint
+    ## change the cutpoint, reattribute new data:
     attr(dat_sides, "cutpoint") <- seqi[i]
+    object_call$RDDobject <- dat_sides
 
-    ## Re-estimate model and eventually bw
-    bw_reg <- if(same_bw) bw else RDDbw_IK(dat_sides)
-    object_new <- RDDreg_np(dat_sides, bw=bw_reg)
+    ## Change bw if(same_bw=FALSE)
+    if(same_bw)  attr(object_call, "bw") <- RDDbw_IK(dat_sides)
+
+    ## Re-estimate model with new cutpoint/bw
+    object_new <- eval(object_call) # RDDreg_np(dat_sides, bw=bw_reg)
 
     ## assign results (LATE and se)
     if(!inherits(object_new, "try-error")){
 
-      seq_vals[i,"LATE"] <- coef(object_new)["D"]
+      seq_vals[i,"LATE"] <- getEst(object_new)
       if(!is.null(vcov.)) {
 	co <- coeftest(object_new, vcov.=vcov.)["D",, drop=FALSE]
       } else {
-	co <- coef(summary(object_new))["D",, drop=FALSE]
+	co <- getEst(object_new, allInfo=TRUE)
       }
       seq_vals[i,"se"] <- co[,"Std. Error"]
       seq_vals[i,"p_value"] <- co[,4]
@@ -232,9 +236,9 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
   if(!is.null(vcov.)) {
     true_co <- coeftest(object, vcov.=vcov.)["D",, drop=FALSE]
   } else {
-    true_co <- coef(summary(object))["D",, drop=FALSE]
+    true_co <- getEst(object, allInfo=TRUE)
   }
-  true_confint <- as.numeric(waldci(object, level=level, vcov.=vcov.)["D",])
+  true_confint <- as.numeric(waldci(object, level=level, vcov.=vcov.))
   true <- data.frame(cutpoint=cutpoint, position="True", LATE=getEst(object), 
 		      se=true_co["D","Std. Error"], p_value=true_co["D",4], CI_low=true_confint[1], CI_high=true_confint[2])
 
@@ -270,6 +274,7 @@ Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
 reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
 
+environment(plotPlacebo) <- environment(RDDdata)
 pla_lm <- plotPlacebo(reg_para, by=0.05)
 head(pla_lm)
 

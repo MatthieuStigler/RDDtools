@@ -74,12 +74,11 @@ plotSensi.RDDreg_np <- function(RDDregobject, from, to, by=0.05, level=0.95, dev
     object_call$bw <- seq_bw[i]
     object_new <- try(eval(object_call), silent=TRUE)
     if(!inherits(object_new, "try-error")){
-      seq_vals[i,"LATE"] <- coef(object_new)["D"] 
-      co <- coef(summary(object_new))["D",, drop=FALSE]
+      seq_vals[i,"LATE"] <- getEst(object_new)
       if(!is.null(vcov.)) {
 	co <- coeftest(object_new, vcov.=vcov.)["D",, drop=FALSE]
       } else {
-	co <- coef(summary(object_new))["D",, drop=FALSE]
+	co <- getEst(object_new, allInfo=TRUE)
       }
       seq_vals[i,"se"] <- co[,"Std. Error"]
       seq_vals[i,"p_value"] <- co[,4]
@@ -178,7 +177,7 @@ plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, ord
       seq_vals[i+(j-1)*n_seq_bw,"order"] <- seq_ord[j]
 
       if(!inherits(object_new, "try-error")){
-	co <- coef(summary(object_new))["D",, drop=FALSE]
+	co <- getEst(object_new, allInfo=TRUE)
 	seq_vals[i+(j-1)*n_seq_bw,"LATE"] <- co[,1]
 	seq_vals[i+(j-1)*n_seq_bw,"se"] <- co[,2]
 	}
