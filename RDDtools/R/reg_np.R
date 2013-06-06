@@ -23,13 +23,14 @@
 #'
 
 
-RDDreg_np <- function(RDDobject, covariates=".", bw=RDDbw_IK(RDDobject), slope=c("separate", "same"), inference=c("np", "lm")){
+RDDreg_np <- function(RDDobject, covariates=NULL, bw=RDDbw_IK(RDDobject), slope=c("separate", "same"), inference=c("np", "lm")){
 
   slope <- match.arg(slope)
   inference <- match.arg(inference)
   checkIsRDD(RDDobject)
   cutpoint <- getCutpoint(RDDobject)
 
+  if(!is.null(covariates)) stop("covariates not implemented for non-para reg")
 ## Construct data
   dat <- as.data.frame(RDDobject)
 
