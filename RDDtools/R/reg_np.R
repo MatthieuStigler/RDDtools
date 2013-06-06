@@ -106,33 +106,52 @@ print.RDDreg_np <- function(x, signif.stars = getOption("show.signif.stars"), ..
 summary.RDDreg_np <- function(object, digits = max(3, getOption("digits") - 3), signif.stars = getOption("show.signif.stars"), ...) {
 
   x <- object
-
-  RDDcall <- attr(x, "RDDcall")
   bw <- getBW(x)
   cutpoint <- getCutpoint(x)
   x_var <- getOriginalX(x)
 
+## compute numbers left/right:
   n_left  <- sum(x_var >= cutpoint -bw & x_var < cutpoint)
   n_right <- sum(x_var >= cutpoint & x_var <= cutpoint+bw)
 
-  cat("### RDD regression: nonparametric local linear###\n")
-  cat("\tBandwidth: ", bw, "\n")
-  cat("\tNumber of obs: ", sum(n_left+n_right), " (left: ", n_left, ", right: ", n_right, ")\n", sep="")
-
-  cat("\n\tResiduals:\n")
+## compute residual summary:
   res_quant <- quantile(residuals(x))
   names(res_quant) <- c("Min", "1Q", "Median", "3Q", "Max")
-  res_quant <- zapsmall(res_quant, digits + 1)
-  print(res_quant)
+
+## compute R^2
+  r.squared <- summary(x$RDDslot$model)$r.squared
+
+## Extend the RDDreg_no output with new computaations:
+
+  object$r.squared <- r.squared
+  object$res_quant <- res_quant
+  object$n_obs <- list(n_left=n_left, n_right=n_right, total=n_left+n_right)
+
+  class(object) <- c("summary.RDDreg_np", class(object))
+  object
+}
+
+#' @S3method print summary.RDDreg_np
+print.summary.RDDreg_np <- function(x, digits = max(3, getOption("digits") - 3), signif.stars = getOption("show.signif.stars"), ...) {
+
+  bw <- getBW(x)
+
+  cat("### RDD regression: nonparametric local linear###\n")
+  cat("\tBandwidth: ", bw, "\n")
+  cat("\tNumber of obs: ", x$n_obs$total, " (left: ", x$n_obs$n_left, ", right: ", x$n_obs$n_right, ")\n", sep="")
+
+  cat("\n\tWeighted Residuals:\n")
+  print(zapsmall(x$res_quant, digits + 1))
 
 
   cat("\n\tCoefficient:\n")
 
   printCoefmat(x$coefMat, signif.stars=signif.stars)
 
-  cat("\n\tLocal R squared:",  formatC(summary(x$RDDslot$model)$r.squared, digits = digits), "\n")
+  cat("\n\tLocal R squared:",  formatC(x$r.squared, digits = digits), "\n")
 
 }
+
 
 #' @S3method plot RDDreg_np
 plot.RDDreg_np <- function(x,binwidth,chart=c("locpoly", "np"), ...) {
