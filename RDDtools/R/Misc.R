@@ -42,16 +42,32 @@ getBW <- function(object){
   attr(object, "bw")
 }
 
-RDDcoef <- function(object, allInfo=FALSE)
+#' RDD coefficient
+#'
+#' Function to access the RDD coefficient in the various regressions
+#' @param object A RDD regression object
+#' @param allInfo whether to return just the coefficients (allInfo=FALSE) or also the se/t stat/pval. 
+#' @param \ldots Further arguments passed to/from specific methods
+#' @return Either a numeric value of the RDD coefficient estimate, or a data frame with the estimate, 
+#' its standard value, t test and p-value and 
+#' @export
+RDDcoef <- function(object, allInfo=FALSE, ...)
   UseMethod("RDDcoef")
 
-RDDcoef.default <- function(object, allInfo=FALSE){
+#' @rdname RDDcoef
+#' @method RDDcoef default
+#' @S3method RDDcoef default
+RDDcoef.default <- function(object, allInfo=FALSE, ...){
   res <- coef(summary(object))["D",, drop=FALSE]
   if(!allInfo) res <- res[,"Estimate"]
   res
 }
 
-RDDcoef.RDDreg_np <- function(object, allCo=FALSE, allInfo=FALSE){
+#' @rdname RDDcoef
+#' @param allCo Whether to give only the RDD coefficient (allCo=FALSE) or all coefficients
+#' @method RDDcoef RDDreg_np
+#' @S3method RDDcoef RDDreg_np
+RDDcoef.RDDreg_np <- function(object, allInfo=FALSE, allCo=FALSE, ...){
   res<- object$coefMat
   if(!allInfo) res <- res[,"Estimate"]
   res
