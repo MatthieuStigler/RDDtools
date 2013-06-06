@@ -28,7 +28,7 @@ plot.RDDdata <- function(x,  h, xlim=range(object$x, na.rm=TRUE), cex=0.7, nplot
 ## bandwidth: use Ruppert, Sheather and Wand (KernSmooth:::dpill)
   if(missing(h)) {
     if(!all(xlim==range(object$x, na.rm=TRUE))){
-      object <- subset(object, object$x> min(xlim) & object$x< max(xlim))
+      object <- subset(object, x> min(xlim) & x< max(xlim))
     }
     h <- RDDbw_RSW(object) 
     if(is.even(nplot)) {
