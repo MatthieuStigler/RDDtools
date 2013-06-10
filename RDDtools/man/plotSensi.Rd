@@ -5,15 +5,15 @@
 \title{Plot the sensitivity to the bandwidth}
 \usage{
   plotSensi(RDDregobject, from, to, by = 0.01,
-    level = 0.95, ...)
+    level = 0.95, output = c("data", "ggplot"), ...)
 
   \method{plotSensi}{RDDreg_np} (RDDregobject, from, to,
-    by = 0.05, level = 0.95, device = c("ggplot", "base"),
-    output = c("data", "ggplot"), vcov. = NULL, ...)
+    by = 0.05, level = 0.95, output = c("data", "ggplot"),
+    device = c("ggplot", "base"), vcov. = NULL, ...)
 
   \method{plotSensi}{RDDreg_lm} (RDDregobject, from, to,
-    by = 0.05, level = 0.95, order,
-    type = c("colour", "facet"), ...)
+    by = 0.05, level = 0.95, output = c("data", "ggplot"),
+    order, type = c("colour", "facet"), ...)
 }
 \arguments{
   \item{RDDregobject}{object of a RDD regression, from
@@ -39,12 +39,12 @@
 
   \item{device}{Whether to draw a base or a ggplot graph.}
 
+  \item{output}{Whether to return (invisibly) the data
+  frame containing the bandwidths and corresponding
+  estimates, or the ggplot object}
+
   \item{\ldots}{Further arguments passed to specific
   methods}
-
-  \item{output}{Whether return the data frame containing
-  the bandwidths and corresponding estimates, or the ggplot
-  object}
 
   \item{vcov.}{Specific covariance function to pass to
   coeftest. See help of package

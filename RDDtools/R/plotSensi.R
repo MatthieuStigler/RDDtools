@@ -10,6 +10,7 @@
 #' @param order For parametric models (from \code{\link{RDDreg_lm}}), the order of the polynomial.
 #' @param type For parametric models (from \code{\link{RDDreg_lm}}) whether different orders are represented as different colour or as different facets.
 #' @param device Whether to draw a base or a ggplot graph.
+#' @param output Whether to return (invisibly) the data frame containing the bandwidths and corresponding estimates, or the ggplot object
 #' @param \ldots Further arguments passed to specific methods
 #' @return A data frame containing the bandwidths and corresponding estimates and confidence intervals. 
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
@@ -35,15 +36,14 @@
 ###################################
 
 #' @export
-plotSensi <- function(RDDregobject, from, to, by=0.01, level=0.95, ...)
+plotSensi <- function(RDDregobject, from, to, by=0.01, level=0.95, output=c("data", "ggplot"), ...)
   UseMethod("plotSensi")
 
 #' @rdname plotSensi
 #' @method plotSensi RDDreg_np
 #' @S3method plotSensi RDDreg_np
-#' @param output Whether return the data frame containing the bandwidths and corresponding estimates, or the ggplot object
 #' @param vcov. Specific covariance function to pass to coeftest. See help of package \code{\link[sandwich]{sandwich}}
-plotSensi.RDDreg_np <- function(RDDregobject, from, to, by=0.05, level=0.95, device=c("ggplot", "base"), output=c("data", "ggplot"),vcov.=NULL, ...){
+plotSensi.RDDreg_np <- function(RDDregobject, from, to, by=0.05, level=0.95, output=c("data", "ggplot"), device=c("ggplot", "base"), vcov.=NULL, ...){
 
   device <- match.arg(device)
   output <- match.arg(output)
@@ -129,9 +129,10 @@ plotSensi.RDDreg_np <- function(RDDregobject, from, to, by=0.05, level=0.95, dev
 #' @rdname plotSensi
 #' @method plotSensi RDDreg_lm
 #' @S3method plotSensi RDDreg_lm
-plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, order, type=c("colour", "facet"), ...){
+plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, output=c("data", "ggplot"), order, type=c("colour", "facet"), ...){
 
   type <- match.arg(type)
+  output <- match.arg(output)
   object <- RDDregobject
   est <- RDDcoef(object)
   bw <- getBW(object)
@@ -206,17 +207,17 @@ plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, ord
   if(type=="colour"){
     if(hasBw){
       est_point <- data.frame(bw=bw, LATE=est, order=as.factor(origOrder))
-      qp <- qplot(x=bw, y=LATE, data=seq_vals_df, colour=order, geom="line")+geom_point(data=est_point)
+      sensPlot <- qplot(x=bw, y=LATE, data=seq_vals_df, colour=order, geom="line")+geom_point(data=est_point)
     } else {
       est_point <- data.frame(LATE=est, order=origOrder)
-      qp <- qplot(x=order, y=LATE, data=seq_vals_df, geom="line")+geom_point(data=est_point)
+      sensPlot <- qplot(x=order, y=LATE, data=seq_vals_df, geom="line")+geom_point(data=est_point)
     }
   } else {
-    qp <- qplot(x=bw, y=LATE, data= seq_vals_df, geom="line")+facet_grid(order~.)+
+    sensPlot <- qplot(x=bw, y=LATE, data= seq_vals_df, geom="line")+facet_grid(order~.)+
 	  geom_smooth(aes(ymin=CI_low, ymax=CI_high), data=seq_vals_df, stat="identity")
   }
 
-  print(qp)
+  print(sensPlot)
 
 
 #   if(n_seq_ord==1){
@@ -247,7 +248,8 @@ plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, ord
 # }
 
 ## export (silently) results:
-  invisible(seq_vals_df)
+  out <- switch(output, "data"=seq_vals_df, "ggplot"=sensPlot)
+  invisible(out)
 }
 
 
