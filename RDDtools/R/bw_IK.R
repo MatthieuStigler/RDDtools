@@ -27,6 +27,54 @@ RDDbw_IK <-function(RDDobject, kernel=c("Triangular", "Uniform")) {
 
 }
 
+IK_bias <-function(RDDobject, kernel=c("Triangular", "Uniform"), bw) {
+
+  kernel <- match.arg(kernel)
+  checkIsRDD(RDDobject)
+  cutpoint <- getCutpoint(RDDobject)
+
+  resB <- RDDbw_IK_low(X=RDDobject$x,Y=RDDobject$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=TRUE, kernel=kernel)
+
+## compute C1: see IK equ 5, and Fan Jijbels (1996, 3.23)
+# is done in R with locpol, computeMu(i=2, equivKernel(TrianK, nu=0, deg=1, lower=0, upper=1), lower=0, upper=1)
+  C1 <- switch(kernel, "Triangular"= -0.1, "Uniform"= -0.1666667) ## from: 
+
+## Compute bias as in IK equ:5, 
+# note here 1/4 is outside C1
+  if(missing(bw))  bw <- resB$h_opt
+  res<-  C1 * 1/2 * bw^2 *(resB$m2_right-resB$m2_left)
+  return(res)
+
+}
+
+IK_var <-function(RDDobject, kernel=c("Triangular", "Uniform"), bw) {
+
+  kernel <- match.arg(kernel)
+  checkIsRDD(RDDobject)
+  cutpoint <- getCutpoint(RDDobject)
+
+  resB <- RDDbw_IK_low(X=RDDobject$x,Y=RDDobject$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=TRUE, kernel=kernel)
+
+## compute C2: see IK equ 5, and Fan Jijbels (1996, 3.23)
+# is done in R with locpol, computeRK(equivKernel(TrianK, nu=0, deg=1, lower=0, upper=1), lower=0, upper=1)
+  C2 <- switch(kernel, "Triangular"= 4.8, "Uniform"= 4) ## from: 
+
+## Compute var as in IK equ:5, 
+  if(missing(bw))  bw <- resB$h_op
+  elem1 <- (resB$var_inh_left+resB$var_inh_right)/resB$f_cu
+  elem2 <- C2/(nrow(RDDobject)*bw)
+  res <- elem1*elem2
+  res
+}
+
+IK_amse <- function(RDDobject, kernel=c("Triangular", "Uniform"), bw) {
+
+  var <- IK_var(RDDobject=RDDobject, kernel=kernel, bw=bw)
+  bias <- IK_bias(RDDobject=RDDobject, kernel=kernel, bw=bw)
+  res <- bias^2+var
+  res
+}
+
 
 RDDbw_IK_low <-function (X,Y,threshold=0,verbose=FALSE, type=c("RES", "RES_imp","WP"), returnBig=FALSE, kernel=c("Triangular", "Uniform")) {
   
@@ -153,4 +201,27 @@ if(FALSE){
   IKbandwidth3(X=lee_dat4$X, Y=lee_dat4$Y, verbose=TRUE)
   IKbandwidth3(X=lee_dat4$X, Y=lee_dat4$Y, verbose=TRUE, type="WP")
   IKbandwidth3(X=lee_dat4$X, Y=lee_dat4$Y, verbose=FALSE, returnBig=TRUE)
+
+
+data(Lee2008)
+Lee2008_rdd <- RDDdata(x=Lee2008$x,y=Lee2008$y , cutpoint=0)
+
+### 
+bw_IK <- RDDbw_IK(Lee2008_rdd)
+bws <- sort(c(bw_IK, seq(0.05, 0.5, by=0.05)))
+bi <- Vectorize(IK_bias, vectorize.args="bw")(Lee2008_rdd, bw=bws)
+va <- Vectorize(IK_var, vectorize.args="bw")(Lee2008_rdd, bw=bws)
+ms <- Vectorize(IK_amse, vectorize.args="bw")(Lee2008_rdd, bw=bws)
+
+df<- data.frame(bw=rep(bws,3), value=c(ms, va, bi^2), type=rep(c("ms", "va", "bias^2"), each=length(bws)))
+
+
+# qplot(x=bw, y=value, data=df, geom="line", colour=type)+geom_point(data=subset(df, value==min(subset(df, type=="ms", "value"))))
+
+bws_03 <- sort(c(bw_IK, seq(0.25, 0.35, by=0.005)))
+ms_03 <- Vectorize(IK_amse, vectorize.args="bw")(Lee2008_rdd, bw=bws_03)
+df2 <- data.frame(bw=bws_03,mse=ms_03)
+
+subset(df2, mse==min(mse)) ## 1.78, not 1.74 from: 
+qplot(x=bw, y=mse, data=df2, geom="line")
 }
