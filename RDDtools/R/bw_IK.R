@@ -4,6 +4,7 @@
 #' for local linear regression in Regression discontinuity designs.
 #' 
 #' @param RDDobject of class RDDdata created by \code{\link{RDDdata}}
+#' @param kernel The type of kernel used: either \code{triangular} or \code{uniform}. 
 #' @return The optimal bandwidth
 #' @references Imbens, Guido and Karthik Kalyanaraman. (2012) "Optimal Bandwidth Choice for the regression discontinuity estimator," 
 #' Review of Economic Studies (2012) 79, 933-959
@@ -15,21 +16,22 @@
 #' RDDbw_IK(rd)
 
 
-RDDbw_IK <-function(RDDobject) {
+RDDbw_IK <-function(RDDobject, kernel=c("Triangular", "Uniform")) {
 
+  kernel <- match.arg(kernel)
   checkIsRDD(RDDobject)
   cutpoint <- getCutpoint(RDDobject)
 
-  res <- RDDbw_IK_low(X=RDDobject$x,Y=RDDobject$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=FALSE)
+  res <- RDDbw_IK_low(X=RDDobject$x,Y=RDDobject$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=FALSE, kernel=kernel)
   return(res)
 
 }
 
 
-RDDbw_IK_low <-function (X,Y,threshold=0,verbose=FALSE, type=c("RES", "RES_imp","WP"), returnBig=FALSE) {
+RDDbw_IK_low <-function (X,Y,threshold=0,verbose=FALSE, type=c("RES", "RES_imp","WP"), returnBig=FALSE, kernel=c("Triangular", "Uniform")) {
   
   type <- match.arg(type)
-
+  kernel <- match.arg(kernel)
 
 
   N <- length(X)
@@ -121,7 +123,7 @@ RDDbw_IK_low <-function (X,Y,threshold=0,verbose=FALSE, type=c("RES", "RES_imp",
   if(verbose)   cat("\n-Reg left:", r_left, "\n-Reg right:", r_right)
 
 ## Final bandwidth: Equ (17) 
-  Ck<-3.4375
+  Ck <- switch(kernel, "Triangular"=3.4375, "Uniform"=2.70192) # is not 5.4 as in paper since our kernel is on I(|x|<1), not <1/2
   h_opt <- Ck * ( (var_inh_left+ var_inh_right) / (f_cut * ((m2_right-m2_left)^2 + r_left +r_right)))^(1/5) * N^(-1/5)
   names(h_opt) <- "h_opt"
 
