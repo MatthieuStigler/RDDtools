@@ -16,7 +16,7 @@
 #'  reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
 #' 
 #' ## Convert to npreg:
-#'  reg_nonpara_np <- as.npregbw(reg_nonpara)
+#'  reg_nonpara_np <- as.npreg(reg_nonpara)
 #'  RDDcoef(reg_nonpara_np)
 #' 
 #' ## Compare with result obtained with a Gaussian kernel:
@@ -34,7 +34,7 @@ as.npregbw <- function(x,...){
   res
 }
 
-#' @rdname plotSensi
+#' @rdname as.npregbw
 #' @export
 as.npreg <- function(x,...){
   res <- as.npregbw_low(x=x, npreg=TRUE,...)
@@ -58,13 +58,15 @@ as.npregbw_low <- function(x, npreg=FALSE,...){
 ## start npregbw
   res <- npregbw(bws=bws, formula=y~x+D+Dx, data= dat_np,  regtype = "ll",
 			eval=dataPoints, bandwidth.compute=FALSE, gradients=TRUE,...)
+  class(res) <- c("RDDreg_npregbw", class(res))
 
 ## if npreg, return instead model_np <- npreg(bw_np, newdata=dataPoints, gradients=TRUE)
   if(npreg) {
+    options(np.messages = TRUE) ## otherwise got warnings messages... probably because comes only if loaded!
     res <- npreg(res, newdata=dataPoints, gradients=TRUE,...)
+    class(res) <- c("RDDreg_npreg", class(res))
   }
-  class(res) <- c("RDDreg_npreg", class(res))
-  
+
   res
 }
 
@@ -93,10 +95,12 @@ if(FALSE){
   Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
   reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
 
-  environment(as.npregbw_low) <- environment(RDDdata)
+#   environment(as.npregbw_low) <- environment(RDDdata)
   reg_nonpara_npbw <- as.npregbw(reg_nonpara)
   reg_nonpara_npbw
 class(reg_nonpara_npbw)
+RDDcoef(reg_nonpara_npbw)
+
   reg_nonpara_np <- as.npreg(reg_nonpara)
   reg_nonpara_np
 class(reg_nonpara_np)
