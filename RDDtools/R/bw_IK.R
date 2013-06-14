@@ -16,7 +16,7 @@
 #' RDDbw_IK(rd)
 
 
-RDDbw_IK <-function(RDDobject, kernel=c("Triangular", "Uniform")) {
+RDDbw_IK <-function(RDDobject, kernel=c("Triangular", "Uniform", "Normal")) {
 
   kernel <- match.arg(kernel)
   checkIsRDD(RDDobject)
@@ -27,7 +27,7 @@ RDDbw_IK <-function(RDDobject, kernel=c("Triangular", "Uniform")) {
 
 }
 
-IK_bias <-function(RDDobject, kernel=c("Triangular", "Uniform"), bw) {
+IK_bias <-function(RDDobject, kernel=c("Triangular", "Uniform", "Normal"), bw) {
 
   kernel <- match.arg(kernel)
   checkIsRDD(RDDobject)
@@ -170,8 +170,10 @@ RDDbw_IK_low <-function (X,Y,threshold=0,verbose=FALSE, type=c("RES", "RES_imp",
 
   if(verbose)   cat("\n-Reg left:", r_left, "\n-Reg right:", r_right)
 
+## Compute kernel dependent constant: (see file ~/Dropbox/HEI/rdd/Rcode/IK bandwidth/bandwidth_comput.R)
+  Ck <- switch(kernel, "Triangular"=3.4375, "Uniform"=2.70192, "Normal"=1.25864) # is not 5.4 as in paper since our kernel is on I(|x|<1), not <1/2
+
 ## Final bandwidth: Equ (17) 
-  Ck <- switch(kernel, "Triangular"=3.4375, "Uniform"=2.70192) # is not 5.4 as in paper since our kernel is on I(|x|<1), not <1/2
   h_opt <- Ck * ( (var_inh_left+ var_inh_right) / (f_cut * ((m2_right-m2_left)^2 + r_left +r_right)))^(1/5) * N^(-1/5)
   names(h_opt) <- "h_opt"
 

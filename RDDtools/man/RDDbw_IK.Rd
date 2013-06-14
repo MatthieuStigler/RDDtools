@@ -2,7 +2,8 @@
 \alias{RDDbw_IK}
 \title{Imbens-Kalyanaraman Optimal Bandwidth Calculation}
 \usage{
-  RDDbw_IK(RDDobject, kernel = c("Triangular", "Uniform"))
+  RDDbw_IK(RDDobject,
+    kernel = c("Triangular", "Uniform", "Normal"))
 }
 \arguments{
   \item{RDDobject}{of class RDDdata created by
