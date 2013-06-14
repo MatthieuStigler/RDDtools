@@ -36,8 +36,8 @@ IK_bias <-function(RDDobject, kernel=c("Triangular", "Uniform", "Normal"), bw) {
   resB <- RDDbw_IK_low(X=RDDobject$x,Y=RDDobject$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=TRUE, kernel=kernel)
 
 ## compute C1: see IK equ 5, and Fan Jijbels (1996, 3.23)
-# is done in R with locpol, computeMu(i=2, equivKernel(TrianK, nu=0, deg=1, lower=0, upper=1), lower=0, upper=1)
-  C1 <- switch(kernel, "Triangular"= -0.1, "Uniform"= -0.1666667) ## from: 
+# is done in R with locpol, computeMu(i=2, equivKernel(TrianK, nu=0, deg=1, lower=0, upper=Inf), lower=0, upper=Inf)
+  C1 <- switch(kernel, "Triangular"= -0.1, "Uniform"= -0.1666667, "Normal"= -0.7519384) ## from: 
 
 ## Compute bias as in IK equ:5, 
 # note here 1/4 is outside C1
@@ -47,7 +47,7 @@ IK_bias <-function(RDDobject, kernel=c("Triangular", "Uniform", "Normal"), bw) {
 
 }
 
-IK_var <-function(RDDobject, kernel=c("Triangular", "Uniform"), bw) {
+IK_var <-function(RDDobject, kernel=c("Triangular", "Uniform", "Normal"), bw) {
 
   kernel <- match.arg(kernel)
   checkIsRDD(RDDobject)
@@ -56,8 +56,8 @@ IK_var <-function(RDDobject, kernel=c("Triangular", "Uniform"), bw) {
   resB <- RDDbw_IK_low(X=RDDobject$x,Y=RDDobject$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=TRUE, kernel=kernel)
 
 ## compute C2: see IK equ 5, and Fan Jijbels (1996, 3.23)
-# is done in R with locpol, computeRK(equivKernel(TrianK, nu=0, deg=1, lower=0, upper=1), lower=0, upper=1)
-  C2 <- switch(kernel, "Triangular"= 4.8, "Uniform"= 4) ## from: 
+# is done in R with locpol, computeRK(equivKernel(TrianK, nu=0, deg=1, lower=0, upper=Inf), lower=0, upper=Inf)
+  C2 <- switch(kernel, "Triangular"= 4.8, "Uniform"= 4, "Normal"=1.785961) ## from: 
 
 ## Compute var as in IK equ:5, 
   if(missing(bw))  bw <- resB$h_op
@@ -67,7 +67,7 @@ IK_var <-function(RDDobject, kernel=c("Triangular", "Uniform"), bw) {
   res
 }
 
-IK_amse <- function(RDDobject, kernel=c("Triangular", "Uniform"), bw) {
+IK_amse <- function(RDDobject, kernel=c("Triangular", "Uniform", "Normal"), bw) {
 
   var <- IK_var(RDDobject=RDDobject, kernel=kernel, bw=bw)
   bias <- IK_bias(RDDobject=RDDobject, kernel=kernel, bw=bw)
@@ -76,7 +76,7 @@ IK_amse <- function(RDDobject, kernel=c("Triangular", "Uniform"), bw) {
 }
 
 
-RDDbw_IK_low <-function (X,Y,threshold=0,verbose=FALSE, type=c("RES", "RES_imp","WP"), returnBig=FALSE, kernel=c("Triangular", "Uniform")) {
+RDDbw_IK_low <-function (X,Y,threshold=0,verbose=FALSE, type=c("RES", "RES_imp","WP"), returnBig=FALSE, kernel=c("Triangular", "Uniform", "Normal")) {
   
   type <- match.arg(type)
   kernel <- match.arg(kernel)
