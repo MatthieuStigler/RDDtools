@@ -17,6 +17,7 @@
 #' 
 #' ## Convert to npreg:
 #'  reg_nonpara_np <- as.npreg(reg_nonpara)
+#'  reg_nonpara_np
 #'  RDDcoef(reg_nonpara_np)
 #' 
 #' ## Compare with result obtained with a Gaussian kernel:
@@ -50,7 +51,7 @@ as.npregbw_low <- function(x, npreg=FALSE,...){
 
 ## Specify inputs to npregbw:
   x <- dat$x
-  dat_np <- data.frame(y=dat$y, x=ifelse(x>=cutpoint,0,x),  D=ifelse(x>=cutpoint,1,0), Dx=ifelse(x>=cutpoint,x,0))
+  dat_np <- data.frame(y=dat$y, x=x,  D=ifelse(x>=cutpoint,1,0), Dx=ifelse(x>=cutpoint,x,0))
   range.x <- range(dat$x, na.rm=TRUE)
   bws <- c(bw, rep(9999*diff(range.x),2))
   dataPoints <- data.frame(x=c(cutpoint,cutpoint), D=c(0,1), Dx=c(0,cutpoint))
@@ -89,14 +90,19 @@ RDDcoef.RDDreg_npreg <- function(object, allInfo=FALSE, allCo=FALSE, ...){
   if(allCo){
     cos <- c(object$mean[1], object$grad)
     ses <- c(object$merr[1], object$gerr)
-    zvals <- cos/ses
-    pvals <- 2 * pnorm(abs(zvals), lower.tail = FALSE)
-    res <- data.frame("Estimate"   = c(cos[1], co, cos[2:3]),
-		      "Std. Error" = c(ses[1], se, ses[2:3]),
-		      "z value"    = c(zvals[1], zval, zvals[2:3]),
-		      "Pr(>|z|)"   = c(pvals[1], pval, pvals[2:3])
-		      )
-    rownames(res) <- c("(Intercept)", "D", "x_left", "x_right")
+    estimates <- c(cos[1], co, cos[2:3])
+    if(allInfo){
+      zvals <- cos/ses
+      pvals <- 2 * pnorm(abs(zvals), lower.tail = FALSE)
+      res <- data.frame("Estimate"   = estimates,
+			"Std. Error" = c(ses[1], se, ses[2:3]),
+			"z value"    = c(zvals[1], zval, zvals[2:3]),
+			"Pr(>|z|)"   = c(pvals[1], pval, pvals[2:3]),
+			check.names=FALSE)
+      rownames(res) <- c("(Intercept)", "D", "x_left", "x_right")
+    } else {
+      res <- estimates
+    }
   }
 
   res 
@@ -125,7 +131,6 @@ RDDcoef(reg_nonpara_np, allInfo=TRUE, allCo=TRUE)
 ## compare:
   bw_lm <- dnorm(Lee2008_rdd$x, sd=RDDtools:::getBW(reg_nonpara))
   reg_nonpara_gaus <- RDDreg_lm(RDDobject=Lee2008_rdd, w=bw_lm)
-coef(summary(reg_nonpara_gaus))
   all.equal(RDDcoef(reg_nonpara_gaus),RDDcoef(reg_nonpara_np))
 
 

@@ -655,6 +655,40 @@ Message d'avis :
 In ks.test(x[regime], x[!regime], exact = exact) :
   p-values will be approximate in the presence of ties
 > 
+> #### as npreg
+>   reg_nonpara_np <- as.npreg(reg_nonpara)
+>   reg_nonpara_np
+
+Regression Data: 6558 training points, and 2 evaluation points, in 3 variable(s)
+                      x     D    Dx
+Bandwidth(s): 0.2938561 19998 19998
+
+Kernel Regression Estimator: Local-Linear
+Bandwidth Type: Fixed
+
+Continuous Kernel Type: Second-Order Gaussian
+No. Continuous Explanatory Vars.: 3
+
+>   RDDcoef(reg_nonpara_np)
+[1] 0.08329576
+>   RDDcoef(reg_nonpara_np, allCo=TRUE)
+[1] 0.45491244 0.08329576 0.39139806 0.39139806
+>   RDDcoef(reg_nonpara_np, allInfo=TRUE)
+    Estimate Std. Error  z value      Pr(>|z|)
+D 0.08329576 0.00353085 23.59085 4.784535e-123
+>   RDDcoef(reg_nonpara_np, allInfo=TRUE, allCo=TRUE)
+              Estimate  Std. Error   z value      Pr(>|z|)
+(Intercept) 0.45491244 0.001765425 257.67872  0.000000e+00
+D           0.08329576 0.003530850  23.59085 4.784535e-123
+x_left      0.39139806 0.003995962  97.94840  0.000000e+00
+x_right     0.39139806 0.003995962  97.94840  0.000000e+00
+> 
+> ## Compare with result obtained with a Gaussian kernel:
+>   bw_lm <- dnorm(Lee2008_rdd$x, sd=RDDtools:::getBW(reg_nonpara))
+>   reg_nonpara_gaus <- RDDreg_lm(RDDobject=Lee2008_rdd, w=bw_lm)
+>   all.equal(RDDcoef(reg_nonpara_gaus),RDDcoef(reg_nonpara_np)) 
+[1] TRUE
+> 
 > proc.time()
 utilisateur     système      écoulé 
      11.460       0.150      12.246 
