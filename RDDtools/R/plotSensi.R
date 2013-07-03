@@ -182,10 +182,13 @@ plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, out
 
       # put output estim/se into matrix:
       if(!inherits(object_new, "try-error")){
-	co <- RDDcoef(object_new, allInfo=TRUE)
-	seq_vals[i+(j-1)*n_seq_bw,"LATE"] <- co[,1]
-	seq_vals[i+(j-1)*n_seq_bw,"se"] <- co[,2]
-	}
+        co <- RDDcoef(object_new, allInfo=TRUE)
+        seq_vals[i+(j-1)*n_seq_bw,"LATE"] <- co[,1]
+        seq_vals[i+(j-1)*n_seq_bw,"se"] <- co[,2]
+      } else {
+        warning("Problem evaluating model with new bw=", 
+                object_call$bw, " and new order=",object_call$order, ".")
+      }
     }
   }
 
