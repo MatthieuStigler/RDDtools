@@ -32,9 +32,9 @@
   \item{\ldots}{Further arguments passed to specific
   methods.}
 
-  \item{vcov.}{TSpecific covariance function to pass to
+  \item{vcov.}{Specific covariance function to pass to
   coeftest. See help of package
-  \code{\link[sandwich]{sandwich}}}
+  \code{\link[sandwich]{sandwich}}.}
 
   \item{from}{Starting point of the fake cutpoints
   sequence. Refers ot the quantile of each side of the true
@@ -51,8 +51,8 @@
   each point}
 }
 \value{
-  A data frame containing the cutpoints and corresponding
-  estimates and confidence intervals.
+  A data frame containing the cutpoints, their
+  corresponding estimates and confidence intervals.
 }
 \description{
   Draw a plot of placebo tests, estimating the impact on
@@ -63,6 +63,12 @@ data(Lee2008)
 Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
 plotPlacebo(reg_nonpara)
+
+# Use with another vcov function; cluster case
+reg_nonpara_lminf <- RDDreg_np(RDDobject=Lee2008_rdd, inference="lm")
+# need to be a function applied to updated object!
+vc <- function(x) vcovCluster(x, clusterVar=model.frame(x)$x)
+plotPlacebo(reg_nonpara_lminf, vcov. = vc)
 }
 \author{
   Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
