@@ -36,28 +36,7 @@
   Compute a parametric polynomial regression of the ATE,
   possibly on the range specified by bandwidth
 }
-\examples{
-## Step 0: prepare data
-data(Lee2008)
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-## Step 2: regression
-# Simple polynomial of order 1:
-reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
-print(reg_para)
-plot(reg_para)
-
-# Simple polynomial of order 4:
-reg_para4 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=4)
-reg_para4
-plot(reg_para4)
-
-# Restrict sample to bandwidth area:
-bw_ik <- RDDbw_IK(Lee2008_rdd)
-reg_para_ik <- RDDreg_lm(RDDobject=Lee2008_rdd, bw=bw_ik, order=4)
-reg_para_ik
-plot(reg_para_ik)
-}
-\references{
+\details{
   This function estimates the standard \emph{discontinuity
   regression}: \deqn{Y=\alpha+\tau
   D+\beta_{1}(X-c)+\beta_{2}D(X-c)+\epsilon} with
@@ -90,5 +69,29 @@ plot(reg_para_ik)
   with the usual function from package \pkg{sandwich}. For
   the case of clustered observations a specific function
   \code{\link{clusterInf}} is provided.
+}
+\examples{
+## Step 0: prepare data
+data(Lee2008)
+Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+## Step 2: regression
+# Simple polynomial of order 1:
+reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
+print(reg_para)
+plot(reg_para)
+
+# Simple polynomial of order 4:
+reg_para4 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=4)
+reg_para4
+plot(reg_para4)
+
+# Restrict sample to bandwidth area:
+bw_ik <- RDDbw_IK(Lee2008_rdd)
+reg_para_ik <- RDDreg_lm(RDDobject=Lee2008_rdd, bw=bw_ik, order=4)
+reg_para_ik
+plot(reg_para_ik)
+}
+\references{
+  TODO
 }
 

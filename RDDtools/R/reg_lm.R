@@ -10,7 +10,7 @@
 #' @param weights Optional weights to pass to the lm function. Note this cannot be entered together with \code{bw}
 #' @param slope Whether slopes should be different on left or right (separate), or the same.
 #' @return An object of class RDDreg_lm and class lm, with specific print and plot methods
-#' @references This function estimates the standard \emph{discontinuity regression}:
+#' @details This function estimates the standard \emph{discontinuity regression}:
 #' \deqn{Y=\alpha+\tau D+\beta_{1}(X-c)+\beta_{2}D(X-c)+\epsilon}
 #' with \eqn{\tau} the main parameter of interest. Several versions of the regression can be estimated, either restricting the slopes to be the same, 
 #' i.e \eqn{\beta_{1}=\beta_{2}} (argument \code{slope}). The order of the polynomial in \eqn{X-c} can also be adjusted with argument \code{order}. 
@@ -25,6 +25,7 @@
 #' The returned object is a classical \code{lm} object, augmented with a \code{RDDslot}, so usual methods can be applied. As is done in general in R, 
 #' heteroskeadsticity-robust inference can be done later on with the usual function from package \pkg{sandwich}. For the case of clustered observations
 #' a specific function \code{\link{clusterInf}} is provided.  
+#' @references TODO
 #' @include plotBin.R
 #' @include Misc.R
 #' @import Formula
