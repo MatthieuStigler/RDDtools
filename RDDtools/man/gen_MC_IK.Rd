@@ -2,7 +2,8 @@
 \alias{gen_MC_IK}
 \title{Generate Monte Carlo simulations of Imbens and Kalyanaraman}
 \usage{
-  gen_MC_IK(n = 200, version = 1, sd = 0.1295)
+  gen_MC_IK(n = 200, version = 1, sd = 0.1295,
+    output = c("data.frame", "RDDdata"))
 }
 \arguments{
   \item{n}{The size of sampel to generate}
@@ -11,6 +12,9 @@
   (between 1 and 4).}
 
   \item{sd}{The standard deviation of the error term.}
+
+  \item{output}{Whether to return a data-frame, or already
+  a RDDdata}
 }
 \value{
   An data frame with x and y variables.

@@ -3,7 +3,8 @@
 #' Generate the simulations reported in Imbens and Kalyanaraman (2012)
 #' @param n The size of sampel to generate
 #' @param version The MC version of Imbens and Kalnayaraman (between 1 and 4).
-#' @param sd The standard deviation of the error term. 
+#' @param sd The standard deviation of the error term.
+#' @param output Whether to return a data-frame, or already a RDDdata
 #' @return An data frame with x and y variables. 
 #' @references TODO
 #' @export
@@ -15,8 +16,10 @@
 #' reg_nonpara
 #' 
 
-gen_MC_IK <- function(n=200, version=1, sd=0.1295){
+gen_MC_IK <- function(n=200, version=1, sd=0.1295, output=c("data.frame", "RDDdata")){
  
+  output <- match.arg(output)
+
   if(!version%in% c(1:4) |length(version) !=1) stop("arg 'version' should be between 1 and 4")
   foo <- switch(version, 
 			"1"=gen_MC_IK_1,
@@ -24,6 +27,9 @@ gen_MC_IK <- function(n=200, version=1, sd=0.1295){
 			"3"=gen_MC_IK_3,
 			"4"=gen_MC_IK_4)
   res <- foo(n=n, sd=sd)
+  if(output=="RDDdata"){
+    res <- RDDdata(x=x, y=y, data=res, cutpoint=0)
+  }
   res
 }
 

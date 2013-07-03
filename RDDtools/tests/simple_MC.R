@@ -47,3 +47,19 @@ plotPlacebo(RDD_lm_sep)
 
 plotSensi(RDD_lm_same, from=5, to=20, by=0.5)
 plotPlacebo(RDD_lm_same)
+
+#### Other MCs:
+set.seed(123)
+head(gen_MC_IK())
+
+set.seed(123)
+head(gen_MC_IK(output="RDDdata"))
+
+set.seed(123)
+head(gen_MC_IK(version=2))
+
+set.seed(123)
+head(gen_MC_IK(version=3))
+
+set.seed(123)
+head(gen_MC_IK(version=4))
