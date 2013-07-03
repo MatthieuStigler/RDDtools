@@ -6,23 +6,40 @@
 #' @param y Output
 #' @param z Exogeneous variables
 #' @param cutpoint Cutpoint
-#' @param labels Additional labels to provide as list (with entries x, y, and eventually vector z)
+#' @param labels Additional labels to provide as list (with entries x, y, and eventually vector z). Unused currently. 
+#' @param data A data-frame for the x and y variables. If this is provided, 
+#' the column names can be entered directly for argumetn \code{x} and \code{y}
 #' @return Object of class \code{RDDdata}, inheriting from \code{data.frame}
 #' @export
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 #' @examples
 #' data(Lee2008)
 #' rd<- RDDdata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
+#' rd2 <- RDDdata(x=x, y=y, data=Lee2008, cutpoint=0)
+#' 
+#' # The print() function is the same as the print.data.frame:
 #' rd
+#'
+#' # The summary() and plot() function are specific to RDDdata
 #' summary(rd)
+#' plot(rd)
 
 
-RDDdata <- function(y, x, z, cutpoint, labels){
+RDDdata <- function(y, x, z, cutpoint, labels, data){
 
+  
 ## check args
   hasCovar <- !missing(z)
   if(missing(cutpoint)) stop("Please provide cutpoint")
 
+## Use data in case:
+  if(!missing(data)){
+    pf <- parent.frame()
+    x <- eval(substitute(x), data, enclos = pf) # copy from with.default
+    y <- eval(substitute(y), data, enclos = pf) # copy from with.default
+    if(hasCovar) z <- eval(substitute(z), data, enclos = pf) # idem
+  }
+  
 ### Check y, x univariate
   k_y <- NCOL(y)
   k_x <- NCOL(x)
@@ -123,7 +140,7 @@ subset.RDDdata <- function (x, subset, select, drop = FALSE, ...) {
 #   r <- subset.data.frame(x,...)
 #   r <- NextMethod("subset")
 
-## keep attributes only if remainsa  data frame!
+## keep attributes only if remains a data frame!
   if(inherits(r, "data.frame")){
     attr_x$row.names <- attr(res, "row.names")
     attr_x$names <- attr(res, "names")
@@ -148,8 +165,12 @@ if(FALSE){
 library(RDDtools)
 data(Lee2008)
 
-### wrong covariate setting, legitimate warnings:
 Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+Lee2008_rdd2 <- RDDdata(y=y, x=x,data=Lee2008, cutpoint=0)
+
+all.equal(Lee2008_rdd, Lee2008_rdd2)
+
+### wrong covariate setting, legitimate warnings:
 Lee2008_rdd_lab1 <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0, labels=c("a","bb"))
 Lee2008_rdd_lab2 <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0, labels=list("a","bb"))
 Lee2008_rdd_lab3 <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0, labels=list(x="a",u="bb"))
