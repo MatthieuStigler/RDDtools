@@ -4,8 +4,8 @@
 #' @param object the output of an RDD regression
 #' @param device Whether to draw a base or a ggplot graph.
 #' @param \ldots Further arguments passed to specific methods. 
-#' @param vcov. Specific covariance function to pass to coeftest. See help of package \code{\link[sandwich]{sandwich}}
-#' @return A data frame containing the cutpoints and corresponding estimates and confidence intervals. 
+#' @param vcov. Specific covariance function to pass to coeftest. See help of package \code{\link[sandwich]{sandwich}}.
+#' @return A data frame containing the cutpoints, their corresponding estimates and confidence intervals. 
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 #' @examples
 #' data(Lee2008)
