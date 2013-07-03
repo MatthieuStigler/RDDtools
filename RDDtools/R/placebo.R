@@ -4,7 +4,7 @@
 #' @param object the output of an RDD regression
 #' @param device Whether to draw a base or a ggplot graph.
 #' @param \ldots Further arguments passed to specific methods. 
-#' @param vcov. TSpecific covariance function to pass to coeftest. See help of package \code{\link[sandwich]{sandwich}}
+#' @param vcov. Specific covariance function to pass to coeftest. See help of package \code{\link[sandwich]{sandwich}}
 #' @return A data frame containing the cutpoints and corresponding estimates and confidence intervals. 
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 #' @examples
@@ -12,6 +12,12 @@
 #' Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 #' reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
 #' plotPlacebo(reg_nonpara)
+#' 
+#' # Use with another vcov function; cluster case
+#' reg_nonpara_lminf <- RDDreg_np(RDDobject=Lee2008_rdd, inference="lm")
+#' # need to be a function applied to updated object!
+#' vc <- function(x) vcovCluster(x, clusterVar=model.frame(x)$x)
+#' plotPlacebo(reg_nonpara_lminf, vcov. = vc)
 
 
 #' @export
@@ -238,9 +244,10 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
   } else {
     true_co <- RDDcoef(object, allInfo=TRUE)
   }
-  true_confint <- as.numeric(waldci(object, level=level, vcov.=vcov.))
+  true_confint <- as.numeric(waldci(object, level=level, vcov.=vcov.)["D",])
   true <- data.frame(cutpoint=cutpoint, position="True", LATE=RDDcoef(object), 
-		      se=true_co["D","Std. Error"], p_value=true_co["D",4], CI_low=true_confint[1], CI_high=true_confint[2])
+		      se=true_co["D","Std. Error"], p_value=true_co["D",4], 
+		      CI_low=true_confint[1], CI_high=true_confint[2])
 
 
 ## output
@@ -249,7 +256,7 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
 
   seq_vals <- rbind(seq_vals, true)
   seq_vals <- seq_vals[order(seq_vals$cutpoint),]
-
+  rownames(seq_vals) <- seq_len(nrow(seq_vals))
 
 
 #   seq_vals$position <- if(seq_vals$cutpoint == cutpoint) "True"
@@ -304,7 +311,8 @@ bw_ik <- RDDbw_IK(mc_dat)
 mc_reg <- RDDreg_np(mc_dat, bw=bw_ik)
 
 mc_reg_lm <- RDDreg_lm(mc_dat, bw=bw_ik)
-
+mc_reg_np <- RDDreg_np(mc_dat, bw=bw_ik)
+waldci(mc_reg_lm)
 
 environment(plotPlacebo) <- environment(RDDdata)
 
@@ -314,7 +322,10 @@ plotPlacebo(mc_reg, device="ggplot")
 plotPlacebo(mc_reg, device="ggplot", by=0.05)
 plotPlacebo(mc_reg, device="ggplot", from=0.05,by=0.05, to=0.95)
 
-plotPlacebo(mc_reg_lm)
+a<-plotPlacebo(mc_reg_lm)
+a
+RDDtools:::waldci.default(mc_reg_lm)
+waldci(mc_reg_np)
 plotPlacebo(mc_reg_lm, device="ggplot")
 
 
