@@ -19,6 +19,10 @@ install_github(repo = "RDDtools", username = "MatthieuStigler", subdir = "RDDtoo
 Note however the latest version of RDDtools only works with R 3.0, and that you might need to install  [Rtools](http://stat.ethz.ch/CRAN/bin/windows/Rtools/) if on Windows. 
 
 
+Documentation
+-----------------------
+The (preliminary documentation) is available in the help files directly, as well as in the *vignette*. The vignette can be accessed from R with vignette("RDDtools"), or by accessing the [pdf](https://github.com/MatthieuStigler/RDDtools/raw/master/RDDtools/inst/doc/RDDtools.pdf) stored on this github. 
+
 Using RDDtools: a quick example
 -----------------------
 
@@ -27,10 +31,10 @@ Using RDDtools: a quick example
 +  RDD parametric estimation: **RDDreg_lm()**
 +  RDD local non-parametric estimation: **RDDreg_np()**
 +  Plot of sensitivity to bandwidth: **plotSensi()**
-+  Placebo plot using different cutpoints: **plotSensi()**
++  Placebo plot using different cutpoints: **plotPlacebo()**
 
 
-Load the package, and load the built-in dataset from Lee (2008):
+Load the package, and load the built-in dataset from [Lee 2008]:
 
 
 
@@ -78,7 +82,7 @@ plot(Lee2008_rdd)
 
 
 
-As well as run a simple local regression, using the Imbens and Kalyanaraman bandwidth:
+As well as run a simple local regression, using the [Imbens and Kalyanaraman 2012] bandwidth:
 
 ```r
 bw_ik <- RDDbw_IK(Lee2008_rdd)
@@ -92,8 +96,8 @@ print(reg_nonpara)
 ## 	Number of obs: 3200 (left: 1594, right: 1606)
 ## 
 ## 	Coefficient:
-##   Estimate Std. Error t value Pr(>|t|)    
-## D  0.07992    0.00682    11.7   <2e-16 ***
+##   Estimate Std. Error z value Pr(>|z|)    
+## D  0.07992    0.00946    8.44   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -116,3 +120,8 @@ plotSensi(reg_nonpara, from = 0.05)
 
 
 
+  [Imbens and Kalyanaraman 2012]: http://ideas.repec.org/a/oup/restud/v79y2012i3p933-959.html "Imbens, G. & Kalyanaraman, K. (2012) Optimal Bandwidth Choice for the Regression Discontinuity Estimator, Review of Economic Studies, 79, 933-959"
+  
+  [Lee 2008]: http://ideas.repec.org/a/eee/econom/v142y2008i2p675-697.html "Lee, D. S. (2008) Randomized experiments from non-random selection in U.S. House elections, Journal of Econometrics, 142, 675-697"
+  
+  
