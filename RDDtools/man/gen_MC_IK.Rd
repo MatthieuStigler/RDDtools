@@ -3,7 +3,7 @@
 \title{Generate Monte Carlo simulations of Imbens and Kalyanaraman}
 \usage{
   gen_MC_IK(n = 200, version = 1, sd = 0.1295,
-    output = c("data.frame", "RDDdata"))
+    output = c("data.frame", "RDDdata"), size)
 }
 \arguments{
   \item{n}{The size of sampel to generate}
@@ -15,6 +15,10 @@
 
   \item{output}{Whether to return a data-frame, or already
   a RDDdata}
+
+  \item{size}{The size of the effect, this depends on the
+  specific version, defaults are as in IK: 0.04, NULL, 0.1,
+  0.1}
 }
 \value{
   An data frame with x and y variables.
