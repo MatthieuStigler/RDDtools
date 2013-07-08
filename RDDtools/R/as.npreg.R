@@ -68,6 +68,7 @@ as.npregbw_low <- function(x, npreg=FALSE,...){
     class(res) <- c("RDDreg_npreg", class(res))
   }
   attr(res, "RDDdf") <- dat_np
+  attr(res, "cutpoint") <- cutpoint
   res
 }
 
