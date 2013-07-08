@@ -36,7 +36,7 @@ gen_MC_IK <- function(n=200, version=1, sd=0.1295, output=c("data.frame", "RDDda
   }
   res <- foo(n=n, sd=sd, size=size)
   if(output=="RDDdata"){
-    res <- RDDdata(x=x, y=y, data=res, cutpoint=0)
+    res <- RDDdata(x=res$x, y=res$y, cutpoint=0)
   }
   res
 }
