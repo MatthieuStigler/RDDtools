@@ -30,7 +30,7 @@ RDDreg_np <- function(RDDobject, covariates=NULL, bw=RDDbw_IK(RDDobject), slope=
   checkIsRDD(RDDobject)
   cutpoint <- getCutpoint(RDDobject)
 
-  if(!is.null(covariates)) stop("covariates not implemented for non-para reg")
+  if(!is.null(covariates)) warning("covariates not fully implemented for non-para reg")
 ## Construct data
   dat <- as.data.frame(RDDobject)
 
@@ -43,6 +43,16 @@ RDDreg_np <- function(RDDobject, covariates=NULL, bw=RDDbw_IK(RDDobject), slope=
 
 ### Weights
   kernel_w <- Kernel_tri(dat_step1[,"x"], center=0, bw=bw)
+
+## Covariates
+
+  if(!is.null(covariates)){
+    covar <- getCovar(RDDobject)
+    formu <- as.Formula(paste("y", covariates, sep="~"))
+    mod_frame_cov <- model.frame(formu, covar, lhs=FALSE)
+    dat_step1 <- cbind(dat_step1, mod_frame_cov) ## add covar as regressors
+  } 
+
 
 ## Regression
   reg <- lm(y~., data=dat_step1, weights=kernel_w)
@@ -60,7 +70,7 @@ RDDreg_np <- function(RDDobject, covariates=NULL, bw=RDDbw_IK(RDDobject), slope=
     pval <- 2 * pnorm(abs(tval), lower.tail = FALSE)
     coefmat <- matrix(c(coefD, se,tval, pval), nrow=1, dimnames=list("D", c("Estimate", "Std. Error", "z value", "Pr(>|z|)")))
   } else {
-    coefmat <- coef(summary(reg))["D",]
+    coefmat <- coef(summary(reg))["D", , drop=FALSE]
   }
 
 ##Return
@@ -69,7 +79,7 @@ RDDreg_np <- function(RDDobject, covariates=NULL, bw=RDDbw_IK(RDDobject), slope=
   RDDslot$RDDdata <- RDDobject
   RDDslot$model <- reg
   res$coefficients <- coef(reg)["D"]
-  res$coefMat <- if(inference=="np") coefmat else coef(summary(reg))["D",, drop=FALSE]
+  res$coefMat <- coefmat 
   res$residuals <- residuals(reg)
   res$fitted <- fitted(reg)
   res$RDDslot <- RDDslot
