@@ -70,7 +70,7 @@ RDDreg_np <- function(RDDobject, covariates=NULL, bw=RDDbw_IK(RDDobject), slope=
     pval <- 2 * pnorm(abs(tval), lower.tail = FALSE)
     coefmat <- matrix(c(coefD, se,tval, pval), nrow=1, dimnames=list("D", c("Estimate", "Std. Error", "z value", "Pr(>|z|)")))
   } else {
-    coefmat <- coef(summary(reg))["D", , drop=FALSE]
+    coefmat <- coef(summary(reg))#["D", , drop=FALSE]
   }
 
 ##Return

@@ -4,9 +4,10 @@
 \alias{RDDcoef.default}
 \title{RDD coefficient}
 \usage{
-  RDDcoef(object, allInfo = FALSE, ...)
+  RDDcoef(object, allInfo = FALSE, allCo = FALSE, ...)
 
-  \method{RDDcoef}{default} (object, allInfo = FALSE, ...)
+  \method{RDDcoef}{default} (object, allInfo = FALSE,
+    allCo = FALSE, ...)
 
   \method{RDDcoef}{RDDreg_np} (object, allInfo = FALSE,
     allCo = FALSE, ...)
@@ -17,11 +18,11 @@
   \item{allInfo}{whether to return just the coefficients
   (allInfo=FALSE) or also the se/t stat/pval.}
 
-  \item{\ldots}{Further arguments passed to/from specific
-  methods}
-
   \item{allCo}{Whether to give only the RDD coefficient
   (allCo=FALSE) or all coefficients}
+
+  \item{\ldots}{Further arguments passed to/from specific
+  methods}
 }
 \value{
   Either a numeric value of the RDD coefficient estimate,
