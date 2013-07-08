@@ -72,16 +72,16 @@ gen_MC_IK_1 <- function(n=200,  sd=0.1295, size=0.04){
 ######### MC 2
 ####################################
 
-gen_MC_IK_2 <- function(n=200,  sd=0.1295, size){
+gen_MC_IK_2 <- function(n=200,  sd=0.1295, size=0){
 
-  if(!missing(size) && !is.null(size)) warning("Argument 'size' ignored for gen_MC_IK_2")
+#   if(!missing(size) && !is.null(size)) warning("Argument 'size' ignored for gen_MC_IK_2")
 ## Regressor:
   Z <- rbeta(n, shape1=2, shape2=4, ncp = 0)
   X <- 2*Z-1
   error <- rnorm(n, sd=sd)
 
 ## Compute Y variables:
-  Y <- ifelse(X<0, 3*X^2, 4*X^2) + error
+  Y <- ifelse(X<0, 3*X^2, 4*X^2+size) + error
 
 ## Result:
   res <- data.frame(x=X, y=Y)
