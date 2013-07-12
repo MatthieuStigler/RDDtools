@@ -43,18 +43,27 @@ as.npreg <- function(x,...){
 }
 
 
-as.npregbw_low <- function(x, npreg=FALSE,...){
+as.npregbw_low <- function(x, npreg=FALSE, adjustIK_bw=TRUE, ...){
 
   dat <- getOriginalData(x)
   bw <- getBW(x)
   cutpoint <- getCutpoint(x)
 
 ## Specify inputs to npregbw:
+
+  ## data:
   x <- dat$x
   dat_np <- data.frame(y=dat$y, x=x,  D=ifelse(x>=cutpoint,1,0), Dx=ifelse(x>=cutpoint,x,0))
-  range.x <- range(dat$x, na.rm=TRUE)
-  bws <- c(bw, rep(9999*diff(range.x),2))
   dataPoints <- data.frame(x=c(cutpoint,cutpoint), D=c(0,1), Dx=c(0,cutpoint))
+
+  ## bw:
+  range.x <- range(dat$x, na.rm=TRUE, finite=TRUE)
+  if(adjustIK_bw ){ ## & names(bw) =="h_opt"
+    bw <- RDDbw_IK(dat, kernel="Normal")
+  }
+  bw_other <- 9999*diff(range.x)
+  bws <- c(bw_other, bw, bw_other)
+  
 
 ## start npregbw
   res <- npregbw(bws=bws, formula=y~x+D+Dx, data= dat_np,  regtype = "ll",
