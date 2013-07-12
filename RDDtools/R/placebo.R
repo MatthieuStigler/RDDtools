@@ -191,8 +191,8 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
   n_seqi <- length(seqi)
 
 ## set matrix for results:
-  seq_vals <- matrix(NA, nrow=n_seqi, ncol=7)
-  colnames(seq_vals) <- c("cutpoint", "position", "LATE", "se", "p_value", "CI_low", "CI_high")
+  seq_vals <- matrix(NA, nrow=n_seqi, ncol=8)
+  colnames(seq_vals) <- c("cutpoint", "position", "LATE", "se", "p_value", "CI_low", "CI_high", "bw")
   seq_vals[, "cutpoint"] <- seqi
 
 ## get original call:
@@ -212,13 +212,14 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
       dat_sides <- subset(dat_orig, x>cutpoint) ## exclude x>cutpoint
     }
 
+    
     ## change the cutpoint, reattribute new data:
     attr(dat_sides, "cutpoint") <- seqi[i]
     object_call$RDDobject <- dat_sides
 
     ## Change bw if(same_bw=FALSE)
-    if(same_bw)  attr(object_call, "bw") <- RDDbw_IK(dat_sides)
-
+    object_call$bw <- if(!same_bw) RDDbw_IK(dat_sides) else bw
+    
     ## Re-estimate model with new cutpoint/bw
     object_new <- eval(object_call) # RDDreg_np(dat_sides, bw=bw_reg)
 
@@ -227,12 +228,13 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
 
       seq_vals[i,"LATE"] <- RDDcoef(object_new)
       if(!is.null(vcov.)) {
-	co <- coeftest(object_new, vcov.=vcov.)["D",, drop=FALSE]
+        co <- coeftest(object_new, vcov.=vcov.)["D",, drop=FALSE]
       } else {
-	co <- RDDcoef(object_new, allInfo=TRUE)
+        co <- RDDcoef(object_new, allInfo=TRUE)
       }
       seq_vals[i,"se"] <- co[,"Std. Error"]
       seq_vals[i,"p_value"] <- co[,4]
+      seq_vals[i,"bw"] <- getBW(object_new)
       seq_vals[i,c("CI_low", "CI_high")] <- waldci(object_new, level=level, vcov.=vcov.)["D",] ## confint version working with vcov. 
     }
   }
@@ -247,7 +249,7 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
   true_confint <- as.numeric(waldci(object, level=level, vcov.=vcov.)["D",])
   true <- data.frame(cutpoint=cutpoint, position="True", LATE=RDDcoef(object), 
 		      se=true_co["D","Std. Error"], p_value=true_co["D",4], 
-		      CI_low=true_confint[1], CI_high=true_confint[2])
+		      CI_low=true_confint[1], CI_high=true_confint[2], bw=bw)
 
 
 ## output
