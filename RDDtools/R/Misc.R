@@ -36,10 +36,12 @@ getSlope <- function(object){
   attr(object, "slope")
 }
 
-getBW <- function(object){
+getBW <- function(object, force.na=FALSE){
 
   checkIsAnyRDD(object)
-  attr(object, "bw")
+  res <- attr(object, "bw")
+  if(force.na) if(is.null(res)) res <- NA
+  res
 }
 
 #' RDD coefficient

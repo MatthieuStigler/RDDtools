@@ -174,6 +174,9 @@ plotPlaceboDens_low <- function(seq_vals,  device=c("ggplot", "base")){
 computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_bw=FALSE, vcov.=NULL){
 
   bw <- getBW(object)
+  hasBw <- !is.null(bw)
+  if(!hasBw) bw <- NA
+
   if(!is.null(vcov.)&& !is.function(vcov.)) stop("'arg' vcov. should be a function (so can be updated at each step, not a matrix")
   cutpoint <- getCutpoint(object)
   forc_var <- getOriginalX(object)
@@ -218,7 +221,7 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
     object_call$RDDobject <- dat_sides
 
     ## Change bw if(same_bw=FALSE)
-    object_call$bw <- if(!same_bw) RDDbw_IK(dat_sides) else bw
+    if(hasBw) object_call$bw <- if(!same_bw) RDDbw_IK(dat_sides) else bw
     
     ## Re-estimate model with new cutpoint/bw
     object_new <- eval(object_call) # RDDreg_np(dat_sides, bw=bw_reg)
@@ -234,7 +237,7 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
       }
       seq_vals[i,"se"] <- co[,"Std. Error"]
       seq_vals[i,"p_value"] <- co[,4]
-      seq_vals[i,"bw"] <- getBW(object_new)
+      seq_vals[i,"bw"] <- getBW(object_new, force.na=TRUE)
       seq_vals[i,c("CI_low", "CI_high")] <- waldci(object_new, level=level, vcov.=vcov.)["D",] ## confint version working with vcov. 
     }
   }
