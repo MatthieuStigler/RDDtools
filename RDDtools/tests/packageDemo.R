@@ -169,7 +169,7 @@ covarTest_dis(Lee2008_rdd_z)
 covarTest_dis(Lee2008_rdd_z, bw=0.1)
 
 #### as npreg
-  reg_nonpara_np <- as.npreg(reg_nonpara)
+  reg_nonpara_np <- as.npreg(reg_nonpara, adjustIK_bw=FALSE)
   reg_nonpara_np
   RDDcoef(reg_nonpara_np)
   RDDcoef(reg_nonpara_np, allCo=TRUE)

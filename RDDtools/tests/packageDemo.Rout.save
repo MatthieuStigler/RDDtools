@@ -656,7 +656,7 @@ In ks.test(x[regime], x[!regime], exact = exact) :
   p-values will be approximate in the presence of ties
 > 
 > #### as npreg
->   reg_nonpara_np <- as.npreg(reg_nonpara)
+>   reg_nonpara_np <- as.npreg(reg_nonpara, adjustIK_bw=FALSE)
 >   reg_nonpara_np
 
 Regression Data: 6558 training points, and 2 evaluation points, in 3 variable(s)
