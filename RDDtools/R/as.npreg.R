@@ -62,7 +62,7 @@ as.npregbw_low <- function(x, npreg=FALSE, adjustIK_bw=TRUE, ...){
     bw <- RDDbw_IK(dat, kernel="Normal")
   }
   bw_other <- 9999*diff(range.x)
-  bws <- c(bw_other, bw, bw_other)
+  bws <- c(bw, rep(bw_other, 2))
   
 
 ## start npregbw
