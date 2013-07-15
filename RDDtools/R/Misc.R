@@ -83,9 +83,14 @@ infType <- function(x) {
 }
 
 
-hasCovar <- function(object){
-  if(!inherits(object, "RDDdata")) stop("Only works for RDDdata objects")
-  attr(object, "hasCovar")
+hasCovar <- function(object)
+  UseMethod("hasCovar")
+
+hasCovar.RDDdata <- function(object)  attr(object, "hasCovar")
+
+hasCovar.RDDreg <- function(object) { 
+  call <- getCall(object)
+  !is.null(call$covariates)
 }
 
 getCovar <- function(object){
