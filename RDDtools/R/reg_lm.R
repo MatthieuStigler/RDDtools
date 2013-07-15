@@ -52,11 +52,15 @@
 #' plot(reg_para_ik)
 
 
-RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.strat=c("include", "residual"), weights){
+RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), covar.strat=c("include", "residual"), weights){
+
+  checkIsRDD(RDDobject)
+  if(!missing(covar.strat)) warning("covar.strat is (soon) deprecated arg!")
 
   slope <- match.arg(slope)
-  covar.strat <- match.arg(covar.strat)
-  checkIsRDD(RDDobject)
+  covar.strat <- match.arg(covar.opt$strategy, choices=c("include", "residual"))
+  covar.slope <- match.arg(covar.opt$slope, choices=c("same", "separate"))
+  
   cutpoint <- getCutpoint(RDDobject)
   if(!missing(weights)&!is.null(bw)) stop("Cannot give both 'bw' and 'weights'")
   if(!is.null(covariates) & !hasCovar(RDDobject))  stop("Arg 'covariates' was specified, but no covariates found in 'RDDobject'.")
@@ -93,17 +97,30 @@ RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
 ## Covariates
   if(!is.null(covariates)){
     covar <- getCovar(RDDobject)
-    formu <- as.Formula(paste("y", covariates, sep="~"))
-    mod_frame_cov <- model.frame(formu, covar, lhs=FALSE)
+    
+    if(covar.slope=="separate") { 
+      formu <- paste("y~", covariates, "+", paste("D*", covariates, collapse="+",sep=""), sep=" ")
+      covar$D <- dat_step1$D
+    } else {
+      formu <- paste("y", covariates, sep="~")
+    }
+    formu <- as.Formula(formu)
+
+
+    mod_frame_cov <- as.data.frame(model.matrix(formu, covar, lhs=FALSE))
 
     if(covar.strat=="residual"){
       mod_frame_cov$y <- dat_step1$y
+
       first_stage <- lm(formu, data=mod_frame_cov) ## regress y on covariates only
       dat_step1$y <- residuals(first_stage) ## change in original data
     } else {
+      rem <- switch(covar.slope, "separate"="^D$|(Intercept)", "same" ="(Intercept)")
+      mod_frame_cov <- mod_frame_cov[, -grep(rem, colnames(mod_frame_cov))] 
       dat_step1 <- cbind(dat_step1, mod_frame_cov) ## add covar as regressors
     }
   } 
+
 
 ## Regression
   reg <- lm(y~., data=dat_step1, weights=weights)

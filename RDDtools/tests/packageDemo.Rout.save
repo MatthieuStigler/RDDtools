@@ -279,7 +279,7 @@ Multiple R-squared: 0.6839,	Adjusted R-squared: 0.6833
 F-statistic:  1089 on 13 and 6544 DF,  p-value: < 2.2e-16 
 
 > 
-> reg_para4_cov_startR <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.strat="residual")
+> reg_para4_cov_startR <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(strategy="residual"))
 > reg_para4_cov_startR
 ### RDD regression: parametric ###
 	Polynomial order:  4 

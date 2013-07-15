@@ -84,7 +84,7 @@ reg_para4_cov <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".")
 reg_para4_cov
 summary(reg_para4_cov)
 
-reg_para4_cov_startR <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.strat="residual")
+reg_para4_cov_startR <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(strategy="residual"))	
 reg_para4_cov_startR
 summary(reg_para4_cov_startR)
 
