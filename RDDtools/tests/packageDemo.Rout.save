@@ -672,21 +672,21 @@ No. Continuous Explanatory Vars.: 3
 >   RDDcoef(reg_nonpara_np)
 [1] 0.08329576
 >   RDDcoef(reg_nonpara_np, allCo=TRUE)
-[1] 0.45491244 0.08329576 0.39139806 0.39139806
+[1] 0.454912436 0.083295755 0.391398059 0.004460978
 >   RDDcoef(reg_nonpara_np, allInfo=TRUE)
     Estimate Std. Error  z value      Pr(>|z|)
 D 0.08329576 0.00353085 23.59085 4.784535e-123
 >   RDDcoef(reg_nonpara_np, allInfo=TRUE, allCo=TRUE)
-              Estimate  Std. Error   z value      Pr(>|z|)
-(Intercept) 0.45491244 0.001765425 257.67872  0.000000e+00
-D           0.08329576 0.003530850  23.59085 4.784535e-123
-x_left      0.39139806 0.003995962  97.94840  0.000000e+00
-x_right     0.39139806 0.003995962  97.94840  0.000000e+00
+               Estimate  Std. Error   z value      Pr(>|z|)
+(Intercept) 0.454912436 0.001765425 257.67872  0.000000e+00
+D           0.083295755 0.003530850  23.59085 4.784535e-123
+x_left      0.391398059 0.003995962  97.94840  0.000000e+00
+x_right     0.004460978 0.003995962  97.94840  0.000000e+00
 > 
 > ## Compare with result obtained with a Gaussian kernel:
 >   bw_lm <- dnorm(Lee2008_rdd$x, sd=RDDtools:::getBW(reg_nonpara))
 >   reg_nonpara_gaus <- RDDreg_lm(RDDobject=Lee2008_rdd, w=bw_lm)
->   all.equal(RDDcoef(reg_nonpara_gaus),RDDcoef(reg_nonpara_np)) 
+>   all.equal(RDDcoef(reg_nonpara_gaus, allCo=TRUE),RDDcoef(reg_nonpara_np, allCo=TRUE), check.attributes=FALSE) 
 [1] TRUE
 > 
 > proc.time()

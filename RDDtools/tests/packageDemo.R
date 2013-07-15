@@ -179,4 +179,4 @@ covarTest_dis(Lee2008_rdd_z, bw=0.1)
 ## Compare with result obtained with a Gaussian kernel:
   bw_lm <- dnorm(Lee2008_rdd$x, sd=RDDtools:::getBW(reg_nonpara))
   reg_nonpara_gaus <- RDDreg_lm(RDDobject=Lee2008_rdd, w=bw_lm)
-  all.equal(RDDcoef(reg_nonpara_gaus),RDDcoef(reg_nonpara_np)) 
+  all.equal(RDDcoef(reg_nonpara_gaus, allCo=TRUE),RDDcoef(reg_nonpara_np, allCo=TRUE), check.attributes=FALSE) 

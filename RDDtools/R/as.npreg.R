@@ -100,7 +100,13 @@ RDDcoef.RDDreg_npreg <- function(object, allInfo=FALSE, allCo=FALSE, ...){
   if(allCo){
     cos <- c(object$mean[1], object$grad)
     ses <- c(object$merr[1], object$gerr)
-    estimates <- c(cos[1], co, cos[2:3])
+
+    ## X_right:
+    dataPoints_Xr <- data.frame(x=0, D=0, Dx=c(0,1))
+    Xr <- diff(predict(object, newdata=dataPoints_Xr))
+
+    estimates <- c(cos[1], co, cos[2], Xr)
+    
     if(allInfo){
       zvals <- cos/ses
       pvals <- 2 * pnorm(abs(zvals), lower.tail = FALSE)
@@ -131,17 +137,32 @@ if(FALSE){
 class(reg_nonpara_npbw)
 RDDcoef(reg_nonpara_npbw)
 
-  reg_nonpara_np <- as.npreg(reg_nonpara)
+  reg_nonpara_np <- as.npreg(reg_nonpara, adjustIK_bw=FALSE)
   reg_nonpara_np
 class(reg_nonpara_np)
 RDDcoef(reg_nonpara_np)
 RDDcoef(reg_nonpara_np, allInfo=TRUE)
 RDDcoef(reg_nonpara_np, allInfo=TRUE, allCo=TRUE)
 
+## manual predict:
+
+cutpoint <- 0
+dataPoints <- data.frame(x=c(cutpoint,cutpoint), D=c(0,1), Dx=c(0,cutpoint))
+dataPoints2 <- data.frame(x=0, D=c(0,1), Dx=0)
+dataPoints3 <- data.frame(x=c(0,1), D=0, Dx=0)
+dataPoints3 <- data.frame(x=0, D=0, Dx=c(0,1))
+
+diff(predict(reg_nonpara_np, newdata=dataPoints))
+diff(predict(reg_nonpara_np, newdata=dataPoints2))
+
+diff(predict(reg_nonpara_np, newdata=dataPoints3))
+RDDcoef(reg_nonpara_gaus, allCo=TRUE)
+
 ## compare:
   bw_lm <- dnorm(Lee2008_rdd$x, sd=RDDtools:::getBW(reg_nonpara))
   reg_nonpara_gaus <- RDDreg_lm(RDDobject=Lee2008_rdd, w=bw_lm)
   all.equal(RDDcoef(reg_nonpara_gaus),RDDcoef(reg_nonpara_np))
+  all.equal(RDDcoef(reg_nonpara_gaus, allCo=TRUE),RDDcoef(reg_nonpara_np, allCo=TRUE), check=FALSE)
 
 
 }
