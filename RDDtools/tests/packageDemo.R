@@ -84,11 +84,17 @@ reg_para4_cov <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".")
 reg_para4_cov
 summary(reg_para4_cov)
 
-reg_para4_cov_startR <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(strategy="residual"))	
+reg_para4_cov_slSep <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(slope="separate"))
+summary(reg_para4_cov_slSep)
+
+reg_para4_cov_startR <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(strategy="residual"))
 reg_para4_cov_startR
 summary(reg_para4_cov_startR)
 
 plot(reg_para4_cov)
+
+reg_para4_cov_startR_sl2 <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(strategy="residual", slope="separate"))
+summary(reg_para4_cov_startR_sl2)
 
 reg_para4_cov_2 <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates="z3+I(z1^2)")
 reg_para4_cov_2

@@ -279,6 +279,44 @@ Multiple R-squared: 0.6839,	Adjusted R-squared: 0.6833
 F-statistic:  1089 on 13 and 6544 DF,  p-value: < 2.2e-16 
 
 > 
+> reg_para4_cov_slSep <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(slope="separate"))
+> summary(reg_para4_cov_slSep)
+
+Call:
+lm(formula = y ~ ., data = dat_step1, weights = weights)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.87319 -0.06121  0.00152  0.06788  0.71590 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.4467816  0.0275921  16.192  < 2e-16 ***
+D            0.0744082  0.0365414   2.036 0.041763 *  
+`x^1`        0.5314429  0.1581582   3.360 0.000783 ***
+`x^2`        1.5607299  0.7414043   2.105 0.035321 *  
+`x^3`        4.2599536  1.2492983   3.410 0.000654 ***
+`x^4`        3.0604662  0.6644491   4.606 4.18e-06 ***
+`x^1_right`  0.0128643  0.2092782   0.061 0.950987    
+`x^2_right` -2.2682981  0.9489665  -2.390 0.016864 *  
+`x^3_right` -3.0229759  1.5528584  -1.947 0.051611 .  
+`x^4_right` -3.7900473  0.8094190  -4.682 2.89e-06 ***
+z1          -0.0019210  0.0025907  -0.741 0.458419    
+z2           0.0007586  0.0012911   0.588 0.556863    
+z3b         -0.0144320  0.0062796  -2.298 0.021580 *  
+z3c         -0.0076795  0.0064097  -1.198 0.230918    
+`z1:D`       0.0025846  0.0034062   0.759 0.448015    
+`z2:D`      -0.0003170  0.0016953  -0.187 0.851664    
+`z3b:D`      0.0163160  0.0082404   1.980 0.047745 *  
+`z3c:D`      0.0077248  0.0084028   0.919 0.357967    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+Residual standard error: 0.1357 on 6540 degrees of freedom
+Multiple R-squared: 0.6841,	Adjusted R-squared: 0.6833 
+F-statistic: 833.1 on 17 and 6540 DF,  p-value: < 2.2e-16 
+
+> 
 > reg_para4_cov_startR <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(strategy="residual"))
 > reg_para4_cov_startR
 ### RDD regression: parametric ###
@@ -321,6 +359,36 @@ F-statistic:  1574 on 9 and 6548 DF,  p-value: < 2.2e-16
 
 > 
 > plot(reg_para4_cov)
+> 
+> reg_para4_cov_startR_sl2 <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(strategy="residual", slope="separate"))
+> summary(reg_para4_cov_startR_sl2)
+
+Call:
+lm(formula = y ~ ., data = dat_step1, weights = weights)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.87001 -0.06145  0.00138  0.06728  0.71762 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.108148   0.009721  11.125  < 2e-16 ***
+D           -0.275377   0.013234 -20.808  < 2e-16 ***
+`x^1`        0.534391   0.157954   3.383 0.000721 ***
+`x^2`        1.574893   0.740561   2.127 0.033489 *  
+`x^3`        4.282174   1.248022   3.431 0.000605 ***
+`x^4`        3.071545   0.663799   4.627 3.78e-06 ***
+`x^1_right`  0.011154   0.209031   0.053 0.957445    
+`x^2_right` -2.286510   0.947892  -2.412 0.015884 *  
+`x^3_right` -3.042340   1.551154  -1.961 0.049882 *  
+`x^4_right` -3.801129   0.808534  -4.701 2.64e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+Residual standard error: 0.1356 on 6548 degrees of freedom
+Multiple R-squared: 0.3453,	Adjusted R-squared: 0.3444 
+F-statistic: 383.7 on 9 and 6548 DF,  p-value: < 2.2e-16 
+
 > 
 > reg_para4_cov_2 <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates="z3+I(z1^2)")
 > reg_para4_cov_2
