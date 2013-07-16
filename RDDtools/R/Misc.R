@@ -168,3 +168,16 @@ PLEASE NOTE THIS is currently only a development version. \nRun vignette('RDDtoo
 #format(Sys.Date(), "%A %Y-%m-%d")
 
 
+expand.formula <- function(formula, data, lhs=FALSE, rhs="y", int=FALSE){
+
+  if(!inherits(formula, "formula")) {
+    if(!grepl("~", formula)) formula <- paste(rhs, formula, sep="~")
+    formula <- as.formula(formula)
+  }
+  mm <-model.matrix(formula, data=data[1,])
+  mm_col <- colnames(mm)
+  if(!int && grepl("(Intercept)", mm_col)) mm_col <- mm_col[-grep("(Intercept)", mm_col)]
+  form <- paste(mm_col, collapse=" + ")
+  if(!lhs) form <- as.formula(paste("y~", form))
+  return(form)
+}
