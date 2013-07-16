@@ -59,6 +59,7 @@ print(reg_para)
 summary(reg_para)
 plot(reg_para)
 
+all.equal(unlist(RDDpred(reg_para)), RDDcoef(reg_para, allInfo=TRUE)[1:2], check=FALSE)
 
 ## Difference in means regression:
 # Simple polynomial of order 0:
@@ -72,12 +73,15 @@ plot(reg_para_0)
 reg_para4 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=4)
 reg_para4
 plot(reg_para4)
+all.equal(unlist(RDDpred(reg_para4)), RDDcoef(reg_para4, allInfo=TRUE)[1:2], check=FALSE)
 
 ## Restrict sample to bandwidth area:
 bw_ik <- RDDbw_IK(Lee2008_rdd)
 reg_para_ik <- RDDreg_lm(RDDobject=Lee2008_rdd, bw=bw_ik, order=4)
 reg_para_ik
 plot(reg_para_ik)
+
+all.equal(unlist(RDDpred(reg_para_ik)), RDDcoef(reg_para_ik, allInfo=TRUE)[1:2], check=FALSE)
 
 ## Covariates:
 reg_para4_cov <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".")
@@ -86,6 +90,9 @@ summary(reg_para4_cov)
 
 reg_para4_cov_slSep <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(slope="separate"))
 summary(reg_para4_cov_slSep)
+RDDpred(reg_para4_cov_slSep)
+RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0, 0.2, 0.2), z2=c(0,20,20), z3b=c(0,1,0), z3c=c(0,0,1)))
+
 
 reg_para4_cov_startR <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(strategy="residual"))
 reg_para4_cov_startR

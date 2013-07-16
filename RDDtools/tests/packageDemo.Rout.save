@@ -163,6 +163,8 @@ F-statistic:  4450 on 3 and 6554 DF,  p-value: < 2.2e-16
 
 > plot(reg_para)
 > 
+> all.equal(unlist(RDDpred(reg_para)), RDDcoef(reg_para, allInfo=TRUE)[1:2], check=FALSE)
+[1] TRUE
 > 
 > ## Difference in means regression:
 > # Simple polynomial of order 0:
@@ -215,6 +217,8 @@ D 0.076590   0.013239  5.7851 7.582e-09 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > plot(reg_para4)
+> all.equal(unlist(RDDpred(reg_para4)), RDDcoef(reg_para4, allInfo=TRUE)[1:2], check=FALSE)
+[1] TRUE
 > 
 > ## Restrict sample to bandwidth area:
 > bw_ik <- RDDbw_IK(Lee2008_rdd)
@@ -232,6 +236,9 @@ D 0.059164   0.020596  2.8726 0.004098 **
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > plot(reg_para_ik)
+> 
+> all.equal(unlist(RDDpred(reg_para_ik)), RDDcoef(reg_para_ik, allInfo=TRUE)[1:2], check=FALSE)
+[1] TRUE
 > 
 > ## Covariates:
 > reg_para4_cov <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".")
@@ -316,6 +323,22 @@ Residual standard error: 0.1357 on 6540 degrees of freedom
 Multiple R-squared: 0.6841,	Adjusted R-squared: 0.6833 
 F-statistic: 833.1 on 17 and 6540 DF,  p-value: < 2.2e-16 
 
+> RDDpred(reg_para4_cov_slSep)
+$fit
+        2 
+0.0744082 
+
+$se.fit
+[1] 0.03654137
+
+> RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0, 0.2, 0.2), z2=c(0,20,20), z3b=c(0,1,0), z3c=c(0,0,1)))
+$fit
+[1] 0.0744082 0.0849006 0.0763094
+
+$se.fit
+[1] 0.03654137 0.01406868 0.01412509
+
+> 
 > 
 > reg_para4_cov_startR <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(strategy="residual"))
 > reg_para4_cov_startR
