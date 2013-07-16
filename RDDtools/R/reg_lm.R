@@ -104,10 +104,10 @@ RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
     } else {
       formu <- paste("y", covariates, sep="~")
     }
-    formu <- as.Formula(formu)
+    formu <- as.formula(formu)
 
 
-    mod_frame_cov <- as.data.frame(model.matrix(formu, covar, lhs=FALSE))
+    mod_frame_cov <- as.data.frame(model.matrix(formu, covar))
 
     if(covar.strat=="residual"){
       mod_frame_cov$y <- dat_step1$y
