@@ -117,11 +117,10 @@ RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
       dat_step1$y <- residuals(first_stage) ## change in original data
     } else {
       rem <- switch(covar.slope, "separate"="^D$|(Intercept)", "same" ="(Intercept)")
-      M_covar <- M_covar[,-grep(rem, colnames(M_covar))]
+      M_covar <- M_covar[,-grep(rem, colnames(M_covar)), drop=FALSE	]
       dat_step1 <- cbind(dat_step1, M_covar) ## add covar as regressors
     }
   } 
-
 
 ## Regression
   reg <- lm(y~., data=dat_step1, weights=weights)
