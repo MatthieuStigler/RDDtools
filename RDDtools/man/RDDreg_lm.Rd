@@ -4,6 +4,7 @@
 \usage{
   RDDreg_lm(RDDobject, covariates = NULL, order = 1,
     bw = NULL, slope = c("separate", "same"),
+    covar.opt = list(strategy = c("include", "residual"), slope = c("same", "separate"), bw = NULL),
     covar.strat = c("include", "residual"), weights)
 }
 \arguments{
