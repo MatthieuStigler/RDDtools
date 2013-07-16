@@ -18,9 +18,12 @@
   \item{bw}{A bandwidth to specify the subset on which the
   parametric regression is estimated}
 
-  \item{covar.strat}{Way to include covariates, either in
-  the main regression (\code{include}) or as regressors of
-  y in a first step (\code{residual}).}
+  \item{covar.strat}{DEPRECATED, use covar.opt instead.}
+
+  \item{covar.opt}{Options for the inclusion of covariates.
+  Way to include covariates, either in the main regression
+  (\code{include}) or as regressors of y in a first step
+  (\code{residual}).}
 
   \item{weights}{Optional weights to pass to the lm
   function. Note this cannot be entered together with

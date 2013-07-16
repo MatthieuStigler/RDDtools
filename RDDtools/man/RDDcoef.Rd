@@ -1,7 +1,7 @@
 \name{RDDcoef}
 \alias{RDDcoef}
-\alias{RDDcoef.RDDreg_np}
 \alias{RDDcoef.default}
+\alias{RDDcoef.RDDreg_np}
 \title{RDD coefficient}
 \usage{
   RDDcoef(object, allInfo = FALSE, allCo = FALSE, ...)

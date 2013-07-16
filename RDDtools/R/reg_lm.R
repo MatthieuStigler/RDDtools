@@ -6,7 +6,8 @@
 #' @param covariates Formula to include covariates
 #' @param order Order of the polynomial regression. 
 #' @param bw A bandwidth to specify the subset on which the parametric regression is estimated
-#' @param covar.strat Way to include covariates, either in the main regression (\code{include}) or as regressors of y in a first step (\code{residual}). 
+#' @param covar.strat DEPRECATED, use covar.opt instead. 
+#' @param covar.opt Options for the inclusion of covariates. Way to include covariates, either in the main regression (\code{include}) or as regressors of y in a first step (\code{residual}). 
 #' @param weights Optional weights to pass to the lm function. Note this cannot be entered together with \code{bw}
 #' @param slope Whether slopes should be different on left or right (separate), or the same.
 #' @return An object of class RDDreg_lm and class lm, with specific print and plot methods
