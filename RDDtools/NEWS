@@ -1,0 +1,17 @@
+RDDtools 0.2
+===========
+Updated on 16/7/13
+
+* Add new option to have separate or same covariates
+
+* Add as.nprg, to convert to a np regression from package np
+
+* Add RDDcoef, working on multiple models (lm, np, npreg). 
+
+* Many fixes...
+
+RDDtools 0.1
+===========
+Initial commit on 29/04/2013
+
+* Initial commit, containing RDDdata, RDDreg_lm, RDDreg_np, plotSensi, plotPlacebo, etc...
