@@ -97,7 +97,7 @@ getCovar <- function(object){
   if(!inherits(object, "RDDdata")) stop("Only works for RDDdata objects")
   if(!hasCovar(object)) stop("object has no covariates")
 
-  res <- object[,-c(1,2)]
+  res <- object[,-c(1,2), drop=FALSE]
   as.data.frame(res)
 }
 
