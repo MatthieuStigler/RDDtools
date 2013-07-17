@@ -31,6 +31,7 @@ RDDdata <- function(y, x, z, cutpoint, labels, data){
 ## check args
   hasCovar <- !missing(z)
   if(missing(cutpoint)) stop("Please provide cutpoint")
+  z_nam <- deparse(substitute(z))
 
 ## Use data in case:
   if(!missing(data)){
@@ -76,6 +77,7 @@ RDDdata <- function(y, x, z, cutpoint, labels, data){
   RDDdat <- data.frame(x=x, y=y)
   if(hasCovar) {
     RDDdat <- cbind(RDDdat,z)
+    if(NCOL(z)==1 && is.null(colnames(z))) colnames(RDDdat)[3] <- z_nam
   } 
 
 ## return
