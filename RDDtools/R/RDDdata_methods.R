@@ -94,6 +94,9 @@ as.lm_RDD <- function(x){
 #' @S3method as.lm RDDreg_np
 as.lm.RDDreg_np <- function(x) as.lm_RDD(x)
 
+#' @S3method as.lm RDDreg
+as.lm.RDDreg <- function(x) as.lm_RDD(x)
+
 
 
 
