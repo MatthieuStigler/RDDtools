@@ -19,7 +19,7 @@ Note however the latest version of RDDtools only works with R 3.0, and that you 
 
 Documentation
 -----------------------
-The (preliminary documentation) is available in the help files directly, as well as in the *vignette*. The vignette can be accessed from R with vignette("RDDtools"), or by accessing the [pdf](https://github.com/MatthieuStigler/RDDtools/raw/master/RDDtools/inst/doc/RDDtools.pdf) stored on this github. 
+The (preliminary) documentation is available in the help files directly, as well as in the *vignette*. The vignette can be accessed from R with vignette("RDDtools"), or by accessing the [pdf](https://github.com/MatthieuStigler/RDDtools/raw/master/RDDtools/inst/doc/RDDtools.pdf) stored on this github. 
 
 RDDtools: main features
 -----------------------
@@ -45,8 +45,8 @@ RDDtools: main features
   + Test of equal means of covariates: **covarTest_mean()**
   + Test of equal density of covariates: **covarTest_dens()**
 + Datasets
-  + Contains the seminal dataset of [Lee 2008]
-  + Contains functions to replicate the Monte-Carlo simulations of [Imbens and Kalyanaraman 2012]
+  + Contains the seminal dataset of [Lee 2008]: **Lee2008**
+  + Contains functions to replicate the Monte-Carlo simulations of [Imbens and Kalyanaraman 2012]: **gen_MC_IK()**
 
 Using RDDtools: a quick example
 -----------------------
