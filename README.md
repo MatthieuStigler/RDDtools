@@ -28,12 +28,16 @@ RDDtools: main features
 
 
 +  Simple visualisation of the data using binned-plot: **plot()**
+
++ Bandwidth selection:
+  + MSE-RDD bandwidth procedure of [Imbens and Kalyanaraman 2012]: **RDDbw_IK()**
+  + MSE gobal bandwidth procedure of [Ruppert et al 1995]: **RDDbw_RSW()**
 + Estimation:
   +  RDD parametric estimation: **RDDreg_lm()** This includes specifying the polynomial order, including covariates with various specifications as advocated in [Imbens and Lemieux 2008].
   +  RDD local non-parametric estimation: **RDDreg_np()**. Can also include covariates, and allows different types of inference (fully non-parametric, or parametric approximation). 
   +  RDD generalised estimation: allows to use custom estimating functions to get the RDD coefficient. Could allow for example a probit RDD, or quantile regression.
++ Post-Estimation tools:
   + Various tools, to obtain predictions at given covariate values ( **RDDpred()** ), or to convert to other classes, to lm ( **as.lm()** ), or to the package *np* ( **as.npreg()** ). 
-+ Post-Estimation inference:
   + Function to do inference with clustered data: **clusterInf()** either using a cluster covariance matrix ( **vcovCluster()** ) or by a degrees of freedom correction (as in [Cameron et al. 2008]).
 + Regression sensitivity analysis:
   + Plot the sensitivity of the coefficient with respect to the bandwith: **plotSensi()**
@@ -42,12 +46,15 @@ RDDtools: main features
   + McCrary test of manipulation of the forcing variable: wrapper **dens_test()** to the function **DCdensity()** from package **rdd**. 
   + Test of equal means of covariates: **covarTest_mean()**
   + Test of equal density of covariates: **covarTest_dens()**
-
++ Datasets
+  + Contains the seminal dataset of [Lee 2008]
+  + Contains functions to replicate the Monte-Carlo simulations of [Imbens and Kalyanaraman 2012]
 
 Using RDDtools: a quick example
 -----------------------
 **RDDtools** works in an object-oriented way: the user has to define once the characteristic of the data, creating a *RDDdata* object, on which different anaylsis tools can be applied. 
 
+### Data preparation and visualisation
 Load the package, and load the built-in dataset from [Lee 2008]:
 
 
@@ -61,7 +68,7 @@ data(Lee2008)
 ```
 
 
-Declare the data as a RDDdata object:
+Declare the data to be a *RDDdata* object:
 
 
 ```r
@@ -95,7 +102,40 @@ plot(Lee2008_rdd)
 ![plot of chunk dataPlot](figuresREADME/dataPlot.png) 
 
 
+### Estimation
 
+#### Parametric
+
+Estimate parametrically, by fitting a 4th order polynomial:
+
+```r
+reg_para <- RDDreg_lm(RDDobject = Lee2008_rdd, order = 4)
+reg_para
+```
+
+```
+## ### RDD regression: parametric ###
+## 	Polynomial order:  4 
+## 	Slopes:  separate 
+## 	Number of obs: 6558 (left: 2740, right: 3818)
+## 
+## 	Coefficient:
+##   Estimate Std. Error t value Pr(>|t|)    
+## D   0.0766     0.0132    5.79  7.6e-09 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+```r
+
+plot(reg_para)
+```
+
+![plot of chunk reg_para](figuresREADME/reg_para.png) 
+
+
+
+#### Non-parametric
 As well as run a simple local regression, using the [Imbens and Kalyanaraman 2012] bandwidth:
 
 ```r
@@ -123,14 +163,24 @@ plot(x = reg_nonpara)
 ![plot of chunk RegPlot](figuresREADME/RegPlot.png) 
 
 
+### Sensitivity tests:
 
 One can easily check the sensitivity of the estimate to different bandwidths:
 
 ```r
-plotSensi(reg_nonpara, from = 0.05)
+plotSensi(reg_nonpara, from = 0.05, to = 1, by = 0.1)
 ```
 
 ![plot of chunk SensiPlot](figuresREADME/SensiPlot.png) 
+
+
+Or run the Placebo test, estimating the RDD effect based on fake cutpoints:
+
+```r
+plotPlacebo(reg_nonpara)
+```
+
+![plot of chunk placeboPlot](figuresREADME/placeboPlot.png) 
 
 
 
@@ -141,6 +191,8 @@ plotSensi(reg_nonpara, from = 0.05)
   [Imbens and Lemieux 2008]: http://ideas.repec.org/a/eee/econom/v142y2008i2p615-635.html "Imbens, G. & Lemieux, T. (2008) Regression discontinuity designs: A guide to practice, Journal of Econometrics, Vol. 142(2), pages 615-635"
   
   [Cameron et al. 2008]: http://ideas.repec.org/a/tpr/restat/v90y2008i3p414-427.html "Cameron, Gelbach and Miller (2008) Bootstrap-Based Improvements for Inference with Clustered Errors, The Review of Economics and Statistics, Vol. 90(3), pages 414-427"
+  
+  [Ruppert et al 1995]: http://www.jstor.org/stable/2291516 "Ruppert, D., Sheather, S. J. and Wand, M. P. (1995). An effective bandwidth selector for local least squares regression. Journal of the American Statistical Association, 90, 12571270."
 
 
   
