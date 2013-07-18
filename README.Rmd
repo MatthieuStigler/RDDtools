@@ -21,16 +21,30 @@ Documentation
 -----------------------
 The (preliminary documentation) is available in the help files directly, as well as in the *vignette*. The vignette can be accessed from R with vignette("RDDtools"), or by accessing the [pdf](https://github.com/MatthieuStigler/RDDtools/raw/master/RDDtools/inst/doc/RDDtools.pdf) stored on this github. 
 
-Using RDDtools: a quick example
+RDDtools: main features
 -----------------------
 
-**RDDtools** works in an object-oriented way: the user has to define once the characteristic of the data, creating a *RDDdata* object, on which different anaylsis tools can be applied, such as:
-+  Simple visualisation of the data using binned-plot: **plot()**
-+  RDD parametric estimation: **RDDreg_lm()**
-+  RDD local non-parametric estimation: **RDDreg_np()**
-+  Plot of sensitivity to bandwidth: **plotSensi()**
-+  Placebo plot using different cutpoints: **plotPlacebo()**
 
++  Simple visualisation of the data using binned-plot: **plot()**
++ Estimation:
+  +  RDD parametric estimation: **RDDreg_lm()** This includes specifying the polynomial order, including covariates with various specifications as advocated in [Imbens and Lemieux 2008].
+  +  RDD local non-parametric estimation: **RDDreg_np()**. Can also include covariates, and allows different types of inference (fully non-parametric, or parametric approximation). 
+  +  RDD generalised estimation: allows to use custom estimating functions to get the RDD coefficient. Could allow for example a probit RDD, or quantile regression.
+  + Various tools, to obtain predictions at given covariate values (**RDDpred()**), or to convert to other classes, to lm (**as.lm()**), or to the package *np* (**as.npreg()**). 
++ Post-Estimation inference:
+  + Function to do inference with clustered data: **clusterInf()** either using a cluster covariance matrix (**vcovCluster()**) or by a degrees of freedom correction (as in [Cameron et al. 2008]).
++ Regression sensitivity analysis:
+  + Plot the sensitivity of the coefficient with respect to the bandwith: **plotSensi()**
+  + *Placebo plot* using different cutpoints: **plotPlacebo()**
++ Design sensitivity analysis:
+  + McCrary test of manipulation of the forcing variable: wrapper **dens_test()** to the function **DCdensity()** from package **rdd**. 
+  + Test of equal means of covariates: **covarTest_mean()**
+  + Test of equal density of covariates: **covarTest_dens()**
+
+
+Using RDDtools: a quick example
+-----------------------
+**RDDtools** works in an object-oriented way: the user has to define once the characteristic of the data, creating a *RDDdata* object, on which different anaylsis tools can be applied. 
 
 Load the package, and load the built-in dataset from [Lee 2008]:
 
@@ -79,4 +93,9 @@ plotSensi(reg_nonpara, from=0.05)
   
   [Lee 2008]: http://ideas.repec.org/a/eee/econom/v142y2008i2p675-697.html "Lee, D. S. (2008) Randomized experiments from non-random selection in U.S. House elections, Journal of Econometrics, 142, 675-697"
   
+  [Imbens and Lemieux 2008]: http://ideas.repec.org/a/eee/econom/v142y2008i2p615-635.html "Imbens, G. & Lemieux, T. (2008) Regression discontinuity designs: A guide to practice, Journal of Econometrics, Vol. 142(2), pages 615-635"
+  
+  [Cameron et al. 2008]: http://ideas.repec.org/a/tpr/restat/v90y2008i3p414-427.html "Cameron, Gelbach and Miller (2008) Bootstrap-Based Improvements for Inference with Clustered Errors, The Review of Economics and Statistics, Vol. 90(3), pages 414-427"
+
+
   
