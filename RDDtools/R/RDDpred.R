@@ -33,7 +33,9 @@
 #'   RDDpred(reg_para_cov, covdata=data.frame(z1=0)) ## should obtain same result than with RDestimate
 #'   RDDpred(reg_para_cov, covdata=data.frame(z1=0.5)) #evaluate at mean of z1 (as comes from uniform)
 
-RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL){
+RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c("identity", "mean")){
+
+  stat <- match.arg(stat)
 
   x_call <- getCall(object)
   hasCo <- hasCovar(object)
@@ -52,37 +54,42 @@ RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL){
   if(any(grepl("\\(weights\\)", colnames(mf)))) mf <- mf[,-grep("\\(weights\\)", colnames(mf))]
 
 ## Fill orig struc with 0/1
-  which.D <- grep("^D$", colnames(mf))
-  mf[,which.D] <- c(0,1) ## set coeff of interest
-  mf[,-which.D] <- 0 ## remove others (not absolutely necessary actually)
-  newdata <- mf
+  if(missing(newdata)){
+    which.D <- grep("^D$", colnames(mf))
+    mf[,which.D] <- c(0,1) ## set coeff of interest
+    mf[,-which.D] <- 0 ## remove others (not absolutely necessary actually)
+    newdata <- mf
+  }
 
 ## Merge covdata with newdata:
-newdata <<- newdata
+oldData <<- newdata
+# 
   if(!missing(covdata)){
-    if(nrow(covdata)>1) newdata <- Reduce(rbind, list(newdata)[rep(1L, times=nrow(covdata))])
+#     if(nrow(covdata)>1) newdata <- Reduce(rbind, list(newdata)[rep(1L, times=nrow(covdata))])
+    if(nrow(covdata)>1) newdata <- rbind(newdata[1,], Reduce(rbind, list(newdata[2,])[rep(1L, times=nrow(covdata))]))
     if(covar.strat=="residual") stop("Do not provide 'covdata' if covariates were use with 'residual' strategy")
-#     newdata[, colnames(covdata)] <- covdata
     if(covar.slope=="separate"){
-covdata <<- covdata
       ind <- seq(from=2, by=2, length.out=nrow(covdata))
       colnames_cov <- colnames(covdata)
       if(!all(colnames_cov%in% colnames(newdata))) stop("Arg 'covdata' contains colnames not in the data")
-      newdata[ind, paste(colnames(covdata), "D", sep=":")] <- covdata
+#       newdata[ind, paste(colnames(covdata), "D", sep=":")] <- covdata
+      newdata[2:nrow(newdata), paste(colnames(covdata), "D", sep=":")] <- covdata
     }
-  }
+  } 
 
   multiN <- nrow(newdata)>2
 # print(newdata)
 ## Set up variance matrix: X_i (X'X)^{-1} X_i'
   X_i <- as.matrix(cbind(1,newdata))
+#   X_i2 <<- as.matrix(cbind(1,newdata2))
   if(any(is.na(X_i))){
     warning("data contains NA. Were removed")
-    X_i <- X_i[-apply(rd_rev_2008, 1, function(x) any(is.na(x))),]
+    X_i <- X_i[-apply(X_i, 1, function(x) any(is.na(x))),]
   }
   if(is.null(vcov.)) vcov. <- vcov(object)
-  X_inv <- vcov.
+  X_inv <<- vcov.
   mat <- X_i%*%X_inv%*%t(X_i)
+#   mat2 <<- X_i2%*%X_inv%*%t(X_i2)
 
 ## preds:
 
@@ -92,19 +99,29 @@ covdata <<- covdata
   if(multiN) {
 #     print(pred_point[seq(1, by=2, length.out=nrow(newdata)/2)]) OLD
     d <<- X_i%*%coef(object)
-    colRm <- seq(3,by=2, length.out=nrow(d)/2)
-    d2 <<- d[-colRm,, drop=FALSE]
-    mat2 <- mat[-colRm,-colRm]
+#     d2 <<- X_i2%*%coef(object)
+#     colRm <- seq(3,by=2, length.out=nrow(d)/2)
+#     d2 <<- d[-colRm,, drop=FALSE]
+#     mat2 <<- mat[-colRm,-colRm]
 
-    Mat_DIFF <- cbind(-1, diag(nrow(d2)-1))
-    Mat_SUM  <- cbind( 1, diag(nrow(d2)-1))
-    Mat_DIAG <- matrix(diag(mat2), ncol=1)
-    MAT_BigSum <- matrix(rep(c(-1,1), times=nrow(d)/2), nrow=1)
-    MAT_SmallSum <<- matrix(c(-(nrow(d2)-1), rep(1,nrow(d2)-1  )), nrow=1)
-# print(MAT_BigSum%*%d)
-# print(MAT_SmallSum%*%d2)
-    pred_point <- drop(Mat_DIFF%*%d2)
-    if(se.fit) pred_se    <- drop(sqrt(Mat_SUM %*%Mat_DIAG -2* mat2[1,2:ncol(mat2)]))
+    Mat_DIFF <- cbind(-1, diag(nrow(d)-1))
+    Mat_SUM  <- cbind( 1, diag(nrow(d)-1))
+    Mat_DIAG <- matrix(diag(mat), ncol=1)
+#     MAT_BigSum <- matrix(rep(c(-1,1), times=nrow(d)/2), nrow=1)
+    MAT_SmallSum <<- matrix(c(-(nrow(d)-1), rep(1,nrow(d)-1  )), nrow=1)
+
+# print(MAT_SmallSum%*%mat2%*%t(MAT_SmallSum))
+# print()
+
+# print(MAT_SmallSum2 %*%Mat_DIAG )
+# print(sum(Mat_SUM %*%Mat_DIAG ))
+    if(stat=="identity"){
+      pred_point <- drop(Mat_DIFF%*%d)
+      if(se.fit) pred_se <- drop(sqrt(Mat_SUM %*%Mat_DIAG -2* mat[1,2:ncol(mat)]))
+    } else {
+      pred_point <- drop(MAT_SmallSum%*%d)
+      if(se.fit) pred_se <- drop(sqrt(MAT_SmallSum%*%mat%*%t(MAT_SmallSum)))
+    }
   }
 
 
@@ -134,7 +151,7 @@ if(FALSE){
 ## use:
   reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
 
-  RDDpred(x=reg_para)
+  RDDpred(reg_para)
   RDDcoef(reg_para, allInfo=TRUE)
   all.equal(unlist(RDDpred(reg_para)), RDDcoef(reg_para, allInfo=TRUE)[1:2], check=FALSE)
 
@@ -162,14 +179,14 @@ if(FALSE){
 
 ### Check RDDpred:
 vec_eval <- c(2,4,4,5,6)
-estim_sep <- lapply(vec_eval, function(x) RDDpred(x=reg_para4_cov, covdata=data.frame(z1=x)))
-estim_toget <- RDDpred(x=reg_para4_cov, covdata=data.frame(z1=vec_eval))
+estim_sep <- lapply(vec_eval, function(x) RDDpred(object=reg_para4_cov, covdata=data.frame(z1=x)))
+estim_toget <- RDDpred(reg_para4_cov, covdata=data.frame(z1=vec_eval))
 
 all(estim_toget$fit==sapply(estim_sep, function(x) x$fit))
 all(estim_toget$se.fit==sapply(estim_sep, function(x) x$se.fit))
 
 environment(RDDpred) <- environment(RDDreg_lm)
-RDDpred(reg_para4_cov, covdata=data.frame(z1=c(0,1))) 
+sum(RDDpred(reg_para4_cov, covdata=data.frame(z1=c(0,1,2,1)))$fit) 
 # RDDpred(x=reg_para4_cov, covdata=data.frame(z1=c(2,4,4,4,5,6)))
 # RDDpred(reg_para4_cov)
 
