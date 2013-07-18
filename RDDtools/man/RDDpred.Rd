@@ -47,7 +47,9 @@
 \examples{
 ## Load data, add (artificial) covariates:
   data(Lee2008)
-  Lee2008_rdd <- RDDdata(y=y, x=x, data=Lee2008, z=runif(n_Lee), cutpoint=0)
+  n_Lee <- nrow(Lee2008)
+  z1 <- runif(n_Lee)
+  Lee2008_rdd <- RDDdata(y=y, x=x, data=Lee2008, z=z1, cutpoint=0)
 
 ## estimation without covariates: RDDpred is the same than RDDcoef:
   reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
@@ -56,7 +58,7 @@
   RDDcoef(reg_para, allInfo=TRUE)
 
 ## estimation with covariates:
-  reg_para_cov <- RDDreg_lm(RDDobject=Lee2008_rdd_z, covariates="z1", covar.opt=list(slope="separate"))
+  reg_para_cov <- RDDreg_lm(RDDobject=Lee2008_rdd, covariates="z1", covar.opt=list(slope="separate"))
   RDDpred(reg_para_cov, covdata=data.frame(z1=0)) ## should obtain same result than with RDestimate
   RDDpred(reg_para_cov, covdata=data.frame(z1=0.5)) #evaluate at mean of z1 (as comes from uniform)
 }

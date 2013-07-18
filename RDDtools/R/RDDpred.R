@@ -18,7 +18,9 @@
 #' @examples
 #' ## Load data, add (artificial) covariates:
 #'   data(Lee2008)
-#'   Lee2008_rdd <- RDDdata(y=y, x=x, data=Lee2008, z=runif(n_Lee), cutpoint=0)
+#'   n_Lee <- nrow(Lee2008)
+#'   z1 <- runif(n_Lee)
+#'   Lee2008_rdd <- RDDdata(y=y, x=x, data=Lee2008, z=z1, cutpoint=0)
 #' 
 #' ## estimation without covariates: RDDpred is the same than RDDcoef:
 #'   reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
@@ -27,7 +29,7 @@
 #'   RDDcoef(reg_para, allInfo=TRUE)
 #' 
 #' ## estimation with covariates: 
-#'   reg_para_cov <- RDDreg_lm(RDDobject=Lee2008_rdd_z, covariates="z1", covar.opt=list(slope="separate"))
+#'   reg_para_cov <- RDDreg_lm(RDDobject=Lee2008_rdd, covariates="z1", covar.opt=list(slope="separate"))
 #'   RDDpred(reg_para_cov, covdata=data.frame(z1=0)) ## should obtain same result than with RDestimate
 #'   RDDpred(reg_para_cov, covdata=data.frame(z1=0.5)) #evaluate at mean of z1 (as comes from uniform)
 
@@ -56,19 +58,28 @@ RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL){
   newdata <- mf
 
 ## Merge covdata with newdata:
+newdata <<- newdata
   if(!missing(covdata)){
     if(nrow(covdata)>1) newdata <- Reduce(rbind, list(newdata)[rep(1L, times=nrow(covdata))])
     if(covar.strat=="residual") stop("Do not provide 'covdata' if covariates were use with 'residual' strategy")
 #     newdata[, colnames(covdata)] <- covdata
     if(covar.slope=="separate"){
+covdata <<- covdata
       ind <- seq(from=2, by=2, length.out=nrow(covdata))
+      colnames_cov <- colnames(covdata)
+      if(!all(colnames_cov%in% colnames(newdata))) stop("Arg 'covdata' contains colnames not in the data")
       newdata[ind, paste(colnames(covdata), "D", sep=":")] <- covdata
     }
   }
 
   multiN <- nrow(newdata)>2
+# print(newdata)
 ## Set up variance matrix: X_i (X'X)^{-1} X_i'
   X_i <- as.matrix(cbind(1,newdata))
+  if(any(is.na(X_i))){
+    warning("data contains NA. Were removed")
+    X_i <- X_i[-apply(rd_rev_2008, 1, function(x) any(is.na(x))),]
+  }
   if(is.null(vcov.)) vcov. <- vcov(object)
   X_inv <- vcov.
   mat <- X_i%*%X_inv%*%t(X_i)
@@ -80,15 +91,18 @@ RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL){
 
   if(multiN) {
 #     print(pred_point[seq(1, by=2, length.out=nrow(newdata)/2)]) OLD
-    d <- X_i%*%coef(object)
+    d <<- X_i%*%coef(object)
     colRm <- seq(3,by=2, length.out=nrow(d)/2)
-    d2 <- d[-colRm,, drop=FALSE]
+    d2 <<- d[-colRm,, drop=FALSE]
     mat2 <- mat[-colRm,-colRm]
 
     Mat_DIFF <- cbind(-1, diag(nrow(d2)-1))
     Mat_SUM  <- cbind( 1, diag(nrow(d2)-1))
     Mat_DIAG <- matrix(diag(mat2), ncol=1)
-
+    MAT_BigSum <- matrix(rep(c(-1,1), times=nrow(d)/2), nrow=1)
+    MAT_SmallSum <<- matrix(c(-(nrow(d2)-1), rep(1,nrow(d2)-1  )), nrow=1)
+# print(MAT_BigSum%*%d)
+# print(MAT_SmallSum%*%d2)
     pred_point <- drop(Mat_DIFF%*%d2)
     if(se.fit) pred_se    <- drop(sqrt(Mat_SUM %*%Mat_DIAG -2* mat2[1,2:ncol(mat2)]))
   }
@@ -154,8 +168,8 @@ estim_toget <- RDDpred(x=reg_para4_cov, covdata=data.frame(z1=vec_eval))
 all(estim_toget$fit==sapply(estim_sep, function(x) x$fit))
 all(estim_toget$se.fit==sapply(estim_sep, function(x) x$se.fit))
 
-environment(RDDpred) <- environment(RDDdata)
-RDDpred(RDDtools_mod_cov) 
+environment(RDDpred) <- environment(RDDreg_lm)
+RDDpred(reg_para4_cov, covdata=data.frame(z1=c(0,1))) 
 # RDDpred(x=reg_para4_cov, covdata=data.frame(z1=c(2,4,4,4,5,6)))
 # RDDpred(reg_para4_cov)
 

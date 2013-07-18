@@ -24,7 +24,7 @@ all.equal(rdd_co[-4,], RDDtools_co[c(1,3,2),], check=FALSE)
 
 ### Covariate estimation:
 rdd_mod_cov <- RDestimate(y~x|cov, kernel="rectangular", bw=5, model=TRUE, se.type="const")$model[[1]]
-RDDtools_mod_cov <- RDDreg_lm(RD, bw=5, covariates="res", covar.opt=list(slope="separate"))
+RDDtools_mod_cov <- RDDreg_lm(RD, bw=5, covariates="cov", covar.opt=list(slope="separate"))
 
 rdd_co_cov <- coef(summary(rdd_mod_cov))
 RDDtools_co_cov <- RDDcoef(RDDtools_mod_cov, allCo=TRUE, allInfo=TRUE)
