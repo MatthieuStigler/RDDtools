@@ -108,7 +108,7 @@ RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
     } 
 
     formula.cova <- as.formula(paste("~", formu.cova))
-    mf <- model.frame(formula.cova, covar)
+    mf <- model.frame(formula.cova, covar, na.action=na.pass)
     M_covar <- model.matrix(formula.cova, data=mf)
 
     if(covar.strat=="residual"){
