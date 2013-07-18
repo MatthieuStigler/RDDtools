@@ -43,4 +43,9 @@ clusRandom <- sample(nlet[1:60], size=nrow(Lee2008_rdd), replace=TRUE)
 clusterInf(reg_para, clusterVar=clusRandom)
 clusterInf(reg_para, clusterVar=clusRandom, type="HC")
 }
+\seealso{
+  \code{\link{vcovCluster}}, which implements the
+  cluster-robust covariance matrix estimator used by
+  \code{cluserInf}
+}
 

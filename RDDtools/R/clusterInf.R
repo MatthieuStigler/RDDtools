@@ -8,6 +8,7 @@
 #' @param type The type of cluster correctin to do: either the degrees of freedom, or a HC matrix. 
 #' @param \ldots Further argumetns passed to coeftest
 #' @return The output of the coeftest function, which is itself of class \code{coeftest}
+#' @seealso \code{\link{vcovCluster}}, which implements the cluster-robust covariance matrix estimator used by \code{cluserInf}
 #' @export
 #' @import sandwich
 #' @import lmtest
