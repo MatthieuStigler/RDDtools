@@ -5,6 +5,7 @@
 #' @param covdata New data.frame specifying the values of the covariates, can have multiple rows. 
 #' @param se.fit A switch indicating if standard errors are required.
 #' @param vcov. Specific covariance function (see package sandwich ), by default uses the \code{\link{vcov}}
+#' @param newdata Another data on which to evaluate the x/D variables. useful in very few cases. 
 #' @details The function RDDpred does a simple prediction of the RDD effect
 #'  \deqn{RDDeffect= \mu(x, z, D=1) - \mu(x, z, D=0)}
 #' When there are no covariates (and z is irrelevant in the equation above), this amounts exactly to the usual RDD coefficient, 
@@ -15,6 +16,7 @@
 #' the values for the covariates. Note that the effect can be evaluated at multiple points, if you provide multiple rows of \code{covdata}. 
 #' @return Returns the predicted value(s), and, if se.fit=TRUE, their standard errors. 
 #' @export
+#' @references Froehlich (2007) Regression discontinuity design with covariates, IZA discussion paper 3024
 #' @examples
 #' ## Load data, add (artificial) covariates:
 #'   data(Lee2008)
@@ -62,34 +64,29 @@ RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c(
   }
 
 ## Merge covdata with newdata:
-oldData <<- newdata
-# 
+
   if(!missing(covdata)){
-#     if(nrow(covdata)>1) newdata <- Reduce(rbind, list(newdata)[rep(1L, times=nrow(covdata))])
     if(nrow(covdata)>1) newdata <- rbind(newdata[1,], Reduce(rbind, list(newdata[2,])[rep(1L, times=nrow(covdata))]))
     if(covar.strat=="residual") stop("Do not provide 'covdata' if covariates were use with 'residual' strategy")
     if(covar.slope=="separate"){
       ind <- seq(from=2, by=2, length.out=nrow(covdata))
       colnames_cov <- colnames(covdata)
       if(!all(colnames_cov%in% colnames(newdata))) stop("Arg 'covdata' contains colnames not in the data")
-#       newdata[ind, paste(colnames(covdata), "D", sep=":")] <- covdata
       newdata[2:nrow(newdata), paste(colnames(covdata), "D", sep=":")] <- covdata
     }
   } 
 
   multiN <- nrow(newdata)>2
-# print(newdata)
+
 ## Set up variance matrix: X_i (X'X)^{-1} X_i'
   X_i <- as.matrix(cbind(1,newdata))
-#   X_i2 <<- as.matrix(cbind(1,newdata2))
   if(any(is.na(X_i))){
     warning("data contains NA. Were removed")
     X_i <- X_i[-apply(X_i, 1, function(x) any(is.na(x))),]
   }
   if(is.null(vcov.)) vcov. <- vcov(object)
-  X_inv <<- vcov.
+  X_inv <- vcov.
   mat <- X_i%*%X_inv%*%t(X_i)
-#   mat2 <<- X_i2%*%X_inv%*%t(X_i2)
 
 ## preds:
 
@@ -97,24 +94,13 @@ oldData <<- newdata
   if(se.fit) pred_se    <- sqrt(sum(c(diag(mat), -2*mat[1,2])))
 
   if(multiN) {
-#     print(pred_point[seq(1, by=2, length.out=nrow(newdata)/2)]) OLD
-    d <<- X_i%*%coef(object)
-#     d2 <<- X_i2%*%coef(object)
-#     colRm <- seq(3,by=2, length.out=nrow(d)/2)
-#     d2 <<- d[-colRm,, drop=FALSE]
-#     mat2 <<- mat[-colRm,-colRm]
+    d <- X_i%*%coef(object)
 
     Mat_DIFF <- cbind(-1, diag(nrow(d)-1))
     Mat_SUM  <- cbind( 1, diag(nrow(d)-1))
     Mat_DIAG <- matrix(diag(mat), ncol=1)
-#     MAT_BigSum <- matrix(rep(c(-1,1), times=nrow(d)/2), nrow=1)
-    MAT_SmallSum <<- matrix(c(-(nrow(d)-1), rep(1,nrow(d)-1  )), nrow=1)
+    MAT_SmallSum <- matrix(c(-(nrow(d)-1), rep(1,nrow(d)-1  )), nrow=1)
 
-# print(MAT_SmallSum%*%mat2%*%t(MAT_SmallSum))
-# print()
-
-# print(MAT_SmallSum2 %*%Mat_DIAG )
-# print(sum(Mat_SUM %*%Mat_DIAG ))
     if(stat=="identity"){
       pred_point <- drop(Mat_DIFF%*%d)
       if(se.fit) pred_se <- drop(sqrt(Mat_SUM %*%Mat_DIAG -2* mat[1,2:ncol(mat)]))

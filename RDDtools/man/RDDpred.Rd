@@ -2,7 +2,8 @@
 \alias{RDDpred}
 \title{RDD coefficient prediction}
 \usage{
-  RDDpred(object, covdata, se.fit = TRUE, vcov. = NULL)
+  RDDpred(object, covdata, se.fit = TRUE, vcov. = NULL,
+    newdata, stat = c("identity", "mean"))
 }
 \arguments{
   \item{object}{A RDD regression object}
@@ -15,6 +16,9 @@
 
   \item{vcov.}{Specific covariance function (see package
   sandwich ), by default uses the \code{\link{vcov}}}
+
+  \item{newdata}{Another data on which to evaluate the x/D
+  variables. useful in very few cases.}
 }
 \value{
   Returns the predicted value(s), and, if se.fit=TRUE,
@@ -61,5 +65,9 @@
   reg_para_cov <- RDDreg_lm(RDDobject=Lee2008_rdd, covariates="z1", covar.opt=list(slope="separate"))
   RDDpred(reg_para_cov, covdata=data.frame(z1=0)) ## should obtain same result than with RDestimate
   RDDpred(reg_para_cov, covdata=data.frame(z1=0.5)) #evaluate at mean of z1 (as comes from uniform)
+}
+\references{
+  Froehlich (2007) Regression discontinuity design with
+  covariates, IZA discussion paper 3024
 }
 
