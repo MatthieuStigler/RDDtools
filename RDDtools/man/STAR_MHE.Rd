@@ -1,0 +1,57 @@
+\docType{data}
+\name{STAR_MHE}
+\alias{STAR_MHE}
+\title{Transformation of the STAR dataset as used in Angrist and Pischke (2008)}
+\format{A data frame containing 5743 observations and 6 variables. The first variable is from the original dataset,
+all other are created by Angrist and Pischke STAT code.
+\describe{
+\item{schidkn}{School ID in kindergarden (original variable, schoolidk in \code{\link[AER]{STAR}})}
+\item{pscore}{The propensity score  (computed by A & P)}
+\item{classid}{The id of the class (computed by A & P)}
+\item{cs}{Class size (computed by A & P)}
+\item{female, nwhite}{Various covariates (computed by A & P)}
+}}
+\source{
+  Data obtained using the script krueger.do on data
+  webstar.rda, found on J. Angrist website
+  \url{http://economics.mit.edu/faculty/angrist/data1/mhe/krueger},
+  retrieved on 26 November 2012.
+}
+\description{
+  Transformation of the STAR dataset as used in Table 8.2.1
+  of Angrist and Pischke (2008)
+}
+\details{
+  ). This is a transformation of the dataset from the
+  project STAR (Student/Teacher Achievement Ratio. The full
+  dataset is described and available in package AER,
+  \code{\link[AER]{STAR}}. The transformed data was
+  obtained using the STATA script krueger.do, obtained from
+  Joshua Angrist website
+  (\url{http://economics.mit.edu/faculty/angrist/data1/mhe/krueger}),
+  on the webstar.dta.
+}
+\examples{
+data(STAR_MHE)
+
+# Compute the group means:
+STAR_MHE_means <- aggregate(STAR_MHE[, c("classid", "pscore", "cs")], by=list(STAR_MHE$classid), mean)
+
+# Regression of means, with weighted average:
+reg_krug_gls <- lm(pscore~cs, data=STAR_MHE_means, weights=cs)
+coef(summary(reg_krug_gls))[2,2]
+}
+\references{
+  Krueger, A. (1999) "Experimental Estimates Of Education
+  Production Functions," \emph{The Quarterly Journal of
+  Economics}, Vol. 114(2), pages 497-532, May.
+
+  Angrist, A. ad Pischke J-S (2008) \emph{Mostly Harmless
+  Econometrics: An Empiricist's Companion}, Princeton
+  University press
+}
+\seealso{
+  \code{\link[AER]{STAR}} for the original dataset.
+}
+\keyword{datasets}
+
