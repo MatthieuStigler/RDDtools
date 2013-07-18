@@ -75,7 +75,22 @@ model.frame.RDDreg_np <- function (formula, ...)
 #' @param object Object of class lm, from which RDDreg also inherits.
 #' @param clusterVar The variable containing the cluster attributions. 
 #' @return A matrix containing the covariance matrix estimate.
+#' @author Mahmood Arai, see \url{http://people.su.se/~ma/clmclx.R}
 #' @export
+#' @seealso \code{\link{clusterInf}} for a direct function, allowing also alternative cluster inference methods. 
+#' @examples
+#' data(STAR_MHE)
+#' if(all(c(require(sandwich), require(lmtest)))){
+#' 
+#' # Run simple regression:
+#' reg_krug <- lm(pscore~cs, data=STAR_MHE)
+#' 
+#' # Row 1 of Table 8.2.1, inference with standard vcovHC:
+#' coeftest(reg_krug,vcov.=vcovHC(reg_krug, "HC1"))[2,2]
+#' 
+#' # Row 4 of Table 8.2.1, inference with cluster vcovHC:
+#' coeftest(reg_krug,vcov.=vcovCluster(reg_krug, clusterVar=STAR_MHE$classid))[2,2]
+#' }
 
 vcovCluster   <- function(object, clusterVar){
   M <- length(unique(clusterVar))   
