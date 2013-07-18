@@ -30,9 +30,9 @@ RDDtools: main features
   +  RDD parametric estimation: **RDDreg_lm()** This includes specifying the polynomial order, including covariates with various specifications as advocated in [Imbens and Lemieux 2008].
   +  RDD local non-parametric estimation: **RDDreg_np()**. Can also include covariates, and allows different types of inference (fully non-parametric, or parametric approximation). 
   +  RDD generalised estimation: allows to use custom estimating functions to get the RDD coefficient. Could allow for example a probit RDD, or quantile regression.
-  + Various tools, to obtain predictions at given covariate values (**RDDpred()**), or to convert to other classes, to lm (**as.lm()**), or to the package *np* (**as.npreg()**). 
+  + Various tools, to obtain predictions at given covariate values ( **RDDpred()** ), or to convert to other classes, to lm ( **as.lm()** ), or to the package *np* ( **as.npreg()** ). 
 + Post-Estimation inference:
-  + Function to do inference with clustered data: **clusterInf()** either using a cluster covariance matrix (**vcovCluster()**) or by a degrees of freedom correction (as in [Cameron et al. 2008]).
+  + Function to do inference with clustered data: **clusterInf()** either using a cluster covariance matrix ( **vcovCluster()** ) or by a degrees of freedom correction (as in [Cameron et al. 2008]).
 + Regression sensitivity analysis:
   + Plot the sensitivity of the coefficient with respect to the bandwith: **plotSensi()**
   + *Placebo plot* using different cutpoints: **plotPlacebo()**
