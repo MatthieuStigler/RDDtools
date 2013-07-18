@@ -1,9 +1,9 @@
 \name{plotPlacebo}
 \alias{computePlacebo}
 \alias{plotPlacebo}
+\alias{plotPlacebo.RDDreg}
 \alias{plotPlaceboDens}
 \alias{plotPlaceboDens.RDDreg}
-\alias{plotPlacebo.RDDreg}
 \title{Draw a (density) plot of placebo tests}
 \usage{
   plotPlacebo(object, device = c("ggplot", "base"), ...)
