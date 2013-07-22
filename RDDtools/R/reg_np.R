@@ -211,7 +211,18 @@ plot.RDDreg_np <- function(x,binwidth,chart=c("locpoly", "np"), ...) {
 }
 }
 
+#' @S3method vcov RDDreg_np
+vcov.RDDreg_np <- function(object, ...){
 
+  infType <- infType(object)
+  if(infType=="np") {
+    warning("No vcov() available when RDDreg_np() was called with infType='np'")
+    res <- NULL
+  } else {
+    res <- vcov(object$RDDslot$model)
+  }
+  res
+}
 
 if(FALSE){
   library(RDDtools)
