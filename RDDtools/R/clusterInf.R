@@ -136,9 +136,9 @@ vcovCluster2 <- function(object, clusterVar1, clusterVar2){
     u1j   <- apply(estF, 2, function(x) tapply(x, clusterVar1,  sum)) 
     u2j   <- apply(estF, 2, function(x) tapply(x, clusterVar2,  sum)) 
     u12j  <- apply(estF, 2, function(x) tapply(x, clusterVar12, sum)) 
-    vc1   <-  dfc1*sandwich(object, meat=crossprod(u1j)/N )
-    vc2   <-  dfc2*sandwich(object, meat=crossprod(u2j)/N )
-    vc12  <- dfc12*sandwich(object, meat=crossprod(u12j)/N)
+    vc1   <-  dfc1*sandwich(object, meat.=crossprod(u1j)/N )
+    vc2   <-  dfc2*sandwich(object, meat.=crossprod(u2j)/N )
+    vc12  <- dfc12*sandwich(object, meat.=crossprod(u12j)/N)
     vcovMCL <- vc1 + vc2 - vc12
     vcovMCL
 }
