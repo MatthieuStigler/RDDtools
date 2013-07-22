@@ -126,7 +126,7 @@ RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c(
   } else {
     d <- X_i%*%coef(object)
 
-    Mat_DIFF <- cbind(-1, diag(nrow(d)-1))
+    
     Mat_SUM  <- cbind( 1, diag(nrow(d)-1))
     Mat_DIAG <- matrix(diag(mat), ncol=1)
     if(missing(weights)) {
@@ -136,6 +136,8 @@ RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c(
     }
     
     if(stat=="identity"){
+      Mat_DIFF <- Mat_SUM
+      Mat_DIFF[,1] <- -1
       pred_point <- drop(Mat_DIFF%*%d)
       if(se.fit) pred_se <- drop(sqrt(Mat_SUM %*%Mat_DIAG -2* mat[1,2:ncol(mat)]))
     } else {

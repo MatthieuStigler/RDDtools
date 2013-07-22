@@ -258,4 +258,4 @@ In RDDpred(reg_para4_cov_slSep, covdata = data.frame(z1 = c(0.2,  :
 > 
 > proc.time()
 utilisateur     système      écoulé 
-      1.860       0.130       8.429 
+      3.550       0.650       4.251 
