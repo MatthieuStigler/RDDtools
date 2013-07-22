@@ -37,12 +37,16 @@
 #'   RDDpred(reg_para_cov, covdata=data.frame(z1=0)) ## should obtain same result than with RDestimate
 #'   RDDpred(reg_para_cov, covdata=data.frame(z1=0.5)) #evaluate at mean of z1 (as comes from uniform)
 
-RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c("identity", "mean"), weights){
+RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c("identity", "sum", "mean"), weights){
 
   stat <- match.arg(stat)
 
   if(!missing(weights)) {
+    if(missing(covdata)) stop("Arg 'weights' only useful with arg 'covdata'")
     if(stat=="identity") stop("Argument 'weights' not useful when arg: stat='identity'")
+    if(stat=="sum") {
+      warning("Providing weights for a sum makes little sense?!")
+    }
     if(length(weights)!=NROW(covdata)) stop("Weights should be of the same length than covdata")
   }
 
@@ -73,10 +77,11 @@ RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c(
 ## Merge covdata with newdata:
 
   if(!missing(covdata)){
-    if(nrow(covdata)>1) newdata <- rbind(newdata[1,], Reduce(rbind, list(newdata[2,])[rep(1L, times=nrow(covdata))]))
+    Nrow_cov <- nrow(covdata)
+    if(Nrow_cov>1) newdata <- rbind(newdata[1,], Reduce(rbind, list(newdata[2,])[rep(1L, times=Nrow_cov)]))
     if(covar.strat=="residual") stop("Do not provide 'covdata' if covariates were use with 'residual' strategy")
     if(covar.slope=="separate"){
-      ind <- seq(from=2, by=2, length.out=nrow(covdata))
+      ind <- seq(from=2, by=2, length.out=Nrow_cov)
       colnames_cov <- colnames(covdata)
       if(!all(colnames_cov%in% colnames(newdata))) stop("Arg 'covdata' contains colnames not in the data")
       newdata[2:nrow(newdata), paste(colnames(covdata), "D", sep=":")] <- covdata
@@ -113,11 +118,13 @@ RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c(
     } else {
       MAT_SmallSum <- matrix(c(-1, weights), nrow=1)                            ## create vector: [- 1, w_1, w_2, w_n]
     }
+    
 
     if(stat=="identity"){
       pred_point <- drop(Mat_DIFF%*%d)
       if(se.fit) pred_se <- drop(sqrt(Mat_SUM %*%Mat_DIAG -2* mat[1,2:ncol(mat)]))
     } else {
+      if(stat=="mean" & missing(weights)) MAT_SmallSum <- MAT_SmallSum/Nrow_cov
       pred_point <- drop(MAT_SmallSum%*%d)
       if(se.fit) pred_se <- drop(sqrt(MAT_SmallSum%*%mat%*%t(MAT_SmallSum)))
     }
