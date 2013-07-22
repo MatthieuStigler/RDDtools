@@ -27,7 +27,7 @@
 #'   xCut <- res[which(res$x==min(res$x[res$x>=0]))+c(0,-1),]
 #'   points(xCut, col=2)
 #' }
-#' layout(matrix(1:4,2))
+#' layout(matrix(1:4,2, byrow=TRUE))
 #' plotCu(version=1)
 #' plotCu(version=2)
 #' plotCu(version=3)
