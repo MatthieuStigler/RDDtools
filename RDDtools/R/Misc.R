@@ -167,22 +167,3 @@ PLEASE NOTE THIS is currently only a development version. \nRun vignette('RDDtoo
 
 #format(Sys.Date(), "%A %Y-%m-%d")
 
-
-expand.formula <- function(formula, data, rhs=FALSE, rhs.var="y", int=FALSE, remove="D"){
-
-  if(!inherits(formula, "formula")) {
-    if(!grepl("~", formula)) {
-      formula <- paste(rhs.var, formula, sep="~")
-    }
-    formula <- as.formula(formula)
-  }
-  if(!any(grepl(paste("^", rhs.var, "$", sep=""), colnames(data)))) data[,rhs.var] <- rep(NA, nrow(data))
-
-  mm <-model.matrix(formula, data=data[1,])
-  mm_col <- colnames(mm)
-  if(!int && grepl("(Intercept)", mm_col)) mm_col <- mm_col[-grep("(Intercept)", mm_col)]
-  form <- paste(mm_col, collapse=" + ")
-  if(rhs) form <- as.formula(paste(rhs.var, "~", form))
-  if(grepl("\\+ D ", form)) form <- gsub("\\+ D ", "", form)
-  return(form)
-}

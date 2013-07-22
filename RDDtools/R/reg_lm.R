@@ -96,7 +96,6 @@ RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
   }
 
 ## Covariates
-  formu_x <- expand.formula("y~.", dat_step1)
   if(!is.null(covariates)){
     covar <- getCovar(RDDobject)
     formu.cova <- covariates
