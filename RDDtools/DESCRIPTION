@@ -17,7 +17,7 @@ Imports:
     lmtest, 
     Formula
 Suggests:
-    stats4
+    stats4, car
 Description: Provides a set of functions for RDD, from data visualisation,
     estimation and testing.
 License: GPL (>= 2)
