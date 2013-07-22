@@ -13,10 +13,40 @@ Z<- data.frame(z1=rnorm(n_Lee), z2=rnorm(n_Lee, mean=20, sd=2), z3=sample(letter
 Lee2008_rdd_z <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z,cutpoint=0)
 
 #### REGS
-
+bw_IK <- RDDbw_IK(Lee2008_rdd_z)
+w_IK <- RDDtools:::Kernel_tri(Lee2008_rdd_z$x, 0, bw_IK)
 reg_para4_cov_slSep <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates="z1", covar.opt=list(slope="separate"))
+reg_para4_cov_slSep_W <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates="z1", covar.opt=list(slope="separate"), weights=w_IK)
+reg_np_cov <- RDDreg_np(RDDobject=Lee2008_rdd_z, covariates="z1", bw=bw_IK, inference="lm")
+
+
+
 
 reg_para4_cov_slSep_2Z <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates="z1+z2", covar.opt=list(slope="separate"))
+
+reg_li <- list( reg_para4_cov_slSep=reg_para4_cov_slSep, 
+		reg_para4_cov_slSep_W=reg_para4_cov_slSep_W,
+		reg_np_cov=reg_np_cov,
+		reg_para4_cov_slSep_2Z=reg_para4_cov_slSep_2Z)
+
+checkRDDmean <- function(x, n=5){
+  covDF <- model.frame(x)
+  zDF <- grep("z", colnames(covDF), value=FALSE)
+  hasD <- zDF[-grep(":", colnames(covDF)[zDF])]
+
+  DF_1 <- covDF[1:n,hasD, drop=FALSE]
+  DF_2 <- data.frame(t(colMeans(DF_1)))
+
+  pred_1 <- RDDpred(x, covdata=DF_1, stat="mean")
+  pred_2 <- RDDpred(x, covdata=DF_2)
+  all.equal(pred_1, pred_2, check=FALSE)
+}
+
+sapply(reg_li, checkRDDmean)
+
+sapply(reg_li, function(x) all.equal(unlist(RDDpred(x)),RDDcoef(x, allInfo=TRUE)[1,1:2], check=FALSE))
+
+
 # 
 # reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
 # print(reg_para)

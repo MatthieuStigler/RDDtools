@@ -121,7 +121,7 @@ RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c(
 ## preds:
 
   if(!multiN) {
-    pred_point <- drop(diff(X_i%*%coef(object)))
+    pred_point <- drop(diff(X_i%*%RDDcoef(object, allCo=TRUE)))
     if(se.fit) pred_se    <- sqrt(sum(c(diag(mat), -2*mat[1,2])))
   } else {
     d <- X_i%*%coef(object)
