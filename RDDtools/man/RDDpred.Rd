@@ -3,7 +3,7 @@
 \title{RDD coefficient prediction}
 \usage{
   RDDpred(object, covdata, se.fit = TRUE, vcov. = NULL,
-    newdata, stat = c("identity", "mean"))
+    newdata, stat = c("identity", "mean"), weights)
 }
 \arguments{
   \item{object}{A RDD regression object}
@@ -19,6 +19,13 @@
 
   \item{newdata}{Another data on which to evaluate the x/D
   variables. useful in very few cases.}
+
+  \item{stat}{The statistic to use if there are multiple
+  predictions, 'identity' just returns the single values,
+  'mean' averages them}
+
+  \item{weights}{Eventual weights for the averaging of the
+  predicted values.}
 }
 \value{
   Returns the predicted value(s), and, if se.fit=TRUE,

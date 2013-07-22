@@ -6,6 +6,8 @@
 #' @param se.fit A switch indicating if standard errors are required.
 #' @param vcov. Specific covariance function (see package sandwich ), by default uses the \code{\link{vcov}}
 #' @param newdata Another data on which to evaluate the x/D variables. useful in very few cases. 
+#' @param stat The statistic to use if there are multiple predictions, 'identity' just returns the single values, 'mean' averages them 
+#' @param weights Eventual weights for the averaging of the predicted values. 
 #' @details The function RDDpred does a simple prediction of the RDD effect
 #'  \deqn{RDDeffect= \mu(x, z, D=1) - \mu(x, z, D=0)}
 #' When there are no covariates (and z is irrelevant in the equation above), this amounts exactly to the usual RDD coefficient, 
@@ -35,9 +37,14 @@
 #'   RDDpred(reg_para_cov, covdata=data.frame(z1=0)) ## should obtain same result than with RDestimate
 #'   RDDpred(reg_para_cov, covdata=data.frame(z1=0.5)) #evaluate at mean of z1 (as comes from uniform)
 
-RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c("identity", "mean")){
+RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c("identity", "mean"), weights){
 
   stat <- match.arg(stat)
+
+  if(!missing(weights)) {
+    if(stat=="identity") stop("Argument 'weights' not useful when arg: stat='identity'")
+    if(length(weights)!=NROW(covdata)) stop("Weights should be of the same length than covdata")
+  }
 
   x_call <- getCall(object)
   hasCo <- hasCovar(object)
@@ -78,12 +85,14 @@ RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c(
 
   multiN <- nrow(newdata)>2
 
-## Set up variance matrix: X_i (X'X)^{-1} X_i'
+## Merge and check no NAs
   X_i <- as.matrix(cbind(1,newdata))
   if(any(is.na(X_i))){
     warning("data contains NA. Were removed")
     X_i <- X_i[-apply(X_i, 1, function(x) any(is.na(x))),]
   }
+
+## Set up variance matrix: X_i (X'X)^{-1} X_i'
   if(is.null(vcov.)) vcov. <- vcov(object)
   X_inv <- vcov.
   mat <- X_i%*%X_inv%*%t(X_i)
@@ -99,7 +108,11 @@ RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c(
     Mat_DIFF <- cbind(-1, diag(nrow(d)-1))
     Mat_SUM  <- cbind( 1, diag(nrow(d)-1))
     Mat_DIAG <- matrix(diag(mat), ncol=1)
-    MAT_SmallSum <- matrix(c(-(nrow(d)-1), rep(1,nrow(d)-1  )), nrow=1)
+    if(missing(weights)) {
+      MAT_SmallSum <- matrix(c(-(nrow(d)-1), rep(1,nrow(d)-1  )), nrow=1) ## create vector: [- n-1, 1, 1, 1....]
+    } else {
+      MAT_SmallSum <- matrix(c(-1, weights), nrow=1)                            ## create vector: [- 1, w_1, w_2, w_n]
+    }
 
     if(stat=="identity"){
       pred_point <- drop(Mat_DIFF%*%d)
