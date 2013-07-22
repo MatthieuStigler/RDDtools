@@ -66,27 +66,9 @@ RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
   if(!missing(weights)&!is.null(bw)) stop("Cannot give both 'bw' and 'weights'")
   if(!is.null(covariates) & !hasCovar(RDDobject))  stop("Arg 'covariates' was specified, but no covariates found in 'RDDobject'.")
 
-## Construct data
+## Subsetting
   dat <- as.data.frame(RDDobject)
 
-  dat_step1 <- dat[, c("y", "x")]
-  dat_step1$x <- dat_step1$x -cutpoint
-  dat_step1$D <- ifelse(dat_step1$x>= 0, 1,0) ## NEW
-  if(order>0){
-    polys <- poly(dat_step1$x, degree=order, raw=TRUE)
-    colnames(polys) <- paste("x", 1:order, sep="^")
-    dat_step1  <- cbind(dat_step1[,c("y", "D")],polys)
-    if(slope=="separate") {
-      polys2 <- polys*dat_step1$D
-      colnames(polys2) <- paste(colnames(polys), "right", sep="_")
-      dat_step1  <- cbind(dat_step1,polys2)
-    }
-  } else {
-    dat_step1$x <- NULL
-  }
-
-
-## Subsetting
   if(!is.null(bw)){
     weights <- ifelse(dat$x >= cutpoint -bw & dat$x <= cutpoint +bw, 1, 0)
   } else if(!missing(weights)){
@@ -95,31 +77,10 @@ RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
     weights <- NULL
   }
 
-## Covariates
-  if(!is.null(covariates)){
-    covar <- getCovar(RDDobject)
-    formu.cova <- covariates
-
-    if(grepl("\\.", formu.cova)) formu.cova <- paste(colnames(covar), collapse=" + ")
-    if(covar.slope=="separate") { 
-      formu.cova <- paste(formu.cova, "+", paste("D*(", formu.cova,")", sep=""), sep=" ")
-      covar$D <- dat_step1$D
-    } 
-
-    formula.cova <- as.formula(paste("~", formu.cova))
-    mf <- model.frame(formula.cova, covar, na.action=na.pass)
-    M_covar <- model.matrix(formula.cova, data=mf)
-
-    if(covar.strat=="residual"){
-      M_covar <- data.frame(y=dat_step1$y, M_covar)
-      first_stage <- lm(y~., data=M_covar) ## regress y on covariates only
-      dat_step1$y <- residuals(first_stage) ## change in original data
-    } else {
-      rem <- switch(covar.slope, "separate"="^D$|(Intercept)", "same" ="(Intercept)")
-      M_covar <- M_covar[,-grep(rem, colnames(M_covar)), drop=FALSE	]
-      dat_step1 <- cbind(dat_step1, M_covar) ## add covar as regressors
-    }
-  } 
+## Construct data
+  if(missing(weights)) weights <- NULL
+  dat_step1 <- model.matrix(RDDobject, covariates=covariates, order=order, bw=bw, 
+			    slope=slope, covar.opt=covar.opt)
 
 ## Regression
   reg <- lm(y~., data=dat_step1, weights=weights)
