@@ -15,6 +15,8 @@ Lee2008_rdd_z <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z,cutpoint=0)
 #### REGS
 
 reg_para4_cov_slSep <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates="z1", covar.opt=list(slope="separate"))
+
+reg_para4_cov_slSep_2Z <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates="z1+z2", covar.opt=list(slope="separate"))
 # 
 # reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
 # print(reg_para)
@@ -131,7 +133,7 @@ all.equal(unlist(rdd_p_01_5z_Mb), drop(as.matrix(delta_01_5z_M[1:2])), check=FAL
 # all.equal(rdd_p_01_ALLz_M, rdd_p_01_ALLz_Mb, check=FALSE)
 
 #### Weighted mean!!
-w <- c(0.1, 0.2, 0.4, 0.2, 0.1)
+w_5 <- c(0.1, 0.2, 0.4, 0.2, 0.1)
 w <- c(0.4, 0.6)
 rdd_p_01_Sid <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0.2,1)), stat="identity")
 wm <- weighted.mean(rdd_p_01_Sid$fit , w=w)
@@ -151,3 +153,17 @@ all.equal(unlist(rdd_p_01_W_S), drop(as.matrix(delta_2z_w2[1:2])), check=FALSE)
 all.equal(unlist(rdd_p_01_W_M), drop(as.matrix(delta_2z_w2[1:2])), check=FALSE)
 
 
+###### 2 Z:
+df_2Z_5z <- Lee2008_rdd_z[1:5, c("z1", "z2")]
+df_2Z_5z_M <- data.frame(t(colMeans(df_2Z_5z)))
+df_2Z_5z_Mw <- data.frame(t(apply(df_2Z_5z, 2, weighted.mean, w=w_5)))
+
+rdd_p_sZ_5z_S <- RDDpred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z, stat="sum")
+rdd_p_sZ_5z_M <- RDDpred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z, stat="mean")
+rdd_p_sZ_5z_Mb <- RDDpred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z_M, stat="sum")
+
+rdd_p_sZ_5z_MW <- RDDpred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z, stat="mean", weights=w_5)
+rdd_p_sZ_5z_MWb <- RDDpred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z_Mw, stat="sum")
+
+all.equal(rdd_p_sZ_5z_M, rdd_p_sZ_5z_Mb, check=FALSE)
+all.equal(rdd_p_sZ_5z_MW, rdd_p_sZ_5z_MWb, check=FALSE)

@@ -104,10 +104,10 @@ RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c(
 
 ## preds:
 
-  pred_point <- drop(diff(X_i%*%coef(object)))
-  if(se.fit) pred_se    <- sqrt(sum(c(diag(mat), -2*mat[1,2])))
-
-  if(multiN) {
+  if(!multiN) {
+    pred_point <- drop(diff(X_i%*%coef(object)))
+    if(se.fit) pred_se    <- sqrt(sum(c(diag(mat), -2*mat[1,2])))
+  } else {
     d <- X_i%*%coef(object)
 
     Mat_DIFF <- cbind(-1, diag(nrow(d)-1))
@@ -119,7 +119,6 @@ RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c(
       MAT_SmallSum <- matrix(c(-1, weights), nrow=1)                            ## create vector: [- 1, w_1, w_2, w_n]
     }
     
-
     if(stat=="identity"){
       pred_point <- drop(Mat_DIFF%*%d)
       if(se.fit) pred_se <- drop(sqrt(Mat_SUM %*%Mat_DIAG -2* mat[1,2:ncol(mat)]))
