@@ -4,24 +4,26 @@ Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-pc-linux-gnu (64-bit)
 
-R est un logiciel libre livré sans AUCUNE GARANTIE.
-Vous pouvez le redistribuer sous certaines conditions.
-Tapez 'license()' ou 'licence()' pour plus de détails.
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
 
-R est un projet collaboratif avec de nombreux contributeurs.
-Tapez 'contributors()' pour plus d'information et
-'citation()' pour la façon de le citer dans les publications.
+  Natural language support but running in an English locale
 
-Tapez 'demo()' pour des démonstrations, 'help()' pour l'aide
-en ligne ou 'help.start()' pour obtenir l'aide au format HTML.
-Tapez 'q()' pour quitter R.
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
 
 > 
 > library(RDDtools)
-Le chargement a nécessité le package : sandwich
-Le chargement a nécessité le package : zoo
+Loading required package: sandwich
+Loading required package: zoo
 
-Attachement du package : ‘zoo’
+Attaching package: ‘zoo’
 
 The following object(s) are masked from ‘package:base’:
 
@@ -34,15 +36,15 @@ RDDtools 0.2
 PLEASE NOTE THIS is currently only a development version. 
 Run vignette('RDDtools') for the documentation
 > library(rdd)
-Le chargement a nécessité le package : lmtest
-Le chargement a nécessité le package : AER
-Le chargement a nécessité le package : car
-Le chargement a nécessité le package : MASS
-Le chargement a nécessité le package : nnet
-Le chargement a nécessité le package : Formula
-Le chargement a nécessité le package : strucchange
-Le chargement a nécessité le package : survival
-Le chargement a nécessité le package : splines
+Loading required package: lmtest
+Loading required package: AER
+Loading required package: car
+Loading required package: MASS
+Loading required package: nnet
+Loading required package: Formula
+Loading required package: strucchange
+Loading required package: survival
+Loading required package: splines
 > 
 > ## simple MC:
 > set.seed(123)

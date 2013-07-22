@@ -4,23 +4,25 @@ Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-pc-linux-gnu (64-bit)
 
-R est un logiciel libre livré sans AUCUNE GARANTIE.
-Vous pouvez le redistribuer sous certaines conditions.
-Tapez 'license()' ou 'licence()' pour plus de détails.
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
 
-R est un projet collaboratif avec de nombreux contributeurs.
-Tapez 'contributors()' pour plus d'information et
-'citation()' pour la façon de le citer dans les publications.
+  Natural language support but running in an English locale
 
-Tapez 'demo()' pour des démonstrations, 'help()' pour l'aide
-en ligne ou 'help.start()' pour obtenir l'aide au format HTML.
-Tapez 'q()' pour quitter R.
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
 
 > library(RDDtools)
-Le chargement a nécessité le package : sandwich
-Le chargement a nécessité le package : zoo
+Loading required package: sandwich
+Loading required package: zoo
 
-Attachement du package : ‘zoo’
+Attaching package: ‘zoo’
 
 The following object(s) are masked from ‘package:base’:
 
@@ -734,7 +736,7 @@ z3 1.963605   2.006329   0.04272426   -0.9146029 0.3605844
 z1 0.02251666  0.3936811
 z2 0.02684002  0.2006513
 z3 0.007305005 0.9999956
-Message d'avis :
+Warning message:
 In ks.test(x[regime], x[!regime], exact = exact) :
   p-values will be approximate in the presence of ties
 > covarTest_dis(Lee2008_rdd_z, bw=0.1)
@@ -742,7 +744,7 @@ In ks.test(x[regime], x[!regime], exact = exact) :
 z1 0.03544633 0.8429655
 z2 0.04718864 0.512701 
 z3 0.02398646 0.9950799
-Message d'avis :
+Warning message:
 In ks.test(x[regime], x[!regime], exact = exact) :
   p-values will be approximate in the presence of ties
 > 
