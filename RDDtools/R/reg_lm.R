@@ -56,15 +56,12 @@
 RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), covar.strat=c("include", "residual"), weights){
 
   checkIsRDD(RDDobject)
-  if(!missing(covar.strat)) warning("covar.strat is (soon) deprecated arg!")
+  cutpoint <- getCutpoint(RDDobject)
 
   slope <- match.arg(slope)
-  covar.strat <- match.arg(covar.opt$strategy, choices=c("include", "residual"))
-  covar.slope <- match.arg(covar.opt$slope, choices=c("same", "separate"))
-  
-  cutpoint <- getCutpoint(RDDobject)
+
+  if(!missing(covar.strat)) warning("covar.strat is (soon) deprecated arg!")  
   if(!missing(weights)&!is.null(bw)) stop("Cannot give both 'bw' and 'weights'")
-  if(!is.null(covariates) & !hasCovar(RDDobject))  stop("Arg 'covariates' was specified, but no covariates found in 'RDDobject'.")
 
 ## Subsetting
   dat <- as.data.frame(RDDobject)

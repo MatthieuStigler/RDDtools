@@ -36,36 +36,19 @@
 #' summary(reg_bin_glm)
 #'
 
-RDDgenreg <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.strat=c("include", "residual"), weights, fun=glm, ...){
-  
-  slope <- match.arg(slope)
-  covar.strat <- match.arg(covar.strat)
+RDDgenreg <- function(RDDobject, fun=glm, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), weights, ...){
+
   checkIsRDD(RDDobject)
   cutpoint <- getCutpoint(RDDobject)
+
+  slope <- match.arg(slope)
+
   if(!missing(weights)&!is.null(bw)) stop("Cannot give both 'bw' and 'weights'")
-  if(!is.null(covariates) & !hasCovar(RDDobject))  stop("Arg 'covariates' was specified, but no covariates found in 'RDDobject'.")
-  
-  ## Construct data
-  dat <- as.data.frame(RDDobject)
-  
-  dat_step1 <- dat[, c("y", "x")]
-  dat_step1$x <- dat_step1$x -cutpoint
-  dat_step1$D <- ifelse(dat_step1$x>= 0, 1,0) ## NEW
-  if(order>0){
-    polys <- poly(dat_step1$x, degree=order, raw=TRUE)
-    colnames(polys) <- paste("x", 1:order, sep="^")
-    dat_step1  <- cbind(dat_step1[,c("y", "D")],polys)
-    if(slope=="separate") {
-      polys2 <- polys*dat_step1$D
-      colnames(polys2) <- paste(colnames(polys), "right", sep="_")
-      dat_step1  <- cbind(dat_step1,polys2)
-    }
-  } else {
-    dat_step1$x <- NULL
-  }
-  
-  
+
+
   ## Subsetting
+  dat <- as.data.frame(RDDobject)
+
   if(!is.null(bw)){
     weights <- ifelse(dat$x >= cutpoint -bw & dat$x <= cutpoint +bw, 1, 0)
   } else if(!missing(weights)){
@@ -73,23 +56,13 @@ RDDgenreg <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
   } else {
     weights <- NULL
   }
-  
-  ## Covariates
-  if(!is.null(covariates)){
-    covar <- getCovar(RDDobject)
-    formu <- as.Formula(paste("y", covariates, sep="~"))
-    mod_frame_cov <- model.frame(formu, covar, lhs=FALSE)
-    
-    if(covar.strat=="residual"){
-      mod_frame_cov$y <- dat_step1$y
-      first_stage <- fun(formu, data=mod_frame_cov) ## regress y on covariates only
-      dat_step1$y <- residuals(first_stage) ## change in original data
-    } else {
-      dat_step1 <- cbind(dat_step1, mod_frame_cov) ## add covar as regressors
-    }
-  } 
-  
-  ## Regression
+
+## Construct data
+  if(missing(weights)) weights <- NULL
+  dat_step1 <- model.matrix(RDDobject, covariates=covariates, order=order, bw=bw, 
+			    slope=slope, covar.opt=covar.opt)
+
+## Regression
   reg <- fun(y~., data=dat_step1, weights=weights,...)
   
   ##Return
