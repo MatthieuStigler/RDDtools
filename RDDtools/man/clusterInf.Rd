@@ -43,6 +43,11 @@ clusRandom <- sample(nlet[1:60], size=nrow(Lee2008_rdd), replace=TRUE)
 clusterInf(reg_para, clusterVar=clusRandom)
 clusterInf(reg_para, clusterVar=clusRandom, type="HC")
 }
+\references{
+  Wooldridge (2003) Cluster-sample methods in applied
+  econometrics. \emph{AmericanEconomic Review}, 93, p.
+  133-138
+}
 \seealso{
   \code{\link{vcovCluster}}, which implements the
   cluster-robust covariance matrix estimator used by

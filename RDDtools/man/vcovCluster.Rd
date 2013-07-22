@@ -1,8 +1,11 @@
 \name{vcovCluster}
 \alias{vcovCluster}
+\alias{vcovCluster2}
 \title{Cluster Heteroskedasticity-consistent estimation of the covariance matrix.}
 \usage{
   vcovCluster(object, clusterVar)
+
+  vcovCluster2(object, clusterVar1, clusterVar2)
 }
 \arguments{
   \item{object}{Object of class lm, from which RDDreg also
@@ -10,6 +13,9 @@
 
   \item{clusterVar}{The variable containing the cluster
   attributions.}
+
+  \item{clusterVar1,clusterVar2}{The two cluster variables
+  for the 2-cluster case.}
 }
 \value{
   A matrix containing the covariance matrix estimate.
@@ -33,10 +39,27 @@ coeftest(reg_krug,vcov.=vcovCluster(reg_krug, clusterVar=STAR_MHE$classid))[2,2]
 }
 }
 \author{
-  Mahmood Arai, see \url{http://people.su.se/~ma/clmclx.R}
+  Mahmood Arai, see
+  \url{http://people.su.se/~ma/econometrics.html}
+}
+\references{
+  Cameron, C., Gelbach, J. and Miller, D. (2011) Robust
+  Inference With Multiway Clustering, \emph{Journal of
+  Business and Economic Statistics}, vol. 29(2), pages
+  238-249. #'
+
+  Wooldridge (2003) Cluster-sample methods in applied
+  econometrics. \emph{AmericanEconomic Review}, 93, p.
+  133-138
+
+  Arai, M. (2011) Cluster-robust standard errors using R,
+  Note available
+  \url{http://people.su.se/~ma/clustering.pdf}.
 }
 \seealso{
   \code{\link{clusterInf}} for a direct function, allowing
-  also alternative cluster inference methods.
+  also alternative cluster inference methods. See also
+  \code{\link[rms]{robcov}} from package \code{rms} for
+  another implementation of the cluster robust.
 }
 
