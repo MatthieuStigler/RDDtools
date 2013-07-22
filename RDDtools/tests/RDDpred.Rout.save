@@ -29,7 +29,7 @@ The following object(s) are masked from ‘package:base’:
 KernSmooth 2.23 loaded
 Copyright M. P. Wand 1997-2009
 
-RDDtools 0.2 (rev Sunday 2013-07-14, opened on lun. 22 juil. 2013 00:00:00 CET). 
+RDDtools 0.2
 PLEASE NOTE THIS is currently only a development version. 
 Run vignette('RDDtools') for the documentation
 > library(car)

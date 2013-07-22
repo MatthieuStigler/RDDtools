@@ -162,8 +162,8 @@ getOriginalData.RDDreg <- function(object, na.rm=TRUE, classRDD=TRUE){
 getCall.RDDreg <- function(x,...) attr(x, "RDDcall")
 
 .onLoad <- function(libname, pkgname)
-   packageStartupMessage("\nRDDtools ", utils:::packageVersion("RDDtools"), " (rev Sunday 2013-07-14, opened on ", format(Sys.Date(), "%c"),"). 
-PLEASE NOTE THIS is currently only a development version. \nRun vignette('RDDtools') for the documentation")
+    packageStartupMessage("\nRDDtools ", utils:::packageVersion("RDDtools"), 
+      "\nPLEASE NOTE THIS is currently only a development version. \nRun vignette('RDDtools') for the documentation")
 
 #format(Sys.Date(), "%A %Y-%m-%d")
 
