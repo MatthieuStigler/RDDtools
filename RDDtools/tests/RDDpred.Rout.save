@@ -94,7 +94,7 @@ Le chargement a nécessité le package : nnet
 > delta_1 <- deltaMethod(aaa, "a1 - a2 + a12", parameterNames=paste("a", 1:12, sep=""))
 > rdd_p_1
 $fit
-         2 
+         1 
 0.07886429 
 
 $se.fit
@@ -112,7 +112,7 @@ a1 - a2 + a12 0.07886429 0.01361366
 > delta_0 <- deltaMethod(aaa, "a1 - a2 ", parameterNames=paste("a", 1:12, sep=""))
 > rdd_p_0
 $fit
-         2 
+         1 
 0.07644637 
 
 $se.fit
@@ -153,7 +153,7 @@ a1 - a2  0.07644637 0.01324368
 > all.equal(rdd_p_01_all$se.fit, c(delta_0[1,2], delta_1[1,2]))
 [1] TRUE
 > c(rdd_p_01_M$fit/2, rdd_p_01_AGG$fit)
-                    2 
+                    1 
 0.03882766 0.07765533 
 > 
 > ## compare sum (stat=sum)
@@ -179,8 +179,8 @@ a1 - a2  0.07644637 0.01324368
 > rdd_p_01_5zPos_Sb <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=sum(Lee2008_rdd_z$z1[ind_z_pos])), stat="sum")
 > rdd_p_01_5z_M <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=Lee2008_rdd_z$z1[1:5]), stat="mean")
 > rdd_p_01_5z_Mb <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=mean(Lee2008_rdd_z$z1[1:5])), stat="mean")
-> # rdd_p_01_ALLz_M <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=Lee2008_rdd_z$z1), stat="mean")
-> # rdd_p_01_ALLz_Mb <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=mean(Lee2008_rdd_z$z1)), stat="mean")
+> rdd_p_01_ALLz_M <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=Lee2008_rdd_z$z1), stat="mean")
+> rdd_p_01_ALLz_Mb <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=mean(Lee2008_rdd_z$z1)), stat="mean")
 > 
 > del <- function(x, mean=FALSE) {
 +   n <- length(x)

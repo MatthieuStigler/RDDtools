@@ -107,8 +107,8 @@ rdd_p_01_5zPos_S <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=Lee2008_r
 rdd_p_01_5zPos_Sb <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=sum(Lee2008_rdd_z$z1[ind_z_pos])), stat="sum")
 rdd_p_01_5z_M <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=Lee2008_rdd_z$z1[1:5]), stat="mean")
 rdd_p_01_5z_Mb <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=mean(Lee2008_rdd_z$z1[1:5])), stat="mean")
-# rdd_p_01_ALLz_M <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=Lee2008_rdd_z$z1), stat="mean")
-# rdd_p_01_ALLz_Mb <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=mean(Lee2008_rdd_z$z1)), stat="mean")
+rdd_p_01_ALLz_M <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=Lee2008_rdd_z$z1), stat="mean")
+rdd_p_01_ALLz_Mb <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=mean(Lee2008_rdd_z$z1)), stat="mean")
 
 del <- function(x, mean=FALSE) {
   n <- length(x)

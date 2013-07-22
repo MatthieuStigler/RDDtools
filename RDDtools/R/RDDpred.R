@@ -87,12 +87,18 @@ RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c(
 ## Merge covdata with newdata:
 
   if(!missing(covdata)){
-    Nrow_cov <- nrow(covdata)
-    if(Nrow_cov>1) newdata <- rbind(newdata[1,], Reduce(rbind, list(newdata[2,])[rep(1L, times=Nrow_cov)]))
     if(covar.strat=="residual") stop("Do not provide 'covdata' if covariates were use with 'residual' strategy")
     if(covar.slope=="separate"){
-      ind <- seq(from=2, by=2, length.out=Nrow_cov)
+      Nrow_cov <- nrow(covdata)
+      if(Nrow_cov>1) newdata <- newdata[c(1, rep(2,Nrow_cov)),]
+      if(!is.null(rownames(covdata))) { 
+	  if("1" %in% rownames(covdata)) rownames(newdata)[1] <- "0"
+	  rownames(newdata)[-1] <- rownames(covdata)
+      } else {
+	rownames(newdata) <- c(0, seq_len(Nrow_cov))
+      }
       colnames_cov <- colnames(covdata)
+      ind <- seq(from=2, by=2, length.out=Nrow_cov)
       if(!all(colnames_cov%in% colnames(newdata))) stop("Arg 'covdata' contains colnames not in the data")
       newdata[2:nrow(newdata), paste(colnames(covdata), "D", sep=":")] <- covdata
     }
