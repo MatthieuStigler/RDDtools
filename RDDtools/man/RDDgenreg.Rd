@@ -2,10 +2,10 @@
 \alias{RDDgenreg}
 \title{General polynomial estimator of the regression discontinuity}
 \usage{
-  RDDgenreg(RDDobject, covariates = NULL, order = 1,
-    bw = NULL, slope = c("separate", "same"),
-    covar.strat = c("include", "residual"), weights,
-    fun = glm, ...)
+  RDDgenreg(RDDobject, fun = glm, covariates = NULL,
+    order = 1, bw = NULL, slope = c("separate", "same"),
+    covar.opt = list(strategy = c("include", "residual"), slope = c("same", "separate"), bw = NULL),
+    weights, ...)
 }
 \arguments{
   \item{RDDobject}{Object of class RDDdata created by
@@ -18,16 +18,17 @@
   \item{bw}{A bandwidth to specify the subset on which the
   kernel weighted regression is estimated}
 
-  \item{covar.strat}{Way to include covariates, either in
-  the main regression (\code{include}) or as regressors of
-  y in a first step (\code{residual}).}
-
   \item{weights}{Optional weights to pass to the lm
   function. Note this cannot be entered together with
   \code{bw}}
 
   \item{slope}{Whether slopes should be different on left
   or right (separate), or the same.}
+
+  \item{covar.opt}{Options for the inclusion of covariates.
+  Way to include covariates, either in the main regression
+  (\code{include}) or as regressors of y in a first step
+  (\code{residual}).}
 
   \item{fun}{The function to estimate the parameters}
 

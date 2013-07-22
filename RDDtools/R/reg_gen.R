@@ -6,9 +6,9 @@
 #' @param covariates Formula to include covariates
 #' @param order Order of the polynomial regression. 
 #' @param bw A bandwidth to specify the subset on which the kernel weighted regression is estimated
-#' @param covar.strat Way to include covariates, either in the main regression (\code{include}) or as regressors of y in a first step (\code{residual}). 
 #' @param weights Optional weights to pass to the lm function. Note this cannot be entered together with \code{bw}
 #' @param slope Whether slopes should be different on left or right (separate), or the same.
+#' @param covar.opt Options for the inclusion of covariates. Way to include covariates, either in the main regression (\code{include}) or as regressors of y in a first step (\code{residual}). 
 #' @param fun The function to estimate the parameters
 #' @param \ldots Further argumetns passed to fun. See the example. 
 #' @details This function allows the user to use a custom estimating function, instead of the traditional \code{lm()}. 
