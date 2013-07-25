@@ -23,7 +23,7 @@
 #'
 
 
-RDDreg_np <- function(RDDobject, covariates=NULL, bw=RDDbw_IK(RDDobject), slope=c("separate", "same"), inference=c("np", "lm")){
+RDDreg_np <- function(RDDobject, covariates=NULL, bw=RDDbw_IK(RDDobject), slope=c("separate", "same"), inference=c("np", "lm"), covar.opt=list(slope=c("same", "separate"), bw=NULL)){
 
   slope <- match.arg(slope)
   inference <- match.arg(inference)
@@ -31,28 +31,17 @@ RDDreg_np <- function(RDDobject, covariates=NULL, bw=RDDbw_IK(RDDobject), slope=
   cutpoint <- getCutpoint(RDDobject)
 
   if(!is.null(covariates)) warning("covariates not fully implemented for non-para reg")
-## Construct data
-  dat <- as.data.frame(RDDobject)
 
-  dat_step1 <- dat[, c("y", "x")]
-  dat_step1$x <- dat_step1$x -cutpoint
-  dat_step1$D <- ifelse(dat_step1$x >= 0, 1,0)
-  if(slope=="separate") {
-    dat_step1$x_right <- dat_step1$x*dat_step1$D 
-  }
+## Construct data
+  if("strategy"%in%names(covar.opt)) warning("Arg 'strategy' should not be used for ")
+  covar.opt$strategy <- "include"
+  dat <- as.data.frame(RDDobject)
+  dat_step1 <- model.matrix(RDDobject, covariates=covariates, order=1, bw=bw, 
+			    slope=slope, covar.opt=covar.opt, xforce=TRUE)
+
 
 ### Weights
   kernel_w <- Kernel_tri(dat_step1[,"x"], center=0, bw=bw)
-
-## Covariates
-
-  if(!is.null(covariates)){
-    covar <- getCovar(RDDobject)
-    formu <- as.Formula(paste("y", covariates, sep="~"))
-    mod_frame_cov <- model.frame(formu, covar, lhs=FALSE)
-    dat_step1 <- cbind(dat_step1, mod_frame_cov) ## add covar as regressors
-  } 
-
 
 ## Regression
   reg <- lm(y~., data=dat_step1, weights=kernel_w)
