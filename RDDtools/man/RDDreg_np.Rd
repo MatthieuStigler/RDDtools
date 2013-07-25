@@ -5,7 +5,8 @@
   RDDreg_np(RDDobject, covariates = NULL,
     bw = RDDbw_IK(RDDobject),
     slope = c("separate", "same"),
-    inference = c("np", "lm"))
+    inference = c("np", "lm"),
+    covar.opt = list(slope = c("same", "separate"), bw = NULL))
 }
 \arguments{
   \item{RDDobject}{Object of class RDDdata created by
@@ -22,6 +23,11 @@
 
   \item{slope}{Whether slopes should be different on left
   or right (separate), or the same.}
+
+  \item{covar.opt}{Options for the inclusion of covariates.
+  Way to include covariates, either in the main regression
+  (\code{include}) or as regressors of y in a first step
+  (\code{residual}).}
 }
 \value{
   An object of class RDDreg_np and class lm, with specific
