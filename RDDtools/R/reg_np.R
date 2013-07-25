@@ -38,7 +38,7 @@ RDDreg_np <- function(RDDobject, covariates=NULL, bw=RDDbw_IK(RDDobject), slope=
   covar.opt$strategy <- "include"
   dat <- as.data.frame(RDDobject)
   dat_step1 <- model.matrix(RDDobject, covariates=covariates, order=1, bw=bw, 
-			    slope=slope, covar.opt=covar.opt, xforce=TRUE)
+			    slope=slope, covar.opt=covar.opt)
 
 
 ### Weights

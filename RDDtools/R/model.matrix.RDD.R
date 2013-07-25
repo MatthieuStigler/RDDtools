@@ -1,6 +1,6 @@
 #' @S3method model.matrix RDDdata
 
-model.matrix.RDDdata <- function(object, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), covar.strat=c("include", "residual"), xforce=FALSE, ...){
+model.matrix.RDDdata <- function(object, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), covar.strat=c("include", "residual"), ...){
 
   checkIsRDD(object)
   RDDobject <- object
@@ -59,10 +59,8 @@ model.matrix.RDDdata <- function(object, covariates=NULL, order=1, bw=NULL, slop
     }
   }
 
-## xforce
-  if(xforce){
-    colnames(dat_step1) <- gsub("x\\^1", "x", colnames(dat_step1))
-  }
+## Colnames cleaning
+  colnames(dat_step1) <- gsub("x\\^1", "x", colnames(dat_step1))
 
 
 ## return results: 

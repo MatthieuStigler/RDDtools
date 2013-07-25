@@ -101,16 +101,12 @@ getCovar <- function(object){
   as.data.frame(res)
 }
 
-getXname <- function(object){
-  if(inherits(object, "RDDreg_lm")) "x^1" else "x"
-}
 
 
 getOriginalX <- function(object){
 
   cutpoint <- getCutpoint(object)
-  Xnam <- getXname(object) 
-  x <- object$model[,Xnam]
+  x <- object$model[,"x"]
   if(cutpoint!=0)  x <- x+cutpoint
   x
 }
