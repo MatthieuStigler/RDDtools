@@ -1,3 +1,19 @@
+RDDtools 0.21
+===========
+Updated on 25/7/13
+
+* Add new function RDDpred
+
+* Add new model.matrix.RDDdata, preparing all output, now used by all RDDreg_np, RDDreg_lm, RDDgenre...
+
+* Add method vcov.RDDreg, as.lm.RDDreg
+
+* Add enw function vcovCluster2, complement doc, add M Arai, 
+
+* Add data STAR_MHE
+
+* Many small fixes
+
 RDDtools 0.2
 ===========
 Updated on 16/7/13
