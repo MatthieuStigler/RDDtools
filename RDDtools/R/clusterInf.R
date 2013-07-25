@@ -29,18 +29,15 @@
 
 
 clusterInf <- function(object, clusterVar, vcov. = NULL, type=c("df-adj", "HC"), ...){
-
-
+  
+  if(is.null(clusterVar)) stop("clusterVar seems to be NULL?")
   type <- match.arg(type)
 
-  npar <- length(coef(object))
-  nClus <- if(is.factor(clusterVar)) nlevels(clusterVar) else length(unique(clusterVar))
-
-  if(type=="HC" & !is.null(vcov.)) warning("arg 'vcov.' not used when 'type=HC'")
-
   if(type=="df-adj"){
+    nClus <- if(is.factor(clusterVar)) nlevels(clusterVar) else length(unique(clusterVar))
     res <- coeftest(object, vcov. = vcov., df = nClus, ...)
   } else {
+    if(!is.null(vcov.)) warning("arg 'vcov.' not used when 'type=HC' (default vcovCluster used)")
     res <- coeftest(object, vcov. = function(x) vcovCluster(x, clusterVar=clusterVar), ...)
   }
 
