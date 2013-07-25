@@ -617,13 +617,13 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > clusterInf(reg_para, clusterVar=model.frame(reg_para)$x, type="df-adj")
 
-z test of coefficients:
+t test of coefficients:
 
              Estimate Std. Error  t value  Pr(>|t|)    
 (Intercept) 0.4329479  0.0042758 101.2544 < 2.2e-16 ***
 D           0.1182314  0.0056799  20.8159 < 2.2e-16 ***
-`x^1`       0.2969065  0.0115464  25.7142 < 2.2e-16 ***
-`x^1_right` 0.0459776  0.0135015   3.4054 0.0006607 ***
+x           0.2969065  0.0115464  25.7142 < 2.2e-16 ***
+x_right     0.0459776  0.0135015   3.4054 0.0006663 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
