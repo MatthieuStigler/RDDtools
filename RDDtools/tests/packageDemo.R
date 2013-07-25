@@ -144,7 +144,7 @@ plSe_reg_para_0
 ###### Post-inference: ######
 
 clusterInf(reg_para, clusterVar=model.frame(reg_para)$x, type="df-adj")
-clusterInf(reg_para, clusterVar=model.frame(reg_para)[, "x^1"], type="HC")
+clusterInf(reg_para, clusterVar=model.frame(reg_para)$x, type="HC")
 
 
 ############################################

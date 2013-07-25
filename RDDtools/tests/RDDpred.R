@@ -75,8 +75,8 @@ sapply(reg_li, function(x) all.equal(unlist(RDDpred(x)),RDDcoef(x, allInfo=TRUE)
 mf_2 <- model.frame(reg_para4_cov_slSep)
 # formula(reg_para4_cov_slSep)
 # 
-aa <- lm("y ~ D + `x^1` + `x^2` + `x^3` + `x^4` + `x^1_right` + `x^2_right` + `x^3_right` + `x^4_right` + z1 + `z1:D`", data=mf_2)
-aaa <- lm("y ~ -1+ D + I(1-D)+`x^1` + `x^2` + `x^3` + `x^4` + `x^1_right` + `x^2_right` + `x^3_right` + `x^4_right` + z1 + `z1:D`", data=mf_2)
+aa <- lm("y ~ D + `x` + `x^2` + `x^3` + `x^4` + `x_right` + `x^2_right` + `x^3_right` + `x^4_right` + z1 + `z1:D`", data=mf_2)
+aaa <- lm("y ~ -1+ D + I(1-D)+`x` + `x^2` + `x^3` + `x^4` + `x_right` + `x^2_right` + `x^3_right` + `x^4_right` + z1 + `z1:D`", data=mf_2)
 # 
 # diff(coef(aaa)[2:1])
 # RDDpred(reg_para4_cov_slSep)
