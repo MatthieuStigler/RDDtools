@@ -76,16 +76,16 @@ effect 2.4
 > printCoefmat(coef(summary(RDD_np_sep_inflm$RDDslot$model)))
              Estimate Std. Error t value  Pr(>|t|)    
 (Intercept) 6.7943125  0.0074768 908.722 < 2.2e-16 ***
-x           0.2984534  0.0022980 129.876 < 2.2e-16 ***
 D           2.4175554  0.0106230 227.578 < 2.2e-16 ***
+x           0.2984534  0.0022980 129.876 < 2.2e-16 ***
 x_right     0.1007346  0.0032831  30.683 < 2.2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > printCoefmat(coef(summary(RDD_np_same_inflm$RDDslot$model)))
              Estimate Std. Error t value  Pr(>|t|)    
 (Intercept) 6.9205374  0.0088024  786.21 < 2.2e-16 ***
-x           0.3478051  0.0023140  150.31 < 2.2e-16 ***
 D           2.4225702  0.0149756  161.77 < 2.2e-16 ***
+x           0.3478051  0.0023140  150.31 < 2.2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > printCoefmat(coef(summary(RDD_lm_sep)))

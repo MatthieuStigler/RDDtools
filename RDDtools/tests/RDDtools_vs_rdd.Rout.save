@@ -69,11 +69,13 @@ Xr           -8.803442 15.3610618 -0.5731012 5.678375e-01
 > RDDtools_co
               Estimate Std. Error     t value     Pr(>|t|)
 (Intercept)   1.770044  0.7972657  2.22014276 2.862216e-02
-x           -10.971380 18.0143071 -0.60903701 5.438540e-01
 D            11.905253  1.0010665 11.89256902 5.556052e-21
+x           -10.971380 18.0143071 -0.60903701 5.438540e-01
 x_right       2.167938 23.6744056  0.09157305 9.272169e-01
 > 
-> all.equal(rdd_co[-4,], RDDtools_co[c(1,3,2),], check=FALSE)
+> all.equal(rdd_co[-4,], RDDtools_co[1:3,], check=FALSE)
+[1] TRUE
+> all.equal(rdd_co[4,1], sum(RDDtools_co[3:4,1]), check=FALSE)
 [1] TRUE
 > 
 > 
