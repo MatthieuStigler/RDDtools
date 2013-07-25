@@ -172,7 +172,7 @@ delta_2z_w <- deltaMethod(aaa, "0.4*(a1 - a2) + 0.4*0.2*a12+0.6*(a1 - a2) + 0.6*
 delta_2z_w2 <- deltaMethod(aaa, "1*(a1 - a2) + 0.4*0.2*a12 + 0.6*a12", parameterNames=paste("a", 1:12, sep=""))
 delta_2z_w3 <- deltaMethod(aaa, "1*(a1 - a2) + a12*(0.4*0.2 + 0.6)", parameterNames=paste("a", 1:12, sep=""))
 all(delta_2z_w==delta_2z_w2)
-all(delta_2z_w==delta_2z_w3)
+all.equal(delta_2z_w, delta_2z_w3, check=FALSE)
 all.equal(delta_2z_w[1,1],wm)
 
 rdd_p_01_W_S <- RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0.2,1)), stat="sum", weights=w)

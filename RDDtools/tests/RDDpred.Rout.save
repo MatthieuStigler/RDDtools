@@ -263,7 +263,7 @@ a1 - a2  0.07644637 0.01324368
 > delta_2z_w3 <- deltaMethod(aaa, "1*(a1 - a2) + a12*(0.4*0.2 + 0.6)", parameterNames=paste("a", 1:12, sep=""))
 > all(delta_2z_w==delta_2z_w2)
 [1] TRUE
-> all(delta_2z_w==delta_2z_w3)
+> all.equal(delta_2z_w, delta_2z_w3, check=FALSE)
 [1] TRUE
 > all.equal(delta_2z_w[1,1],wm)
 [1] TRUE
