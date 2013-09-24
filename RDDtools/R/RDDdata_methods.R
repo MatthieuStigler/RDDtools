@@ -15,8 +15,27 @@ summary.RDDdata <- function(object, ...){
   cat("\nCovariates:", hasCovar_eng, "\n")
 }
 
-
+#' Plot RDDdata
+#' 
+#' Binned plot of the forcing and outcome variable
+#' 
+#' @param x Object of class RDDdata
+#' @param h h The binwidth parameter (note this differs from the bandwidth parameter!)
+#' @param xlim The range of the x data
+#' @param cex Size of the points, see \code{\link{par}}
+#' @param nplot Number of plot to draw
+#' @param type Type of device used
+#' @param \ldots Further arguments passed to the \code{\link{plot}} function.
+#' @return A plot
+#' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
+#' @examples
+#' data(Lee2008)
+#' rd<- RDDdata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
+#'
+#' plot(rd)
+#' @method plot RDDdata
 #' @S3method plot RDDdata
+
 
 ### PLOT method
 plot.RDDdata <- function(x,  h, xlim=range(object$x, na.rm=TRUE), cex=0.7, nplot=1,type=c("base", "ggplot"),...){
