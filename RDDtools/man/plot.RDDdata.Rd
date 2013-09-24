@@ -4,7 +4,7 @@
 \usage{
   \method{plot}{RDDdata} (x, h,
     xlim = range(object$x, na.rm = TRUE), cex = 0.7,
-    nplot = 1, type = c("base", "ggplot"), ...)
+    nplot = 1, device = c("base", "ggplot"), ...)
 }
 \arguments{
   \item{x}{Object of class RDDdata}
@@ -18,7 +18,7 @@
 
   \item{nplot}{Number of plot to draw}
 
-  \item{type}{Type of device used}
+  \item{device}{Type of device used. Currently not used.}
 
   \item{\ldots}{Further arguments passed to the
   \code{\link{plot}} function.}

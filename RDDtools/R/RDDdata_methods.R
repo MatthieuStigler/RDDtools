@@ -24,7 +24,7 @@ summary.RDDdata <- function(object, ...){
 #' @param xlim The range of the x data
 #' @param cex Size of the points, see \code{\link{par}}
 #' @param nplot Number of plot to draw
-#' @param type Type of device used
+#' @param device Type of device used. Currently not used.
 #' @param \ldots Further arguments passed to the \code{\link{plot}} function.
 #' @return A plot
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
@@ -38,11 +38,11 @@ summary.RDDdata <- function(object, ...){
 
 
 ### PLOT method
-plot.RDDdata <- function(x,  h, xlim=range(object$x, na.rm=TRUE), cex=0.7, nplot=1,type=c("base", "ggplot"),...){
+plot.RDDdata <- function(x,  h, xlim=range(object$x, na.rm=TRUE), cex=0.7, nplot=1, device=c("base", "ggplot"),...){
 
   object <- x
   cutpoint <- getCutpoint(object)
-  type <- match.arg(type)
+  device <- match.arg(device)
 
 ## bandwidth: use Ruppert, Sheather and Wand (KernSmooth:::dpill)
   if(missing(h)) {
