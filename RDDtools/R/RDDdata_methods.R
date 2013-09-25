@@ -20,7 +20,8 @@ summary.RDDdata <- function(object, ...){
 #' Binned plot of the forcing and outcome variable
 #' 
 #' @param x Object of class RDDdata
-#' @param h h The binwidth parameter (note this differs from the bandwidth parameter!)
+#' @param h The binwidth parameter (note this differs from the bandwidth parameter!)
+#' @param nbins Alternative to h, the total number of bins in the plot.
 #' @param xlim The range of the x data
 #' @param cex Size of the points, see \code{\link{par}}
 #' @param nplot Number of plot to draw
@@ -38,14 +39,14 @@ summary.RDDdata <- function(object, ...){
 
 
 ### PLOT method
-plot.RDDdata <- function(x,  h, xlim=range(object$x, na.rm=TRUE), cex=0.7, nplot=1, device=c("base", "ggplot"),...){
+plot.RDDdata <- function(x, h, nbins=NULL, xlim=range(object$x, na.rm=TRUE), cex=0.7, nplot=1, device=c("base", "ggplot"),...){
 
   object <- x
   cutpoint <- getCutpoint(object)
   device <- match.arg(device)
 
 ## bandwidth: use Ruppert, Sheather and Wand (KernSmooth:::dpill)
-  if(missing(h)) {
+  if(missing(h) & is.null(nbins)) {
     if(!all(xlim==range(object$x, na.rm=TRUE))){
       object <- subset(object, x> min(xlim) & x< max(xlim))
     }
@@ -56,7 +57,7 @@ plot.RDDdata <- function(x,  h, xlim=range(object$x, na.rm=TRUE), cex=0.7, nplot
       se <- seq(from=1-floor(nplot/2)*0.2, to=1+floor(nplot/2)*0.2, by=.2)
     }
     hs <- if(nplot==1) h else se *h
-  } else {
+  } else if(!missing(h) & is.null(nbins)){
     if(length(h)==1){
       if(is.even(nplot)) {
 	se <- seq(from=1-(sum(1:nplot<(nplot/2)))*0.2, to=1+(sum(1:nplot>(nplot/2)))*0.2, by=.2)
@@ -71,6 +72,11 @@ plot.RDDdata <- function(x,  h, xlim=range(object$x, na.rm=TRUE), cex=0.7, nplot
 	stop("Length of h should be either one or equal to nplot (", nplot, ")")
       }
     }
+  } else if(!is.null(nbins)){
+    hs <- rep(0.05, nplot)
+    if(length(nbins)!=nplot){
+      stop("Length of nbins should be equal to nplot (", nplot, ")")
+    }
   }
 
 
@@ -81,7 +87,7 @@ plot.RDDdata <- function(x,  h, xlim=range(object$x, na.rm=TRUE), cex=0.7, nplot
   par_orig <- par()
   par(mfrow=c(nplot,1))
   for(i in 1:nplot){
-    plotBin(x=object$x, y=object$y, cutpoint=cutpoint, h=hs[i], xlim=xlim, cex=cex,...)
+    plotBin(x=object$x, y=object$y, cutpoint=cutpoint, h=hs[i], nbins=nbins[i], xlim=xlim, cex=cex,...)
   }
   par(mfrow=c(1,1))
 
@@ -129,16 +135,18 @@ as.lm.RDDreg <- function(x) as.lm_RDD(x)
 
 ### EXAMPLE
 if(FALSE){
-#   lee_dat4 <- read.csv("/home/mat/Dropbox/HEI/rdd/Rcode/IK bandwidth/datasets/imbens_from_MATLAB.csv", header=FALSE)
-#   head(lee_dat4)
-# 
-#   a<-RDDdata(y=lee_dat4[,2], x=lee_dat4[,1], cutpoint=0)
-# head(a)
-# getCutpoint(a)
-# hasCovar(a)
-# summary(a)
-# plot(a)
-# plot(a, nplot=1)
-# plot(object=a, xlim=c(-0.5, 0.5))
-# plot(a, xlim=c(-0.5, 0.5), h=c(0.1, 0.05, 0.01))
+  library(RDDtools)
+#   data(Lee2008)
+
+
+  environment(plot.RDDdata) <- environment(RDDdata)
+
+  Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+  plot(Lee2008_rdd)
+
+  plot(Lee2008_rdd, h=0.2)
+  plot(Lee2008_rdd, h=c(0.2,0.3,0.4), nplot=3)
+
+  plot(Lee2008_rdd, nbins=21)
+
 }

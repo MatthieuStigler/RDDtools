@@ -2,15 +2,18 @@
 \alias{plot.RDDdata}
 \title{Plot RDDdata}
 \usage{
-  \method{plot}{RDDdata} (x, h,
+  \method{plot}{RDDdata} (x, h, nbins = NULL,
     xlim = range(object$x, na.rm = TRUE), cex = 0.7,
     nplot = 1, device = c("base", "ggplot"), ...)
 }
 \arguments{
   \item{x}{Object of class RDDdata}
 
-  \item{h}{h The binwidth parameter (note this differs from
+  \item{h}{The binwidth parameter (note this differs from
   the bandwidth parameter!)}
+
+  \item{nbins}{Alternative to h, the total number of bins
+  in the plot.}
 
   \item{xlim}{The range of the x data}
 

@@ -15,7 +15,7 @@
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 #' @keywords internal
 
-plotBin <-  function(x, y, h=0.05, cutpoint=0,  plot=TRUE, type=c("value", "number"),xlim=range(x, na.rm=TRUE), cex=0.9,main=NULL, xlab, ylab, ...){
+plotBin <-  function(x, y, h=0.05, nbins=NULL, cutpoint=0,  plot=TRUE, type=c("value", "number"),xlim=range(x, na.rm=TRUE), cex=0.9,main=NULL, xlab, ylab, ...){
 
   type <- match.arg(type)
   x_name <- if(missing(xlab)) deparse(substitute(x)) else xlab
@@ -26,15 +26,28 @@ plotBin <-  function(x, y, h=0.05, cutpoint=0,  plot=TRUE, type=c("value", "numb
   min_x <- min(xlim)
   max_x <- max(xlim)
 
-  K0 <- ceiling((cutpoint-min_x)/h)
-  K1 <- ceiling((cutpoint+max_x)/h)
+  if(!is.null(nbins)) h <- diff(xlim)/nbins
+
+  K0 <- ceiling((cutpoint-min_x)/h) # Number of cells on left
+  K1 <- ceiling((cutpoint+max_x)/h) # Number of cells on right
   K <- K0+K1
+  if(!is.null(nbins) && K!=nbins) {
+    ranges <- c(cutpoint-min_x, cutpoint+max_x)
+    if(which.min(ranges)==1) {
+      K0 <- K0-1 
+    } else {
+      K1 <- K1-1 
+    }
+    K <- K0+K1
+  }
+
   b_k <- cutpoint - (K0-c(1:K)+1)*h # Lee and Lemieux (2010) p. 308
   mid_points_bk <- b_k+h/2
   n_bins <- length(mid_points_bk)
+  brk <- c(b_k,cutpoint + (K1+2)*h)
 
 ## compute output (mean of count)
-  intervs <- cut(x, breaks=c(b_k,max_x), include.lowest=TRUE)
+  intervs <- cut(x, breaks=brk, include.lowest=TRUE)
   table_intervs <- table(intervs)
   n_non0_intervs <- sum(table_intervs!=0)
 

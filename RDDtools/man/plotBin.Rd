@@ -2,8 +2,8 @@
 \alias{plotBin}
 \title{Bin plotting}
 \usage{
-  plotBin(x, y, h = 0.05, cutpoint = 0, plot = TRUE,
-    type = c("value", "number"),
+  plotBin(x, y, h = 0.05, nbins = NULL, cutpoint = 0,
+    plot = TRUE, type = c("value", "number"),
     xlim = range(x, na.rm = TRUE), cex = 0.9, main = NULL,
     xlab, ylab, ...)
 }
