@@ -32,11 +32,31 @@
 \description{
   Binned plot of the forcing and outcome variable
 }
+\details{
+  Produces a simple binned plot averaging values within
+  each interval. The length of the intervals is specified
+  with the argument \code{h}, specifying the whole binwidth
+  (contrary to the usual bandwidth argument, that gives
+  half of the length of the kernel window. When no
+  bandwidth is given, the bandwidth of Ruppert et al is
+  used, see \code{\link{RDDbw_RSW}}.
+}
 \examples{
 data(Lee2008)
-rd<- RDDdata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
+Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+plot(Lee2008_rdd)
 
-plot(rd)
+## Specify manually the bandwidth:
+plot(Lee2008_rdd, h=0.2)
+
+## Show three plots with different bandwidth:
+plot(Lee2008_rdd, h=c(0.2,0.3,0.4), nplot=3)
+
+## Specify instead of the bandwidth, the final number of bins:
+plot(Lee2008_rdd, nbins=22)
+
+## If the specified number of bins is odd, the larger number is given to side with largest range
+plot(Lee2008_rdd, nbins=21)
 }
 \author{
   Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
