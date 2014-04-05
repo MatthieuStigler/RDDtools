@@ -25,14 +25,14 @@ Loading required package: zoo
 
 Attaching package: ‘zoo’
 
-The following object(s) are masked from ‘package:base’:
+The following objects are masked from ‘package:base’:
 
     as.Date, as.Date.numeric
 
 KernSmooth 2.23 loaded
 Copyright M. P. Wand 1997-2009
 
-RDDtools 0.2
+RDDtools 0.21
 PLEASE NOTE THIS is currently only a development version. 
 Run vignette('RDDtools') for the documentation
 > library(rdd)

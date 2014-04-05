@@ -31,7 +31,7 @@ The following object(s) are masked from ‘package:base’:
 KernSmooth 2.23 loaded
 Copyright M. P. Wand 1997-2009
 
-RDDtools 0.2
+RDDtools 0.21
 PLEASE NOTE THIS is currently only a development version. 
 Run vignette('RDDtools') for the documentation
 > library(car)
