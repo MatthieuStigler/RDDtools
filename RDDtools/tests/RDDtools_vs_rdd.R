@@ -11,6 +11,7 @@ RD <- RDDdata(x=x, y=y, cutpoint=0, z=cov)
 
 ### Simple estimation:
 bw <- IKbandwidth(X=x, Y=y, cutpoint=0)
+bw
 rdd_mod <- RDestimate(y~x, bw=bw, se.type="const", model=TRUE)$model[[1]]
 RDDtools_mod <- RDDreg_np(RD, bw=bw, inference="lm")
 
