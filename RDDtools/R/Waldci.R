@@ -17,8 +17,8 @@ waldci <- function(x, parm = NULL, level = 0.95, vcov. = NULL, df = NULL, ...)
 waldci.default <- function(x, parm = NULL, level = 0.95, vcov. = NULL, df = NULL, ...)
 {
   ## use S4 methods if loaded
-  coef0 <- if("stats4" %in% loadedNamespaces()) stats4:::coef else coef
-  vcov0 <- if("stats4" %in% loadedNamespaces()) stats4:::vcov else vcov
+  coef0 <- if("stats4" %in% loadedNamespaces()) stats4::coef else coef
+  vcov0 <- if("stats4" %in% loadedNamespaces()) stats4::vcov else vcov
 
   ## extract coefficients and standard errors
   est <- coef0(x)
@@ -60,18 +60,23 @@ if(is.character(parm)) parm <- which(names(est)%in% parm )
 } 
 
 
+## copy of stats:::format.perc
+format.perc <- function (probs, digits) 
+  paste(format(100 * probs, trim = TRUE, scientific = FALSE, digits = digits), 
+        "%")
+
 waldci.RDDreg_np <- function(x, level = 0.95, vcov. = NULL, df = Inf, ...){
 
   inf_met <- infType(x) ## def in Misc.R
   if(inf_met=="se"){
     if(!is.null(vcov.)|!is.infinite(df)) {warning("Arg 'vcov.' and 'df' only work for RDDreg with inf='lm'")
     }
-    ## code recycled from stats:::confint.default
+    ## code recycled from stats::confint.default
     co <- RDDcoef(x, allInfo=TRUE)
     a <- (1 - level)/2
     a <- c(a, 1 - a)
     fac <- qnorm(a)
-    pct <- stats:::format.perc(a, 3) ## import!!
+    pct <- format.perc(a, 3) ## import!!
     ci <- array(NA, dim = c(1, 2L), dimnames = list("D",   pct))
     ci[] <- co[,"Estimate"] + co[,"Std. Error"] %o% fac
     return(ci)
