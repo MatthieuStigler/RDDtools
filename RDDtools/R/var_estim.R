@@ -53,6 +53,19 @@ var_estim <- function(x,y, point, bw, eachSide=TRUE){
 res
 }
 
+
+#' @importFrom locpol locpol 
+#' @importFrom locpol gaussK
+
+### Add locpol kernel for uniform:
+uniK <- function(x) ifelse(abs(x) <= 1, 1/2, 0)
+attr(uniK, "RK") <- 1/2 ## Rk: kernel(u)^2
+attr(uniK,"mu0K") <- 1
+attr(uniK,"mu2K") <- 1/3 ## second orde rmoment of K
+attr(uniK,"K4") <- NA ## see with author!
+attr(uniK,"RdK") <- NA ## see with author!
+attr(uniK, "dom") <- c(-1,1) ##
+
 var_estim2 <- function(x,y, point, bw, estim=c("var", "NW", "NW_loc", "LL_kern", "LL_loc", "var_loc"), sides=c("both", "uni"), kernel=c("Normal", "Uniform"), dfadj=TRUE){
 
   sides <- match.arg(sides)
