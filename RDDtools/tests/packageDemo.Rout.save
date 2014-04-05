@@ -19,15 +19,6 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > library(RDDtools)
-Loading required package: sandwich
-Loading required package: zoo
-
-Attaching package: ‘zoo’
-
-The following object(s) are masked from ‘package:base’:
-
-    as.Date, as.Date.numeric
-
 KernSmooth 2.23 loaded
 Copyright M. P. Wand 1997-2009
 
@@ -738,7 +729,7 @@ z2 0.02684002  0.2006513
 z3 0.007305005 0.9999956
 Warning message:
 In ks.test(x[regime], x[!regime], exact = exact) :
-  p-values will be approximate in the presence of ties
+  p-value will be approximate in the presence of ties
 > covarTest_dis(Lee2008_rdd_z, bw=0.1)
    statistic  p.value  
 z1 0.03544633 0.8429655
@@ -746,7 +737,7 @@ z2 0.04718864 0.512701
 z3 0.02398646 0.9950799
 Warning message:
 In ks.test(x[regime], x[!regime], exact = exact) :
-  p-values will be approximate in the presence of ties
+  p-value will be approximate in the presence of ties
 > 
 > #### as npreg
 >   reg_nonpara_np <- as.npreg(reg_nonpara, adjustIK_bw=FALSE)

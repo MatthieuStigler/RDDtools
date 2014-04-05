@@ -20,15 +20,6 @@ Type 'q()' to quit R.
 
 > 
 > library(RDDtools)
-Loading required package: sandwich
-Loading required package: zoo
-
-Attaching package: ‘zoo’
-
-The following objects are masked from ‘package:base’:
-
-    as.Date, as.Date.numeric
-
 KernSmooth 2.23 loaded
 Copyright M. P. Wand 1997-2009
 
@@ -36,15 +27,21 @@ RDDtools 0.21
 PLEASE NOTE THIS is currently only a development version. 
 Run vignette('RDDtools') for the documentation
 > library(rdd)
+Loading required package: sandwich
 Loading required package: lmtest
+Loading required package: zoo
+
+Attaching package: 'zoo'
+
+The following objects are masked from 'package:base':
+
+    as.Date, as.Date.numeric
+
 Loading required package: AER
 Loading required package: car
-Loading required package: MASS
-Loading required package: nnet
-Loading required package: Formula
-Loading required package: strucchange
 Loading required package: survival
 Loading required package: splines
+Loading required package: Formula
 > 
 > ## simple MC:
 > set.seed(123)
