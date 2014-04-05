@@ -6,8 +6,6 @@ Date: 25/07/2013
 Authors@R: person("Matthieu", "Stigler", role = c("aut","cre"),
     email="Matthieu.Stigler@iheid.ch")
 Maintainer: Matthieu Stigler <Matthieu.Stigler@iheid.ch>
-Depends:
-    sandwich
 Imports:
     KernSmooth,
     ggplot2,
