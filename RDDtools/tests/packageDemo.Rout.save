@@ -739,6 +739,19 @@ Warning message:
 In ks.test(x[regime], x[!regime], exact = exact) :
   p-value will be approximate in the presence of ties
 > 
+> covarTest_mean(reg_para4_cov)
+   mean of x   mean of y   Difference  statistic  p.value  
+z1 0.001423447 0.006434915 0.005011469 -0.2005416 0.8410639
+z2 20.0026     19.97715    -0.02544849 0.5065413  0.6124957
+z3 1.978102    1.989785    0.01168304  -0.5762938 0.5644386
+> covarTest_dis(reg_para4_cov)
+   statistic   p.value  
+z1 0.02251666  0.3936811
+z2 0.02684002  0.2006513
+z3 0.007305005 0.9999956
+Warning message:
+In ks.test(x[regime], x[!regime], exact = exact) :
+  p-value will be approximate in the presence of ties
 > #### as npreg
 >   reg_nonpara_np <- as.npreg(reg_nonpara, adjustIK_bw=FALSE)
 >   reg_nonpara_np
@@ -775,4 +788,4 @@ x_right     0.004460978 0.003995962  97.94840  0.000000e+00
 > 
 > proc.time()
 utilisateur     système      écoulé 
-     11.460       0.150      12.246 
+      8.384       0.184       8.567 
