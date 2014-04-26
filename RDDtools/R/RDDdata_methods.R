@@ -117,7 +117,15 @@ plot.RDDdata <- function(x, h, nbins=NULL, xlim=range(object$x, na.rm=TRUE), cex
 
 #' Convert a rdd object to lm
 #' @param x An object to convert to lm
-
+#' @return An object of class \code{lm}
+#' @seealso \code{\link{as.npreg}} which converts \code{RDDreg} objects into \code{npreg} from package \code{np}.
+#' @examples 
+#' data(Lee2008)
+#' Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+#' reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
+#' reg_para_lm <- as.lm(reg_para)
+#' reg_para_lm
+#' plot(reg_para_lm, which=4)
 #' @export
 as.lm <- function(x)
   UseMethod("as.lm")

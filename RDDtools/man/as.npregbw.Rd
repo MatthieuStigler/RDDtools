@@ -14,6 +14,9 @@ as.npreg(x, ...)
   \item{\ldots}{Further arguments passed to the
   \code{\link{npregbw}} or \code{\link{npreg}}}
 }
+\value{
+An object of class \code{npreg} or \code{npregbw}
+}
 \description{
 Convert an RDDobject to a non-parametric regression
 \code{npreg} from package \code{np}
@@ -46,5 +49,9 @@ one obtains back the univariate kernel.
  bw_lm <- dnorm(Lee2008_rdd$x, sd=RDDtools:::getBW(reg_nonpara))
  reg_nonpara_gaus <- RDDreg_lm(RDDobject=Lee2008_rdd, w=bw_lm)
  all.equal(RDDcoef(reg_nonpara_gaus),RDDcoef(reg_nonpara_np))
+}
+\seealso{
+\code{\link{as.lm}} which converts \code{RDDreg} objects
+into \code{lm}.
 }
 

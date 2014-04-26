@@ -9,6 +9,7 @@
 #' proceeds as if the kernerl was univariate. A simple solution to make the multivariate kernel similar to the  univariate one 
 #' is to set the bandwidth for x and Dx to a large number, so that they converge towards a constant, and one obtains back the univariate kernel. 
 #' @export
+#' @return An object of class \code{npreg} or \code{npregbw}
 #' @seealso \code{\link{as.lm}} which converts \code{RDDreg} objects into \code{lm}.
 #' @examples
 #' # Estimate ususal RDDreg:
