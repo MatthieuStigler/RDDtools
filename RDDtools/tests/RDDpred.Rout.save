@@ -68,7 +68,7 @@ In RDDreg_np(RDDobject = Lee2008_rdd_z, covariates = "z1", bw = bw_IK,  :
 + 
 +   pred_1 <- RDDpred(x, covdata=DF_1, stat="mean")
 +   pred_2 <- RDDpred(x, covdata=DF_2)
-+   all.equal(pred_1, pred_2, check=FALSE)
++   all.equal(pred_1, pred_2, check.attributes=FALSE)
 + }
 > 
 > sapply(reg_li, checkRDDmean)
@@ -77,7 +77,7 @@ In RDDreg_np(RDDobject = Lee2008_rdd_z, covariates = "z1", bw = bw_IK,  :
 reg_para4_cov_slSep_2Z 
                   TRUE 
 > 
-> sapply(reg_li, function(x) all.equal(unlist(RDDpred(x)),RDDcoef(x, allInfo=TRUE)[1,1:2], check=FALSE))
+> sapply(reg_li, function(x) all.equal(unlist(RDDpred(x)),RDDcoef(x, allInfo=TRUE)[1,1:2], check.attributes=FALSE))
    reg_para4_cov_slSep  reg_para4_cov_slSep_W             reg_np_cov 
                   TRUE                   TRUE                   TRUE 
 reg_para4_cov_slSep_2Z 
@@ -135,7 +135,7 @@ $se.fit
 > delta_1
                 Estimate         SE
 a1 - a2 + a12 0.07886429 0.01361366
-> all.equal(unlist(rdd_p_1), drop(as.matrix(delta_1[1:2])), check=FALSE)
+> all.equal(unlist(rdd_p_1), drop(as.matrix(delta_1[1:2])), check.attributes=FALSE)
 [1] TRUE
 > 
 > ## compare RDDpred and Delta at 0:
@@ -154,11 +154,11 @@ $se.fit
     Estimate Std. Error  t value     Pr(>|t|)
 D 0.07644637 0.01324368 5.772289 8.178184e-09
 > delta_0
-           Estimate         SE
-a1 - a2  0.07644637 0.01324368
-> all.equal(unlist(rdd_p_0), drop(as.matrix(delta_0[1:2])), check=FALSE)
+          Estimate         SE
+a1 - a2 0.07644637 0.01324368
+> all.equal(unlist(rdd_p_0), drop(as.matrix(delta_0[1:2])), check.attributes=FALSE)
 [1] TRUE
-> all.equal(unlist(rdd_p_0), drop(as.matrix(rdd_c_0[1:2])), check=FALSE)
+> all.equal(unlist(rdd_p_0), drop(as.matrix(rdd_c_0[1:2])), check.attributes=FALSE)
 [1] TRUE
 > 
 > ## compare RDDpred and Delta at 2 points:
@@ -170,11 +170,11 @@ a1 - a2  0.07644637 0.01324368
 > delta_01_S <- deltaMethod(aaa, "2*(a1 - a2) +1*a12", parameterNames=paste("a", 1:12, sep=""))
 > delta_01_M <- deltaMethod(aaa, "(2*(a1 - a2) +1*a12)/2", parameterNames=paste("a", 1:12, sep=""))
 > delta_01_S
-                    Estimate         SE
-2*(a1 - a2) +1*a12 0.1553107 0.02664323
-> delta_01_M
                          Estimate         SE
-(2*(a1 - a2) +1*a12)/2 0.07765533 0.01332161
+2 * (a1 - a2) + 1 * a12 0.1553107 0.02664323
+> delta_01_M
+                              Estimate         SE
+(2 * (a1 - a2) + 1 * a12)/2 0.07765533 0.01332161
 > 
 > all(delta_01_S/2==delta_01_M)
 [1] TRUE
@@ -189,17 +189,17 @@ a1 - a2  0.07644637 0.01324368
 0.03882766 0.07765533 
 > 
 > ## compare sum (stat=sum)
-> all.equal(unlist(rdd_p_01_S), drop(as.matrix(delta_01_S[1:2])), check=FALSE)
+> all.equal(unlist(rdd_p_01_S), drop(as.matrix(delta_01_S[1:2])), check.attributes=FALSE)
 [1] TRUE
 > 
 > ## compare mean (stat=mean)
-> all.equal(unlist(rdd_p_01_M), drop(as.matrix(delta_01_M[1:2])), check=FALSE)
+> all.equal(unlist(rdd_p_01_M), drop(as.matrix(delta_01_M[1:2])), check.attributes=FALSE)
 [1] TRUE
 > all.equal(rdd_p_01_M$fit, rdd_p_01_S$fit/2)
 [1] TRUE
-> all.equal(rdd_p_01_M$fit, rdd_p_01_AGG$fit, check=FALSE)
+> all.equal(rdd_p_01_M$fit, rdd_p_01_AGG$fit, check.attributes=FALSE)
 [1] TRUE
-> all.equal(rdd_p_01_M$se.fit, rdd_p_01_AGG$se.fit, check=FALSE)
+> all.equal(rdd_p_01_M$se.fit, rdd_p_01_AGG$se.fit, check.attributes=FALSE)
 [1] TRUE
 > 
 > ## compare RDDpred and Delta at 5 first points:
@@ -229,17 +229,17 @@ a1 - a2  0.07644637 0.01324368
 > delta_01_5z_S <- deltaMethod(aaa, del(x=Lee2008_rdd_z$z1[1:5]), parameterNames=paste("a", 1:12, sep=""), func="RDD")
 > delta_01_5z_M <- deltaMethod(aaa, del(x=Lee2008_rdd_z$z1[1:5], mean=TRUE), parameterNames=paste("a", 1:12, sep=""), func="RDD")
 > 
-> all.equal(unlist(rdd_p_01_5z_S), drop(as.matrix(delta_01_5z_S[1:2])), check=FALSE)
+> all.equal(unlist(rdd_p_01_5z_S), drop(as.matrix(delta_01_5z_S[1:2])), check.attributes=FALSE)
 [1] TRUE
-> all.equal(unlist(rdd_p_01_5z_Sb), drop(as.matrix(delta_01_5z_S[1:2])), check=FALSE)
+> all.equal(unlist(rdd_p_01_5z_Sb), drop(as.matrix(delta_01_5z_S[1:2])), check.attributes=FALSE)
 [1] "Mean relative difference: 3.880226"
-> all.equal(unlist(rdd_p_01_5z_M), drop(as.matrix(delta_01_5z_M[1:2])), check=FALSE)
+> all.equal(unlist(rdd_p_01_5z_M), drop(as.matrix(delta_01_5z_M[1:2])), check.attributes=FALSE)
 [1] TRUE
-> all.equal(unlist(rdd_p_01_5z_Mb), drop(as.matrix(delta_01_5z_M[1:2])), check=FALSE)
+> all.equal(unlist(rdd_p_01_5z_Mb), drop(as.matrix(delta_01_5z_M[1:2])), check.attributes=FALSE)
 [1] TRUE
 > 
 > ## All z:
-> # all.equal(rdd_p_01_ALLz_M, rdd_p_01_ALLz_Mb, check=FALSE)
+> # all.equal(rdd_p_01_ALLz_M, rdd_p_01_ALLz_Mb, check.attributes=FALSE)
 > 
 > #### Weighted mean!!
 > w_5 <- c(0.1, 0.2, 0.4, 0.2, 0.1)
@@ -252,7 +252,7 @@ a1 - a2  0.07644637 0.01324368
 > delta_2z_w3 <- deltaMethod(aaa, "1*(a1 - a2) + a12*(0.4*0.2 + 0.6)", parameterNames=paste("a", 1:12, sep=""))
 > all(delta_2z_w==delta_2z_w2)
 [1] TRUE
-> all.equal(delta_2z_w, delta_2z_w3, check=FALSE)
+> all.equal(delta_2z_w, delta_2z_w3, check.attributes=FALSE)
 [1] TRUE
 > all.equal(delta_2z_w[1,1],wm)
 [1] TRUE
@@ -265,9 +265,9 @@ In RDDpred(reg_para4_cov_slSep, covdata = data.frame(z1 = c(0.2,  :
 > all.equal(rdd_p_01_W_M$fit,wm)
 [1] TRUE
 > 
-> all.equal(unlist(rdd_p_01_W_S), drop(as.matrix(delta_2z_w2[1:2])), check=FALSE)
+> all.equal(unlist(rdd_p_01_W_S), drop(as.matrix(delta_2z_w2[1:2])), check.attributes=FALSE)
 [1] TRUE
-> all.equal(unlist(rdd_p_01_W_M), drop(as.matrix(delta_2z_w2[1:2])), check=FALSE)
+> all.equal(unlist(rdd_p_01_W_M), drop(as.matrix(delta_2z_w2[1:2])), check.attributes=FALSE)
 [1] TRUE
 > 
 > 
@@ -283,9 +283,9 @@ In RDDpred(reg_para4_cov_slSep, covdata = data.frame(z1 = c(0.2,  :
 > rdd_p_sZ_5z_MW <- RDDpred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z, stat="mean", weights=w_5)
 > rdd_p_sZ_5z_MWb <- RDDpred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z_Mw, stat="sum")
 > 
-> all.equal(rdd_p_sZ_5z_M, rdd_p_sZ_5z_Mb, check=FALSE)
+> all.equal(rdd_p_sZ_5z_M, rdd_p_sZ_5z_Mb, check.attributes=FALSE)
 [1] TRUE
-> all.equal(rdd_p_sZ_5z_MW, rdd_p_sZ_5z_MWb, check=FALSE)
+> all.equal(rdd_p_sZ_5z_MW, rdd_p_sZ_5z_MWb, check.attributes=FALSE)
 [1] TRUE
 > 
 > proc.time()

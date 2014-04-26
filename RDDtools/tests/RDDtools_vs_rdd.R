@@ -20,8 +20,8 @@ RDDtools_co <- RDDcoef(RDDtools_mod, allCo=TRUE, allInfo=TRUE)
 rdd_co
 RDDtools_co
 
-all.equal(rdd_co[-4,], RDDtools_co[1:3,], check=FALSE)
-all.equal(rdd_co[4,1], sum(RDDtools_co[3:4,1]), check=FALSE)
+all.equal(rdd_co[-4,], RDDtools_co[1:3,], check.attributes=FALSE)
+all.equal(rdd_co[4,1], sum(RDDtools_co[3:4,1]), check.attributes=FALSE)
 
 
 ### Covariate estimation:
@@ -33,5 +33,5 @@ RDDtools_co_cov <- RDDcoef(RDDtools_mod_cov, allCo=TRUE, allInfo=TRUE)
 rdd_co_cov
 RDDtools_co_cov
 
-all.equal(rdd_co_cov[-4,], RDDtools_co_cov[-4,], check=FALSE)
+all.equal(rdd_co_cov[-4,], RDDtools_co_cov[-4,], check.attributes=FALSE)
 

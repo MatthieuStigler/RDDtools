@@ -72,9 +72,9 @@ D           10.8995093  0.4071983 26.7670789 7.187232e-107
 x            0.3076565  1.1003584  0.2795966  7.798762e-01
 x_right      0.6930668  1.5365013  0.4510681  6.520914e-01
 > 
-> all.equal(rdd_co[-4,], RDDtools_co[1:3,], check=FALSE)
+> all.equal(rdd_co[-4,], RDDtools_co[1:3,], check.attributes=FALSE)
 [1] TRUE
-> all.equal(rdd_co[4,1], sum(RDDtools_co[3:4,1]), check=FALSE)
+> all.equal(rdd_co[4,1], sum(RDDtools_co[3:4,1]), check.attributes=FALSE)
 [1] TRUE
 > 
 > 
@@ -101,7 +101,7 @@ x_right      0.04881865 0.22449550  0.2174594  8.278950e-01
 cov          3.04154403 0.05189778 58.6064361  0.000000e+00
 `cov:D`     -0.03728164 0.06948406 -0.5365496  5.916988e-01
 > 
-> all.equal(rdd_co_cov[-4,], RDDtools_co_cov[-4,], check=FALSE)
+> all.equal(rdd_co_cov[-4,], RDDtools_co_cov[-4,], check.attributes=FALSE)
 [1] TRUE
 > 
 > 

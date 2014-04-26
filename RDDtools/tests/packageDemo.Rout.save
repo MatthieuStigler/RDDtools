@@ -156,7 +156,7 @@ F-statistic:  4450 on 3 and 6554 DF,  p-value: < 2.2e-16
 
 > plot(reg_para)
 > 
-> all.equal(unlist(RDDpred(reg_para)), RDDcoef(reg_para, allInfo=TRUE)[1:2], check=FALSE)
+> all.equal(unlist(RDDpred(reg_para)), RDDcoef(reg_para, allInfo=TRUE)[1:2], check.attributes=FALSE)
 [1] TRUE
 > 
 > ## Difference in means regression:
@@ -210,7 +210,7 @@ D 0.076590   0.013239  5.7851 7.582e-09 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > plot(reg_para4)
-> all.equal(unlist(RDDpred(reg_para4)), RDDcoef(reg_para4, allInfo=TRUE)[1:2], check=FALSE)
+> all.equal(unlist(RDDpred(reg_para4)), RDDcoef(reg_para4, allInfo=TRUE)[1:2], check.attributes=FALSE)
 [1] TRUE
 > 
 > ## Restrict sample to bandwidth area:
@@ -230,7 +230,7 @@ D 0.059164   0.020596  2.8726 0.004098 **
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > plot(reg_para_ik)
 > 
-> all.equal(unlist(RDDpred(reg_para_ik)), RDDcoef(reg_para_ik, allInfo=TRUE)[1:2], check=FALSE)
+> all.equal(unlist(RDDpred(reg_para_ik)), RDDcoef(reg_para_ik, allInfo=TRUE)[1:2], check.attributes=FALSE)
 [1] TRUE
 > 
 > ## Covariates:
