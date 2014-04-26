@@ -8,7 +8,7 @@
 #' @param var.equal Argument of the \code{\link{t.test}} function:  logical variable indicating whether to treat the two variances as being equal
 #' @param p.adjust Whether to adjust the p-values for multiple testing. Uses the \code{\link{p.adjust}} function
 #' @param \ldots currently not used
-#' @return A data frame with, for each variable, the mean on each size, the difference, t-stat and ts p-value. 
+#' @return A data frame with, for each covariate, the mean on each size, the difference, t-stat and ts p-value. 
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 #' @seealso \code{\link{covarTest_dis}} for the Kolmogorov-Smirnov test of equality of distribution
 #' @examples
@@ -89,8 +89,25 @@ covarTest_mean_low <- function(covar,cutvar, cutpoint, bw=NULL, paired = FALSE, 
 #' @param exact Argument of the \code{\link{ks.test}} function: NULL or a logical indicating whether an exact p-value should be computed.
 #' @param p.adjust Whether to adjust the p-values for multiple testing. Uses the \code{\link{p.adjust}} function
 #' @param \ldots currently not used
-#' @return A data frame wih
+#' @return A data frame  with, for each covariate, the K-S statistic and its p-value. 
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
+#' @seealso \code{\link{covarTest_mean}} for the t-test of equality of means
+#' @examples
+#' data(Lee2008)
+#' 
+#' ## Add randomly generated covariates
+#' set.seed(123)
+#' n_Lee <- nrow(Lee2008)
+#' Z <- data.frame(z1 = rnorm(n_Lee, sd=2), 
+#'                 z2 = rnorm(n_Lee, mean = ifelse(Lee2008<0, 5, 8)), 
+#'                 z3 = sample(letters, size = n_Lee, replace = TRUE))
+#' Lee2008_rdd_Z <- RDDdata(y = Lee2008$y, x = Lee2008$x, z = Z, cutpoint = 0)
+#' 
+#' ## Kolmogorov-Smirnov test of equality in distribution:
+#' covarTest_dis(Lee2008_rdd_Z, bw=0.3)
+#' 
+#' ## Can also use function covarTest_dis() for a t-test for equality of means around cutoff:
+#' covarTest_mean(Lee2008_rdd_Z, bw=0.3)
 
 #' @export
 covarTest_dis <- function(object, bw,  exact=NULL, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni"))

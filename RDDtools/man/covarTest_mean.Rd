@@ -26,7 +26,7 @@ covarTest_mean(object, bw = NULL, paired = FALSE, var.equal = FALSE,
   \item{\ldots}{currently not used}
 }
 \value{
-A data frame with, for each variable, the mean on each
+A data frame with, for each covariate, the mean on each
 size, the difference, t-stat and ts p-value.
 }
 \description{

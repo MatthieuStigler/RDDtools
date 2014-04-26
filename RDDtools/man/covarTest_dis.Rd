@@ -21,14 +21,36 @@ covarTest_dis(object, bw, exact = NULL, p.adjust = c("none", "holm", "BH",
   \item{\ldots}{currently not used}
 }
 \value{
-A data frame wih
+A data frame with, for each covariate, the K-S statistic
+and its p-value.
 }
 \description{
 Tests equality of distribution with a Kolmogorov-Smirnov
 for each covariates, between the two full groups or around
 the discontinuity threshold
 }
+\examples{
+data(Lee2008)
+
+## Add randomly generated covariates
+set.seed(123)
+n_Lee <- nrow(Lee2008)
+Z <- data.frame(z1 = rnorm(n_Lee, sd=2),
+                z2 = rnorm(n_Lee, mean = ifelse(Lee2008<0, 5, 8)),
+                z3 = sample(letters, size = n_Lee, replace = TRUE))
+Lee2008_rdd_Z <- RDDdata(y = Lee2008$y, x = Lee2008$x, z = Z, cutpoint = 0)
+
+## Kolmogorov-Smirnov test of equality in distribution:
+covarTest_dis(Lee2008_rdd_Z, bw=0.3)
+
+## Can also use function covarTest_dis() for a t-test for equality of means around cutoff:
+covarTest_mean(Lee2008_rdd_Z, bw=0.3)
+}
 \author{
 Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
+}
+\seealso{
+\code{\link{covarTest_mean}} for the t-test of equality of
+means
 }
 
