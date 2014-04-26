@@ -2,8 +2,7 @@
 \alias{waldci}
 \title{Confint allowing vcov}
 \usage{
-  waldci(x, parm = NULL, level = 0.95, vcov. = NULL,
-    df = NULL, ...)
+waldci(x, parm = NULL, level = 0.95, vcov. = NULL, df = NULL, ...)
 }
 \arguments{
   \item{x}{Object of class lm or else}
@@ -22,7 +21,7 @@
   \item{\ldots}{Further argument}
 }
 \description{
-  Version of vcov allowing for confint
+Version of vcov allowing for confint
 }
 \keyword{internal}
 

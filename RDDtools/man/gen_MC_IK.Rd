@@ -2,8 +2,8 @@
 \alias{gen_MC_IK}
 \title{Generate Monte Carlo simulations of Imbens and Kalyanaraman}
 \usage{
-  gen_MC_IK(n = 200, version = 1, sd = 0.1295,
-    output = c("data.frame", "RDDdata"), size)
+gen_MC_IK(n = 200, version = 1, sd = 0.1295, output = c("data.frame",
+  "RDDdata"), size)
 }
 \arguments{
   \item{n}{The size of sampel to generate}
@@ -21,11 +21,11 @@
   0.1}
 }
 \value{
-  An data frame with x and y variables.
+An data frame with x and y variables.
 }
 \description{
-  Generate the simulations reported in Imbens and
-  Kalyanaraman (2012)
+Generate the simulations reported in Imbens and
+Kalyanaraman (2012)
 }
 \examples{
 MC1_dat <- gen_MC_IK()
@@ -53,6 +53,6 @@ plotCu(version=4)
 layout(matrix(1))
 }
 \references{
-  TODO
+TODO
 }
 

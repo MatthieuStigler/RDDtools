@@ -4,13 +4,13 @@
 \alias{RDDtools-package}
 \title{Regression Discontinuity Design}
 \description{
-  Regression Discontinuity Design
+Regression Discontinuity Design
 }
 \details{
-  Provides function to do a comprehensive regression
-  discontinuity analysis.
+Provides function to do a comprehensive regression
+discontinuity analysis.
 }
 \author{
-  Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
+Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
 }
 

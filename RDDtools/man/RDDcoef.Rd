@@ -4,13 +4,11 @@
 \alias{RDDcoef.default}
 \title{RDD coefficient}
 \usage{
-  RDDcoef(object, allInfo = FALSE, allCo = FALSE, ...)
+RDDcoef(object, allInfo = FALSE, allCo = FALSE, ...)
 
-  \method{RDDcoef}{default} (object, allInfo = FALSE,
-    allCo = FALSE, ...)
+\method{RDDcoef}{default}(object, allInfo = FALSE, allCo = FALSE, ...)
 
-  \method{RDDcoef}{RDDreg_np} (object, allInfo = FALSE,
-    allCo = FALSE, ...)
+\method{RDDcoef}{RDDreg_np}(object, allInfo = FALSE, allCo = FALSE, ...)
 }
 \arguments{
   \item{object}{A RDD regression object}
@@ -25,12 +23,12 @@
   methods}
 }
 \value{
-  Either a numeric value of the RDD coefficient estimate,
-  or a data frame with the estimate, its standard value, t
-  test and p-value and
+Either a numeric value of the RDD coefficient estimate, or
+a data frame with the estimate, its standard value, t test
+and p-value and
 }
 \description{
-  Function to access the RDD coefficient in the various
-  regressions
+Function to access the RDD coefficient in the various
+regressions
 }
 

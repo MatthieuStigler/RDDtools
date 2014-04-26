@@ -4,18 +4,16 @@
 \alias{plotSensi.RDDreg_np}
 \title{Plot the sensitivity to the bandwidth}
 \usage{
-  plotSensi(RDDregobject, from, to, by = 0.01,
-    level = 0.95, output = c("data", "ggplot"),
-    plot = TRUE, ...)
+plotSensi(RDDregobject, from, to, by = 0.01, level = 0.95,
+  output = c("data", "ggplot"), plot = TRUE, ...)
 
-  \method{plotSensi}{RDDreg_np} (RDDregobject, from, to,
-    by = 0.05, level = 0.95, output = c("data", "ggplot"),
-    plot = TRUE, device = c("ggplot", "base"),
-    vcov. = NULL, ...)
+\method{plotSensi}{RDDreg_np}(RDDregobject, from, to, by = 0.05,
+  level = 0.95, output = c("data", "ggplot"), plot = TRUE,
+  device = c("ggplot", "base"), vcov. = NULL, ...)
 
-  \method{plotSensi}{RDDreg_lm} (RDDregobject, from, to,
-    by = 0.05, level = 0.95, output = c("data", "ggplot"),
-    plot = TRUE, order, type = c("colour", "facet"), ...)
+\method{plotSensi}{RDDreg_lm}(RDDregobject, from, to, by = 0.05,
+  level = 0.95, output = c("data", "ggplot"), plot = TRUE, order,
+  type = c("colour", "facet"), ...)
 }
 \arguments{
   \item{RDDregobject}{object of a RDD regression, from
@@ -55,12 +53,12 @@
   \code{\link[sandwich]{sandwich}}}
 }
 \value{
-  A data frame containing the bandwidths and corresponding
-  estimates and confidence intervals.
+A data frame containing the bandwidths and corresponding
+estimates and confidence intervals.
 }
 \description{
-  Draw a plot showing the LATE estimates depending on
-  multiple bandwidths
+Draw a plot showing the LATE estimates depending on
+multiple bandwidths
 }
 \examples{
 data(Lee2008)
@@ -78,6 +76,6 @@ plotSensi(reg_para_ik)
 plotSensi(reg_para_ik, type="facet")
 }
 \author{
-  Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
+Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
 }
 

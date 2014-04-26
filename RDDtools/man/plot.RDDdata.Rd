@@ -2,9 +2,8 @@
 \alias{plot.RDDdata}
 \title{Plot RDDdata}
 \usage{
-  \method{plot}{RDDdata} (x, h, nbins = NULL,
-    xlim = range(object$x, na.rm = TRUE), cex = 0.7,
-    nplot = 1, device = c("base", "ggplot"), ...)
+\method{plot}{RDDdata}(x, h, nbins = NULL, xlim = range(object$x, na.rm =
+  TRUE), cex = 0.7, nplot = 1, device = c("base", "ggplot"), ...)
 }
 \arguments{
   \item{x}{Object of class RDDdata}
@@ -27,19 +26,19 @@
   \code{\link{plot}} function.}
 }
 \value{
-  A plot
+A plot
 }
 \description{
-  Binned plot of the forcing and outcome variable
+Binned plot of the forcing and outcome variable
 }
 \details{
-  Produces a simple binned plot averaging values within
-  each interval. The length of the intervals is specified
-  with the argument \code{h}, specifying the whole binwidth
-  (contrary to the usual bandwidth argument, that gives
-  half of the length of the kernel window. When no
-  bandwidth is given, the bandwidth of Ruppert et al is
-  used, see \code{\link{RDDbw_RSW}}.
+Produces a simple binned plot averaging values within each
+interval. The length of the intervals is specified with the
+argument \code{h}, specifying the whole binwidth (contrary
+to the usual bandwidth argument, that gives half of the
+length of the kernel window. When no bandwidth is given,
+the bandwidth of Ruppert et al is used, see
+\code{\link{RDDbw_RSW}}.
 }
 \examples{
 data(Lee2008)
@@ -59,6 +58,6 @@ plot(Lee2008_rdd, nbins=22)
 plot(Lee2008_rdd, nbins=21)
 }
 \author{
-  Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
+Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
 }
 

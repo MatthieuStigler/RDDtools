@@ -2,7 +2,7 @@
 \alias{RDDdata}
 \title{Construct RDDdata}
 \usage{
-  RDDdata(y, x, z, cutpoint, labels, data)
+RDDdata(y, x, z, cutpoint, labels, data)
 }
 \arguments{
   \item{x}{Forcing variable}
@@ -22,12 +22,12 @@
   directly for argumetn \code{x} and \code{y}}
 }
 \value{
-  Object of class \code{RDDdata}, inheriting from
-  \code{data.frame}
+Object of class \code{RDDdata}, inheriting from
+\code{data.frame}
 }
 \description{
-  Construct the base RDD object, containing x, y and the
-  cutpoint, eventuallay covariates.
+Construct the base RDD object, containing x, y and the
+cutpoint, eventuallay covariates.
 }
 \examples{
 data(Lee2008)
@@ -42,6 +42,6 @@ summary(rd)
 plot(rd)
 }
 \author{
-  Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
+Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
 }
 

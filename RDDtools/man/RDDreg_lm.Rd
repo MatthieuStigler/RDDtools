@@ -2,10 +2,10 @@
 \alias{RDDreg_lm}
 \title{Parametric polynomial estimator of the regression discontinuity}
 \usage{
-  RDDreg_lm(RDDobject, covariates = NULL, order = 1,
-    bw = NULL, slope = c("separate", "same"),
-    covar.opt = list(strategy = c("include", "residual"), slope = c("same", "separate"), bw = NULL),
-    covar.strat = c("include", "residual"), weights)
+RDDreg_lm(RDDobject, covariates = NULL, order = 1, bw = NULL,
+  slope = c("separate", "same"), covar.opt = list(strategy = c("include",
+  "residual"), slope = c("same", "separate"), bw = NULL),
+  covar.strat = c("include", "residual"), weights)
 }
 \arguments{
   \item{RDDobject}{Object of class RDDdata created by
@@ -33,46 +33,45 @@
   or right (separate), or the same.}
 }
 \value{
-  An object of class RDDreg_lm and class lm, with specific
-  print and plot methods
+An object of class RDDreg_lm and class lm, with specific
+print and plot methods
 }
 \description{
-  Compute a parametric polynomial regression of the ATE,
-  possibly on the range specified by bandwidth
+Compute a parametric polynomial regression of the ATE,
+possibly on the range specified by bandwidth
 }
 \details{
-  This function estimates the standard \emph{discontinuity
-  regression}: \deqn{Y=\alpha+\tau
-  D+\beta_{1}(X-c)+\beta_{2}D(X-c)+\epsilon} with
-  \eqn{\tau} the main parameter of interest. Several
-  versions of the regression can be estimated, either
-  restricting the slopes to be the same, i.e
-  \eqn{\beta_{1}=\beta_{2}} (argument \code{slope}). The
-  order of the polynomial in \eqn{X-c} can also be adjusted
-  with argument \code{order}. Note that a value of zero can
-  be used, which corresponds to the simple \emph{difference
-  in means}, that one would use if the samples were random.
-  Covariates can also be added in the regression, according
-  to the two strategies discussed in Lee and Lemieux (2010,
-  sec 4.5), through argument \code{covar.strat}: \describe{
-  \item{include}{Covariates are simply added as
-  supplementary regressors in the RD equation}
-  \item{residual}{The dependent variable is first regressed
-  on the covariates only, then the RDD equation is applied
-  on the residuals from this first step}} The regression
-  can also be estimated in a neighborhood of the cutpoint
-  with the argument \code{bw}. This make the parametric
-  regression resemble the non-parametric local kernel
-  \code{\link{RDDreg_np}}. Similarly, weights can also be
-  provided (but not simultaneously to \code{bw}).
+This function estimates the standard \emph{discontinuity
+regression}: \deqn{Y=\alpha+\tau
+D+\beta_{1}(X-c)+\beta_{2}D(X-c)+\epsilon} with \eqn{\tau}
+the main parameter of interest. Several versions of the
+regression can be estimated, either restricting the slopes
+to be the same, i.e \eqn{\beta_{1}=\beta_{2}} (argument
+\code{slope}). The order of the polynomial in \eqn{X-c} can
+also be adjusted with argument \code{order}. Note that a
+value of zero can be used, which corresponds to the simple
+\emph{difference in means}, that one would use if the
+samples were random. Covariates can also be added in the
+regression, according to the two strategies discussed in
+Lee and Lemieux (2010, sec 4.5), through argument
+\code{covar.strat}: \describe{ \item{include}{Covariates
+are simply added as supplementary regressors in the RD
+equation} \item{residual}{The dependent variable is first
+regressed on the covariates only, then the RDD equation is
+applied on the residuals from this first step}} The
+regression can also be estimated in a neighborhood of the
+cutpoint with the argument \code{bw}. This make the
+parametric regression resemble the non-parametric local
+kernel \code{\link{RDDreg_np}}. Similarly, weights can also
+be provided (but not simultaneously to \code{bw}).
 
-  The returned object is a classical \code{lm} object,
-  augmented with a \code{RDDslot}, so usual methods can be
-  applied. As is done in general in R,
-  heteroskeadsticity-robust inference can be done later on
-  with the usual function from package \pkg{sandwich}. For
-  the case of clustered observations a specific function
-  \code{\link{clusterInf}} is provided.
+The returned object is a classical \code{lm} object,
+augmented with a \code{RDDslot}, so usual methods can be
+applied. As is done in general in R,
+heteroskeadsticity-robust inference can be done later on
+with the usual function from package \pkg{sandwich}. For
+the case of clustered observations a specific function
+\code{\link{clusterInf}} is provided.
 }
 \examples{
 ## Step 0: prepare data
@@ -96,6 +95,6 @@ reg_para_ik
 plot(reg_para_ik)
 }
 \references{
-  TODO
+TODO
 }
 

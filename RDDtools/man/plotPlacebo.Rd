@@ -6,23 +6,20 @@
 \alias{plotPlaceboDens.RDDreg}
 \title{Draw a (density) plot of placebo tests}
 \usage{
-  plotPlacebo(object, device = c("ggplot", "base"), ...)
+plotPlacebo(object, device = c("ggplot", "base"), ...)
 
-  \method{plotPlacebo}{RDDreg} (object,
-    device = c("ggplot", "base"), from = 0.25, to = 0.75,
-    by = 0.1, level = 0.95, same_bw = FALSE, vcov. = NULL,
-    ...)
+\method{plotPlacebo}{RDDreg}(object, device = c("ggplot", "base"),
+  from = 0.25, to = 0.75, by = 0.1, level = 0.95, same_bw = FALSE,
+  vcov. = NULL, ...)
 
-  plotPlaceboDens(object, device = c("ggplot", "base"),
-    ...)
+plotPlaceboDens(object, device = c("ggplot", "base"), ...)
 
-  \method{plotPlaceboDens}{RDDreg} (object,
-    device = c("ggplot", "base"), from = 0.25, to = 0.75,
-    by = 0.1, level = 0.95, same_bw = FALSE, vcov. = NULL,
-    ...)
+\method{plotPlaceboDens}{RDDreg}(object, device = c("ggplot", "base"),
+  from = 0.25, to = 0.75, by = 0.1, level = 0.95, same_bw = FALSE,
+  vcov. = NULL, ...)
 
-  computePlacebo(object, from = 0.25, to = 0.75, by = 0.1,
-    level = 0.95, same_bw = FALSE, vcov. = NULL)
+computePlacebo(object, from = 0.25, to = 0.75, by = 0.1, level = 0.95,
+  same_bw = FALSE, vcov. = NULL)
 }
 \arguments{
   \item{object}{the output of an RDD regression}
@@ -51,12 +48,12 @@
   each point}
 }
 \value{
-  A data frame containing the cutpoints, their
-  corresponding estimates and confidence intervals.
+A data frame containing the cutpoints, their corresponding
+estimates and confidence intervals.
 }
 \description{
-  Draw a plot of placebo tests, estimating the impact on
-  fake cutpoints
+Draw a plot of placebo tests, estimating the impact on fake
+cutpoints
 }
 \examples{
 data(Lee2008)
@@ -71,6 +68,6 @@ vc <- function(x) vcovCluster(x, clusterVar=model.frame(x)$x)
 plotPlacebo(reg_nonpara_lminf, vcov. = vc)
 }
 \author{
-  Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
+Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
 }
 

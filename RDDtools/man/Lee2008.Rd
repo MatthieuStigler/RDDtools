@@ -8,11 +8,14 @@
 \item{y}{Vote at election t}
 }}
 \source{
-  Guido Imbens webpage:
-  \url{http://scholar.harvard.edu/imbens/scholar_software/regression-discontinuity}
+Guido Imbens webpage:
+\url{http://scholar.harvard.edu/imbens/scholar_software/regression-discontinuity}
+}
+\usage{
+Lee2008
 }
 \description{
-  U.S. House elections data
+U.S. House elections data
 }
 \examples{
 data(Lee2008)
@@ -21,13 +24,12 @@ summary(RDDlee)
 plot(RDDlee)
 }
 \references{
-  Imbens, Guido and Karthik Kalyanaraman. (2012) "Optimal
-  Bandwidth Choice for the regression discontinuity
-  estimator," Review of Economic Studies (2012) 79, 933-959
+Imbens, Guido and Karthik Kalyanaraman. (2012) "Optimal
+Bandwidth Choice for the regression discontinuity
+estimator," Review of Economic Studies (2012) 79, 933-959
 
-  Lee, D. (2008) Randomized experiments from non-random
-  selection in U.S. House elections, \emph{Journal of
-  Econometrics}, 142, 675-697
+Lee, D. (2008) Randomized experiments from non-random
+selection in U.S. House elections, \emph{Journal of
+Econometrics}, 142, 675-697
 }
-\keyword{datasets}
 

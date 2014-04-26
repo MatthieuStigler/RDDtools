@@ -2,11 +2,9 @@
 \alias{RDDreg_np}
 \title{Parametric polynomial estimator of the regression discontinuity}
 \usage{
-  RDDreg_np(RDDobject, covariates = NULL,
-    bw = RDDbw_IK(RDDobject),
-    slope = c("separate", "same"),
-    inference = c("np", "lm"),
-    covar.opt = list(slope = c("same", "separate"), bw = NULL))
+RDDreg_np(RDDobject, covariates = NULL, bw = RDDbw_IK(RDDobject),
+  slope = c("separate", "same"), inference = c("np", "lm"),
+  covar.opt = list(slope = c("same", "separate"), bw = NULL))
 }
 \arguments{
   \item{RDDobject}{Object of class RDDdata created by
@@ -30,12 +28,12 @@
   (\code{residual}).}
 }
 \value{
-  An object of class RDDreg_np and class lm, with specific
-  print and plot methods
+An object of class RDDreg_np and class lm, with specific
+print and plot methods
 }
 \description{
-  Compute a parametric polynomial regression of the ATE,
-  possibly on the range specified by bandwidth
+Compute a parametric polynomial regression of the ATE,
+possibly on the range specified by bandwidth
 }
 \examples{
 ## Step 0: prepare data
@@ -48,9 +46,10 @@ print(reg_nonpara)
 plot(reg_nonpara)
 }
 \references{
-  TODO
+TODO
 }
 \seealso{
 \code{\link{RDDbw_IK}} Bandwidth selection using the
 plug-in bandwidth of Imbens and Kalyanaraman (2012)
 }
+

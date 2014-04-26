@@ -2,10 +2,9 @@
 \alias{RDDgenreg}
 \title{General polynomial estimator of the regression discontinuity}
 \usage{
-  RDDgenreg(RDDobject, fun = glm, covariates = NULL,
-    order = 1, bw = NULL, slope = c("separate", "same"),
-    covar.opt = list(strategy = c("include", "residual"), slope = c("same", "separate"), bw = NULL),
-    weights, ...)
+RDDgenreg(RDDobject, fun = glm, covariates = NULL, order = 1, bw = NULL,
+  slope = c("separate", "same"), covar.opt = list(strategy = c("include",
+  "residual"), slope = c("same", "separate"), bw = NULL), weights, ...)
 }
 \arguments{
   \item{RDDobject}{Object of class RDDdata created by
@@ -36,25 +35,25 @@
   example.}
 }
 \value{
-  An object of class RDDreg_lm and class lm, with specific
-  print and plot methods
+An object of class RDDreg_lm and class lm, with specific
+print and plot methods
 }
 \description{
-  Compute RDD estimate allowing a locally kernel weighted
-  version of any estimation function possibly on the range
-  specified by bandwidth
+Compute RDD estimate allowing a locally kernel weighted
+version of any estimation function possibly on the range
+specified by bandwidth
 }
 \details{
-  This function allows the user to use a custom estimating
-  function, instead of the traditional \code{lm()}. It is
-  assumed that the custom funciton has following behaviour:
-  \enumerate{ \item A formula interface, together with a
-  \code{data} argument \item A \code{weight} argument \item
-  A coef(summary(x)) returning a data-frame containing a
-  column Estimate } Note that for the last requirement,
-  this can be accomodated by writing a specific
-  \code{\link{RDDcoef}} function for the class of the
-  object returned by \code{fun}.
+This function allows the user to use a custom estimating
+function, instead of the traditional \code{lm()}. It is
+assumed that the custom funciton has following behaviour:
+\enumerate{ \item A formula interface, together with a
+\code{data} argument \item A \code{weight} argument \item A
+coef(summary(x)) returning a data-frame containing a column
+Estimate } Note that for the last requirement, this can be
+accomodated by writing a specific \code{\link{RDDcoef}}
+function for the class of the object returned by
+\code{fun}.
 }
 \examples{
 ## Step 0: prepare data
@@ -68,6 +67,6 @@ print(reg_bin_glm)
 summary(reg_bin_glm)
 }
 \references{
-  TODO
+TODO
 }
 

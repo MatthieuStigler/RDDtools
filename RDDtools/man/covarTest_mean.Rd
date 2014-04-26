@@ -2,9 +2,9 @@
 \alias{covarTest_mean}
 \title{Testing for balanced covariates: equality of means with t-test}
 \usage{
-  covarTest_mean(object, bw = NULL, paired = FALSE,
-    var.equal = FALSE,
-    p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel", "bonferroni"))
+covarTest_mean(object, bw = NULL, paired = FALSE, var.equal = FALSE,
+  p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel",
+  "bonferroni"))
 }
 \arguments{
   \item{object}{object of class RDDdata}
@@ -26,14 +26,14 @@
   \item{\ldots}{currently not used}
 }
 \value{
-  A data frame wih
+A data frame wih
 }
 \description{
-  Tests equality of means by a t-test for each covariate,
-  between the two full groups or around the discontinuity
-  threshold
+Tests equality of means by a t-test for each covariate,
+between the two full groups or around the discontinuity
+threshold
 }
 \author{
-  Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
+Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
 }
 

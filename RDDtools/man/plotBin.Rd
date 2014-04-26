@@ -2,10 +2,9 @@
 \alias{plotBin}
 \title{Bin plotting}
 \usage{
-  plotBin(x, y, h = 0.05, nbins = NULL, cutpoint = 0,
-    plot = TRUE, type = c("value", "number"),
-    xlim = range(x, na.rm = TRUE), cex = 0.9, main = NULL,
-    xlab, ylab, ...)
+plotBin(x, y, h = 0.05, nbins = NULL, cutpoint = 0, plot = TRUE,
+  type = c("value", "number"), xlim = range(x, na.rm = TRUE), cex = 0.9,
+  main = NULL, xlab, ylab, ...)
 }
 \arguments{
   \item{x}{Forcing variable}
@@ -29,16 +28,16 @@
   \item{\ldots}{further arguments passed to plot.}
 }
 \value{
-  Returns silently values
+Returns silently values
 }
 \description{
-  Do a "scatterplot bin smoothing"
+Do a "scatterplot bin smoothing"
 }
 \author{
-  Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
+Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
 }
 \references{
-  McCrary, Justin.
+McCrary, Justin.
 }
 \keyword{internal}
 

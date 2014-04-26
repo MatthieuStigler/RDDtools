@@ -2,8 +2,7 @@
 \alias{clusterInf}
 \title{Post-inference for clustered data}
 \usage{
-  clusterInf(object, clusterVar, vcov. = NULL,
-    type = c("df-adj", "HC"), ...)
+clusterInf(object, clusterVar, vcov. = NULL, type = c("df-adj", "HC"), ...)
 }
 \arguments{
   \item{object}{Object of class lm, from which RDDreg also
@@ -21,14 +20,14 @@
   \item{\ldots}{Further argumetns passed to coeftest}
 }
 \value{
-  The output of the coeftest function, which is itself of
-  class \code{coeftest}
+The output of the coeftest function, which is itself of
+class \code{coeftest}
 }
 \description{
-  Correct standard-errors to account for clustered data,
-  doing either a degrees of freedom correction or using a
-  heteroskedasticidty-cluster robust covariance matrix
-  possibly on the range specified by bandwidth
+Correct standard-errors to account for clustered data,
+doing either a degrees of freedom correction or using a
+heteroskedasticidty-cluster robust covariance matrix
+possibly on the range specified by bandwidth
 }
 \examples{
 data(Lee2008)
@@ -44,13 +43,13 @@ clusterInf(reg_para, clusterVar=clusRandom)
 clusterInf(reg_para, clusterVar=clusRandom, type="HC")
 }
 \references{
-  Wooldridge (2003) Cluster-sample methods in applied
-  econometrics. \emph{AmericanEconomic Review}, 93, p.
-  133-138
+Wooldridge (2003) Cluster-sample methods in applied
+econometrics. \emph{AmericanEconomic Review}, 93, p.
+133-138
 }
 \seealso{
-  \code{\link{vcovCluster}}, which implements the
-  cluster-robust covariance matrix estimator used by
-  \code{cluserInf}
+\code{\link{vcovCluster}}, which implements the
+cluster-robust covariance matrix estimator used by
+\code{cluserInf}
 }
 
