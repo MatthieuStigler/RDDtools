@@ -211,10 +211,14 @@ plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, out
   if(type=="colour"){
     if(hasBw){
       est_point <- data.frame(bw=bw, LATE=est, order=as.factor(origOrder))
-      sensPlot <- qplot(x=bw, y=LATE, data=seq_vals_df, colour=order, geom="line")+geom_point(data=est_point)
+      sensPlot <- qplot(x=bw, y=LATE, data=seq_vals_df, colour=order, geom="line")+
+        geom_point(data=est_point)+
+        geom_smooth(aes(ymin=CI_low, ymax=CI_high), data=seq_vals_df, stat="identity")
     } else {
       est_point <- data.frame(LATE=est, order=origOrder)
-      sensPlot <- qplot(x=order, y=LATE, data=seq_vals_df, geom="line")+geom_point(data=est_point)
+      sensPlot <- qplot(x=order, y=LATE, data=seq_vals_df, geom="line")+
+        geom_point(data=est_point)+
+        geom_smooth(aes(ymin=CI_low, ymax=CI_high), data=seq_vals_df, stat="identity")
     }
   } else {
     sensPlot <- qplot(x=bw, y=LATE, data= seq_vals_df, geom="line")+facet_grid(order~.)+
