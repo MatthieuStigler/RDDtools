@@ -31,7 +31,7 @@ RDDgenreg(RDDobject, fun = glm, covariates = NULL, order = 1, bw = NULL,
 
   \item{fun}{The function to estimate the parameters}
 
-  \item{\ldots}{Further argumetns passed to fun. See the
+  \item{\ldots}{Further arguments passed to fun. See the
   example.}
 }
 \value{

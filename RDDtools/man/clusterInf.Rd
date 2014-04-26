@@ -14,10 +14,10 @@ clusterInf(object, clusterVar, vcov. = NULL, type = c("df-adj", "HC"), ...)
   \item{vcov.}{Specific covariance function to pass to
   coeftest. See help of sandwich}
 
-  \item{type}{The type of cluster correctin to do: either
+  \item{type}{The type of cluster correction to use: either
   the degrees of freedom, or a HC matrix.}
 
-  \item{\ldots}{Further argumetns passed to coeftest}
+  \item{\ldots}{Further arguments passed to coeftest}
 }
 \value{
 The output of the coeftest function, which is itself of

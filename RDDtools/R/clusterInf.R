@@ -5,8 +5,8 @@
 #' @param object Object of class lm, from which RDDreg also inherits.
 #' @param clusterVar The variable containing the cluster attributions. 
 #' @param vcov. Specific covariance function to pass to coeftest. See help of sandwich
-#' @param type The type of cluster correctin to do: either the degrees of freedom, or a HC matrix. 
-#' @param \ldots Further argumetns passed to coeftest
+#' @param type The type of cluster correction to use: either the degrees of freedom, or a HC matrix. 
+#' @param \ldots Further arguments passed to coeftest
 #' @return The output of the coeftest function, which is itself of class \code{coeftest}
 #' @seealso \code{\link{vcovCluster}}, which implements the cluster-robust covariance matrix estimator used by \code{cluserInf}
 #' @references Wooldridge (2003) Cluster-sample methods in applied econometrics. 

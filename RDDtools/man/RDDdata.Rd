@@ -19,7 +19,7 @@ RDDdata(y, x, z, cutpoint, labels, data)
 
   \item{data}{A data-frame for the x and y variables. If
   this is provided, the column names can be entered
-  directly for argumetn \code{x} and \code{y}}
+  directly for argument \code{x} and \code{y}}
 }
 \value{
 Object of class \code{RDDdata}, inheriting from

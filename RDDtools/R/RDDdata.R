@@ -8,7 +8,7 @@
 #' @param cutpoint Cutpoint
 #' @param labels Additional labels to provide as list (with entries x, y, and eventually vector z). Unused currently. 
 #' @param data A data-frame for the x and y variables. If this is provided, 
-#' the column names can be entered directly for argumetn \code{x} and \code{y}
+#' the column names can be entered directly for argument \code{x} and \code{y}
 #' @return Object of class \code{RDDdata}, inheriting from \code{data.frame}
 #' @export
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
