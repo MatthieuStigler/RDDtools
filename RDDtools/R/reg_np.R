@@ -9,6 +9,7 @@
 #' @param slope Whether slopes should be different on left or right (separate), or the same.
 #' @param covar.opt Options for the inclusion of covariates. Way to include covariates, either in the main regression (\code{include}) or as regressors of y in a first step (\code{residual}). 
 #' @return An object of class RDDreg_np and class lm, with specific print and plot methods
+#' @seealso \code{\link{RDDbw_IK}} Bandwidth selection using the plug-in bandwidth of Imbens and Kalyanaraman (2012)
 #' @references TODO
 #' @include plotBin.R
 #' @export RDDreg_np
