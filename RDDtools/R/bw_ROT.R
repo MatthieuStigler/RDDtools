@@ -52,6 +52,7 @@ ROT_bw <- function(object){
 #' @return One (or two for \code{sided}) bandwidth value. 
 #' @references See \code{\link[KernSmooth]{dpill}}
 #' @include plotBin.R
+#' @seealso \code{\link{RDDbw_IK}} Local RDD bandwidth selector using the plug-in method of Imbens and Kalyanaraman (2012)
 #' @import KernSmooth
 #' @export
 #' @examples

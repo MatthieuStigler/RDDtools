@@ -28,4 +28,8 @@ RDDbw_RSW(rd)
 \references{
 See \code{\link[KernSmooth]{dpill}}
 }
+\seealso{
+\code{\link{RDDbw_IK}} Local RDD bandwidth selector using
+the plug-in method of Imbens and Kalyanaraman (2012)
+}
 
