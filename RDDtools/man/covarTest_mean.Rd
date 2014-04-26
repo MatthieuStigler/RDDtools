@@ -1,10 +1,20 @@
 \name{covarTest_mean}
 \alias{covarTest_mean}
+\alias{covarTest_mean.RDDdata}
+\alias{covarTest_mean.RDDreg}
 \title{Testing for balanced covariates: equality of means with t-test}
 \usage{
 covarTest_mean(object, bw = NULL, paired = FALSE, var.equal = FALSE,
   p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel",
   "bonferroni"))
+
+\method{covarTest_mean}{RDDdata}(object, bw = NULL, paired = FALSE,
+  var.equal = FALSE, p.adjust = c("none", "holm", "BH", "BY", "hochberg",
+  "hommel", "bonferroni"))
+
+\method{covarTest_mean}{RDDreg}(object, bw = NULL, paired = FALSE,
+  var.equal = FALSE, p.adjust = c("none", "holm", "BH", "BY", "hochberg",
+  "hommel", "bonferroni"))
 }
 \arguments{
   \item{object}{object of class RDDdata}
@@ -50,6 +60,10 @@ covarTest_mean(Lee2008_rdd_Z, bw=0.3)
 
 ## Can also use function covarTest_dis() for Kolmogorov-Smirnov test:
 covarTest_dis(Lee2008_rdd_Z, bw=0.3)
+
+## covarTest_mean works also on regression outputs (bw will be taken from the model)
+reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd_Z)
+covarTest_mean(reg_nonpara)
 }
 \author{
 Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>

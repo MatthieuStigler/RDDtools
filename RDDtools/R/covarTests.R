@@ -27,6 +27,10 @@
 #' 
 #' ## Can also use function covarTest_dis() for Kolmogorov-Smirnov test:
 #' covarTest_dis(Lee2008_rdd_Z, bw=0.3)
+#' 
+#' ## covarTest_mean works also on regression outputs (bw will be taken from the model)
+#' reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd_Z)
+#' covarTest_mean(reg_nonpara)
 
 
 
@@ -36,7 +40,8 @@
 covarTest_mean <- function(object, bw=NULL, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) 
   UseMethod("covarTest_mean")
 
-
+#' @rdname covarTest_mean
+#' @method covarTest_mean RDDdata
 #' @S3method covarTest_mean RDDdata
 covarTest_mean.RDDdata <- function(object, bw=NULL, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
 
@@ -47,6 +52,23 @@ covarTest_mean.RDDdata <- function(object, bw=NULL, paired = FALSE, var.equal = 
   covarTest_mean_low(covar=covar,cutvar=cutvar,cutpoint=cutpoint, bw=bw, paired = paired, var.equal = var.equal, p.adjust=p.adjust)
 
 }
+
+
+#' @rdname covarTest_mean
+#' @method covarTest_mean RDDreg
+#' @S3method covarTest_mean RDDreg
+covarTest_mean.RDDreg <- function(object, bw=NULL, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
+  
+  cutpoint <- getCutpoint(object)
+  dat <- object$RDDslot$RDDdata
+  covar <- getCovar(dat)
+  cutvar <- dat$x
+  if(is.null(bw)) bw <- getBW(object)
+  
+  covarTest_mean_low(covar=covar,cutvar=cutvar,cutpoint=cutpoint, bw=bw, paired = paired, var.equal = var.equal, p.adjust=p.adjust)
+  
+}
+
 
 covarTest_mean_low <- function(covar,cutvar, cutpoint, bw=NULL, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
 
@@ -108,11 +130,16 @@ covarTest_mean_low <- function(covar,cutvar, cutpoint, bw=NULL, paired = FALSE, 
 #' 
 #' ## Can also use function covarTest_dis() for a t-test for equality of means around cutoff:
 #' covarTest_mean(Lee2008_rdd_Z, bw=0.3)
+#' ## covarTest_dis works also on regression outputs (bw will be taken from the model)
+#' reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd_Z)
+#' covarTest_dis(reg_nonpara)
 
 #' @export
 covarTest_dis <- function(object, bw,  exact=NULL, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni"))
   UseMethod("covarTest_dis")
 
+#' @rdname covarTest_dis
+#' @method covarTest_dis RDDdata
 #' @S3method covarTest_dis RDDdata
 covarTest_dis.RDDdata <- function(object, bw=NULL, exact = FALSE,  p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
 
@@ -124,6 +151,20 @@ covarTest_dis.RDDdata <- function(object, bw=NULL, exact = FALSE,  p.adjust=c("n
 
 }
 
+#' @rdname covarTest_dis
+#' @method covarTest_dis RDDreg
+#' @S3method covarTest_dis RDDreg
+covarTest_dis.RDDreg <- function(object, bw=NULL, exact = FALSE,  p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
+  
+  cutpoint <- getCutpoint(object)
+  dat <- object$RDDslot$RDDdata
+  covar <- getCovar(dat)
+  cutvar <- dat$x
+  if(is.null(bw)) bw <- getBW(object)
+  
+  covarTest_dis_low(covar=covar,cutvar=cutvar,cutpoint=cutpoint, bw=bw, exact= exact, p.adjust=p.adjust)
+  
+}
 
 covarTest_dis_low <- function(covar,cutvar, cutpoint, bw=NULL, exact=NULL, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
 
