@@ -67,7 +67,7 @@ bread.RDDreg_np <- function(x,...){
 
 #' @S3method model.frame RDDreg_np
 model.frame.RDDreg_np <- function (formula, ...) 
-  model.frame.lm(formula$RDDslot$model)
+  model.frame(formula$RDDslot$model)
 
 #' Cluster Heteroskedasticity-consistent estimation of the covariance matrix. 
 #' 
