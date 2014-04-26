@@ -9,6 +9,7 @@
 #' proceeds as if the kernerl was univariate. A simple solution to make the multivariate kernel similar to the  univariate one 
 #' is to set the bandwidth for x and Dx to a large number, so that they converge towards a constant, and one obtains back the univariate kernel. 
 #' @export
+#' @seealso \code{\link{as.lm}} which converts \code{RDDreg} objects into \code{lm}.
 #' @examples
 #' # Estimate ususal RDDreg:
 #'  data(Lee2008)
@@ -18,7 +19,7 @@
 #' ## Convert to npreg:
 #'  reg_nonpara_np <- as.npreg(reg_nonpara)
 #'  reg_nonpara_np
-#'  RDDcoef(reg_nonpara_np)
+#'  RDDcoef(reg_nonpara_np, allCo=TRUE, allInfo=TRUE)
 #' 
 #' ## Compare with result obtained with a Gaussian kernel:
 #'  bw_lm <- dnorm(Lee2008_rdd$x, sd=RDDtools:::getBW(reg_nonpara))
