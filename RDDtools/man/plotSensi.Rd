@@ -70,7 +70,7 @@ Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 bw_ik <- RDDbw_IK(Lee2008_rdd)
 reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd, bw=bw_ik)
 plotSensi(reg_nonpara)
-plotSensi(reg_nonpara, device="ggplot")
+plotSensi(reg_nonpara, device="base")
 
 #Parametric estimate:
 reg_para_ik <- RDDreg_lm(RDDobject=Lee2008_rdd, order=4, bw=bw_ik)
