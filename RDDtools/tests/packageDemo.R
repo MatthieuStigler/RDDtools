@@ -174,6 +174,9 @@ ptPl_reg_para_0
 
 ## density tests
 dens_test(Lee2008_rdd)
+dens_test(reg_para_0, plot=FALSE)
+dens_test(reg_nonpara, plot=FALSE, ext.out=TRUE)[c("theta", "se", "z", "p", "binsize", "bw", "cutpoint")]
+
 
 ## Covariates tests
 covarTest_mean(Lee2008_rdd_z)

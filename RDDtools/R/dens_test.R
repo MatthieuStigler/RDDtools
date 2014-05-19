@@ -1,10 +1,12 @@
 #' Run the McCracy test for manipulation of the forcing variable
 #' 
-#' Calls the \code{\link{DCdensity}} test from package rdd on a \code{RDDobject}
+#' Calls the \code{\link[rdd]{DCdensity}} test from package \code{rdd} on a \code{RDDobject}.
 #' 
 #' @param RDDobject object of class RDDdata
 #' @param bin Argument of the \code{\link{DCdensity}} function, the binwidth
 #' @param bw Argument of the \code{\link{DCdensity}} function, the bandwidth
+#' @param plot Whether to return a plot. Logical, default ot TRUE. 
+#' @param \ldots Further arguments passed to \code{\link[rdd]{DCdensity}}. 
 #' @export
 #' @import rdd
 #' @examples
@@ -15,10 +17,11 @@
 
 
 
-dens_test <- function(RDDobject, bin=NULL, bw=NULL){
+dens_test <- function(RDDobject, bin=NULL, bw=NULL, plot=TRUE,...){
   checkIsRDD(RDDobject)
   cutpoint <- getCutpoint(RDDobject)
-  test <- try(DCdensity(RDDobject$x, cutpoint, bin = bin, bw = bw), silent=TRUE)
+  x <- getOriginalX(RDDobject)
+  test <- try(DCdensity(runvar=x, cutpoint=cutpoint, bin = bin, bw = bw, plot=plot,...), silent=TRUE)
   if(inherits(test, "try-error")){
     warning("Error in computing the density, returning a simple histogram", if(is.null(bin)) " with arbitrary bin" else NULL)
     if(is.null(bin)) {

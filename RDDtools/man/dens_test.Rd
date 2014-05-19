@@ -2,7 +2,7 @@
 \alias{dens_test}
 \title{Run the McCracy test for manipulation of the forcing variable}
 \usage{
-dens_test(RDDobject, bin = NULL, bw = NULL)
+dens_test(RDDobject, bin = NULL, bw = NULL, plot = TRUE, ...)
 }
 \arguments{
   \item{RDDobject}{object of class RDDdata}
@@ -12,10 +12,16 @@ dens_test(RDDobject, bin = NULL, bw = NULL)
 
   \item{bw}{Argument of the \code{\link{DCdensity}}
   function, the bandwidth}
+
+  \item{plot}{Whether to return a plot. Logical, default ot
+  TRUE.}
+
+  \item{\ldots}{Further arguments passed to
+  \code{\link[rdd]{DCdensity}}.}
 }
 \description{
-Calls the \code{\link{DCdensity}} test from package rdd on
-a \code{RDDobject}
+Calls the \code{\link[rdd]{DCdensity}} test from package
+\code{rdd} on a \code{RDDobject}.
 }
 \examples{
 library(RDDtools)

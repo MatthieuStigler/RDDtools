@@ -710,6 +710,31 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ## density tests
 > dens_test(Lee2008_rdd)
 [1] 0.1952357
+> dens_test(reg_para_0, plot=FALSE)
+[1] 0.1952357
+> dens_test(reg_nonpara, plot=FALSE, ext.out=TRUE)[c("theta", "se", "z", "p", "binsize", "bw", "cutpoint")]
+$theta
+[1] 0.1035008
+
+$se
+[1] 0.07990827
+
+$z
+[1] 1.295245
+
+$p
+[1] 0.1952357
+
+$binsize
+[1] 0.01124348
+
+$bw
+[1] 0.2422787
+
+$cutpoint
+[1] 0
+
+> 
 > 
 > ## Covariates tests
 > covarTest_mean(Lee2008_rdd_z)
