@@ -18,7 +18,11 @@ Kernel_tri <- function(X, center, bw) {
 }
 
 
-
+getCutpoint <- function(object){
+  
+  checkIsRDD(object)
+  attr(object, "cutpoint")
+}
 
 getOrder <- function(object){
 

@@ -31,9 +31,3 @@ RDDcoef.RDDreg_np <- function(object, allInfo=FALSE, allCo=FALSE, ...){
   res
 }
 
-
-getCutpoint <- function(object){
-  
-  checkIsRDD(object)
-  attr(object, "cutpoint")
-}
