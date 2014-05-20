@@ -709,10 +709,28 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ## density tests
 > dens_test(Lee2008_rdd)
-[1] 0.1952357
+
+	McCrary Test for no discontinuity of density around cutpoint
+
+data:  Lee2008_rdd
+z-val = 1.2952, p-value = 0.1952
+alternative hypothesis: Density is discontinuous around cutpoint
+sample estimates:
+Discontinuity 
+    0.1035008 
+
 > dens_test(reg_para_0, plot=FALSE)
-[1] 0.1952357
-> dens_test(reg_nonpara, plot=FALSE, ext.out=TRUE)[c("theta", "se", "z", "p", "binsize", "bw", "cutpoint")]
+
+	McCrary Test for no discontinuity of density around cutpoint
+
+data:  reg_para_0
+z-val = 1.2952, p-value = 0.1952
+alternative hypothesis: Density is discontinuous around cutpoint
+sample estimates:
+Discontinuity 
+    0.1035008 
+
+> dens_test(reg_nonpara, plot=FALSE)$test.output[c("theta", "se", "z", "p", "binsize", "bw", "cutpoint")]
 $theta
 [1] 0.1035008
 

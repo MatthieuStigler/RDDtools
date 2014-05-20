@@ -21,7 +21,7 @@ dens_test <- function(RDDobject, bin=NULL, bw=NULL, plot=TRUE,...){
   checkIsRDD(RDDobject)
   cutpoint <- getCutpoint(RDDobject)
   x <- getOriginalX(RDDobject)
-  test <- try(DCdensity(runvar=x, cutpoint=cutpoint, bin = bin, bw = bw, plot=plot,...), silent=TRUE)
+  test <- try(DCdensity(runvar=x, cutpoint=cutpoint, bin = bin, bw = bw, plot=plot, ext.out=TRUE, ...), silent=TRUE)
   if(inherits(test, "try-error")){
     warning("Error in computing the density, returning a simple histogram", if(is.null(bin)) " with arbitrary bin" else NULL)
     if(is.null(bin)) {
@@ -34,9 +34,24 @@ dens_test <- function(RDDobject, bin=NULL, bw=NULL, plot=TRUE,...){
     hist(RDDobject$x, breaks=seq_breaks)
     abline(v=cutpoint, col=2, lty=2)
   }
-
-  return(test)
+  
+  test.htest <- list()
+  test.htest$statistic <- c("z-val"=test$z)
+  test.htest$p.value <- test$p
+  test.htest$data.name <- deparse(substitute(RDDobject))
+  test.htest$method <- "McCrary Test for no discontinuity of density around cutpoint"
+  test.htest$alternative <- "Density is discontinuous around cutpoint"
+  test.htest$estimate <- c(Discontinuity=test$theta)
+  test.htest$test.output <- test
+  class(test.htest) <- "htest"
+  return(test.htest)
 }
+
+# print.MCcraryTest <- function(x,...){
+#   cat("#### MC Crary Test of no discontinuity in density\n\n")
+#   cat("Estimate of discontinuity:\t", x$theta, "\n")
+#   cat("z-value:\t", x$z, "\t p-value:\t", x$p, "\n")
+# }
 
 if(FALSE){
 

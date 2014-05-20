@@ -25,10 +25,11 @@
 #' plot(rd)
 
 
-RDDdata <- function(y, x, z, cutpoint, labels, data){
+RDDdata <- function(y, x, z, cutpoint, labels, data, type=c("Sharp", "Fuzzy")){
 
   
 ## check args
+  type <- match.arg(type)
   hasCovar <- !missing(z)
   if(missing(cutpoint)) stop("Please provide cutpoint")
   z_nam <- deparse(substitute(z))
