@@ -48,7 +48,7 @@ n_Lee <- nrow(Lee2008)
 Z <- data.frame(z1 = rnorm(n_Lee, sd=2),
                 z2 = rnorm(n_Lee, mean = ifelse(Lee2008<0, 5, 8)),
                 z3 = sample(letters, size = n_Lee, replace = TRUE))
-Lee2008_rdd_Z <- RDDdata(y = Lee2008$y, x = Lee2008$x, z = Z, cutpoint = 0)
+Lee2008_rdd_Z <- RDDdata(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
 
 ## Kolmogorov-Smirnov test of equality in distribution:
 covarTest_dis(Lee2008_rdd_Z, bw=0.3)

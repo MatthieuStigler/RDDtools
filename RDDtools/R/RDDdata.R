@@ -4,9 +4,9 @@
 #' 
 #' @param x Forcing variable
 #' @param y Output
-#' @param z Exogeneous variables
+#' @param covar Exogeneous variables
 #' @param cutpoint Cutpoint
-#' @param labels Additional labels to provide as list (with entries x, y, and eventually vector z). Unused currently. 
+#' @param labels Additional labels to provide as list (with entries x, y, and eventually vector covar). Unused currently. 
 #' @param data A data-frame for the x and y variables. If this is provided, 
 #' the column names can be entered directly for argument \code{x} and \code{y}
 #' @return Object of class \code{RDDdata}, inheriting from \code{data.frame}
@@ -25,21 +25,21 @@
 #' plot(rd)
 
 
-RDDdata <- function(y, x, z, cutpoint, labels, data, type=c("Sharp", "Fuzzy")){
+RDDdata <- function(y, x, covar, cutpoint, labels, data, type=c("Sharp", "Fuzzy")){
 
   
 ## check args
   type <- match.arg(type)
-  hasCovar <- !missing(z)
+  hasCovar <- !missing(covar)
   if(missing(cutpoint)) stop("Please provide cutpoint")
-  z_nam <- deparse(substitute(z))
+  covar_nam <- deparse(substitute(covar))
 
 ## Use data in case:
   if(!missing(data)){
     pf <- parent.frame()
     x <- eval(substitute(x), data, enclos = pf) # copy from with.default
     y <- eval(substitute(y), data, enclos = pf) # copy from with.default
-    if(hasCovar) z <- eval(substitute(z), data, enclos = pf) # idem
+    if(hasCovar) covar <- eval(substitute(covar), data, enclos = pf) # idem
   }
   
 ### Check y, x univariate
@@ -51,9 +51,9 @@ RDDdata <- function(y, x, z, cutpoint, labels, data, type=c("Sharp", "Fuzzy")){
 ### Check y, x, z same size
   n_y <- NROW(y)
   n_x <- NROW(x)
-  n_z <- if(hasCovar) NROW(x) else NULL
+  n_covar <- if(hasCovar) NROW(x) else NULL
 
-  if(any(c(n_y, n_x) != n_z)) stop("y or x should be univariate")
+  if(any(c(n_y, n_x) != n_covar)) stop("y or x should be univariate")
 
 ### Check cutpoint
   range_x <- range(x, na.rm=TRUE)
@@ -62,9 +62,9 @@ RDDdata <- function(y, x, z, cutpoint, labels, data, type=c("Sharp", "Fuzzy")){
 ## Check labels
   if(!missing(labels)){
     if(!is.list(labels)) stop("labels should be a list.")
-    if(is.null(names(labels)) || !all(names(labels)%in%c("x", "y", "z"))) stop("labels should be a list with components x, and/or y, and/or z")
+    if(is.null(names(labels)) || !all(names(labels)%in%c("x", "y", "covar"))) stop("labels should be a list with components x, and/or y, and/or covar")
     if(hasCovar){
-      if("z"%in%names(labels) && length(labels$z)!=NCOL(z)) stop("There should be ", NCOL(z), " values (dim of z) for component 'z' in labels")
+      if("covar"%in%names(labels) && length(labels$covar)!=NCOL(covar)) stop("There should be ", NCOL(covar), " values (dim of covar) for component 'covar' in labels")
     }
   } else {
     labels <- list()
@@ -72,13 +72,13 @@ RDDdata <- function(y, x, z, cutpoint, labels, data, type=c("Sharp", "Fuzzy")){
 
 #   if(is.null(labels$x)) labels$x <- deparse(substitute(x))
 #   if(is.null(labels$y)) labels$y <- deparse(substitute(y))
-#   if(hasCova && is.null(labels$z)) labels$z <- if(NCOL(z)==1) names(deparse(substitute(y))
+#   if(hasCova && is.null(labels$covar)) labels$covar <- if(NCOL(covar)==1) names(deparse(substitute(y))
 
 ## Assemble data
   RDDdat <- data.frame(x=x, y=y)
   if(hasCovar) {
-    RDDdat <- cbind(RDDdat,z)
-    if(NCOL(z)==1 && is.null(colnames(z))) colnames(RDDdat)[3] <- z_nam
+    RDDdat <- cbind(RDDdat,covar)
+    if(NCOL(covar)==1 && is.null(colnames(covar))) colnames(RDDdat)[3] <- covar_nam
   } 
 
 ## return
@@ -181,14 +181,14 @@ Lee2008_rdd_lab3 <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0, labels=list(x=
 ### Covariate setting:
 Z <- data.frame(z_con=runif(nrow(Lee2008)), z_dic=factor(sample(letters[1:3], size=nrow(Lee2008), replace=TRUE)))
 
-Lee2008_rdd_Z <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z, cutpoint=0)
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z, cutpoint=0, labels=c("a","bb"))
+Lee2008_rdd_Z <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z, cutpoint=0)
+Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z, cutpoint=0, labels=c("a","bb"))
 
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z, cutpoint=0, labels=list(x="aha"))
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z, cutpoint=0, labels=list(x="aha", u="aa"))
+Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z, cutpoint=0, labels=list(x="aha"))
+Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z, cutpoint=0, labels=list(x="aha", u="aa"))
 
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z, cutpoint=0, labels=list(x="aha", z="aa"))
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z, cutpoint=0, labels=list(x="aha", z=c("aa", "hj")))
+Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z, cutpoint=0, labels=list(x="aha", covar="aa"))
+Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z, cutpoint=0, labels=list(x="aha", z=c("aa", "hj")))
 
 ### subsetting
 dat <- Lee2008_rdd

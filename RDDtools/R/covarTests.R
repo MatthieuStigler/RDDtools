@@ -20,7 +20,7 @@
 #' Z <- data.frame(z1 = rnorm(n_Lee, sd=2), 
 #'                 z2 = rnorm(n_Lee, mean = ifelse(Lee2008<0, 5, 8)), 
 #'                 z3 = sample(letters, size = n_Lee, replace = TRUE))
-#' Lee2008_rdd_Z <- RDDdata(y = Lee2008$y, x = Lee2008$x, z = Z, cutpoint = 0)
+#' Lee2008_rdd_Z <- RDDdata(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
 #' 
 #' ## test for equality of means around cutoff:
 #' covarTest_mean(Lee2008_rdd_Z, bw=0.3)
@@ -123,7 +123,7 @@ covarTest_mean_low <- function(covar,cutvar, cutpoint, bw=NULL, paired = FALSE, 
 #' Z <- data.frame(z1 = rnorm(n_Lee, sd=2), 
 #'                 z2 = rnorm(n_Lee, mean = ifelse(Lee2008<0, 5, 8)), 
 #'                 z3 = sample(letters, size = n_Lee, replace = TRUE))
-#' Lee2008_rdd_Z <- RDDdata(y = Lee2008$y, x = Lee2008$x, z = Z, cutpoint = 0)
+#' Lee2008_rdd_Z <- RDDdata(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
 #' 
 #' ## Kolmogorov-Smirnov test of equality in distribution:
 #' covarTest_dis(Lee2008_rdd_Z, bw=0.3)
@@ -238,7 +238,7 @@ library(RDDtools)
 data(Lee2008)
 
 Z <- data.frame(z_con=runif(nrow(Lee2008)), z_dic=factor(sample(letters[1:3], size=nrow(Lee2008), replace=TRUE)))
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z, cutpoint=0)
+Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z, cutpoint=0)
 
 
 covarTest_mean(object=Lee2008_rdd)

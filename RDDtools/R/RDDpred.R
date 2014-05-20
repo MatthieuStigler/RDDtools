@@ -34,7 +34,7 @@
 #'   data(Lee2008)
 #'   n_Lee <- nrow(Lee2008)
 #'   z1 <- runif(n_Lee)
-#'   Lee2008_rdd <- RDDdata(y=y, x=x, data=Lee2008, z=z1, cutpoint=0)
+#'   Lee2008_rdd <- RDDdata(y=y, x=x, data=Lee2008, covar=z1, cutpoint=0)
 #' 
 #' ## estimation without covariates: RDDpred is the same than RDDcoef:
 #'   reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
@@ -169,7 +169,7 @@ if(FALSE){
   set.seed(123)
   n_Lee <- nrow(Lee2008)
   Z<- data.frame(z1=rnorm(n_Lee), z2=rnorm(n_Lee, mean=20, sd=2), z3=sample(letters[1:3], size=n_Lee, replace=TRUE))
-  Lee2008_rdd_z <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z,cutpoint=0)
+  Lee2008_rdd_z <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z,utpoint=0)
 
 ## use:
   reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)

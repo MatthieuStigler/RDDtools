@@ -2,19 +2,19 @@
 \alias{RDDdata}
 \title{Construct RDDdata}
 \usage{
-RDDdata(y, x, z, cutpoint, labels, data)
+RDDdata(y, x, covar, cutpoint, labels, data, type = c("Sharp", "Fuzzy"))
 }
 \arguments{
   \item{x}{Forcing variable}
 
   \item{y}{Output}
 
-  \item{z}{Exogeneous variables}
+  \item{covar}{Exogeneous variables}
 
   \item{cutpoint}{Cutpoint}
 
   \item{labels}{Additional labels to provide as list (with
-  entries x, y, and eventually vector z). Unused
+  entries x, y, and eventually vector covar). Unused
   currently.}
 
   \item{data}{A data-frame for the x and y variables. If

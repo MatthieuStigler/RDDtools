@@ -79,7 +79,7 @@ account.
   data(Lee2008)
   n_Lee <- nrow(Lee2008)
   z1 <- runif(n_Lee)
-  Lee2008_rdd <- RDDdata(y=y, x=x, data=Lee2008, z=z1, cutpoint=0)
+  Lee2008_rdd <- RDDdata(y=y, x=x, data=Lee2008, covar=z1, cutpoint=0)
 
 ## estimation without covariates: RDDpred is the same than RDDcoef:
   reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)

@@ -21,7 +21,7 @@ n_Lee <- nrow(Lee2008)
 
 set.seed(123)
 Z<- data.frame(z1=rnorm(n_Lee), z2=rnorm(n_Lee, mean=20, sd=2), z3=sample(letters[1:3], size=n_Lee, replace=TRUE))
-Lee2008_rdd_z <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z,cutpoint=0)
+Lee2008_rdd_z <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z,cutpoint=0)
 
 head(Lee2008_rdd_z )
 summary(Lee2008_rdd_z )

@@ -7,7 +7,7 @@ x<-runif(1000,-1,1)
 cov<-rnorm(1000)
 y<-3+2*x+3*cov+10*(x>=0)+rnorm(1000)
 
-RD <- RDDdata(x=x, y=y, cutpoint=0, z=cov)
+RD <- RDDdata(x=x, y=y, cutpoint=0, covar=cov)
 
 ### Simple estimation:
 bw <- IKbandwidth(X=x, Y=y, cutpoint=0)
