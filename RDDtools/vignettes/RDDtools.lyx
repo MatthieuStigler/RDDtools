@@ -1,12 +1,11 @@
-#LyX 2.0 created this file. For more info see http://www.lyx.org/
-\lyxformat 413
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
 \begin_document
 \begin_header
 \textclass jss
 \begin_preamble
 
 \usepackage{amsmath}
-\usepackage{amssymb}
 \usepackage{nameref}
 
 %the following commands are used only for articles and codesnippets
@@ -34,36 +33,12 @@ NOTE THAT this is a preliminary note, on a preliminary package still under  deve
 %\Reviewer{Some Author\\University of Somewhere}
 %\Plainreviewer{Some Author}
 
-%the following commands are used only for book reviews
-%\Booktitle{LyX and \proglang{R}: Secrets of the LyX Master}
-%\Bookauthor{Book Author}
-%\Pubyear{2008}
-%\ISBN{0-12345-678-9}
-%\Pages{500}
-
-%the following command is used only for software reviews
-%\Softwaretitle{\proglang{gretl 1.7.4}}
-
-%the following commands are used only for book or software reviews
-%\Publisher{LyX Publishing Inc.}
-%\Pubaddress{LyX City}
-%\Price{USD 59.95 (P), USD 99.95 (H)}
-%\URL{http://www.lyx.org/}
 
 %without any formatting
 %\Plaintitle{LyX and R: Secrets of the LyX Master}
 %\Shorttitle{LyX and R}
 
-%the following commands are used for articles, codesnippets, book reviews and software reviews
 
-%publication information
-%do not use these commands before the article has been accepted
-%\Volume{00}
-%\Issue{0}
-%\Month{Month}
-%\Year{2000}
-%\Submitdate{2000-00-00}
-%\Acceptdate{2000-00-00}
 
 %The address of at least one author should be given in the following format
 \Address{
@@ -99,13 +74,13 @@ knitr
 \font_roman default
 \font_sans default
 \font_typewriter default
+\font_math auto
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
-
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -116,15 +91,24 @@ knitr
 \use_hyperref false
 \papersize default
 \use_geometry false
-\use_amsmath 0
-\use_esint 0
-\use_mhchem 1
-\use_mathdots 1
-\cite_engine natbib_authoryear
+\use_package amsmath 0
+\use_package amssymb 2
+\use_package cancel 0
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 0
+\use_package mhchem 1
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plainnat
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
 \suppress_date false
+\justification true
 \use_refstyle 0
 \index Index
 \shortcut idx
@@ -374,7 +358,7 @@ cutpoint The cutpoint/threshold (note only one cutpoint can be given)
 \end_layout
 
 \begin_layout Description
-z Eventual covariates
+covar Eventual covariates
 \end_layout
 
 \begin_layout Standard
@@ -520,7 +504,7 @@ z3=sample(letters[1:3], size=n_Lee, replace=TRUE))
 
 \begin_layout Plain Layout
 
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=Z,cutpoint=0) 
+Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z,cutpoint=0) 
 \end_layout
 
 \begin_layout Plain Layout
@@ -2363,19 +2347,10 @@ Conclusion
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
-bibfiles "/home/mat/Dropbox/Documents/Ordi/Bibtex/GeneralBiblio,/home/mat/Dropbox/Documents/Ordi/Bibtex/biblioFAO_mat"
-options "bibtotoc,jss"
-
-\end_inset
-
-
-\end_layout
+bibfiles "RDD_refs"
+options "bibtotoc,econometrica"
 
 \end_inset
 
@@ -2388,7 +2363,7 @@ status open
 
 \begin_layout Plain Layout
 
-
+%
 \backslash
 addcontentsline{toc}{section}{
 \backslash
@@ -2397,7 +2372,14 @@ refname}
 
 \begin_layout Plain Layout
 
+%
+\backslash
+bibliography{./RDDrefs} 
+\end_layout
 
+\begin_layout Plain Layout
+
+%
 \backslash
 bibliography{/home/mat/Dropbox/Documents/Ordi/Bibtex/GeneralBiblio,/home/mat/Dro
 pbox/Documents/Ordi/Bibtex/biblioFAO_mat} 

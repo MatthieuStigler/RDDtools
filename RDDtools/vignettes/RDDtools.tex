@@ -1,8 +1,6 @@
-\batchmode
-\makeatletter
-\def\input@path{{/home/mat/Dropbox/Communs/RDD/Package/RDDtools/vignettes//}}
-\makeatother
-\documentclass[english,nojss]{jss}\usepackage{graphicx, color}
+%% LyX 2.1.0 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english,nojss]{jss}\usepackage[]{graphicx}\usepackage[]{color}
 %% maxwidth is the original width if it is less than linewidth
 %% otherwise use linewidth (to make sure the graphics do not exceed the margin)
 \makeatletter
@@ -15,22 +13,16 @@
 }
 \makeatother
 
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\definecolor{fgcolor}{rgb}{0.2, 0.2, 0.2}
-\newcommand{\hlnumber}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlfunctioncall}[1]{\textcolor[rgb]{0.501960784313725,0,0.329411764705882}{\textbf{#1}}}%
-\newcommand{\hlstring}[1]{\textcolor[rgb]{0.6,0.6,1}{#1}}%
-\newcommand{\hlkeyword}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
-\newcommand{\hlargument}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
-\newcommand{\hlcomment}[1]{\textcolor[rgb]{0.180392156862745,0.6,0.341176470588235}{#1}}%
-\newcommand{\hlroxygencomment}[1]{\textcolor[rgb]{0.43921568627451,0.47843137254902,0.701960784313725}{#1}}%
-\newcommand{\hlformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
-\newcommand{\hleqformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
-\newcommand{\hlassignement}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
-\newcommand{\hlpackage}[1]{\textcolor[rgb]{0.588235294117647,0.709803921568627,0.145098039215686}{#1}}%
-\newcommand{\hlslot}[1]{\textit{#1}}%
-\newcommand{\hlsymbol}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlprompt}[1]{\textcolor[rgb]{0.2,0.2,0.2}{#1}}%
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
 
 \usepackage{framed}
 \makeatletter
@@ -60,6 +52,7 @@
 \usepackage{alltt}
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
+\usepackage{amssymb}
 \usepackage[authoryear]{natbib}
 
 \makeatletter
@@ -69,7 +62,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 
 \usepackage{amsmath}
-\usepackage{amssymb}
 \usepackage{nameref}
 
 %the following commands are used only for articles and codesnippets
@@ -152,6 +144,7 @@ NOTE THAT this is a preliminary note, on a preliminary package still under  deve
 \makeatother
 
 \usepackage{babel}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 \tableofcontents{}
 
@@ -201,7 +194,7 @@ into the \code{RDDdata} function, which takes following arguments:
 \item [{x}] The forcing variable 
 \item [{cutpoint}] The cutpoint/threshold (note only one cutpoint can be
 given)
-\item [{z}] Eventual covariates
+\item [{covar}] Eventual covariates
 \end{description}
 The RDDdata function returns an object of class \code{RDDdata}, as
 well as of the usual \proglang{R} class \code{data.frame}. 
@@ -215,23 +208,9 @@ function, we look at the first rows of the dataset:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{library}(RDDtools)
-\end{alltt}
-
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: sandwich}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: zoo}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# \\\#\# Attaching package: 'zoo'}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The following object(s) are masked from 'package:base':\\\#\# \\\#\#\ \ \ \  as.Date, as.Date.numeric}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# KernSmooth 2.23 loaded\\\#\# Copyright M. P. Wand 1997-2009}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# \\\#\# RDDtools 0.1 (rev Monday 2013-05-06). PLEASE NOTE THIS is currently only a development version. \\\#\# Run vignette('RDDtools') for the documentation}}\begin{alltt}
-\hlfunctioncall{data}(Lee2008)
-\hlfunctioncall{head}(Lee2008)
+\hlkwd{library}\hlstd{(RDDtools)}
+\hlkwd{data}\hlstd{(Lee2008)}
+\hlkwd{head}\hlstd{(Lee2008)}
 \end{alltt}
 \begin{verbatim}
 ##         x      y
@@ -254,10 +233,10 @@ matrix Z:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-n_Lee <- \hlfunctioncall{nrow}(Lee2008)
-Z <- \hlfunctioncall{data.frame}(z1 = \hlfunctioncall{rnorm}(n_Lee), z2 = \hlfunctioncall{rnorm}(n_Lee, mean = 20, sd = 2), z3 = \hlfunctioncall{sample}(letters[1:3], 
-    size = n_Lee, replace = TRUE))
-Lee2008_rdd <- \hlfunctioncall{RDDdata}(y = Lee2008$y, x = Lee2008$x, z = Z, cutpoint = 0)
+\hlstd{n_Lee} \hlkwb{<-} \hlkwd{nrow}\hlstd{(Lee2008)}
+\hlstd{Z} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(}\hlkwc{z1} \hlstd{=} \hlkwd{rnorm}\hlstd{(n_Lee),} \hlkwc{z2} \hlstd{=} \hlkwd{rnorm}\hlstd{(n_Lee,} \hlkwc{mean} \hlstd{=} \hlnum{20}\hlstd{,} \hlkwc{sd} \hlstd{=} \hlnum{2}\hlstd{),} \hlkwc{z3} \hlstd{=} \hlkwd{sample}\hlstd{(letters[}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{],}
+    \hlkwc{size} \hlstd{= n_Lee,} \hlkwc{replace} \hlstd{=} \hlnum{TRUE}\hlstd{))}
+\hlstd{Lee2008_rdd} \hlkwb{<-} \hlkwd{RDDdata}\hlstd{(}\hlkwc{y} \hlstd{= Lee2008}\hlopt{$}\hlstd{y,} \hlkwc{x} \hlstd{= Lee2008}\hlopt{$}\hlstd{x,} \hlkwc{covar} \hlstd{= Z,} \hlkwc{cutpoint} \hlstd{=} \hlnum{0}\hlstd{)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -270,7 +249,7 @@ which gives a few summary informations about the dataset:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{summary}(Lee2008_rdd)
+\hlkwd{summary}\hlstd{(Lee2008_rdd)}
 \end{alltt}
 \begin{verbatim}
 ## ### RDDdata object ###
@@ -307,7 +286,7 @@ is shown, using non-overlapping averages:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{plot}(Lee2008_rdd)
+\hlkwd{plot}\hlstd{(Lee2008_rdd)}
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-4} 
@@ -326,7 +305,7 @@ which allows to plot multiple plots with different bandwidths:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{plot}(Lee2008_rdd, nplot = 3, h = \hlfunctioncall{c}(0.02, 0.03, 0.04))
+\hlkwd{plot}\hlstd{(Lee2008_rdd,} \hlkwc{nplot} \hlstd{=} \hlnum{3}\hlstd{,} \hlkwc{h} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0.02}\hlstd{,} \hlnum{0.03}\hlstd{,} \hlnum{0.04}\hlstd{))}
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-5} 
@@ -430,7 +409,7 @@ We show now the different applications, still using the Lee dataset:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-reg_linear_1 <- \hlfunctioncall{RDDreg_lm}(Lee2008_rdd)
+\hlstd{reg_linear_1} \hlkwb{<-} \hlkwd{RDDreg_lm}\hlstd{(Lee2008_rdd)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -443,9 +422,9 @@ window:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-reg_linear_2 <- \hlfunctioncall{RDDreg_lm}(Lee2008_rdd, slope = \hlstring{"same"})
-reg_linear_3 <- \hlfunctioncall{RDDreg_lm}(Lee2008_rdd, order = 3)
-reg_linear_4 <- \hlfunctioncall{RDDreg_lm}(Lee2008_rdd, bw = 0.4)
+\hlstd{reg_linear_2} \hlkwb{<-} \hlkwd{RDDreg_lm}\hlstd{(Lee2008_rdd,} \hlkwc{slope} \hlstd{=} \hlstr{"same"}\hlstd{)}
+\hlstd{reg_linear_3} \hlkwb{<-} \hlkwd{RDDreg_lm}\hlstd{(Lee2008_rdd,} \hlkwc{order} \hlstd{=} \hlnum{3}\hlstd{)}
+\hlstd{reg_linear_4} \hlkwb{<-} \hlkwd{RDDreg_lm}\hlstd{(Lee2008_rdd,} \hlkwc{bw} \hlstd{=} \hlnum{0.4}\hlstd{)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -459,7 +438,7 @@ output of the underlying regression model:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-reg_linear_1
+\hlstd{reg_linear_1}
 \end{alltt}
 \begin{verbatim}
 ## ### RDD regression: parametric ###
@@ -474,12 +453,12 @@ reg_linear_1
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}
 \begin{alltt}
-\hlfunctioncall{summary}(reg_linear_1)
+\hlkwd{summary}\hlstd{(reg_linear_1)}
 \end{alltt}
 \begin{verbatim}
 ## 
 ## Call:
-## lm(formula = y ~ ., data = dat_step1, subset = isIn)
+## lm(formula = y ~ ., data = dat_step1, weights = weights)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
@@ -489,17 +468,17 @@ reg_linear_1
 ##             Estimate Std. Error t value Pr(>|t|)    
 ## (Intercept)  0.43295    0.00428  101.25  < 2e-16 ***
 ## D            0.11823    0.00568   20.82  < 2e-16 ***
-## `x^1`        0.29691    0.01155   25.71  < 2e-16 ***
-## `x^1_right`  0.04598    0.01350    3.41  0.00066 ***
+## x            0.29691    0.01155   25.71  < 2e-16 ***
+## x_right      0.04598    0.01350    3.41  0.00066 ***
 ## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.138 on 6554 degrees of freedom
-## Multiple R-squared: 0.671,	Adjusted R-squared: 0.671 
+## Multiple R-squared:  0.671,	Adjusted R-squared:  0.671 
 ## F-statistic: 4.45e+03 on 3 and 6554 DF,  p-value: <2e-16
 \end{verbatim}
 \begin{alltt}
-reg_linear_2
+\hlstd{reg_linear_2}
 \end{alltt}
 \begin{verbatim}
 ## ### RDD regression: parametric ###
@@ -514,7 +493,7 @@ reg_linear_2
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}
 \begin{alltt}
-reg_linear_3
+\hlstd{reg_linear_3}
 \end{alltt}
 \begin{verbatim}
 ## ### RDD regression: parametric ###
@@ -529,7 +508,7 @@ reg_linear_3
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}
 \begin{alltt}
-reg_linear_4
+\hlstd{reg_linear_4}
 \end{alltt}
 \begin{verbatim}
 ## ### RDD regression: parametric ###
@@ -555,14 +534,14 @@ with polynomial of order 1 and order 3:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{par}(mfrow = \hlfunctioncall{c}(2, 1))
-\hlfunctioncall{plot}(reg_linear_1)
-\hlfunctioncall{plot}(reg_linear_3)
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{1}\hlstd{))}
+\hlkwd{plot}\hlstd{(reg_linear_1)}
+\hlkwd{plot}\hlstd{(reg_linear_3)}
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-9} 
 \begin{kframe}\begin{alltt}
-\hlfunctioncall{par}(mfrow = \hlfunctioncall{c}(1, 1))
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{))}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -636,15 +615,15 @@ with \code{RDDreg_np()}:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-bw_IK <- \hlfunctioncall{RDDbw_IK}(Lee2008_rdd)
-bw_IK
+\hlstd{bw_IK} \hlkwb{<-} \hlkwd{RDDbw_IK}\hlstd{(Lee2008_rdd)}
+\hlstd{bw_IK}
 \end{alltt}
 \begin{verbatim}
 ##  h_opt 
 ## 0.2939
 \end{verbatim}
 \begin{alltt}
-reg_nonpara <- \hlfunctioncall{RDDreg_np}(RDDobject = Lee2008_rdd, bw = bw_IK)
+\hlstd{reg_nonpara} \hlkwb{<-} \hlkwd{RDDreg_np}\hlstd{(}\hlkwc{RDDobject} \hlstd{= Lee2008_rdd,} \hlkwc{bw} \hlstd{= bw_IK)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -656,7 +635,7 @@ The output, of class \code{RDDreg_np}, has the usual \code{print()},
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-reg_nonpara
+\hlstd{reg_nonpara}
 \end{alltt}
 \begin{verbatim}
 ## ### RDD regression: nonparametric local linear###
@@ -664,35 +643,30 @@ reg_nonpara
 ## 	Number of obs: 3200 (left: 1594, right: 1606)
 ## 
 ## 	Coefficient:
-##   Estimate Std. Error t value Pr(>|t|)    
-## D  0.07992    0.00682    11.7   <2e-16 ***
+##   Estimate Std. Error z value Pr(>|z|)    
+## D  0.07992    0.00946    8.44   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}
 \begin{alltt}
-\hlfunctioncall{summary}(reg_nonpara)
+\hlkwd{summary}\hlstd{(reg_nonpara)}
 \end{alltt}
 \begin{verbatim}
+## ### RDD regression: nonparametric local linear###
+## 	Bandwidth:  0.2939 
+## 	Number of obs: 3200 (left: 1594, right: 1606)
 ## 
-## Call:
-## lm(formula = y ~ ., data = dat_step1, weights = kernel_w)
-## 
-## Weighted Residuals:
+## 	Weighted Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -0.5235 -0.0015  0.0000  0.0000  0.4605 
+## -0.9775 -0.0672 -0.0050  0.0450  0.9376 
 ## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  0.45328    0.00491    92.3   <2e-16 ***
-## x            0.39089    0.04204     9.3   <2e-16 ***
-## D            0.07992    0.00682    11.7   <2e-16 ***
-## x_right      0.05344    0.05916     0.9     0.37    
+## 	Coefficient:
+##   Estimate Std. Error z value Pr(>|z|)    
+## D  0.07992    0.00946    8.44   <2e-16 ***
 ## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.0816 on 3196 degrees of freedom
-## Multiple R-squared: 0.356,	Adjusted R-squared: 0.356 
-## F-statistic:  590 on 3 and 3196 DF,  p-value: <2e-16
+## 	Local R squared: 0.356
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -715,7 +689,7 @@ the parametric plots, which show the curve $y=f(x)=\hat{\alpha}+\hat{\beta}(x-c)
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{plot}(reg_nonpara)
+\hlkwd{plot}\hlstd{(reg_nonpara)}
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-12} 
@@ -743,7 +717,7 @@ We illustrate this on the previous non-parametric estimator:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{plotSensi}(reg_nonpara, device = \hlstring{"ggplot"})
+\hlkwd{plotSensi}\hlstd{(reg_nonpara,} \hlkwc{device} \hlstd{=} \hlstr{"ggplot"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-13} 
@@ -757,7 +731,7 @@ was specified:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{plotSensi}(reg_linear_4, device = \hlstring{"ggplot"})
+\hlkwd{plotSensi}\hlstd{(reg_linear_4,} \hlkwc{device} \hlstd{=} \hlstr{"ggplot"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-14} 
@@ -797,7 +771,7 @@ We illustrate this on the non-parametric estimator:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{plotPlacebo}(reg_nonpara, device = \hlstring{"ggplot"})
+\hlkwd{plotPlacebo}\hlstd{(reg_nonpara,} \hlkwc{device} \hlstd{=} \hlstr{"ggplot"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-15} 
@@ -824,12 +798,20 @@ on a RDDdata object:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{dens_test}(Lee2008_rdd)
+\hlkwd{dens_test}\hlstd{(Lee2008_rdd)}
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-16} 
 \begin{kframe}\begin{verbatim}
-## [1] 0.1952
+## 
+## 	McCrary Test for no discontinuity of density around cutpoint
+## 
+## data:  Lee2008_rdd
+## z-val = 1.295, p-value = 0.1952
+## alternative hypothesis: Density is discontinuous around cutpoint
+## sample estimates:
+## Discontinuity 
+##        0.1035
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -858,13 +840,13 @@ We run here the equality in means test:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{covarTest_mean}(Lee2008_rdd)
+\hlkwd{covarTest_mean}\hlstd{(Lee2008_rdd)}
 \end{alltt}
 \begin{verbatim}
 ##    mean of x mean of y Difference statistic p.value
-## z1 -0.01352  0.01004   0.02357    -0.9278   0.3536 
-## z2 20.04     19.97     -0.07224   1.426     0.1539 
-## z3 2.001     2.015     0.01373    -0.6683   0.504
+## z1 0.03658   0.01154   -0.02504   1.019     0.3082 
+## z2 20.02     20        -0.02255   0.4549    0.6492 
+## z3 2.008     2.009     0.001503   -0.07364  0.9413
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -875,15 +857,15 @@ as well as the equality in distribution test:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{covarTest_dis}(Lee2008_rdd)
+\hlkwd{covarTest_dis}\hlstd{(Lee2008_rdd)}
 \end{alltt}
 
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: p-values will be approximate in the presence of ties}}\begin{verbatim}
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: p-value will be approximate in the presence of ties}}\begin{verbatim}
 ##    statistic p.value
-## z1 0.02257   0.391  
-## z2 0.02777   0.1706 
-## z3 0.009861  0.9978
+## z1 0.02406   0.3145 
+## z2 0.0157    0.8263 
+## z3 0.004626  1
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -895,8 +877,11 @@ we would expect that no equality test is rejected.
 
 \section{Conclusion}
 
+\bibliographystyle{econometrica}
+\addcontentsline{toc}{section}{\refname}\bibliography{RDD_refs}
 
 
-\addcontentsline{toc}{section}{\refname}
-\bibliography{/home/mat/Dropbox/Documents/Ordi/Bibtex/GeneralBiblio,/home/mat/Dropbox/Documents/Ordi/Bibtex/biblioFAO_mat} 
+%\addcontentsline{toc}{section}{\refname}
+%\bibliography{./RDDrefs} 
+%\bibliography{/home/mat/Dropbox/Documents/Ordi/Bibtex/GeneralBiblio,/home/mat/Dropbox/Documents/Ordi/Bibtex/biblioFAO_mat} 
 \end{document}
