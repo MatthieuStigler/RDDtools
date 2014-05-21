@@ -1,7 +1,4 @@
-### MISC
-is.even <- function (a) {
-    a%%2 == 0
-}
+
 
 # checkIsRDD <- function(object)  if(!inherits(object, "RDDdata")) stop("Only works for RDDdata objects")
 # checkIsAnyRDD <- function(object)  if(!inherits(object, c("RDDdata", "RDDreg_np"))) stop("Only works for RDDdata objects")
@@ -12,10 +9,6 @@ checkIsAnyRDD <- checkIsRDD <- function(object)  {
   if(!inherits(object, classesOk)) stop("Only works for RDDdata objects")
 }
 
-
-Kernel_tri <- function(X, center, bw) {
-  ifelse(abs(X - center) > bw, 0, 1 - (abs(X - center) / bw))
-}
 
 
 getCutpoint <- function(object){
@@ -46,7 +39,7 @@ getBW <- function(object, force.na=FALSE){
 
 
 
-## return the typoe of inference used by RDDreg_np
+## return the type of inference used by RDDreg_np
 infType <- function(x) {
   if(is.null(getCall(x)$inference)) "se" else getCall(x)$inference
 }
@@ -88,6 +81,10 @@ getOriginalX.RDDreg <- function(object){
   object$RDDslot$RDDdata[, "x"]
 }
 
+getOriginalX.RDDdata <- function(object){
+  object[, "x"]
+}
+
 # getOriginalX.RDDreg_np <- function(object){
 # 
 #   cutpoint <- getCutpoint(object)
@@ -126,9 +123,6 @@ getOriginalData.RDDreg <- function(object, na.rm=TRUE, classRDD=TRUE){
 #' @S3method getCall RDDreg
 getCall.RDDreg <- function(x,...) attr(x, "RDDcall")
 
-.onLoad <- function(libname, pkgname)
-    packageStartupMessage("\nRDDtools ", utils::packageVersion("RDDtools"), 
-      "\nPLEASE NOTE THIS is currently only a development version. \nRun vignette('RDDtools') for the documentation")
 
 #format(Sys.Date(), "%A %Y-%m-%d")
 
