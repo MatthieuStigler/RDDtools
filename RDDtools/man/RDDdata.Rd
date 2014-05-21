@@ -2,7 +2,7 @@
 \alias{RDDdata}
 \title{Construct RDDdata}
 \usage{
-RDDdata(y, x, covar, cutpoint, labels, data, type = c("Sharp", "Fuzzy"))
+RDDdata(y, x, covar, cutpoint, z, labels, data)
 }
 \arguments{
   \item{x}{Forcing variable}
@@ -14,12 +14,14 @@ RDDdata(y, x, covar, cutpoint, labels, data, type = c("Sharp", "Fuzzy"))
   \item{cutpoint}{Cutpoint}
 
   \item{labels}{Additional labels to provide as list (with
-  entries x, y, and eventually vector covar). Unused
-  currently.}
+  entries \code{x}, \code{y}, and eventually vector
+  \code{covar}). Unused currently.}
 
-  \item{data}{A data-frame for the x and y variables. If
-  this is provided, the column names can be entered
-  directly for argument \code{x} and \code{y}}
+  \item{data}{A data-frame for the \code{x} and \code{y}
+  variables. If this is provided, the column names can be
+  entered directly for argument \code{x} and \code{y}}
+
+  \item{z}{Assignment variable for the fuzzy case.}
 }
 \value{
 Object of class \code{RDDdata}, inheriting from

@@ -6,9 +6,10 @@
 #' @param y Output
 #' @param covar Exogeneous variables
 #' @param cutpoint Cutpoint
-#' @param labels Additional labels to provide as list (with entries x, y, and eventually vector covar). Unused currently. 
-#' @param data A data-frame for the x and y variables. If this is provided, 
+#' @param labels Additional labels to provide as list (with entries \code{x}, \code{y}, and eventually vector \code{covar}). Unused currently. 
+#' @param data A data-frame for the \code{x} and \code{y} variables. If this is provided, 
 #' the column names can be entered directly for argument \code{x} and \code{y}
+#' @param z Assignment variable for the fuzzy case. 
 #' @return Object of class \code{RDDdata}, inheriting from \code{data.frame}
 #' @export
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
@@ -25,11 +26,11 @@
 #' plot(rd)
 
 
-RDDdata <- function(y, x, covar, cutpoint, labels, data, type=c("Sharp", "Fuzzy")){
+RDDdata <- function(y, x, covar, cutpoint, z, labels, data){
 
   
 ## check args
-  type <- match.arg(type)
+  type <- ifelse(missing(z), "Sharp", "Fuzzy")
   hasCovar <- !missing(covar)
   if(missing(cutpoint)) stop("Please provide cutpoint")
   covar_nam <- deparse(substitute(covar))
@@ -86,6 +87,8 @@ RDDdata <- function(y, x, covar, cutpoint, labels, data, type=c("Sharp", "Fuzzy"
   attr(RDDdat, "hasCovar") <- hasCovar
   attr(RDDdat, "labels") <- labels
   attr(RDDdat, "cutpoint") <- cutpoint
+  attr(RDDdat, "type") <- type
+
   RDDdat
 }
 
