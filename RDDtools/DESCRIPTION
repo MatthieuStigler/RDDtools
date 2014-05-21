@@ -14,7 +14,8 @@ Imports:
     sandwich,
     lmtest, 
     Formula,
-    locpol
+    locpol,
+    methods
 Suggests:
     stats4, car
 Description: Provides a set of functions for RDD, from data visualisation,

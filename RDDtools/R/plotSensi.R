@@ -15,6 +15,7 @@
 #' @param \ldots Further arguments passed to specific methods
 #' @return A data frame containing the bandwidths and corresponding estimates and confidence intervals. 
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
+#' @import methods
 #' @examples
 #' data(Lee2008)
 #' Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
