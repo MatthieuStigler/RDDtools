@@ -1,8 +1,8 @@
 Package: RDDtools
 Type: Package
 Title: A toolbox for regression discontinuity design (RDD)
-Version: 0.21
-Date: 25/07/2013
+Version: 0.22
+Date: 21/05/2014
 Authors@R: person("Matthieu", "Stigler", role = c("aut","cre"),
     email="Matthieu.Stigler@iheid.ch")
 Maintainer: Matthieu Stigler <Matthieu.Stigler@iheid.ch>

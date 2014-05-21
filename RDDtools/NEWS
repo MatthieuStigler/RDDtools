@@ -1,3 +1,16 @@
+
+RDDtools 0.22
+===========
+Updated on 21/5/14
+
+* RDDdata: change arg z to covar, add new argument z for sharp, currently unused. 
+
+* dens_test: work now on RDDreg, return object htest
+
+* Multiple changes in help files
+
+* Correct import, suggests, calls to :::
+
 RDDtools 0.21
 ===========
 Updated on 25/7/13
