@@ -31,7 +31,7 @@ RDDtools: main features
 
 + Bandwidth selection:
   + MSE-RDD bandwidth procedure of [Imbens and Kalyanaraman 2012]: **RDDbw_IK()**
-  + MSE gobal bandwidth procedure of [Ruppert et al 1995]: **RDDbw_RSW()**
+  + MSE global bandwidth procedure of [Ruppert et al 1995]: **RDDbw_RSW()**
 + Estimation:
   +  RDD parametric estimation: **RDDreg_lm()** This includes specifying the polynomial order, including covariates with various specifications as advocated in [Imbens and Lemieux 2008].
   +  RDD local non-parametric estimation: **RDDreg_np()**. Can also include covariates, and allows different types of inference (fully non-parametric, or parametric approximation). 
@@ -99,7 +99,7 @@ summary(Lee2008_rdd)
 plot(Lee2008_rdd)
 ```
 
-![plot of chunk dataPlot](figuresREADME/dataPlot.png) 
+<img src="figuresREADME/dataPlot.png" title="plot of chunk dataPlot" alt="plot of chunk dataPlot" style="display: block; margin: auto;" />
 
 
 ### Estimation
@@ -131,7 +131,7 @@ reg_para
 plot(reg_para)
 ```
 
-![plot of chunk reg_para](figuresREADME/reg_para.png) 
+<img src="figuresREADME/reg_para.png" title="plot of chunk reg_para" alt="plot of chunk reg_para" style="display: block; margin: auto;" />
 
 
 
@@ -160,10 +160,10 @@ print(reg_nonpara)
 plot(x = reg_nonpara)
 ```
 
-![plot of chunk RegPlot](figuresREADME/RegPlot.png) 
+<img src="figuresREADME/RegPlot.png" title="plot of chunk RegPlot" alt="plot of chunk RegPlot" style="display: block; margin: auto;" />
 
 
-### Sensitivity tests:
+### Regression Sensitivity tests:
 
 One can easily check the sensitivity of the estimate to different bandwidths:
 
@@ -171,7 +171,7 @@ One can easily check the sensitivity of the estimate to different bandwidths:
 plotSensi(reg_nonpara, from = 0.05, to = 1, by = 0.1)
 ```
 
-![plot of chunk SensiPlot](figuresREADME/SensiPlot.png) 
+<img src="figuresREADME/SensiPlot.png" title="plot of chunk SensiPlot" alt="plot of chunk SensiPlot" style="display: block; margin: auto;" />
 
 
 Or run the Placebo test, estimating the RDD effect based on fake cutpoints:
@@ -180,9 +180,89 @@ Or run the Placebo test, estimating the RDD effect based on fake cutpoints:
 plotPlacebo(reg_nonpara)
 ```
 
-![plot of chunk placeboPlot](figuresREADME/placeboPlot.png) 
+<img src="figuresREADME/placeboPlot.png" title="plot of chunk placeboPlot" alt="plot of chunk placeboPlot" style="display: block; margin: auto;" />
 
 
+### Design Sensitivity tests:
+
+Design sensitivity tests check whether the discontinuity found can actually be attributed ot other causes. Two types of tests are available:
+
++ Discontinuity comes from manipulation: test whether there is possible manipulation around the cutoff, McCrary 2008 test: **dens_test()**
++ Discontinuity comes from other variables: should test whether discontinuity arises with covariates. Currently, only simple tests of equality of covariates around the threshold are available: 
+
+#### Discontinuity comes from manipulation: McCrary test
+
+use simply the function **dens_test()**, on either the raw data, or the regression output:
+
+```r
+dens_test(reg_nonpara)
+```
+
+<img src="figuresREADME/DensPlot.png" title="plot of chunk DensPlot" alt="plot of chunk DensPlot" style="display: block; margin: auto;" />
+
+```
+## 
+## 	McCrary Test for no discontinuity of density around cutpoint
+## 
+## data:  reg_nonpara
+## z-val = 1.295, p-value = 0.1952
+## alternative hypothesis: Density is discontinuous around cutpoint
+## sample estimates:
+## Discontinuity 
+##        0.1035
+```
+
+
+#### Discontinuity comes from covariates: covariates balance tests
+
+Two tests available:
++ equal means of covariates: **covarTest_mean()**
++ equal density of covariates: **covarTest_dens()**
+
+
+We need here to simulate some data, given that the Lee (2008) dataset contains no covariates.
+We here simulate three variables, with the second having a different mean on the left and the right. 
+
+
+```r
+set.seed(123)
+n_Lee <- nrow(Lee2008)
+Z <- data.frame(z1 = rnorm(n_Lee, sd = 2), z2 = rnorm(n_Lee, mean = ifelse(Lee2008 < 
+    0, 5, 8)), z3 = sample(letters, size = n_Lee, replace = TRUE))
+Lee2008_rdd_Z <- RDDdata(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
+```
+
+
+
+Run the tests:
+
+```r
+## test for equality of means around cutoff:
+covarTest_mean(Lee2008_rdd_Z, bw = 0.3)
+```
+
+```
+##    mean of x mean of y Difference statistic p.value
+## z1 0.004268  0.02186   0.01759    -0.2539   0.7996 
+## z2 5.006     7.985     2.979      -84.85    0      
+## z3 13.19     13.44     0.2465     -0.941    0.3468
+```
+
+```r
+
+## Can also use function covarTest_dis() for Kolmogorov-Smirnov test:
+covarTest_dis(Lee2008_rdd_Z, bw = 0.3)
+```
+
+```
+##    statistic p.value
+## z1 0.03482   0.2727 
+## z2 0.8648    0      
+## z3 0.03009   0.4474
+```
+
+
+Tests correctly reject equality of the second, and correctly do not reject equality for the first and third. 
 
   [Imbens and Kalyanaraman 2012]: http://ideas.repec.org/a/oup/restud/v79y2012i3p933-959.html "Imbens, G. & Kalyanaraman, K. (2012) Optimal Bandwidth Choice for the Regression Discontinuity Estimator, Review of Economic Studies, 79, 933-959"
   
@@ -192,7 +272,7 @@ plotPlacebo(reg_nonpara)
   
   [Cameron et al. 2008]: http://ideas.repec.org/a/tpr/restat/v90y2008i3p414-427.html "Cameron, Gelbach and Miller (2008) Bootstrap-Based Improvements for Inference with Clustered Errors, The Review of Economics and Statistics, Vol. 90(3), pages 414-427"
   
-  [Ruppert et al 1995]: http://www.jstor.org/stable/2291516 "Ruppert, D., Sheather, S. J. and Wand, M. P. (1995). An effective bandwidth selector for local least squares regression. Journal of the American Statistical Association, 90, 12571270."
+  [Ruppert et al 1995]: http://www.jstor.org/stable/2291516 "Ruppert, D., Sheather, S. J. and Wand, M. P. (1995). An effective bandwidth selector for local least squares regression. Journal of the American Statistical Association, 90, 1257–1270."
 
 
   
