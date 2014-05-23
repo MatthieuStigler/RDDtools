@@ -39,7 +39,7 @@ Loading required package: Formula
 KernSmooth 2.23 loaded
 Copyright M. P. Wand 1997-2009
 
-RDDtools 0.21
+RDDtools 0.22
 PLEASE NOTE THIS is currently only a development version. 
 Run vignette('RDDtools') for the documentation
 > 
