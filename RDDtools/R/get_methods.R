@@ -9,7 +9,10 @@ checkIsAnyRDD <- checkIsRDD <- function(object)  {
   if(!inherits(object, classesOk)) stop("Only works for RDDdata objects")
 }
 
-
+getType <- function(object){
+  checkIsRDD(object)
+  attr(object, "type")
+}
 
 getCutpoint <- function(object){
   

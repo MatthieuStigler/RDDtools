@@ -82,6 +82,10 @@ RDDdata <- function(y, x, covar, cutpoint, z, labels, data){
     if(NCOL(covar)==1 && is.null(colnames(covar))) colnames(RDDdat)[3] <- covar_nam
   } 
 
+  if(type=="Fuzzy"){
+    RDDdat <- cbind(RDDdat,z)
+  }
+
 ## return
   class(RDDdat) <- c("RDDdata", "data.frame")
   attr(RDDdat, "hasCovar") <- hasCovar
