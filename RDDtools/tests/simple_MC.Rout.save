@@ -20,14 +20,8 @@ Type 'q()' to quit R.
 
 > 
 > library(RDDtools)
-KernSmooth 2.23 loaded
-Copyright M. P. Wand 1997-2009
-
-RDDtools 0.22
-PLEASE NOTE THIS is currently only a development version. 
-Run vignette('RDDtools') for the documentation
-> library(rdd)
-Loading required package: sandwich
+Loading required package: AER
+Loading required package: car
 Loading required package: lmtest
 Loading required package: zoo
 
@@ -37,10 +31,16 @@ The following objects are masked from 'package:base':
 
     as.Date, as.Date.numeric
 
-Loading required package: AER
-Loading required package: car
+Loading required package: sandwich
 Loading required package: survival
 Loading required package: splines
+KernSmooth 2.23 loaded
+Copyright M. P. Wand 1997-2009
+
+RDDtools 0.22
+PLEASE NOTE THIS is currently only a development version. 
+Run vignette('RDDtools') for the documentation
+> library(rdd)
 Loading required package: Formula
 > 
 > ## simple MC:
