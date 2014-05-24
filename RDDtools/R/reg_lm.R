@@ -28,8 +28,8 @@
 #' a specific function \code{\link{clusterInf}} is provided.  
 #' @references TODO
 #' @include plotBin.R
-#' @include Misc.R
 #' @import Formula
+#' @importFrom AER ivreg
 #' @export
 #' @examples
 #' ## Step 0: prepare data
@@ -57,6 +57,7 @@ RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
 
   checkIsRDD(RDDobject)
   cutpoint <- getCutpoint(RDDobject)
+  type <- getType(RDDobject)
 
   slope <- match.arg(slope)
 
@@ -80,13 +81,24 @@ RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
 			    slope=slope, covar.opt=covar.opt)
 
 ## Regression
-  reg <- lm(y~., data=dat_step1, weights=weights)
+  if(type=="Sharp"){
+    reg <- lm(y~., data=dat_step1, weights=weights)
+    class_reg <- "lm"
+  } else {
+    if(!is.null(covariates)) stop("Covariates currently not implemented for Fuzzy case")
+#     status <- RDDobject$z
+dat_step1 <<- dat_step1
+    print(head(dat_step1))
+    reg <- ivreg(y~.-ins|.-D, data=dat_step1, weights=weights)
+    class_reg <- "ivreg"
+  }
+  
 
 ##Return
   RDDslot <- list()
   RDDslot$RDDdata <- RDDobject
   reg$RDDslot <- RDDslot 
-  class(reg) <- c("RDDreg_lm", "RDDreg", "lm")
+  class(reg) <- c("RDDreg_lm", "RDDreg", class_reg)
   attr(reg, "PolyOrder") <- order
   attr(reg, "cutpoint") <- cutpoint
   attr(reg, "slope") <- slope
