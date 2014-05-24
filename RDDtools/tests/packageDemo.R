@@ -26,8 +26,11 @@ Lee2008_rdd_z <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z,cutpoint=0)
 head(Lee2008_rdd_z )
 summary(Lee2008_rdd_z )
 
-
-
+### Fuzzy
+set.seed(123)
+ins <- rbinom(n_Lee, 1, prob=ifelse(Lee2008$x<0, 0.1, 0.9))
+Lee2008_rdd_ins <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=ins,cutpoint=0)
+table(Lee2008$x<0, ins==0)
 
 ############################################
 ### STEP 2: Graphical inspection
@@ -82,6 +85,11 @@ reg_para_ik
 plot(reg_para_ik)
 
 all.equal(unlist(RDDpred(reg_para_ik)), RDDcoef(reg_para_ik, allInfo=TRUE)[1:2], check.attributes=FALSE)
+
+## Fuzzy reg
+reg_para_fuzz <- RDDreg_lm(Lee2008_rdd_ins)
+coef(reg_para_fuzz)
+summary(reg_para_fuzz)
 
 ## Covariates:
 reg_para4_cov <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".")

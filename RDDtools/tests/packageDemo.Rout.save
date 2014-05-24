@@ -89,8 +89,15 @@ Sample size:
 	-Right: 3818
 Covariates: yes 
 > 
-> 
-> 
+> ### Fuzzy
+> set.seed(123)
+> ins <- rbinom(n_Lee, 1, prob=ifelse(Lee2008$x<0, 0.1, 0.9))
+> Lee2008_rdd_ins <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=ins,cutpoint=0)
+> table(Lee2008$x<0, ins==0)
+       
+        FALSE TRUE
+  FALSE  3474  344
+  TRUE    283 2457
 > 
 > ############################################
 > ### STEP 2: Graphical inspection
@@ -232,6 +239,41 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > all.equal(unlist(RDDpred(reg_para_ik)), RDDcoef(reg_para_ik, allInfo=TRUE)[1:2], check.attributes=FALSE)
 [1] TRUE
+> 
+> ## Fuzzy reg
+> reg_para_fuzz <- RDDreg_lm(Lee2008_rdd_ins)
+       y D       x x_right ins
+1 0.5810 1  0.1049  0.1049   1
+2 0.4611 1  0.1393  0.1393   1
+3 0.5434 0 -0.0736  0.0000   0
+4 0.5846 1  0.0868  0.0868   1
+5 0.5803 0  0.3994  0.3994   1
+6 0.6244 1  0.1681  0.1681   1
+> coef(reg_para_fuzz)
+(Intercept)           D           x     x_right 
+ 0.41796288  0.14755375  0.29778248  0.04266442 
+> summary(reg_para_fuzz)
+
+Call:
+ivreg(formula = y ~ . - ins | . - D, data = dat_step1, weights = weights)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.905964 -0.070958  0.004881  0.080950  0.879820 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.417963   0.005074  82.375  < 2e-16 ***
+D           0.147554   0.007430  19.860  < 2e-16 ***
+x           0.297782   0.012076  24.659  < 2e-16 ***
+x_right     0.042664   0.014113   3.023  0.00251 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.145 on 6554 degrees of freedom
+Multiple R-Squared: 0.6383,	Adjusted R-squared: 0.6381 
+Wald test:  4051 on 3 and 6554 DF,  p-value: < 2.2e-16 
+
 > 
 > ## Covariates:
 > reg_para4_cov <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".")

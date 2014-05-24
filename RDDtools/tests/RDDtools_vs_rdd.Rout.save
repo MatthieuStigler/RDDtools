@@ -104,7 +104,27 @@ cov          3.04154403 0.05189778 58.6064361  0.000000e+00
 > all.equal(rdd_co_cov[-4,], RDDtools_co_cov[-4,], check.attributes=FALSE)
 [1] TRUE
 > 
+> ## Fuzzy
+> set.seed(123)
+> ins <- rbinom(nrow(RD), 1, prob=ifelse(RD$x<0, 0.1, 0.9))
+> RD_rdd_ins <- RDDdata(y=RD$y, x=RD$x, z=ins,cutpoint=0)
+> 
+> RDDto_reg_fuz <- RDDreg_lm(RD_rdd_ins, bw=10)
+          y D          x   x_right ins
+1  6.203228 0 -0.7725932 0.0000000   0
+2  8.450435 1  0.2445988 0.2445988   1
+3 14.858838 1  0.2185495 0.2185495   1
+4 12.609573 1  0.2467589 0.2467589   1
+5 19.481404 0  0.7218308 0.7218308   1
+6 12.454729 1  0.2806212 0.2806212   1
+> rdd_reg_fuz <- RDestimate(y~x+z, data=RD_rdd_ins, kernel="rectangular", bw=10, model=TRUE, se.type="const")$model[[2]][[1]]
+> 
+> all.equal(RDDcoef(RDDto_reg_fuz),coef(summary(rdd_reg_fuz))[2,1])
+[1] TRUE
+> all.equal(RDDcoef(RDDto_reg_fuz, allCo=TRUE)[1:3],coef(summary(rdd_reg_fuz))[1:3,1], check.attributes=FALSE)
+[1] TRUE
+> 
 > 
 > proc.time()
 utilisateur     système      écoulé 
-      2.500       0.150       2.642 
+      1.248       0.076       1.325 
