@@ -4,6 +4,7 @@ model.matrix.RDDdata <- function(object, covariates=NULL, order=1, bw=NULL, slop
 
   checkIsRDD(object)
   RDDobject <- object
+  type <- getType(object)
 
   if(!missing(covar.strat)) warning("covar.strat is (soon) deprecated arg!")
 
@@ -19,13 +20,16 @@ model.matrix.RDDdata <- function(object, covariates=NULL, order=1, bw=NULL, slop
 
   dat_step1 <- dat[, c("y", "x")]
   dat_step1$x <- dat_step1$x -cutpoint
-  dat_step1$D <- ifelse(dat_step1$x>= 0, 1,0) ## NEW
+
+  L <- ifelse(dat_step1$x>= 0, 1,0)
+  dat_step1$D <- if(type=="Sharp") L else object$z
+
   if(order>0){
     polys <- poly(dat_step1$x, degree=order, raw=TRUE)
     colnames(polys) <- paste("x", 1:order, sep="^")
     dat_step1  <- cbind(dat_step1[,c("y", "D")],polys)
     if(slope=="separate") {
-      polys2 <- polys*dat_step1$D
+      polys2 <- polys*L
       colnames(polys2) <- paste(colnames(polys), "right", sep="_")
       dat_step1  <- cbind(dat_step1,polys2)
     }
@@ -62,6 +66,8 @@ model.matrix.RDDdata <- function(object, covariates=NULL, order=1, bw=NULL, slop
 ## Colnames cleaning
   colnames(dat_step1) <- gsub("x\\^1", "x", colnames(dat_step1))
 
+## 
+ if(type=="Fuzzy") dat_step1$ins <- L
 
 ## return results: 
   dat_step1
