@@ -206,3 +206,35 @@ covarTest_dis(reg_para4_cov)
   bw_lm <- dnorm(Lee2008_rdd$x, sd=RDDtools:::getBW(reg_nonpara))
   reg_nonpara_gaus <- RDDreg_lm(RDDobject=Lee2008_rdd, w=bw_lm)
   all.equal(RDDcoef(reg_nonpara_gaus, allCo=TRUE),RDDcoef(reg_nonpara_np, allCo=TRUE), check.attributes=FALSE) 
+
+
+
+#### methods
+
+regs_all <- list(reg_para=reg_para,
+                 reg_para_0=reg_para_0,
+                 reg_para4=reg_para4,
+                 reg_para_ik=reg_para_ik,
+                 reg_para_fuzz=reg_para_fuzz,
+                 reg_para4_cov=reg_para4_cov,
+                 reg_para4_cov_slSep=reg_para4_cov_slSep,
+                 reg_para4_cov_startR=reg_para4_cov_startR,
+                 reg_para4_cov_startR_sl2=reg_para4_cov_startR_sl2,
+                 reg_nonpara=reg_nonpara,
+                 reg_nonpara_inflm=reg_nonpara_inflm,
+                 reg_nonpara_sameSl=reg_nonpara_sameSl)
+capply <- function(x){
+  n.obs <- sapply(x, length)
+  seq.max <- seq_len(max(n.obs))
+  t(sapply(x, "[", i = seq.max))
+}
+
+capply(lapply(regs_all, coef))
+sapply(regs_all, RDDcoef)
+RDDpred_issue <- c("reg_para_0", "reg_para_fuzz", "reg_nonpara", "reg_nonpara_sameSl")
+sapply(regs_all[!names(regs_all)%in%RDDpred_issue], RDDpred)
+
+sapply(regs_all, RDDtools:::getCutpoint)
+lapply(regs_all, plotSensi, plot=FALSE)
+do.call(rbind, lapply(regs_all, computePlacebo, by=0.2))
+sapply(regs_all, function(x) dens_test(x, plot=FALSE)[c("p.value", "statistic", "estimate")])
