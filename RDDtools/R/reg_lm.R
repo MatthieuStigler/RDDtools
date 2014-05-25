@@ -86,9 +86,6 @@ RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
     class_reg <- "lm"
   } else {
     if(!is.null(covariates)) stop("Covariates currently not implemented for Fuzzy case")
-#     status <- RDDobject$z
-dat_step1 <<- dat_step1
-    print(head(dat_step1))
     reg <- ivreg(y~.-ins|.-D, data=dat_step1, weights=weights)
     class_reg <- "ivreg"
   }
