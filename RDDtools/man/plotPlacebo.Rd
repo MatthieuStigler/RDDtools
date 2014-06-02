@@ -11,7 +11,7 @@ plotPlacebo(object, device = c("ggplot", "base"), ...)
 
 \method{plotPlacebo}{RDDreg}(object, device = c("ggplot", "base"),
   from = 0.25, to = 0.75, by = 0.1, level = 0.95, same_bw = FALSE,
-  vcov. = NULL, ...)
+  vcov. = NULL, plot = TRUE, output = c("data", "ggplot"), ...)
 
 plotPlaceboDens(object, device = c("ggplot", "base"), ...)
 
@@ -30,6 +30,10 @@ computePlacebo(object, from = 0.25, to = 0.75, by = 0.1, level = 0.95,
 \item{\ldots}{Further arguments passed to specific methods.}
 
 \item{vcov.}{Specific covariance function to pass to coeftest. See help of package \code{\link[sandwich]{sandwich}}.}
+
+\item{plot}{Whether to actually plot the data.}
+
+\item{output}{Whether to return (invisibly) the data frame containing the bandwidths and corresponding estimates, or the ggplot object}
 
 \item{from}{Starting point of the fake cutpoints sequence. Refers ot the quantile of each side of the true cutpoint}
 

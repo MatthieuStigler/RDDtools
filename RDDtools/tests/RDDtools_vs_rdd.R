@@ -37,11 +37,11 @@ all.equal(rdd_co_cov[-4,], RDDtools_co_cov[-4,], check.attributes=FALSE)
 
 ## Fuzzy
 set.seed(123)
-ins <- rbinom(nrow(RD), 1, prob=ifelse(RD$x<0, 0.1, 0.9))
-RD_rdd_ins <- RDDdata(y=RD$y, x=RD$x, z=ins,cutpoint=0)
+selec <- rbinom(nrow(RD), 1, prob=ifelse(RD$x<0, 0.1, 0.9))
+RD_rdd_ins <- RDDdata(y=RD$y, x=RD$x, z=selec,cutpoint=0)
 
 RDDto_reg_fuz <- RDDreg_lm(RD_rdd_ins, bw=0.2)
-rdd_reg_fuz <- RDestimate(y~x+z, data=RD_rdd_ins, kernel="rectangular", bw=0.2, model=TRUE, se.type="const")$model[[2]][[1]]
+rdd_reg_fuz <- RDestimate(y~x+selec, data=RD_rdd_ins, kernel="rectangular", bw=0.2, model=TRUE, se.type="const")$model[[2]][[1]]
 
 all.equal(RDDcoef(RDDto_reg_fuz),coef(summary(rdd_reg_fuz))[2,1])
 all.equal(RDDcoef(RDDto_reg_fuz, allCo=TRUE)[1:3],coef(summary(rdd_reg_fuz))[1:3,1], check.attributes=FALSE)

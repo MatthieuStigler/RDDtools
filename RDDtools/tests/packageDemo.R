@@ -145,8 +145,11 @@ plSe_reg_nonpara
 plSe_reg_nonpara_HC <- plotSensi(reg_nonpara_inflm, vcov. =function(x) vcovCluster(x, clusterVar=model.frame(x)$x))
 plSe_reg_nonpara_HC
 
-plSe_reg_para_0 <- plotSensi(reg_para_0)
+plSe_reg_para_0 <- plotSensi(reg_para_0, plot=FALSE)
 plSe_reg_para_0
+
+plSe_reg_para_0_gg <- plotSensi(reg_para_0, plot=FALSE, output="ggplot")
+str(plSe_reg_para_0_gg)
 
 
 ###### Post-inference: ######
@@ -168,8 +171,12 @@ plotPlacebo(placeb_dat_reg_nonpara, device="base")
 
 plotPlaceboDens(placeb_dat_reg_nonpara)
 
-ptPl_reg_nonpara <- plotPlacebo(reg_nonpara)
+## check invisible return:
+ptPl_reg_nonpara <- plotPlacebo(reg_nonpara, plot=FALSE)
 ptPl_reg_nonpara
+
+ptPl_reg_nonpara2 <- plotPlacebo(reg_nonpara, plot=FALSE, output="ggplot")
+ptPl_reg_nonpara2
 
 # with HC:
 ptPl_reg_nonpara_HC <- plotPlacebo(reg_nonpara_inflm, vcov. =function(x) vcovCluster(x, clusterVar=model.frame(x)$x))
@@ -236,5 +243,6 @@ sapply(regs_all[!names(regs_all)%in%RDDpred_issue], RDDpred)
 
 sapply(regs_all, RDDtools:::getCutpoint)
 lapply(regs_all, plotSensi, plot=FALSE)
-do.call(rbind, lapply(regs_all, computePlacebo, by=0.2))
+
 sapply(regs_all, function(x) dens_test(x, plot=FALSE)[c("p.value", "statistic", "estimate")])
+

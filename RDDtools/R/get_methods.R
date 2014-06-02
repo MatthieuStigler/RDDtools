@@ -14,6 +14,11 @@ getType <- function(object){
   attr(object, "type")
 }
 
+isFuzzy <- function(object){
+  checkIsRDD(object)
+  attr(object, "type")=="Fuzzy"
+}
+
 getCutpoint <- function(object){
   
   checkIsRDD(object)
@@ -61,12 +66,19 @@ hasCovar.RDDreg <- function(object) {
 getCovar <- function(object){
   if(!inherits(object, "RDDdata")) stop("Only works for RDDdata objects")
   if(!hasCovar(object)) stop("object has no covariates")
-
-  res <- object[,-c(1,2), drop=FALSE]
+  
+  rem <- if(isFuzzy(object)) 1:3 else  1:2
+  res <- object[,-rem, drop=FALSE]
   as.data.frame(res)
 }
 
-
+getCovarNames <- function(object){
+  if(!inherits(object, "RDDdata")) stop("Only works for RDDdata objects")
+  if(!hasCovar(object)) stop("object has no covariates")
+  
+  rem <- if(isFuzzy(object)) 1:3 else  1:2
+  colnames(object)[-rem]
+}
 
 getOriginalX <- function(object){
 
