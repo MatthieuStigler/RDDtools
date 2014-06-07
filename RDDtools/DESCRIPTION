@@ -15,7 +15,7 @@ Imports:
     lmtest,
     Formula,
     locpol,
-    methods,
+    methods
 Depends:
     AER
 Suggests:
