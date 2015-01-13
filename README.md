@@ -12,7 +12,7 @@ This github website hosts the source code. One of the easiest ways to install th
 
 ```r
 library(devtools)
-install_github(repo = "RDDtools", username = "MatthieuStigler", subdir = "RDDtools")
+install_github(repo = "MatthieuStigler/RDDtools")
 ```
 
 
