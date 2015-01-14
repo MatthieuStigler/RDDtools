@@ -99,12 +99,12 @@ RDDdata <- function(y, x, covar, cutpoint, z, labels, data){
 
 ### Specific subsetting methods
 
-#####  @S3method as.data.frame RDDdata
+#####  @export as.data.frame.RDDdata
 # as.data.frame.RDDdata <- function(x) {
 # subset(x, y>
 # }as.data.frame.default(x)
 
-#' @S3method "[" RDDdata
+#' @export RDDdata
 '[.RDDdata' <- function(x,i,...){
   attr_x <- attributes(x)
   r <- NextMethod("[", object=as.data.frame(x))
@@ -124,7 +124,7 @@ RDDdata <- function(y, x, covar, cutpoint, z, labels, data){
   r
 }
 
-#' @S3method subset RDDdata
+#' @export subset.RDDdata
 subset.RDDdata <- function (x, subset, select, drop = FALSE, ...) {
   attr_x <- attributes(x)
 
@@ -160,7 +160,7 @@ subset.RDDdata <- function (x, subset, select, drop = FALSE, ...) {
   res
 }
 
-#' @S3method as.data.frame RDDdata
+#' @export as.data.frame.RDDdata
 as.data.frame.RDDdata <- function(x,...){
   class(x) <- "data.frame"
   attr(x, "hasCovar") <- NULL

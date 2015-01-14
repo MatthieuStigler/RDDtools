@@ -28,7 +28,7 @@ plotPlacebo <- function(object, device=c("ggplot", "base"), ...)
 
 #' @rdname plotPlacebo
 #' @method plotPlacebo RDDreg
-#' @S3method plotPlacebo RDDreg
+#' @export plotPlacebo.RDDreg
 #' @param from Starting point of the fake cutpoints sequence. Refers ot the quantile of each side of the true cutpoint
 #' @param to Ending   point of the fake cutpoints sequence. Refers ot the quantile of each side of the true cutpoint
 #' @param by Increments of the from-to sequence
@@ -51,7 +51,7 @@ plotPlacebo.RDDreg <- function(object, device=c("ggplot", "base"), from=0.25, to
 
 
 
-#' @S3method plotPlacebo PlaceboVals
+#' @export plotPlacebo.PlaceboVals
 plotPlacebo.PlaceboVals <- function(object, device=c("ggplot", "base"),plot=TRUE, output=c("data", "ggplot"), ...){
 
   device <- match.arg(device)
@@ -124,7 +124,7 @@ plotPlaceboDens <- function(object, device=c("ggplot", "base"), ...)
 
 #' @rdname plotPlacebo
 #' @method plotPlaceboDens RDDreg
-#' @S3method plotPlaceboDens RDDreg
+#' @export plotPlaceboDens.RDDreg
 plotPlaceboDens.RDDreg <- function(object, device=c("ggplot", "base"), from=0.25, to=0.75, by=0.1, level=0.95, same_bw=FALSE, vcov.=NULL, ...){
 
   device <- match.arg(device)
@@ -139,7 +139,7 @@ plotPlaceboDens.RDDreg <- function(object, device=c("ggplot", "base"), from=0.25
 }
 
 
-#' @S3method plotPlaceboDens PlaceboVals
+#' @export plotPlaceboDens.PlaceboVals
 plotPlaceboDens.PlaceboVals <- function(object, device=c("ggplot", "base"), ...){
 
   device <- match.arg(device)

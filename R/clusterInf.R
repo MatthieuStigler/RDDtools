@@ -44,14 +44,14 @@ clusterInf <- function(object, clusterVar, vcov. = NULL, type=c("df-adj", "HC"),
   return(res)
 }
 
-#' @S3method estfun RDDreg_np
+#' @export estfun RDDreg_np
 estfun.RDDreg_np <- function(x,...){
   inf_met <- infType(x) ## def in Misc.R
   if(inf_met=="se") stop("No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference estimators")
   estfun(x$RDDslot$model)
 }
 
-#' @S3method bread RDDreg_np
+#' @export bread RDDreg_np
 bread.RDDreg_np <- function(x,...){
   inf_met <- infType(x) ## def in Misc.R
   if(inf_met=="se") stop("No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference estimators")
@@ -65,7 +65,7 @@ bread.RDDreg_np <- function(x,...){
 #   sandwich(x$RDDslot$model, bread.=bread., meat.=meat., ...)
 # }
 
-#' @S3method model.frame RDDreg_np
+#' @export model.frame.RDDreg_np
 model.frame.RDDreg_np <- function (formula, ...) 
   model.frame(formula$RDDslot$model)
 
@@ -79,7 +79,7 @@ model.frame.RDDreg_np <- function (formula, ...)
 #' @references Cameron, C.,  Gelbach, J. and Miller, D. (2011) Robust Inference With Multiway Clustering,
 #' \emph{Journal of Business and Economic Statistics},  vol. 29(2), pages 238-249.
 #' #' @references Wooldridge (2003) Cluster-sample methods in applied econometrics. 
-#' \emph{AmericanEconomic Review}, 93, p. 133-138
+#' \emph{American Economic Review}, 93, p. 133-138
 #' @references Arai, M. (2011) Cluster-robust standard errors using R, Note available \url{http://people.su.se/~ma/clustering.pdf}. 
 #' @export
 #' @seealso \code{\link{clusterInf}} for a direct function, allowing also alternative cluster inference methods. 

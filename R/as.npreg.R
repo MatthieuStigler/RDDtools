@@ -84,7 +84,7 @@ as.npregbw_low <- function(x, npreg=FALSE, adjustIK_bw=TRUE, ...){
 }
 
 
-#' @S3method RDDcoef RDDreg_npreg
+#' @export RDDcoef.RDDreg_npreg
 RDDcoef.RDDreg_npreg <- function(object, allInfo=FALSE, allCo=FALSE, ...){
 
   co <- diff(object$mean)

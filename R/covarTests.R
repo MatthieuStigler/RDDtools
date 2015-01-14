@@ -42,7 +42,7 @@ covarTest_mean <- function(object, bw=NULL, paired = FALSE, var.equal = FALSE, p
 
 #' @rdname covarTest_mean
 #' @method covarTest_mean RDDdata
-#' @S3method covarTest_mean RDDdata
+#' @export covarTest_mean RDDdata
 covarTest_mean.RDDdata <- function(object, bw=NULL, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
 
   cutpoint <- getCutpoint(object)
@@ -56,7 +56,7 @@ covarTest_mean.RDDdata <- function(object, bw=NULL, paired = FALSE, var.equal = 
 
 #' @rdname covarTest_mean
 #' @method covarTest_mean RDDreg
-#' @S3method covarTest_mean RDDreg
+#' @export covarTest_mean.RDDreg
 covarTest_mean.RDDreg <- function(object, bw=NULL, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
   
   cutpoint <- getCutpoint(object)
@@ -140,7 +140,7 @@ covarTest_dis <- function(object, bw,  exact=NULL, p.adjust=c("none", "holm", "B
 
 #' @rdname covarTest_dis
 #' @method covarTest_dis RDDdata
-#' @S3method covarTest_dis RDDdata
+#' @export covarTest_dis RDDdata
 covarTest_dis.RDDdata <- function(object, bw=NULL, exact = FALSE,  p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
 
   cutpoint <- getCutpoint(object)
@@ -153,7 +153,7 @@ covarTest_dis.RDDdata <- function(object, bw=NULL, exact = FALSE,  p.adjust=c("n
 
 #' @rdname covarTest_dis
 #' @method covarTest_dis RDDreg
-#' @S3method covarTest_dis RDDreg
+#' @export covarTest_dis.RDDreg
 covarTest_dis.RDDreg <- function(object, bw=NULL, exact = FALSE,  p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
   
   cutpoint <- getCutpoint(object)

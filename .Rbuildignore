@@ -1,4 +1,5 @@
 misc
 figuresREADME
+README.Rmd
 ^.*\.Rproj$
 ^\.Rproj\.user$

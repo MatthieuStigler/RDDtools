@@ -45,7 +45,7 @@ Cameron, C.,  Gelbach, J. and Miller, D. (2011) Robust Inference With Multiway C
 #'
 
 Wooldridge (2003) Cluster-sample methods in applied econometrics.
-\emph{AmericanEconomic Review}, 93, p. 133-138
+\emph{American Economic Review}, 93, p. 133-138
 
 Arai, M. (2011) Cluster-robust standard errors using R, Note available \url{http://people.su.se/~ma/clustering.pdf}.
 }

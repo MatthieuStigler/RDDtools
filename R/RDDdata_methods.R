@@ -1,7 +1,7 @@
 
 
 ### SUMMARY method
-#' @S3method summary RDDdata
+#' @export summary.RDDdata
 summary.RDDdata <- function(object, ...){
 
   cutpoint <- getCutpoint(object)
@@ -51,7 +51,7 @@ summary.RDDdata <- function(object, ...){
 #' ## If the specified number of bins is odd, the larger number is given to side with largest range
 #' plot(Lee2008_rdd, nbins=21)
 #' @method plot RDDdata
-#' @S3method plot RDDdata
+#' @export plot.RDDdata
 
 
 ### PLOT method
@@ -140,10 +140,10 @@ as.lm_RDD <- function(x){
   x
 }
 
-#' @S3method as.lm RDDreg_np
+#' @export as.lm.RDDreg_np
 as.lm.RDDreg_np <- function(x) as.lm_RDD(x)
 
-#' @S3method as.lm RDDreg
+#' @export as.lm.RDDreg
 as.lm.RDDreg <- function(x) as.lm_RDD(x)
 
 

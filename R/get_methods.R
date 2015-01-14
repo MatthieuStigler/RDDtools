@@ -135,7 +135,7 @@ getOriginalData.RDDreg <- function(object, na.rm=TRUE, classRDD=TRUE){
 
 
 #' @importFrom stats getCall
-#' @S3method getCall RDDreg
+#' @export getCall.RDDreg
 getCall.RDDreg <- function(x,...) attr(x, "RDDcall")
 
 
