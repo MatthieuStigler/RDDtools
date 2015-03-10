@@ -13,7 +13,7 @@ RDDcoef <- function(object, allInfo=FALSE, allCo=FALSE, ...)
 
 #' @rdname RDDcoef
 #' @method RDDcoef default
-#' @export RDDcoef default
+#' @export RDDcoef RDDcoef.default
 RDDcoef.default <- function(object, allInfo=FALSE, allCo=FALSE, ...){
   res <- coef(summary(object))
   if(!allCo) res <- res["D",, drop=FALSE]
