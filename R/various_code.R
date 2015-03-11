@@ -12,6 +12,6 @@ Kernel_uni <- function(X, center, bw) {
   ifelse(abs(X - center) > bw, 0, 1)
 }
 
-.onLoad <- function(libname, pkgname)
-  packageStartupMessage("\nRDDtools ", utils::packageVersion("RDDtools"), 
-                        "\nPLEASE NOTE THIS is currently only a development version. \nRun vignette('RDDtools') for the documentation")
+.onAttach <- function(libname, pkgname)
+  packageStartupMessage("IMPORTANT, this is an ALPHA VERSION
+                        many changes to the API will follow")
