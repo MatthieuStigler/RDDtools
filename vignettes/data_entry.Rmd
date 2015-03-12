@@ -2,12 +2,11 @@
 title: "Data entry"
 author: "Matthieu Stigler"
 date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
 vignette: >
+  %\VignetteIndexEntry{Data entry}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Custom Print Methods}
-output:
-  knitr:::html_vignette:
-    toc: yes
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r, echo = FALSE, message = FALSE}
