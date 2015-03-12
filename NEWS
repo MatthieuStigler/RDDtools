@@ -1,3 +1,25 @@
+RDDtools 0.3.0.9000
+=====================
+
+* development taken over by Bastiaan
+
+* move package from subdir to repo root directory
+
+* change S3class method to export for roxygen
+
+* connect method functions with . in stead of white space
+
+* classify default functions as RDDcoef.default etc.
+
+* update DESCRIPTION with CRAN guidelines
+
+* change .onLoad to .onAttach 
+
+* remove old lyx vignette in several places
+
+* move examples from README.Rmd to Rmd vignettes
+
+* fix empty package dependency bug
 
 RDDtools 0.22
 ===========
@@ -10,6 +32,7 @@ Updated on 21/5/14
 * Multiple changes in help files
 
 * Correct import, suggests, calls to :::
+
 
 RDDtools 0.21
 ===========

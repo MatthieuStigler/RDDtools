@@ -1,0 +1,88 @@
+---
+title: "Tests"
+author: "Matthieu Stigler"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tests}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+```
+
+**RDDtools** works in an object-oriented way: the user has to define once the characteristic of the data, creating a *RDDdata* object, on which different anaylsis tools can be applied. 
+
+# Data preparation and visualisation
+Load the package, and load the built-in dataset from [Lee 2008]:
+
+```{r}
+library(RDDtools)
+data(Lee2008)
+```
+
+Declare the data to be a *RDDdata* object:
+
+```{r}
+Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+```
+
+
+# Regression Sensitivity tests:
+
+One can easily check the sensitivity of the estimate to different bandwidths:
+```{r SensiPlot}
+plotSensi(reg_nonpara, from=0.05, to=1, by=0.1)
+```
+
+Or run the Placebo test, estimating the RDD effect based on fake cutpoints:
+```{r placeboPlot}
+plotPlacebo(reg_nonpara)
+```
+
+# Design Sensitivity tests:
+
+Design sensitivity tests check whether the discontinuity found can actually be attributed ot other causes. Two types of tests are available:
+
++ Discontinuity comes from manipulation: test whether there is possible manipulation around the cutoff, McCrary 2008 test: **dens_test()**
++ Discontinuity comes from other variables: should test whether discontinuity arises with covariates. Currently, only simple tests of equality of covariates around the threshold are available: 
+
+## Discontinuity comes from manipulation: McCrary test
+
+use simply the function **dens_test()**, on either the raw data, or the regression output:
+```{r DensPlot}
+dens_test(reg_nonpara)
+```
+
+## Discontinuity comes from covariates: covariates balance tests
+
+Two tests available:
++ equal means of covariates: **covarTest_mean()**
++ equal density of covariates: **covarTest_dens()**
+
+
+We need here to simulate some data, given that the Lee (2008) dataset contains no covariates.
+We here simulate three variables, with the second having a different mean on the left and the right. 
+
+```{r}
+set.seed(123)
+n_Lee <- nrow(Lee2008)
+Z <- data.frame(z1 = rnorm(n_Lee, sd=2), 
+                z2 = rnorm(n_Lee, mean = ifelse(Lee2008<0, 5, 8)), 
+                z3 = sample(letters, size = n_Lee, replace = TRUE))
+Lee2008_rdd_Z <- RDDdata(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
+```
+
+
+Run the tests:
+```{r}
+## test for equality of means around cutoff:
+covarTest_mean(Lee2008_rdd_Z, bw=0.3)
+
+## Can also use function covarTest_dis() for Kolmogorov-Smirnov test:
+covarTest_dis(Lee2008_rdd_Z, bw=0.3)
+```
+
+Tests correctly reject equality of the second, and correctly do not reject equality for the first and third. 
