@@ -1,12 +1,18 @@
 ---
 title: "Data entry"
 author: "Matthieu Stigler"
-output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{Data entry}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{Custom Print Methods}
+output:
+  knitr:::html_vignette:
+    toc: yes
 ---
+
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+```
 
 **RDDtools** works in an object-oriented way: the user has to define once the characteristic of the data, creating a *RDDdata* object, on which different anaylsis tools can be applied. 
 

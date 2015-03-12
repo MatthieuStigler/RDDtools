@@ -23,7 +23,8 @@ Depends:
     AER
 Suggests:
     stats4,
-    car
+    car,
+    knitr
 License: GPL (>= 2)
 Collate:
     'Lee2008-data.R'
