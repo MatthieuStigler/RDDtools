@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/bquast/RDDtools/badge.svg)](https://coveralls.io/r/bquast/RDDtools)
+
 RDDtools: an R package for Regression Discontinuity Design
 ========================================================
 
