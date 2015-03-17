@@ -1,7 +1,7 @@
 
 
 ### SUMMARY method
-#' @export summary.RDDdata
+#' @export
 summary.RDDdata <- function(object, ...){
 
   cutpoint <- getCutpoint(object)
