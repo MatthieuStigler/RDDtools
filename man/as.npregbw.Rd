@@ -22,9 +22,9 @@ Convert an RDDobject to a non-parametric regression \code{npreg} from package \c
 }
 \details{
 This function converts an RDDreg object into an \code{npreg} object from package \code{np}
-Note that the output won't be the same, since \code{npreg} does not offer a triangualr kernel, but a gaussian or Epanechinkov one.
+Note that the output won't be the same, since \code{npreg} does not offer a triangular kernel, but a Gaussian or Epanechinkov one.
 Another reason why estimates might differ slightly is that \code{npreg} implements a multivariate kernel, while RDDreg
-proceeds as if the kernerl was univariate. A simple solution to make the multivariate kernel similar to the  univariate one
+proceeds as if the kernel was univariate. A simple solution to make the multivariate kernel similar to the  univariate one
 is to set the bandwidth for x and Dx to a large number, so that they converge towards a constant, and one obtains back the univariate kernel.
 }
 \examples{

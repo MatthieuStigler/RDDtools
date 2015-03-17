@@ -43,7 +43,6 @@ Collate:
     'clusterInf.R'
     'covarTests.R'
     'dens_test.R'
-    'deprecated.R'
     'gen_MC_IK.R'
     'get_methods.R'
     'model.matrix.RDD.R'
