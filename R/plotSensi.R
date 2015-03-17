@@ -42,8 +42,7 @@ plotSensi <- function(RDDregobject, from, to, by=0.01, level=0.95, output=c("dat
   UseMethod("plotSensi")
 
 #' @rdname plotSensi
-#' @method plotSensi RDDreg_np
-#' @export plotSensi RDDreg_np
+#' @export
 #' @param vcov. Specific covariance function to pass to coeftest. See help of package \code{\link[sandwich]{sandwich}}
 plotSensi.RDDreg_np <- function(RDDregobject, from, to, by=0.05, level=0.95, output=c("data", "ggplot"), plot=TRUE, device=c("ggplot", "base"), vcov.=NULL, ...){
 

@@ -12,8 +12,7 @@ RDDcoef <- function(object, allInfo=FALSE, allCo=FALSE, ...)
   UseMethod("RDDcoef")
 
 #' @rdname RDDcoef
-#' @method RDDcoef default
-#' @export RDDcoef RDDcoef.default
+#' @export
 RDDcoef.default <- function(object, allInfo=FALSE, allCo=FALSE, ...){
   res <- coef(summary(object))
   if(!allCo) res <- res["D",, drop=FALSE]
@@ -22,8 +21,7 @@ RDDcoef.default <- function(object, allInfo=FALSE, allCo=FALSE, ...){
 }
 
 #' @rdname RDDcoef
-#' @method RDDcoef RDDreg_np
-#' @export RDDcoef RDDreg_np
+#' @export
 RDDcoef.RDDreg_np <- function(object, allInfo=FALSE, allCo=FALSE, ...){
   res<- object$coefMat
   if(!allCo) res <- res["D",, drop=FALSE]
