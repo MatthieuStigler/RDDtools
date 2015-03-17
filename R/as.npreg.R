@@ -73,11 +73,20 @@ as.npregbw_low <- function(x, npreg=FALSE, adjustIK_bw=TRUE, ...){
   class(res) <- c("RDDreg_npregbw", class(res))
 
 ## if npreg, return instead model_np <- npreg(bw_np, newdata=dataPoints, gradients=TRUE)
-  if(npreg) {
+  if(npreg==TRUE) {
+    
+    # check if np is installed
+    if (!requireNamespace("np", quietly = TRUE)) {
+      stop("The package 'np' is needed for this function to work. Please install it.",
+           call. = FALSE)
+    }
+    
+    require("np")
     options(np.messages = TRUE) ## otherwise got warnings messages... probably because comes only if loaded!
-    res <- npreg(res, newdata=dataPoints, gradients=TRUE, ...)
+    res <- np::npreg(res, newdata=dataPoints, gradients=TRUE, ...)
     class(res) <- c("RDDreg_npreg", class(res))
   }
+  
   attr(res, "RDDdf") <- dat_np
   attr(res, "cutpoint") <- cutpoint
   res

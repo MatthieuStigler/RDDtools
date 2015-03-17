@@ -25,7 +25,8 @@ Suggests:
     stats4,
     car,
     knitr,
-    testthat
+    testthat,
+    np
 License: GPL (>= 2)
 Collate:
     'Lee2008-data.R'
