@@ -4,9 +4,9 @@
 #' @param x Object of class \code{RDDreg} created by \code{\link{RDDreg_np}} or \code{\link{RDDreg_lm}}
 #' @param \ldots Further arguments passed to the \code{\link{npregbw}} or \code{\link{npreg}}
 #' @details This function converts an RDDreg object into an \code{npreg} object from package \code{np}
-#' Note that the output won't be the same, since \code{npreg} does not offer a triangualr kernel, but a gaussian or Epanechinkov one. 
+#' Note that the output won't be the same, since \code{npreg} does not offer a triangular kernel, but a Gaussian or Epanechinkov one. 
 #' Another reason why estimates might differ slightly is that \code{npreg} implements a multivariate kernel, while RDDreg 
-#' proceeds as if the kernerl was univariate. A simple solution to make the multivariate kernel similar to the  univariate one 
+#' proceeds as if the kernel was univariate. A simple solution to make the multivariate kernel similar to the  univariate one 
 #' is to set the bandwidth for x and Dx to a large number, so that they converge towards a constant, and one obtains back the univariate kernel. 
 #' @export
 #' @return An object of class \code{npreg} or \code{npregbw}
@@ -75,7 +75,7 @@ as.npregbw_low <- function(x, npreg=FALSE, adjustIK_bw=TRUE, ...){
 ## if npreg, return instead model_np <- npreg(bw_np, newdata=dataPoints, gradients=TRUE)
   if(npreg) {
     options(np.messages = TRUE) ## otherwise got warnings messages... probably because comes only if loaded!
-    res <- npreg(res, newdata=dataPoints, gradients=TRUE,...)
+    res <- npreg(res, newdata=dataPoints, gradients=TRUE, ...)
     class(res) <- c("RDDreg_npreg", class(res))
   }
   attr(res, "RDDdf") <- dat_np
@@ -84,7 +84,7 @@ as.npregbw_low <- function(x, npreg=FALSE, adjustIK_bw=TRUE, ...){
 }
 
 
-#' @export RDDcoef.RDDreg_npreg
+#' @export
 RDDcoef.RDDreg_npreg <- function(object, allInfo=FALSE, allCo=FALSE, ...){
 
   co <- diff(object$mean)
