@@ -140,10 +140,10 @@ as.lm_RDD <- function(x){
   x
 }
 
-#' @export as.lm.RDDreg_np
+#' @export
 as.lm.RDDreg_np <- function(x) as.lm_RDD(x)
 
-#' @export as.lm.RDDreg
+#' @export
 as.lm.RDDreg <- function(x) as.lm_RDD(x)
 
 
