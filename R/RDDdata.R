@@ -124,7 +124,7 @@ RDDdata <- function(y, x, covar, cutpoint, z, labels, data){
   r
 }
 
-#' @export subset.RDDdata
+#' @export
 subset.RDDdata <- function (x, subset, select, drop = FALSE, ...) {
   attr_x <- attributes(x)
 
@@ -160,7 +160,7 @@ subset.RDDdata <- function (x, subset, select, drop = FALSE, ...) {
   res
 }
 
-#' @export as.data.frame.RDDdata
+#' @export 
 as.data.frame.RDDdata <- function(x,...){
   class(x) <- "data.frame"
   attr(x, "hasCovar") <- NULL
