@@ -9,7 +9,7 @@ Authors@R: c(
     person("Matthieu", "Stigler", role = "aut")
     )
 Maintainer: Bastiaan Quast <bquast@gmail.com>
-Imports: 
+Imports:
     KernSmooth,
     ggplot2,
     rdd,
@@ -19,19 +19,21 @@ Imports:
     Formula,
     locpol,
     methods
-Depends: 
+Depends:
     AER
-Suggests: 
+Suggests:
     stats4,
     car,
-    knitr
+    knitr,
+    testthat
 License: GPL (>= 2)
-Collate: 
+Collate:
     'Lee2008-data.R'
     'RDDcoef.R'
     'RDDdata.R'
     'RDDdata_methods.R'
     'RDDpred.R'
+    'RDDtools.R'
     'STAR_MHE-data.R'
     'Waldci.R'
     'as.npreg.R'
@@ -45,7 +47,6 @@ Collate:
     'gen_MC_IK.R'
     'get_methods.R'
     'model.matrix.RDD.R'
-    'myRDD-package.R'
     'placebo.R'
     'plotSensi.R'
     'qplot_experim.R'
