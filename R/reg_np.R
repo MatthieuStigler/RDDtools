@@ -104,7 +104,7 @@ print.RDDreg_np <- function(x, signif.stars = getOption("show.signif.stars"), ..
 
 }
 
-#' @export summary RDDreg_np
+#' @export
 summary.RDDreg_np <- function(object, digits = max(3, getOption("digits") - 3), signif.stars = getOption("show.signif.stars"), ...) {
 
   x <- object
