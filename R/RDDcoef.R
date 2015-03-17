@@ -8,6 +8,7 @@
 #' @return Either a numeric value of the RDD coefficient estimate, or a data frame with the estimate, 
 #' its standard value, t test and p-value and 
 #' @export
+
 RDDcoef <- function(object, allInfo=FALSE, allCo=FALSE, ...)
   UseMethod("RDDcoef")
 
