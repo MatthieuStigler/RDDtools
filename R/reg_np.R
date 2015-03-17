@@ -83,7 +83,7 @@ RDDreg_np <- function(RDDobject, covariates=NULL, bw=RDDbw_IK(RDDobject), slope=
 }
 
 
-#' @export print RDDreg_np
+#' @export 
 print.RDDreg_np <- function(x, signif.stars = getOption("show.signif.stars"), ...) {
 
   RDDcall <- attr(x, "RDDcall")
@@ -133,7 +133,7 @@ summary.RDDreg_np <- function(object, digits = max(3, getOption("digits") - 3), 
   object
 }
 
-#' @export print summary.RDDreg_np
+#' @export
 print.summary.RDDreg_np <- function(x, digits = max(3, getOption("digits") - 3), signif.stars = getOption("show.signif.stars"), ...) {
 
   bw <- getBW(x)
@@ -155,7 +155,7 @@ print.summary.RDDreg_np <- function(x, digits = max(3, getOption("digits") - 3),
 }
 
 
-#' @export plot RDDreg_np
+#' @export
 plot.RDDreg_np <- function(x,binwidth,chart=c("locpoly", "np"), ...) {
 
   chart <- match.arg(chart)
@@ -202,7 +202,7 @@ plot.RDDreg_np <- function(x,binwidth,chart=c("locpoly", "np"), ...) {
 }
 }
 
-#' @export vcov RDDreg_np
+#' @export 
 vcov.RDDreg_np <- function(object, ...){
 
   infType <- infType(object)

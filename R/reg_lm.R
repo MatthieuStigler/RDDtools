@@ -105,7 +105,7 @@ RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
 }
 
 
-#' @export print RDDreg_lm
+#' @export 
 print.RDDreg_lm <- function(x,...) {
 
   order <- getOrder(x)
@@ -131,7 +131,7 @@ print.RDDreg_lm <- function(x,...) {
 
 }
 
-#' @export plot RDDreg_lm
+#' @export
 plot.RDDreg_lm <- function(x,...) {
 
 ## data
