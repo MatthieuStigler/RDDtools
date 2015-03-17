@@ -27,8 +27,7 @@ plotPlacebo <- function(object, device=c("ggplot", "base"), ...)
   UseMethod("plotPlacebo")
 
 #' @rdname plotPlacebo
-#' @method plotPlacebo RDDreg
-#' @export plotPlacebo.RDDreg
+#' @export
 #' @param from Starting point of the fake cutpoints sequence. Refers ot the quantile of each side of the true cutpoint
 #' @param to Ending   point of the fake cutpoints sequence. Refers ot the quantile of each side of the true cutpoint
 #' @param by Increments of the from-to sequence
