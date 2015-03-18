@@ -51,7 +51,7 @@ estfun.RDDreg_np <- function(x,...){
   estfun(x$RDDslot$model)
 }
 
-#' @export bread RDDreg_np
+#' @export
 bread.RDDreg_np <- function(x,...){
   inf_met <- infType(x) ## def in Misc.R
   if(inf_met=="se") stop("No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference estimators")
@@ -65,7 +65,7 @@ bread.RDDreg_np <- function(x,...){
 #   sandwich(x$RDDslot$model, bread.=bread., meat.=meat., ...)
 # }
 
-#' @export model.frame.RDDreg_np
+#' @export
 model.frame.RDDreg_np <- function (formula, ...) 
   model.frame(formula$RDDslot$model)
 
