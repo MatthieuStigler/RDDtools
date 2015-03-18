@@ -39,7 +39,7 @@ as.npregbw <- function(x,...){
 
 #' @rdname as.npregbw
 #' @export
-as.npreg <- function(x,...){
+as.npreg <- function(x, ...){
   res <- as.npregbw_low(x=x, npreg=TRUE,...)
   res
 }
@@ -68,7 +68,7 @@ as.npregbw_low <- function(x, npreg=FALSE, adjustIK_bw=TRUE, ...){
   
 
 ## start npregbw
-  res <- npregbw(bws=bws, formula=y~x+D+Dx, data= dat_np,  regtype = "ll",
+  res <- np::npregbw(bws=bws, formula=y~x+D+Dx, data= dat_np,  regtype = "ll",
 			eval=dataPoints, bandwidth.compute=FALSE, gradients=TRUE,...)
   class(res) <- c("RDDreg_npregbw", class(res))
 
@@ -158,7 +158,7 @@ RDDcoef(reg_nonpara_np, allInfo=TRUE, allCo=TRUE)
 ## manual predict:
 
 cutpoint <- 0
-dataPoints <- data.frame(x=c(cutpoint,cutpoint), D=c(0,1), Dx=c(0,cutpoint))
+dataPoints  <- data.frame(x=c(cutpoint,cutpoint), D=c(0,1), Dx=c(0,cutpoint))
 dataPoints2 <- data.frame(x=0, D=c(0,1), Dx=0)
 dataPoints3 <- data.frame(x=c(0,1), D=0, Dx=0)
 dataPoints3 <- data.frame(x=0, D=0, Dx=c(0,1))
