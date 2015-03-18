@@ -176,10 +176,10 @@ plot.RDDreg_np <- function(x,binwidth,chart=c("locpoly", "np"), ...) {
 
 ## Use np:
   } else {
-    np_reg_left  <- npreg(npregbw(y~x, data=dat_left, regtype="ll", ckertype="epanechnikov",
+    np_reg_left  <- np::npreg(np::npregbw(y~x, data=dat_left, regtype="ll", ckertype="epanechnikov",
 		      bandwidth.compute=FALSE, bws=bw))
 
-     np_reg_right  <- npreg(npregbw(y~x, data=dat_right, regtype="ll", ckertype="epanechnikov",
+     np_reg_right  <- np::npreg(np::npregbw(y~x, data=dat_right, regtype="ll", ckertype="epanechnikov",
 		      bandwidth.compute=FALSE, bws=bw))
     newDat_left <- data.frame(x=seq(min(dat_left$x), cutpoint-0.001, by=.01))
     newDat_right <- data.frame(x=seq(cutpoint, max(dat_right$x),  by=.01))
