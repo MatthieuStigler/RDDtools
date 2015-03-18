@@ -242,12 +242,12 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
              call. = FALSE)
       }
       
-      # load the lmtst package
-      require("lmtest")
+      # load the lmtest package
+      # require("lmtest")
 
       seq_vals[i,"LATE"] <- RDDcoef(object_new)
       if(!is.null(vcov.)) {
-        co <- coeftest(object_new, vcov.=vcov.)["D",, drop=FALSE]
+        co <- lmtest::coeftest(object_new, vcov.=vcov.)["D",, drop=FALSE]
       } else {
         co <- RDDcoef(object_new, allInfo=TRUE)
       }
