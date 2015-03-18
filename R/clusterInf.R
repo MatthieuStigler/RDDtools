@@ -104,7 +104,8 @@ vcovCluster   <- function(object, clusterVar){
   K <- getModelRank(object)
   dfc <- (M/(M-1))*((N-1)/(N-K))  
   uj  <- apply(estfun(object),2, function(x) tapply(x, clusterVar, sum))
-  dfc*sandwich(object, meat.=crossprod(uj)/N)
+  # require("sandwich")
+  dfc*sandwich::sandwich(object, meat.=crossprod(uj)/N)
 }
 
 #' @rdname vcovCluster
