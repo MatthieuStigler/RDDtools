@@ -1,4 +1,4 @@
-#' @export model.matrix.RDDdata
+#' @export
 
 model.matrix.RDDdata <- function(object, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), covar.strat=c("include", "residual"), ...){
 

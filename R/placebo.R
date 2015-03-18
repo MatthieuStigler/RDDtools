@@ -122,8 +122,7 @@ plotPlaceboDens <- function(object, device=c("ggplot", "base"), ...)
   UseMethod("plotPlaceboDens")
 
 #' @rdname plotPlacebo
-#' @method plotPlaceboDens RDDreg
-#' @export plotPlaceboDens.RDDreg
+#' @export
 plotPlaceboDens.RDDreg <- function(object, device=c("ggplot", "base"), from=0.25, to=0.75, by=0.1, level=0.95, same_bw=FALSE, vcov.=NULL, ...){
 
   device <- match.arg(device)
@@ -138,7 +137,7 @@ plotPlaceboDens.RDDreg <- function(object, device=c("ggplot", "base"), from=0.25
 }
 
 
-#' @export plotPlaceboDens.PlaceboVals
+#' @export
 plotPlaceboDens.PlaceboVals <- function(object, device=c("ggplot", "base"), ...){
 
   device <- match.arg(device)
@@ -177,8 +176,7 @@ plotPlaceboDens_low <- function(seq_vals,  device=c("ggplot", "base")){
 
 
 #' @rdname plotPlacebo
-#' @export computePlacebo
-
+#' @export
 
 computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_bw=FALSE, vcov.=NULL){
 
@@ -237,6 +235,15 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
 
     ## assign results (LATE and se)
     if(!inherits(object_new, "try-error")){
+      
+      # check if lmtest is installed
+      if (!requireNamespace("lmtest", quietly = TRUE)) {
+        stop("The package 'lmtest' is needed for this function to work. Please install it.",
+             call. = FALSE)
+      }
+      
+      # load the lmtst package
+      require("lmtest")
 
       seq_vals[i,"LATE"] <- RDDcoef(object_new)
       if(!is.null(vcov.)) {
