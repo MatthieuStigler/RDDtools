@@ -1,7 +1,7 @@
-[![Coverage Status](https://coveralls.io/repos/bquast/RDDtools/badge.svg)](https://coveralls.io/r/bquast/RDDtools)
-
 RDDtools: an R package for Regression Discontinuity Design
 ========================================================
+[![Travis-CI Build Status](https://travis-ci.org/bquast/RDDtools.png?branch=master)](https://travis-ci.org/bquast/RDDtools)
+[![Coverage Status](https://coveralls.io/repos/bquast/RDDtools/badge.svg)](https://coveralls.io/r/bquast/RDDtools)
 
 **RDDtools** is a new R package under development, designed to offer a set of tools to run all the steps required for a Regression Discontinuity Design (RDD) Analysis, from primary data visualisation to discontinuity estimation, sensitivity and placebo testing. 
 
