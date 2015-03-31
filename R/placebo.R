@@ -50,7 +50,7 @@ plotPlacebo.RDDreg <- function(object, device=c("ggplot", "base"), from=0.25, to
 
 
 
-#' @export plotPlacebo.PlaceboVals
+#' @export
 plotPlacebo.PlaceboVals <- function(object, device=c("ggplot", "base"),plot=TRUE, output=c("data", "ggplot"), ...){
 
   device <- match.arg(device)
