@@ -128,8 +128,7 @@ plotSensi.RDDreg_np <- function(RDDregobject, from, to, by=0.05, level=0.95, out
 
 
 #' @rdname plotSensi
-#' @method plotSensi RDDreg_lm
-#' @export plotSensi RDDreg_lm
+#' @export
 plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, output=c("data", "ggplot"), plot=TRUE, order, type=c("colour", "facet"),  ...){
 
   type <- match.arg(type)

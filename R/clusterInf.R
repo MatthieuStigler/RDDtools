@@ -44,7 +44,7 @@ clusterInf <- function(object, clusterVar, vcov. = NULL, type=c("df-adj", "HC"),
   return(res)
 }
 
-#' @export estfun RDDreg_np
+#' @export
 estfun.RDDreg_np <- function(x,...){
   inf_met <- infType(x) ## def in Misc.R
   if(inf_met=="se") stop("No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference estimators")

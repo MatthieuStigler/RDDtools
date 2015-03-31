@@ -50,8 +50,7 @@ summary.RDDdata <- function(object, ...){
 #'
 #' ## If the specified number of bins is odd, the larger number is given to side with largest range
 #' plot(Lee2008_rdd, nbins=21)
-#' @method plot RDDdata
-#' @export plot.RDDdata
+#' @export
 
 
 ### PLOT method

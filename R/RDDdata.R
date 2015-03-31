@@ -104,7 +104,7 @@ RDDdata <- function(y, x, covar, cutpoint, z, labels, data){
 # subset(x, y>
 # }as.data.frame.default(x)
 
-#' @export RDDdata
+#' @export
 '[.RDDdata' <- function(x,i,...){
   attr_x <- attributes(x)
   r <- NextMethod("[", object=as.data.frame(x))
