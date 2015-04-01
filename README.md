@@ -1,4 +1,4 @@
-RDDtools: an R package for Regression Discontinuity Design
+RDDtools
 ========================================================
 [![Travis-CI Build Status](https://travis-ci.org/bquast/RDDtools.png?branch=master)](https://travis-ci.org/bquast/RDDtools)
 [![Coverage Status](https://coveralls.io/repos/bquast/RDDtools/badge.svg)](https://coveralls.io/r/bquast/RDDtools)
@@ -64,6 +64,3 @@ References
   [Cameron et al. 2008]: http://ideas.repec.org/a/tpr/restat/v90y2008i3p414-427.html "Cameron, Gelbach and Miller (2008) Bootstrap-Based Improvements for Inference with Clustered Errors, The Review of Economics and Statistics, Vol. 90(3), pages 414-427"
   
   [Ruppert et al 1995]: http://www.jstor.org/stable/2291516 "Ruppert, D., Sheather, S. J. and Wand, M. P. (1995). An effective bandwidth selector for local least squares regression. Journal of the American Statistical Association, 90, 1257–1270."
-
-
-  
