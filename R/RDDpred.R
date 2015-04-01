@@ -43,9 +43,15 @@
 #'   RDDcoef(reg_para, allInfo=TRUE)
 #' 
 #' ## estimation with covariates: 
-#'   reg_para_cov <- RDDreg_lm(RDDobject=Lee2008_rdd, covariates="z1", covar.opt=list(slope="separate"))
-#'   RDDpred(reg_para_cov, covdata=data.frame(z1=0)) ## should obtain same result than with RDestimate
-#'   RDDpred(reg_para_cov, covdata=data.frame(z1=0.5)) #evaluate at mean of z1 (as comes from uniform)
+#'   reg_para_cov <- RDDreg_lm(RDDobject=Lee2008_rdd,
+#'                             covariates="z1",
+#'                             covar.opt=list(slope="separate") )
+#'                             
+#'   RDDpred(reg_para_cov,
+#'   covdata=data.frame(z1=0)) ## should obtain same result as with RDestimate
+#'   
+#'   RDDpred(reg_para_cov,
+#'           covdata=data.frame(z1=0.5)) #evaluate at mean of z1 (as comes from uniform)
 
 RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c("identity", "sum", "mean"), weights){
 
