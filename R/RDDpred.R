@@ -30,28 +30,28 @@
 #' @export
 #' @references Froehlich (2007) Regression discontinuity design with covariates, IZA discussion paper 3024
 #' @examples
-#' ## Load data, add (artificial) covariates:
-#'   data(Lee2008)
-#'   n_Lee <- nrow(Lee2008)
-#'   z1 <- runif(n_Lee)
-#'   Lee2008_rdd <- RDDdata(y=y, x=x, data=Lee2008, covar=z1, cutpoint=0)
+#' # Load data, add (artificial) covariates:
+#' data(Lee2008)
+#' n_Lee <- nrow(Lee2008)
+#' z1 <- runif(n_Lee)
+#' Lee2008_rdd <- RDDdata(y=y, x=x, data=Lee2008, covar=z1, cutpoint=0)
 #' 
-#' ## estimation without covariates: RDDpred is the same than RDDcoef:
-#'   reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
+#' # estimation without covariates: RDDpred is the same than RDDcoef:
+#' reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
 #' 
-#'   RDDpred(reg_para)
-#'   RDDcoef(reg_para, allInfo=TRUE)
+#' RDDpred(reg_para)
+#' RDDcoef(reg_para, allInfo=TRUE)
 #' 
-#' ## estimation with covariates: 
-#'   reg_para_cov <- RDDreg_lm(RDDobject=Lee2008_rdd,
-#'                             covariates="z1",
-#'                             covar.opt=list(slope="separate") )
-#'                             
-#'   RDDpred(reg_para_cov,
-#'   covdata=data.frame(z1=0)) ## should obtain same result as with RDestimate
+#' # estimation with covariates: 
+#' reg_para_cov <- RDDreg_lm(RDDobject=Lee2008_rdd,
+#'                           covariates="z1",
+#'                           covar.opt=list(slope="separate") )
+#'
+#'   # should obtain same result as with RDestimate                             
+#'   RDDpred(reg_para_cov, covdata=data.frame(z1=0)) 
 #'   
-#'   RDDpred(reg_para_cov,
-#'           covdata=data.frame(z1=0.5)) #evaluate at mean of z1 (as comes from uniform)
+#'   # evaluate at mean of z1 (as comes from uniform)
+#'   RDDpred(reg_para_cov, covdata=data.frame(z1=0.5))
 
 RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c("identity", "sum", "mean"), weights){
 
