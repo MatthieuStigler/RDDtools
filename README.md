@@ -24,7 +24,7 @@ Documentation
 The (preliminary) documentation is available in the help files directly, as well as in the *vignettes*. The vignettes can be accessed from R.
 
 ```r
-browseVignettes("RDDtools")
+vignette("RDDtools")
 ```
 
 RDDtools: main features
