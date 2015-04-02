@@ -1,18 +1,22 @@
 ---
-title: "Estimation"
+title: "RDDtools"
 author: "Matthieu Stigler"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Estimation}
+  %\VignetteIndexEntry{Data entry}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
+
 
 ```{r, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 ```
 
+**RDDtools** works in an object-oriented way: the user has to define once the characteristic of the data, creating a *RDDdata* object, on which different anaylsis tools can be applied. 
+
+# Data Preparation and Visualisation
 Load the package, and load the built-in dataset from [Lee 2008]:
 
 ```{r}
@@ -26,7 +30,16 @@ Declare the data to be a *RDDdata* object:
 Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 ```
 
-# Parametric
+
+You can now directly summarise and visualise this data:
+
+```{r dataPlot}
+summary(Lee2008_rdd)
+plot(Lee2008_rdd)
+```
+
+
+# Parametric Estimation
 
 Estimate parametrically, by fitting a 4th order polynomial.
 
@@ -38,7 +51,7 @@ plot(reg_para)
 ```
 
 
-# Non-parametric
+# Non-parametric Estimation
 
 Run a simple local regression, using the [Imbens and Kalyanaraman 2012] bandwidth.
 
