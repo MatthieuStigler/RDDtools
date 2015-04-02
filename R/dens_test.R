@@ -46,19 +46,3 @@ dens_test <- function(RDDobject, bin=NULL, bw=NULL, plot=TRUE,...){
   class(test.htest) <- "htest"
   return(test.htest)
 }
-
-# print.MCcraryTest <- function(x,...){
-#   cat("#### MC Crary Test of no discontinuity in density\n\n")
-#   cat("Estimate of discontinuity:\t", x$theta, "\n")
-#   cat("z-value:\t", x$z, "\t p-value:\t", x$p, "\n")
-# }
-
-if(FALSE){
-
-library(RDDtools)
-data(Lee2008)
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-
-dens_test(Lee2008_rdd)
-
-}

@@ -131,6 +131,7 @@ print.RDDreg_lm <- function(x,...) {
 
 }
 
+
 #' @export
 plot.RDDreg_lm <- function(x,...) {
 
@@ -142,39 +143,4 @@ plot.RDDreg_lm <- function(x,...) {
 ##plot
   plotBin(dat$x, dat$y, ...)
   lines(pred[order(pred$x),])
-}
-
-
-
-if(FALSE){
-
-  library(RDDtools)
-  data(Lee2008)
-
-  Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-
-
-  reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
-  print(x=reg_para )
-  summary(reg_para )
-
-  reg_para_same <- RDDreg_lm(RDDobject=Lee2008_rdd, slope="same")
-  print(x=reg_para_same )
-  summary(reg_para_same )
-
-  reg_para2 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=2)
-  reg_para2
-  summary(reg_para2)
-  plot(reg_para2)
-
-  reg_para2_same <- RDDreg_lm(RDDobject=Lee2008_rdd, order=2, slope="same")
-  reg_para2_same
-  summary(reg_para2_same)
-  plot(reg_para2)
-
-  bw_ik <- RDDbw_IK(Lee2008_rdd)
-  reg_para_ik <- RDDreg_lm(RDDobject=Lee2008_rdd, bw=bw_ik)
-  print(x=reg_para_ik)
-  plot(x=reg_para_ik)
-
 }

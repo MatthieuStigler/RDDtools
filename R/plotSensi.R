@@ -117,16 +117,6 @@ plotSensi.RDDreg_np <- function(RDDregobject, from, to, by=0.05, level=0.95, out
 }
 
 
-
-
-
-
-
-
-
-
-
-
 #' @rdname plotSensi
 #' @export
 plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, output=c("data", "ggplot"), plot=TRUE, order, type=c("colour", "facet"),  ...){
@@ -227,81 +217,8 @@ plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, out
   if(plot) print(sensPlot)
 
 
-#   if(n_seq_ord==1){
-#     ra <- range(seq_vals[,c("CI_low", "CI_high")], na.rm=TRUE)
-#     plot(seq_bw, seq_vals[,"LATE"], type="l", ylab="LATE", xlab="bandwidth", ylim=ra)
-#     title("Sensitivity to order choice")
-#     lines(seq_bw, seq_vals[,"CI_low"], lty=2)
-#     lines(seq_bw, seq_vals[,"CI_high"], lty=2) #
-#   } else {
-#       ra <- range(seq_vals[,c("CI_low", "CI_high")], na.rm=TRUE)
-#       for(i in 1:n_seq_ord){
-# 	if(i==1) {
-# 	  plot(seq_bw, seq_vals[(1:n_seq_bw)+(i-1)*n_seq_bw,"LATE"], type="l", ylab="LATE", xlab="bandwidth", ylim=ra, col=i)
-# 	} else {
-# 	  lines(seq_bw, seq_vals[(1:n_seq_bw)+(i-1)*n_seq_bw,"LATE"], col=i)
-# 	}
-# 	title("Sensitivity to order choice")
-# 	lines(seq_bw, seq_vals[(1:n_seq_bw)+(i-1)*n_seq_bw,"CI_low"], lty=2, col=i)
-# 	lines(seq_bw, seq_vals[(1:n_seq_bw)+(i-1)*n_seq_bw,"CI_high"], lty=2, col=i)
-#       }
-#   }
-  
-## add optim in case: 
-#   if(is_IKband) {
-#     points(object$bw, object$est, col="red")
-#     segments(object$bw,0, object$bw, object$est, col="red", lty=2)
-#     segments(0,object$est, object$bw, object$est, col="red", lty=2)
-# }
 
 ## export (silently) results:
   out <- switch(output, "data"=seq_vals_df, "ggplot"=sensPlot)
   invisible(out)
 }
-
-
-
-##########################################
-###### TODO
-##########################################
-## -plotSensi lm: work when no bandwidth!!
-
-
-if(FALSE){
-
-library(RDDtools)
-data(Lee2008)
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-
-
-reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
-reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
-reg_para2 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=2)
-
-bw_ik <- RDDbw_IK(Lee2008_rdd)
-reg_para_ik2 <- RDDreg_lm(RDDobject=Lee2008_rdd, bw=bw_ik, order=2)
-reg_para_ik3 <- RDDreg_lm(RDDobject=Lee2008_rdd, bw=bw_ik, order=3)
-
-plotSensi(reg_para)
-plotSensi(reg_para_ik2)
-plotSensi(reg_para_ik2, type="facet") 
-plotSensi(reg_nonpara)
-plotSensi(reg_nonpara, device="base")
-
-plo_res <- plotSensi(RDDregobject=reg_para_ik2, order=1:4)
-
-
-
-## extract matrix:
-plotSensi.RDDreg_lm(RDDregobject=reg_para_ik2, order=1:4)
-
-a <- plotSensi(RDDregobject=reg_para_ik2, order=1:4, type="facet")
-library(ggplot2)
-
-
-
-environment(plotSensi.RDDreg_lm) <- environment(RDDdata)
-plotSensi(reg_para)
-
-}
-

@@ -99,7 +99,6 @@ RDDdata <- function(y, x, covar, cutpoint, z, labels, data){
 
 ### Specific subsetting methods
 
-#####  @export as.data.frame.RDDdata
 # as.data.frame.RDDdata <- function(x) {
 # subset(x, y>
 # }as.data.frame.default(x)
@@ -167,62 +166,4 @@ as.data.frame.RDDdata <- function(x,...){
   attr(x, "labels")   <- NULL 
   attr(x, "cutpoint") <- NULL
   x
-}
-
-
-if(FALSE){
-
-library(RDDtools)
-data(Lee2008)
-
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-Lee2008_rdd2 <- RDDdata(y=y, x=x,data=Lee2008, cutpoint=0)
-
-all.equal(Lee2008_rdd, Lee2008_rdd2)
-
-### wrong covariate setting, legitimate warnings:
-Lee2008_rdd_lab1 <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0, labels=c("a","bb"))
-Lee2008_rdd_lab2 <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0, labels=list("a","bb"))
-Lee2008_rdd_lab3 <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0, labels=list(x="a",u="bb"))
-
-### Covariate setting:
-Z <- data.frame(z_con=runif(nrow(Lee2008)), z_dic=factor(sample(letters[1:3], size=nrow(Lee2008), replace=TRUE)))
-
-Lee2008_rdd_Z <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z, cutpoint=0)
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z, cutpoint=0, labels=c("a","bb"))
-
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z, cutpoint=0, labels=list(x="aha"))
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z, cutpoint=0, labels=list(x="aha", u="aa"))
-
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z, cutpoint=0, labels=list(x="aha", covar="aa"))
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z, cutpoint=0, labels=list(x="aha", z=c("aa", "hj")))
-
-### subsetting
-dat <- Lee2008_rdd
-dat_sub <- subset(Lee2008_rdd, x<1000)
-dat_ind <- Lee2008_rdd[1:nrow(Lee2008_rdd),]
-dat_ind_1 <- Lee2008_rdd[,1]
-dat_ind_2 <- Lee2008_rdd[1:5,]
-
-
-all.equal(dat, dat_sub)
-all.equal(attributes(dat), attributes(dat_sub))
-
-all.equal(dat, dat_ind)
-all.equal(attributes(dat), attributes(dat_ind))
-
-df<- as.data.frame(Lee2008_rdd)
-head(df)
-
-
-head(Lee2008_rdd_Z)
-colnames(Lee2008_rdd_Z[, -c(1,2)])
-attributes(Lee2008_rdd_Z[, -c(1,2)])
-
-colnames(subset(Lee2008_rdd_Z,select= c("z1","z2")))
-
-colnames(dat_sub)
-colnames(dat_ind)
-colnames(dat_ind_1)
-colnames(dat_ind_2)
 }

@@ -24,7 +24,6 @@
 #' plot(reg_nonpara)
 #'
 
-
 RDDreg_np <- function(RDDobject, covariates=NULL, bw=RDDbw_IK(RDDobject), slope=c("separate", "same"), inference=c("np", "lm"), covar.opt=list(slope=c("same", "separate"), bw=NULL)){
 
   slope <- match.arg(slope)
@@ -104,6 +103,7 @@ print.RDDreg_np <- function(x, signif.stars = getOption("show.signif.stars"), ..
 
 }
 
+
 #' @export
 summary.RDDreg_np <- function(object, digits = max(3, getOption("digits") - 3), signif.stars = getOption("show.signif.stars"), ...) {
 
@@ -132,6 +132,7 @@ summary.RDDreg_np <- function(object, digits = max(3, getOption("digits") - 3), 
   class(object) <- c("summary.RDDreg_np", class(object))
   object
 }
+
 
 #' @export
 print.summary.RDDreg_np <- function(x, digits = max(3, getOption("digits") - 3), signif.stars = getOption("show.signif.stars"), ...) {
@@ -213,96 +214,4 @@ vcov.RDDreg_np <- function(object, ...){
     res <- vcov(object$RDDslot$model)
   }
   res
-}
-
-if(FALSE){
-  library(RDDtools)
-  data(Lee2008)
-  Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-
-  environment(RDDreg_np) <- environment(RDDdata)
-  environment(plot.RDDreg_np) <- environment(RDDdata)
-  environment(print.RDDreg_np) <- environment(RDDdata)
-  environment(summary.RDDreg_np) <- environment(RDDdata)
-
-
-  reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
-  reg_nonpara_inflm <- RDDreg_np(RDDobject=Lee2008_rdd, inference="lm")
-  RDDtools:::getCutpoint(reg_nonpara)
-  head(RDDtools:::getOriginalX.RDDreg(reg_nonpara))
-
-  print(reg_nonpara)
-  print(reg_nonpara_inflm)
-  summary(reg_nonpara)
-  plot(x=reg_nonpara)
-  plot(x=reg_nonpara, chart="np")
-  plot(x=reg_nonpara, binwidth=0.05)
-
-
-  RDDtools:::waldci.RDDreg_np(reg_nonpara)
-  RDDtools:::waldci.RDDreg_np(reg_nonpara_inflm)
-
-environment(waldci.RDDreg_np) <- environment(RDDdata)
-waldci.RDDreg_np(reg_nonpara)
-
-plotSensi(reg_nonpara)
-
-
-class(getCall(reg_nonpara))
-class(attr(reg_nonpara, "RDDcall"))
-
-
-### MC
-mc_simple <- function(n=10000, xr=0.1){
-  x<- rnorm(n)
-  y <- 1+1.2*x+ 1.4*ifelse(x>=0,1,0)+ xr*ifelse(x>=0,1,0)*x+rnorm(n)
-  RD <- RDDdata(x=x, y=y, cutpoint=0)
-  RD
-}
-
-r<-RDDreg_np(mc_simple())
-summary(r)
-plot(r)
-
-
-}
-
-if(FALSE){
-bw <- RDDbw_IK(Lee2008_rdd)
-dat <- Lee2008_rdd
-x<- Lee2008_rdd$x
-y<- Lee2008_rdd$y
-cutpoint <- 0
-  dat_left <- subset(dat, x<cutpoint)
-  dat_right <- subset(dat, x>=cutpoint)
-
-  llp_left <- locpoly(x=dat_left$x, y=dat_left$y, bandwidth=bw)
-  llp_right <- locpoly(x=dat_right$x, y=dat_right$y, bandwidth=bw)
-
-p1 <- -0.7346403
-llp_left$x[which.min(abs(llp_left$x-p1))]
-llp_left$y[which.min(abs(llp_left$x-p1))]
-
-## around x: 
-point <- -0.7350795
-
-po <- subset(dat, x> point -bw & x< point+bw)
-mean(po$y)
-a<-  plotBin(dat$x, dat$y, h=bw)
-a
-
-a$x1 <- a$x-bw
-a$x2 <- a$x+bw
-
-b <- rownames(a)
-b1 <- gsub("\\[|\\(","c(",b)
-b2 <- gsub("\\]|\\)",")",b1)
-
-mean(eval(parse(text=b2[1])))
-diff(eval(parse(text=b2[1])))
-
-
-  lines(llp_left$x, llp_left$y)
-  lines(llp_right$x, llp_right$y)
-
 }

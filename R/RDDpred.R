@@ -47,11 +47,11 @@
 #'                           covariates="z1",
 #'                           covar.opt=list(slope="separate") )
 #'
-#'   # should obtain same result as with RDestimate                             
-#'   RDDpred(reg_para_cov, covdata=data.frame(z1=0)) 
+#' # should obtain same result as with RDestimate                             
+#' RDDpred(reg_para_cov, covdata=data.frame(z1=0)) 
 #'   
-#'   # evaluate at mean of z1 (as comes from uniform)
-#'   RDDpred(reg_para_cov, covdata=data.frame(z1=0.5))
+#' # evaluate at mean of z1 (as comes from uniform)
+#' RDDpred(reg_para_cov, covdata=data.frame(z1=0.5))
 
 RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c("identity", "sum", "mean"), weights){
 
@@ -163,60 +163,4 @@ RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c(
     res <- pred_point
   }
 res
-}
-
-if(FALSE){
-  library(RDDtools)
-  data(Lee2008)
-  head(Lee2008)
-
-  Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-
-  set.seed(123)
-  n_Lee <- nrow(Lee2008)
-  Z<- data.frame(z1=rnorm(n_Lee), z2=rnorm(n_Lee, mean=20, sd=2), z3=sample(letters[1:3], size=n_Lee, replace=TRUE))
-  Lee2008_rdd_z <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z,utpoint=0)
-
-## use:
-  reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
-
-  RDDpred(reg_para)
-  RDDcoef(reg_para, allInfo=TRUE)
-  all.equal(unlist(RDDpred(reg_para)), RDDcoef(reg_para, allInfo=TRUE)[1:2], check=FALSE)
-
-## pred other coefs: 
-  pred_Xr <- RDDpred(reg_para, newdata= data.frame(Tr=0, Xl=0, Xr=c(0,1)))
-  all.equal(RDDcoef(reg_para, allInfo=TRUE, allCo=TRUE)[4,1:2], unlist(pred_Xr), check=FALSE)
-
-  pred_Xl <- RDDpred(reg_para, newdata= data.frame(Tr=0, Xl=c(0,1), Xr=0))
-  all.equal(RDDcoef(reg_para, allInfo=TRUE, allCo=TRUE)[3,1:2], unlist(pred_Xl), check=FALSE)
-
-  reg_para2 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=2)
-  RDDpred(reg_para2)
-  all.equal(unlist(RDDpred(reg_para2)), RDDcoef(reg_para2, allInfo=TRUE)[1:2], check=FALSE)
-
-
-### Covariates
-  reg_para4_cov <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=1, covariates="z1", covar.opt=list(slope="separate"))
-  reg_para4_cov
-  summary(reg_para4_cov)
-
-  RDDpred(reg_para4_cov)
-  all.equal(unlist(RDDpred(reg_para4_cov)), RDDcoef(reg_para4_cov, allInfo=TRUE)[1:2], check=FALSE)
-
-  all.equal(RDDpred(reg_para4_cov, covdata=data.frame(z1=0)),RDDpred(reg_para4_cov))
-
-### Check RDDpred:
-vec_eval <- c(2,4,4,5,6)
-estim_sep <- lapply(vec_eval, function(x) RDDpred(object=reg_para4_cov, covdata=data.frame(z1=x)))
-estim_toget <- RDDpred(reg_para4_cov, covdata=data.frame(z1=vec_eval))
-
-all(estim_toget$fit==sapply(estim_sep, function(x) x$fit))
-all(estim_toget$se.fit==sapply(estim_sep, function(x) x$se.fit))
-
-environment(RDDpred) <- environment(RDDreg_lm)
-sum(RDDpred(reg_para4_cov, covdata=data.frame(z1=c(0,1,2,1)))$fit) 
-# RDDpred(x=reg_para4_cov, covdata=data.frame(z1=c(2,4,4,4,5,6)))
-# RDDpred(reg_para4_cov)
-
 }

@@ -147,33 +147,3 @@ getModelRank <- function(object,...)
 getModelRank.default <- function(object,...) object$rank
 
 getModelRank.RDDreg_np <- function(object,...) getModelRank.default(object$RDDslot$model)
-
-if(FALSE){
-
-  library(RDDtools)
-  data(Lee2008)
-
-  Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-
-
-  reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
-  print(x=reg_para )
-  summary(reg_para )
-
-## cluster inference
-  set.seed(123)
-  nlet <- sort(c(outer(letters, letters, paste, sep="")))
-  clusRandom <- sample(nlet[1:60], size=nrow(Lee2008_rdd), replace=TRUE)
-  clusterInf(reg_para, clusterVar=clusRandom)
-
-  clusterInf(reg_para, clusterVar=clusRandom, type="HC")
-
-## compare with rdd:
-  library(rdd)
-  rddest <- RDestimate(y~x, data=Lee2008, bw=30, kernel="rectangular", model=TRUE)
-  rddest_2 <- RDestimate2(y~x, data=Lee2008, bw=30, kernel="rectangular", model=TRUE, cluster=clusRandom)
-  coef(summary(reg_para))
-  coef(summary(rddest$model[[2]]))
-
-  all.equal(clusterInf(reg_para, clusterVar=clusRandom, type="HC")["D", "Std. Error"],rddest_2[["se"]][2])
-}
