@@ -66,11 +66,11 @@ reg_para_cov <- RDDreg_lm(RDDobject=Lee2008_rdd,
                           covariates="z1",
                           covar.opt=list(slope="separate") )
 
-  # should obtain same result as with RDestimate
-  RDDpred(reg_para_cov, covdata=data.frame(z1=0))
+# should obtain same result as with RDestimate
+RDDpred(reg_para_cov, covdata=data.frame(z1=0))
 
-  # evaluate at mean of z1 (as comes from uniform)
-  RDDpred(reg_para_cov, covdata=data.frame(z1=0.5))
+# evaluate at mean of z1 (as comes from uniform)
+RDDpred(reg_para_cov, covdata=data.frame(z1=0.5))
 }
 \references{
 Froehlich (2007) Regression discontinuity design with covariates, IZA discussion paper 3024
