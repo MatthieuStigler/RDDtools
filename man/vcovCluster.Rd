@@ -51,6 +51,5 @@ Arai, M. (2011) Cluster-robust standard errors using R, Note available \url{http
 }
 \seealso{
 \code{\link{clusterInf}} for a direct function, allowing also alternative cluster inference methods.
-See also \code{\link[rms]{robcov}} from package \code{rms} for another implementation of the cluster robust.
 }
 

@@ -83,7 +83,6 @@ model.frame.RDDreg_np <- function (formula, ...)
 #' @references Arai, M. (2011) Cluster-robust standard errors using R, Note available \url{http://people.su.se/~ma/clustering.pdf}. 
 #' @export
 #' @seealso \code{\link{clusterInf}} for a direct function, allowing also alternative cluster inference methods. 
-#' See also \code{\link[rms]{robcov}} from package \code{rms} for another implementation of the cluster robust. 
 #' @examples
 #' data(STAR_MHE)
 #' if(all(c(require(sandwich), require(lmtest)))){
