@@ -33,7 +33,8 @@ The transformed data was obtained using the STATA script krueger.do, obtained fr
 data(STAR_MHE)
 
 # Compute the group means:
-STAR_MHE_means <- aggregate(STAR_MHE[, c("classid", "pscore", "cs")], by=list(STAR_MHE$classid), mean)
+STAR_MHE_means <- aggregate(STAR_MHE[, c("classid", "pscore", "cs")],
+                            by=list(STAR_MHE$classid), mean)
 
 # Regression of means, with weighted average:
 reg_krug_gls <- lm(pscore~cs, data=STAR_MHE_means, weights=cs)
