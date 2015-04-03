@@ -81,7 +81,8 @@ as.npregbw_low <- function(x, npreg=FALSE, adjustIK_bw=TRUE, ...){
            call. = FALSE)
     }
     
-    require("np")
+    # require("np")
+    # requireNamespace("np", quietly = TRUE)
     options(np.messages = TRUE) ## otherwise got warnings messages... probably because comes only if loaded!
     res <- np::npreg(res, newdata=dataPoints, gradients=TRUE, ...)
     class(res) <- c("RDDreg_npreg", class(res))
