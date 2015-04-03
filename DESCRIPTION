@@ -13,14 +13,14 @@ Imports:
     KernSmooth,
     ggplot2,
     rdd,
-    np,
     sandwich,
     lmtest,
     Formula,
     locpol,
     methods
 Depends:
-    AER
+    AER,
+    np
 Suggests:
     stats4,
     car,
