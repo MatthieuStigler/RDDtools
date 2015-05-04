@@ -10,4 +10,8 @@
 #' @import ggplot2
 #' @title Regression Discontinuity Design 
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
-NULL
+
+if (getRversion() >= "3.1.0") {
+  utils::globalVariables(c("x", "position"))
+  utils::suppressForeignCheck(c("x", "position"))
+}
