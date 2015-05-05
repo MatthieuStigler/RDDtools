@@ -12,6 +12,6 @@
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 
 if (getRversion() >= "3.1.0") {
-  utils::globalVariables(c("x", "position"))
-  utils::suppressForeignCheck(c("x", "position"))
+  utils::globalVariables(c("x", "y", "position", "cutpoint", "LATE", "CI_low", "CI_high"))
+  utils::suppressForeignCheck(c("x", "y", "position", "cutpoint", "LATE", "CI_low", "CI_high"))
 }
