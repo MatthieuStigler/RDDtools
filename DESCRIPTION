@@ -1,4 +1,4 @@
-Package: RDDtools
+Package: rddtools
 Version: 0.3.0.9900
 Date: 2015-4-3
 Title: Toolbox for Regression Discontinuity Design (RDD)
@@ -27,6 +27,9 @@ Suggests:
     knitr,
     testthat
 License: GPL (>= 2)
+URL: https://github.com/bquast/RDDtools
+BugReports: https://github.com/bquast/RDDtools/issues
+VignetteBuilder: knitr
 Collate:
     'Lee2008-data.R'
     'RDDcoef.R'
@@ -54,6 +57,3 @@ Collate:
     'reg_np.R'
     'var_estim.R'
     'various_code.R'
-URL: https://github.com/bquast/RDDtools
-BugReports: https://github.com/bquast/RDDtools/issues
-VignetteBuilder: knitr
