@@ -40,6 +40,7 @@ plot(reg_nonpara)
 }
 \references{
 TODO
+#
 }
 \seealso{
 \code{\link{RDDbw_IK}} Bandwidth selection using the plug-in bandwidth of Imbens and Kalyanaraman (2012)

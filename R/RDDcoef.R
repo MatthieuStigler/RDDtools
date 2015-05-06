@@ -9,6 +9,7 @@
 #' its standard value, t test and p-value and 
 #' @export
 
+
 RDDcoef <- function(object, allInfo=FALSE, allCo=FALSE, ...)
   UseMethod("RDDcoef")
 

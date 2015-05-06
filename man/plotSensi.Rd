@@ -63,7 +63,4 @@ reg_para_ik <- RDDreg_lm(RDDobject=Lee2008_rdd, order=4, bw=bw_ik)
 plotSensi(reg_para_ik)
 plotSensi(reg_para_ik, type="facet")
 }
-\author{
-Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
-}
 

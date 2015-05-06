@@ -40,7 +40,4 @@ rd
 summary(rd)
 plot(rd)
 }
-\author{
-Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
-}
 

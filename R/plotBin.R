@@ -5,6 +5,7 @@
 #' @param x Forcing variable
 #' @param y Output
 #' @param h the bandwidth (defaults to \code{2*sd(runvar)*length(runvar)^(-.5)})
+#' @param nbins number of Bins
 #' @param cutpoint Cutpoint
 #' @param plot Logical. Whether to plot or only returned silently
 #' @param type Whether returns the y averages, or the x frequencies
@@ -12,10 +13,9 @@
 #' @param \ldots further arguments passed to plot. 
 #' @return Returns silently values
 #' @references McCrary, Justin. 
-#' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
-#' @keywords internal
 
-plotBin <-  function(x, y, h=0.05, nbins=NULL, cutpoint=0,  plot=TRUE, type=c("value", "number"),xlim=range(x, na.rm=TRUE), cex=0.9,main=NULL, xlab, ylab, ...){
+
+plotBin <-  function(x, y, h=0.05, nbins=NULL, cutpoint=0, plot=TRUE, type=c("value", "number"), xlim=range(x, na.rm=TRUE), cex=0.9,main=NULL, xlab, ylab, ...){
 
   type <- match.arg(type)
   x_name <- if(missing(xlab)) deparse(substitute(x)) else xlab

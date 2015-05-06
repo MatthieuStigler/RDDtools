@@ -1,4 +1,4 @@
-#'Construct RDDdata
+#' Construct RDDdata
 #' 
 #' Construct the base RDD object, containing x, y and the cutpoint, eventuallay covariates. 
 #' 
@@ -12,7 +12,6 @@
 #' @param z Assignment variable for the fuzzy case. 
 #' @return Object of class \code{RDDdata}, inheriting from \code{data.frame}
 #' @export
-#' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 #' @examples
 #' data(Lee2008)
 #' rd<- RDDdata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)

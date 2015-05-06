@@ -28,10 +28,6 @@
 #'  all.equal(RDDcoef(reg_nonpara_gaus),RDDcoef(reg_nonpara_np)) 
 
 
-
-
-
-
 as.npregbw <- function(x,...){
   res <- as.npregbw_low(x=x, npreg=FALSE,...)
   res

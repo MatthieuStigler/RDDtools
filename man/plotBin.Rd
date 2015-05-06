@@ -15,6 +15,8 @@ plotBin(x, y, h = 0.05, nbins = NULL, cutpoint = 0, plot = TRUE,
 
 \item{h}{the bandwidth (defaults to \code{2*sd(runvar)*length(runvar)^(-.5)})}
 
+\item{nbins}{number of Bins}
+
 \item{cutpoint}{Cutpoint}
 
 \item{plot}{Logical. Whether to plot or only returned silently}
@@ -31,11 +33,7 @@ Returns silently values
 \description{
 Do a "scatterplot bin smoothing"
 }
-\author{
-Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
-}
 \references{
 McCrary, Justin.
 }
-\keyword{internal}
 

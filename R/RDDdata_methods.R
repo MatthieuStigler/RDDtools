@@ -32,8 +32,7 @@ summary.RDDdata <- function(object, ...){
 #' is specified with the argument \code{h}, specifying the whole binwidth (contrary to the usual bandwidth
 #' argument, that gives half of the length of the kernel window. 
 #' When no bandwidth is given, the bandwidth of Ruppert et al is used, see \code{\link{RDDbw_RSW}}. 
-#' 
-#' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
+#' @export
 #' @examples
 #' data(Lee2008)
 #' Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
@@ -50,7 +49,6 @@ summary.RDDdata <- function(object, ...){
 #'
 #' ## If the specified number of bins is odd, the larger number is given to side with largest range
 #' plot(Lee2008_rdd, nbins=21)
-#' @export
 
 
 ### PLOT method

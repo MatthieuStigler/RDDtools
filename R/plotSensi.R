@@ -14,7 +14,6 @@
 #' @param plot Whether to actually plot the data. 
 #' @param \ldots Further arguments passed to specific methods
 #' @return A data frame containing the bandwidths and corresponding estimates and confidence intervals. 
-#' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 #' @import methods
 #' @examples
 #' data(Lee2008)

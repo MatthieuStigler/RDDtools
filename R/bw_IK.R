@@ -10,7 +10,6 @@
 #' Review of Economic Studies (2012) 79, 933-959
 #' @seealso \code{\link{RDDbw_RSW}} Global bandwidth selector of Ruppert, Sheather and Wand (1995) 
 #' @export
-#' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 #' @examples
 #' data(Lee2008)
 #' rd<- RDDdata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)

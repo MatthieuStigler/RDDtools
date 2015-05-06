@@ -6,8 +6,8 @@
 #' @param level the confidence level required, see confint()
 #' @param vcov. Specific covariance function to pass to coeftest. See help of sandwich
 #' @param df Degrees of freedom
-#' @param \ldots Further argument
-#' @keywords internal
+#' @param \ldots Further arguments
+
 
 waldci <- function(x, parm = NULL, level = 0.95, vcov. = NULL, df = NULL, ...)
 {

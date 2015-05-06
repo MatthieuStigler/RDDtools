@@ -17,10 +17,9 @@ waldci(x, parm = NULL, level = 0.95, vcov. = NULL, df = NULL, ...)
 
 \item{df}{Degrees of freedom}
 
-\item{\ldots}{Further argument}
+\item{\ldots}{Further arguments}
 }
 \description{
 Version of vcov allowing for confint
 }
-\keyword{internal}
 
