@@ -1,6 +1,5 @@
 Package: rddtools
-Version: 0.3.0.9900
-Date: 2015-4-3
+Version: 0.3.0.9990
 Title: Toolbox for Regression Discontinuity Design (RDD)
 Description: Set of functions for Regression Discontinuity Design (RDD), for
     data visualisation, estimation and testing.
@@ -30,30 +29,3 @@ License: GPL (>= 2)
 URL: https://github.com/bquast/RDDtools
 BugReports: https://github.com/bquast/RDDtools/issues
 VignetteBuilder: knitr
-Collate:
-    'Lee2008-data.R'
-    'RDDcoef.R'
-    'RDDdata.R'
-    'RDDdata_methods.R'
-    'RDDpred.R'
-    'RDDtools.R'
-    'STAR_MHE-data.R'
-    'Waldci.R'
-    'as.npreg.R'
-    'bw_IK.R'
-    'plotBin.R'
-    'bw_ROT.R'
-    'clusterInf.R'
-    'covarTests.R'
-    'dens_test.R'
-    'gen_MC_IK.R'
-    'get_methods.R'
-    'model.matrix.RDD.R'
-    'placebo.R'
-    'plotSensi.R'
-    'qplot_experim.R'
-    'reg_gen.R'
-    'reg_lm.R'
-    'reg_np.R'
-    'var_estim.R'
-    'various_code.R'
