@@ -21,7 +21,6 @@ dens_test(RDDobject, bin = NULL, bw = NULL, plot = TRUE, ...)
 Calls the \code{\link[rdd]{DCdensity}} test from package \code{rdd} on a \code{RDDobject}.
 }
 \examples{
-library(RDDtools)
 data(Lee2008)
 Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 dens_test(Lee2008_rdd)
