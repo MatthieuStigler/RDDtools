@@ -49,7 +49,4 @@ plotCu(version=3)
 plotCu(version=4)
 layout(matrix(1))
 }
-\references{
-TODO
-}
 

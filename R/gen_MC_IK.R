@@ -7,7 +7,6 @@
 #' @param output Whether to return a data-frame, or already a RDDdata
 #' @param size The size of the effect, this depends on the specific version, defaults are as in IK: 0.04, NULL, 0.1, 0.1
 #' @return An data frame with x and y variables. 
-#' @references TODO
 #' @export
 #' @examples
 #' MC1_dat <- gen_MC_IK()
