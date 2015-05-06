@@ -10,9 +10,9 @@
 
 <meta name="author" content="Matthieu Stigler" />
 
-<meta name="date" content="2015-04-02" />
+<meta name="date" content="2015-05-06" />
 
-<title>RDDtools</title>
+<title>rddtools</title>
 
 
 
@@ -52,9 +52,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 
 <div id="header">
-<h1 class="title">RDDtools</h1>
+<h1 class="title">rddtools</h1>
 <h4 class="author"><em>Matthieu Stigler</em></h4>
-<h4 class="date"><em>2015-04-02</em></h4>
+<h4 class="date"><em>2015-05-06</em></h4>
 </div>
 
 
@@ -63,6 +63,18 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h1>Data Preparation and Visualisation</h1>
 <p>Load the package, and load the built-in dataset from [Lee 2008]:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RDDtools)
+<span class="co">#&gt; IMPORTANT, this is an ALPHA VERSION</span>
+<span class="co">#&gt;                         many changes to the API will follow</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'RDDtools'</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; The following objects are masked from 'package:rddtools':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     as.lm, as.npreg, as.npregbw, clusterInf, computePlacebo,</span>
+<span class="co">#&gt;     covarTest_dis, covarTest_mean, dens_test, gen_MC_IK,</span>
+<span class="co">#&gt;     plotPlacebo, plotPlaceboDens, plotSensi, RDDbw_IK, RDDbw_RSW,</span>
+<span class="co">#&gt;     RDDcoef, RDDdata, RDDgenreg, RDDpred, RDDreg_lm, RDDreg_np,</span>
+<span class="co">#&gt;     ROT_bw, vcovCluster, vcovCluster2</span>
 <span class="kw">data</span>(Lee2008)</code></pre>
 <p>Declare the data to be a <em>RDDdata</em> object:</p>
 <pre class="sourceCode r"><code class="sourceCode r">Lee2008_rdd &lt;-<span class="st"> </span><span class="kw">RDDdata</span>(<span class="dt">y=</span>Lee2008$y, <span class="dt">x=</span>Lee2008$x, <span class="dt">cutpoint=</span><span class="dv">0</span>)</code></pre>
