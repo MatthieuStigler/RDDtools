@@ -11,13 +11,21 @@ rd<- RDDdata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
 rd2 <- RDDdata(x=x, y=y, data=Lee2008, cutpoint=0)
 
 # define context
+context("input ambivalence")
+
+test_that("is rd equal to rd2?", {
+  expect_equal( rd, rd2)
+}
+)
+
+# define context
 context("rd: output format")
 
-test_that("output size matches", {
+test_that("rd: output dimensions match", {
   expect_equal( dim(rd), c(6558, 2) )
 })
 
-test_that("output values match", {
+test_that("rd: output values match", {
   expect_equal( rd[1   ,1],  0.1049 )
   expect_equal( rd[1   ,2],  0.581  )
   expect_equal( rd[4   ,1],  0.0868 )
