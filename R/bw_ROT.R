@@ -4,9 +4,7 @@
 #' 
 #' @param object object of class RDDdata
 #' @references McCrary, Justin. (2008) "Manipulation of the running variable in the regression discontinuity design: A density test," \emph{Journal of Econometrics}. 142(2): 698-714. \url{http://dx.doi.org/10.1016/j.jeconom.2007.05.005}
-#' @include plotBin.R
 #' @export
-#' @author Drew Dimmery <\email{drewd@@nyu.edu}>
 #' @examples
 #' #No discontinuity
 
@@ -51,7 +49,6 @@ ROT_bw <- function(object){
 #' or for each side (\code{sided})
 #' @return One (or two for \code{sided}) bandwidth value. 
 #' @references See \code{\link[KernSmooth]{dpill}}
-#' @include plotBin.R
 #' @seealso \code{\link{RDDbw_IK}} Local RDD bandwidth selector using the plug-in method of Imbens and Kalyanaraman (2012)
 #' @import KernSmooth
 #' @export

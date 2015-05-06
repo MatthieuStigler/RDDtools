@@ -22,7 +22,6 @@
 #' function for the class of the object returned by \code{fun}. 
 #' @return An object of class RDDreg_lm and class lm, with specific print and plot methods
 #' @references TODO
-#' @include plotBin.R
 #' @export RDDgenreg 
 #' @examples
 #' ## Step 0: prepare data
