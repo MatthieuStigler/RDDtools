@@ -20,7 +20,7 @@ knitr::opts_chunk$set(collapse = T, comment = "#>")
 Load the package, and load the built-in dataset from [Lee 2008]:
 
 ```{r}
-library(RDDtools)
+library(rddtools)
 data(Lee2008)
 ```
 

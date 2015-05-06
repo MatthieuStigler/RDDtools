@@ -1,5 +1,5 @@
 
-library(RDDtools)
+library(rddtools)
 library(rdd)
 
 ## simple MC:

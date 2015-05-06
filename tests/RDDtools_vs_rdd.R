@@ -1,6 +1,6 @@
 
 library(rdd)
-library(RDDtools)
+library(rddtools)
 
 set.seed(1234)
 x<-runif(1000,-1,1)
