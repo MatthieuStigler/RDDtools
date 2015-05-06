@@ -1,0 +1,27 @@
+# test_e2r.R
+
+# load the decompr package
+library(rddtools)
+
+# load the example data set
+data(Lee2008)
+
+# create RDDdata sets
+rd<- RDDdata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
+rd2 <- RDDdata(x=x, y=y, data=Lee2008, cutpoint=0)
+
+# define context
+context("rd: output format")
+
+test_that("output size matches", {
+  expect_equal( dim(rd), c(6558, 2) )
+})
+
+test_that("output values match", {
+  expect_equal( rd[1   ,1],  0.1049 )
+  expect_equal( rd[1   ,2],  0.581  )
+  expect_equal( rd[4   ,1],  0.0868 )
+  expect_equal( rd[4   ,2],  0.5846 )
+  expect_equal( rd[6558,1], -0.1982 )
+  expect_equal( rd[6558,2],  0.802  )
+})
