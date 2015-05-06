@@ -49,7 +49,6 @@ the non-parametric local kernel \code{\link{RDDreg_np}}. Similarly, weights can 
 The returned object is a classical \code{lm} object, augmented with a \code{RDDslot}, so usual methods can be applied. As is done in general in R,
 heteroskeadsticity-robust inference can be done later on with the usual function from package \pkg{sandwich}. For the case of clustered observations
 a specific function \code{\link{clusterInf}} is provided.
-#
 }
 \examples{
 ## Step 0: prepare data

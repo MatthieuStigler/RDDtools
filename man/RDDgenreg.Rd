@@ -58,6 +58,5 @@ summary(reg_bin_glm)
 }
 \references{
 TODO
-#
 }
 
