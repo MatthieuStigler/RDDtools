@@ -13,14 +13,14 @@ summary(Lee2008_rdd)
 plot(Lee2008_rdd)
 
 ## ----reg_para------------------------------------------------------------
-reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd, order=4)
+reg_para <- RDDreg_lm(rdd_object=Lee2008_rdd, order=4)
 reg_para
 
 plot(reg_para)
 
 ## ----RegPlot-------------------------------------------------------------
 bw_ik <- RDDbw_IK(Lee2008_rdd)
-reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd, bw=bw_ik)
+reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd, bw=bw_ik)
 print(reg_nonpara)
 plot(x=reg_nonpara)
 

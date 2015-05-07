@@ -58,13 +58,13 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </div>
 
 
-<p><strong>RDDtools</strong> works in an object-oriented way: the user has to define once the characteristic of the data, creating a <em>RDDdata</em> object, on which different anaylsis tools can be applied.</p>
+<p><strong>RDDtools</strong> works in an object-oriented way: the user has to define once the characteristic of the data, creating a <em>rdd_data</em> object, on which different anaylsis tools can be applied.</p>
 <div id="data-preparation-and-visualisation" class="section level1">
 <h1>Data Preparation and Visualisation</h1>
 <p>Load the package, and load the built-in dataset from [Lee 2008]:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rddtools)
 <span class="kw">data</span>(Lee2008)</code></pre>
-<p>Declare the data to be a <em>RDDdata</em> object:</p>
+<p>Declare the data to be a <em>rdd_data</em> object:</p>
 <pre class="sourceCode r"><code class="sourceCode r">Lee2008_rdd &lt;-<span class="st"> </span><span class="kw">rdd_data</span>(<span class="dt">y=</span>Lee2008$y, <span class="dt">x=</span>Lee2008$x, <span class="dt">cutpoint=</span><span class="dv">0</span>)</code></pre>
 <p>You can now directly summarise and visualise this data:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(Lee2008_rdd)
@@ -82,7 +82,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <div id="parametric-estimation" class="section level1">
 <h1>Parametric Estimation</h1>
 <p>Estimate parametrically, by fitting a 4th order polynomial.</p>
-<pre class="sourceCode r"><code class="sourceCode r">reg_para &lt;-<span class="st"> </span><span class="kw">RDDreg_lm</span>(<span class="dt">RDDobject=</span>Lee2008_rdd, <span class="dt">order=</span><span class="dv">4</span>)
+<pre class="sourceCode r"><code class="sourceCode r">reg_para &lt;-<span class="st"> </span><span class="kw">RDDreg_lm</span>(<span class="dt">rdd_object=</span>Lee2008_rdd, <span class="dt">order=</span><span class="dv">4</span>)
 reg_para
 <span class="co">#&gt; ### RDD regression: parametric ###</span>
 <span class="co">#&gt;  Polynomial order:  4 </span>
@@ -102,7 +102,7 @@ reg_para
 <h1>Non-parametric Estimation</h1>
 <p>Run a simple local regression, using the [Imbens and Kalyanaraman 2012] bandwidth.</p>
 <pre class="sourceCode r"><code class="sourceCode r">bw_ik &lt;-<span class="st"> </span><span class="kw">RDDbw_IK</span>(Lee2008_rdd)
-reg_nonpara &lt;-<span class="st"> </span><span class="kw">RDDreg_np</span>(<span class="dt">RDDobject=</span>Lee2008_rdd, <span class="dt">bw=</span>bw_ik)
+reg_nonpara &lt;-<span class="st"> </span><span class="kw">RDDreg_np</span>(<span class="dt">rdd_object=</span>Lee2008_rdd, <span class="dt">bw=</span>bw_ik)
 <span class="kw">print</span>(reg_nonpara)
 <span class="co">#&gt; ### RDD regression: nonparametric local linear###</span>
 <span class="co">#&gt;  Bandwidth:  0.2938561 </span>

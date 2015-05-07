@@ -14,7 +14,7 @@ vignette: >
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 ```
 
-**RDDtools** works in an object-oriented way: the user has to define once the characteristic of the data, creating a *RDDdata* object, on which different anaylsis tools can be applied. 
+**RDDtools** works in an object-oriented way: the user has to define once the characteristic of the data, creating a *rdd_data* object, on which different anaylsis tools can be applied. 
 
 # Data Preparation and Visualisation
 Load the package, and load the built-in dataset from [Lee 2008]:
@@ -24,7 +24,7 @@ library(rddtools)
 data(Lee2008)
 ```
 
-Declare the data to be a *RDDdata* object:
+Declare the data to be a *rdd_data* object:
 
 ```{r}
 Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
@@ -44,7 +44,7 @@ plot(Lee2008_rdd)
 Estimate parametrically, by fitting a 4th order polynomial.
 
 ```{r reg_para}
-reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd, order=4)
+reg_para <- RDDreg_lm(rdd_object=Lee2008_rdd, order=4)
 reg_para
 
 plot(reg_para)
@@ -57,7 +57,7 @@ Run a simple local regression, using the [Imbens and Kalyanaraman 2012] bandwidt
 
 ```{r RegPlot}
 bw_ik <- RDDbw_IK(Lee2008_rdd)
-reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd, bw=bw_ik)
+reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd, bw=bw_ik)
 print(reg_nonpara)
 plot(x=reg_nonpara)
 ```
