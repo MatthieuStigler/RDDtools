@@ -10,7 +10,7 @@ MC_simple <- function(n=200, CATE=0.3, HATE=0.1){
   D <- x>= 20
   y <- 0.8 + CATE*D+ 0.3*x+HATE*x*D+rnorm(n, sd=0.1)
   cat("effect", CATE+HATE*20, "\n")
-  rdddata(x=x, y=y, cutpoint=20)
+  rdd_data(x=x, y=y, cutpoint=20)
 
 }
 
@@ -53,7 +53,7 @@ set.seed(123)
 head(gen_MC_IK())
 
 set.seed(123)
-head(gen_MC_IK(output="rdddata"))
+head(gen_MC_IK(output="rdd_data"))
 
 set.seed(123)
 head(gen_MC_IK(version=2))

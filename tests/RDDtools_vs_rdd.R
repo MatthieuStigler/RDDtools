@@ -7,7 +7,7 @@ x<-runif(1000,-1,1)
 cov<-rnorm(1000)
 y<-3+2*x+3*cov+10*(x>=0)+rnorm(1000)
 
-RD <- rdddata(x=x, y=y, cutpoint=0, covar=cov)
+RD <- rdd_data(x=x, y=y, cutpoint=0, covar=cov)
 
 ### Simple estimation:
 bw <- IKbandwidth(X=x, Y=y, cutpoint=0)
@@ -38,7 +38,7 @@ all.equal(rdd_co_cov[-4,], RDDtools_co_cov[-4,], check.attributes=FALSE)
 ## Fuzzy
 set.seed(123)
 selec <- rbinom(nrow(RD), 1, prob=ifelse(RD$x<0, 0.1, 0.9))
-RD_rdd_ins <- rdddata(y=RD$y, x=RD$x, z=selec,cutpoint=0)
+RD_rdd_ins <- rdd_data(y=RD$y, x=RD$x, z=selec,cutpoint=0)
 
 RDDto_reg_fuz <- RDDreg_lm(RD_rdd_ins, bw=0.2)
 rdd_reg_fuz <- RDestimate(y~x+selec, data=RD_rdd_ins, kernel="rectangular", bw=0.2, model=TRUE, se.type="const")$model[[2]][[1]]

@@ -3,14 +3,14 @@
 \name{covarTest_mean}
 \alias{covarTest_mean}
 \alias{covarTest_mean.RDDreg}
-\alias{covarTest_mean.rdddata}
+\alias{covarTest_mean.rdd_data}
 \title{Testing for balanced covariates: equality of means with t-test}
 \usage{
 covarTest_mean(object, bw = NULL, paired = FALSE, var.equal = FALSE,
   p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel",
   "bonferroni"))
 
-\method{covarTest_mean}{rdddata}(object, bw = NULL, paired = FALSE,
+\method{covarTest_mean}{rdd_data}(object, bw = NULL, paired = FALSE,
   var.equal = FALSE, p.adjust = c("none", "holm", "BH", "BY", "hochberg",
   "hommel", "bonferroni"))
 
@@ -19,7 +19,7 @@ covarTest_mean(object, bw = NULL, paired = FALSE, var.equal = FALSE,
   "hommel", "bonferroni"))
 }
 \arguments{
-\item{object}{object of class rdddata}
+\item{object}{object of class rdd_data}
 
 \item{bw}{a bandwidth}
 
@@ -46,7 +46,7 @@ n_Lee <- nrow(Lee2008)
 Z <- data.frame(z1 = rnorm(n_Lee, sd=2),
                 z2 = rnorm(n_Lee, mean = ifelse(Lee2008<0, 5, 8)),
                 z3 = sample(letters, size = n_Lee, replace = TRUE))
-Lee2008_rdd_Z <- rdddata(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
+Lee2008_rdd_Z <- rdd_data(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
 
 ## test for equality of means around cutoff:
 covarTest_mean(Lee2008_rdd_Z, bw=0.3)

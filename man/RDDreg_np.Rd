@@ -9,7 +9,7 @@ RDDreg_np(RDDobject, covariates = NULL, bw = RDDbw_IK(RDDobject),
   covar.opt = list(slope = c("same", "separate"), bw = NULL))
 }
 \arguments{
-\item{RDDobject}{Object of class rdddata created by \code{\link{rdddata}}}
+\item{RDDobject}{Object of class rdd_data created by \code{\link{rdd_data}}}
 
 \item{covariates}{TODO}
 
@@ -31,7 +31,7 @@ possibly on the range specified by bandwidth
 \examples{
 ## Step 0: prepare data
 data(Lee2008)
-Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 ## Step 2: regression
 # Simple polynomial of order 1:
 reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)

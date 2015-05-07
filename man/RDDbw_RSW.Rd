@@ -7,7 +7,7 @@
 RDDbw_RSW(object, type = c("global", "sided"))
 }
 \arguments{
-\item{object}{object of class rdddata created by \code{\link{rdddata}}}
+\item{object}{object of class rdd_data created by \code{\link{rdd_data}}}
 
 \item{type}{Whether to choose a global bandwidth for the whole function (\code{global})
 or for each side (\code{sided})}
@@ -21,7 +21,7 @@ either to the whole function, or to the functions below and above the cutpoint.
 }
 \examples{
 data(Lee2008)
-rd<- rdddata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
+rd<- rdd_data(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
 RDDbw_RSW(rd)
 }
 \references{

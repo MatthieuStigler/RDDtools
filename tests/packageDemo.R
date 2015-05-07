@@ -9,7 +9,7 @@ library(rddtools)
 data(Lee2008)
 head(Lee2008)
 
-Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 
 head(Lee2008_rdd)
 
@@ -21,7 +21,7 @@ n_Lee <- nrow(Lee2008)
 
 set.seed(123)
 Z<- data.frame(z1=rnorm(n_Lee), z2=rnorm(n_Lee, mean=20, sd=2), z3=sample(letters[1:3], size=n_Lee, replace=TRUE))
-Lee2008_rdd_z <- rdddata(y=Lee2008$y, x=Lee2008$x, covar=Z,cutpoint=0)
+Lee2008_rdd_z <- rdd_data(y=Lee2008$y, x=Lee2008$x, covar=Z,cutpoint=0)
 
 head(Lee2008_rdd_z )
 summary(Lee2008_rdd_z )
@@ -29,7 +29,7 @@ summary(Lee2008_rdd_z )
 ### Fuzzy
 set.seed(123)
 ins <- rbinom(n_Lee, 1, prob=ifelse(Lee2008$x<0, 0.1, 0.9))
-Lee2008_rdd_ins <- rdddata(y=Lee2008$y, x=Lee2008$x, z=ins,cutpoint=0)
+Lee2008_rdd_ins <- rdd_data(y=Lee2008$y, x=Lee2008$x, z=ins,cutpoint=0)
 table(Lee2008$x<0, ins==0)
 
 ############################################

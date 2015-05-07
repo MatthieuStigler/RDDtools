@@ -1,12 +1,12 @@
 
 
-# checkIsRDD <- function(object)  if(!inherits(object, "rdddata")) stop("Only works for rdddata objects")
-# checkIsAnyRDD <- function(object)  if(!inherits(object, c("rdddata", "RDDreg_np"))) stop("Only works for rdddata objects")
+# checkIsRDD <- function(object)  if(!inherits(object, "rdd_data")) stop("Only works for rdd_data objects")
+# checkIsAnyRDD <- function(object)  if(!inherits(object, c("rdd_data", "RDDreg_np"))) stop("Only works for rdd_data objects")
 
-# function(object)  if(!inherits(object, "rdddata")) stop("Only works for rdddata objects")
+# function(object)  if(!inherits(object, "rdd_data")) stop("Only works for rdd_data objects")
 checkIsAnyRDD <- checkIsRDD <- function(object)  {
-  classesOk <- c("rdddata", "RDDreg_np", "RDDreg_lm")
-  if(!inherits(object, classesOk)) stop("Only works for rdddata objects")
+  classesOk <- c("rdd_data", "RDDreg_np", "RDDreg_lm")
+  if(!inherits(object, classesOk)) stop("Only works for rdd_data objects")
 }
 
 getType <- function(object){
@@ -56,7 +56,7 @@ infType <- function(x) {
 hasCovar <- function(object)
   UseMethod("hasCovar")
 
-hasCovar.rdddata <- function(object)  attr(object, "hasCovar")
+hasCovar.rdd_data <- function(object)  attr(object, "hasCovar")
 
 hasCovar.RDDreg <- function(object) { 
   call <- getCall(object)
@@ -64,7 +64,7 @@ hasCovar.RDDreg <- function(object) {
 }
 
 getCovar <- function(object){
-  if(!inherits(object, "rdddata")) stop("Only works for rdddata objects")
+  if(!inherits(object, "rdd_data")) stop("Only works for rdd_data objects")
   if(!hasCovar(object)) stop("object has no covariates")
   
   rem <- if(isFuzzy(object)) 1:3 else  1:2
@@ -73,7 +73,7 @@ getCovar <- function(object){
 }
 
 getCovarNames <- function(object){
-  if(!inherits(object, "rdddata")) stop("Only works for rdddata objects")
+  if(!inherits(object, "rdd_data")) stop("Only works for rdd_data objects")
   if(!hasCovar(object)) stop("object has no covariates")
   
   rem <- if(isFuzzy(object)) 1:3 else  1:2
@@ -93,10 +93,10 @@ getOriginalX <- function(object)
 
 
 getOriginalX.RDDreg <- function(object){
-  object$RDDslot$rdddata[, "x"]
+  object$RDDslot$rdd_data[, "x"]
 }
 
-getOriginalX.rdddata <- function(object){
+getOriginalX.rdd_data <- function(object){
   object[, "x"]
 }
 
@@ -126,7 +126,7 @@ getOriginalData <- function(object, na.rm=TRUE, classRDD=TRUE)
 
 
 getOriginalData.RDDreg <- function(object, na.rm=TRUE, classRDD=TRUE){
-  res <- object$RDDslot$rdddata
+  res <- object$RDDslot$rdd_data
   if(na.rm) res <- res[apply(res, 1, function(x) all(!is.na(x))),] # remove na rows
   if(!classRDD) res <- as.data.frame(res)
   res

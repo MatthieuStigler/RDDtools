@@ -16,7 +16,7 @@
 #' @import lmtest
 #' @examples
 #' data(Lee2008)
-#' Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+#' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 #' reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
 #' 
 #' # here we just generate randomly a cluster variable:

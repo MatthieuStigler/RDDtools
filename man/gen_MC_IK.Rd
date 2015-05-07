@@ -5,7 +5,7 @@
 \title{Generate Monte Carlo simulations of Imbens and Kalyanaraman}
 \usage{
 gen_MC_IK(n = 200, version = 1, sd = 0.1295, output = c("data.frame",
-  "rdddata"), size)
+  "rdd_data"), size)
 }
 \arguments{
 \item{n}{The size of sampel to generate}
@@ -14,7 +14,7 @@ gen_MC_IK(n = 200, version = 1, sd = 0.1295, output = c("data.frame",
 
 \item{sd}{The standard deviation of the error term.}
 
-\item{output}{Whether to return a data-frame, or already a rdddata}
+\item{output}{Whether to return a data-frame, or already a rdd_data}
 
 \item{size}{The size of the effect, this depends on the specific version, defaults are as in IK: 0.04, NULL, 0.1, 0.1}
 }
@@ -26,7 +26,7 @@ Generate the simulations reported in Imbens and Kalyanaraman (2012)
 }
 \examples{
 MC1_dat <- gen_MC_IK()
-MC1_rdd <- rdddata(y=MC1_dat$y, x=MC1_dat$x, cutpoint=0)
+MC1_rdd <- rdd_data(y=MC1_dat$y, x=MC1_dat$x, cutpoint=0)
 
 ## Use np regression:
 reg_nonpara <- RDDreg_np(RDDobject=MC1_rdd)

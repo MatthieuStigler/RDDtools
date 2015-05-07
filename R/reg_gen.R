@@ -2,7 +2,7 @@
 #' 
 #' Compute RDD estimate allowing a locally kernel weighted version of any estimation function
 #' possibly on the range specified by bandwidth
-#' @param RDDobject Object of class rdddata created by \code{\link{rdddata}}
+#' @param RDDobject Object of class rdd_data created by \code{\link{rdd_data}}
 #' @param covariates Formula to include covariates
 #' @param order Order of the polynomial regression. 
 #' @param bw A bandwidth to specify the subset on which the kernel weighted regression is estimated
@@ -26,7 +26,7 @@
 #' @examples
 #' ## Step 0: prepare data
 #' data(Lee2008)
-#' Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+#' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 #' 
 #' ## Estimate a local probit:
 #' Lee2008_rdd$y <- with(Lee2008_rdd, ifelse(y<quantile(y, 0.25), 0,1))
@@ -66,7 +66,7 @@ RDDgenreg <- function(RDDobject, fun=glm, covariates=NULL, order=1, bw=NULL, slo
   
   ##Return
   RDDslot <- list()
-  RDDslot$rdddata <- RDDobject
+  RDDslot$rdd_data <- RDDobject
   reg$RDDslot <- RDDslot 
   class(reg) <- c("RDDreg_lm", "RDDreg", class(reg))
   attr(reg, "PolyOrder") <- order

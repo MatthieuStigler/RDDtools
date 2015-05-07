@@ -2,7 +2,7 @@
 #' 
 #' Compute a parametric polynomial regression of the ATE, 
 #' possibly on the range specified by bandwidth
-#' @param RDDobject Object of class rdddata created by \code{\link{rdddata}}
+#' @param RDDobject Object of class rdd_data created by \code{\link{rdd_data}}
 #' @param covariates Formula to include covariates
 #' @param order Order of the polynomial regression. 
 #' @param bw A bandwidth to specify the subset on which the parametric regression is estimated
@@ -32,7 +32,7 @@
 #' @examples
 #' ## Step 0: prepare data
 #' data(Lee2008)
-#' Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+#' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 #' ## Step 2: regression
 #' # Simple polynomial of order 1:
 #' reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
@@ -91,7 +91,7 @@ RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
 
 ##Return
   RDDslot <- list()
-  RDDslot$rdddata <- RDDobject
+  RDDslot$rdd_data <- RDDobject
   reg$RDDslot <- RDDslot 
   class(reg) <- c("RDDreg_lm", "RDDreg", class_reg)
   attr(reg, "PolyOrder") <- order

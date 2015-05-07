@@ -10,7 +10,7 @@ RDDreg_lm(RDDobject, covariates = NULL, order = 1, bw = NULL,
   covar.strat = c("include", "residual"), weights)
 }
 \arguments{
-\item{RDDobject}{Object of class rdddata created by \code{\link{rdddata}}}
+\item{RDDobject}{Object of class rdd_data created by \code{\link{rdd_data}}}
 
 \item{covariates}{Formula to include covariates}
 
@@ -53,7 +53,7 @@ a specific function \code{\link{clusterInf}} is provided.
 \examples{
 ## Step 0: prepare data
 data(Lee2008)
-Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 ## Step 2: regression
 # Simple polynomial of order 1:
 reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)

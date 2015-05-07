@@ -9,7 +9,7 @@ RDDgenreg(RDDobject, fun = glm, covariates = NULL, order = 1, bw = NULL,
   "residual"), slope = c("same", "separate"), bw = NULL), weights, ...)
 }
 \arguments{
-\item{RDDobject}{Object of class rdddata created by \code{\link{rdddata}}}
+\item{RDDobject}{Object of class rdd_data created by \code{\link{rdd_data}}}
 
 \item{fun}{The function to estimate the parameters}
 
@@ -48,7 +48,7 @@ function for the class of the object returned by \code{fun}.
 \examples{
 ## Step 0: prepare data
 data(Lee2008)
-Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 
 ## Estimate a local probit:
 Lee2008_rdd$y <- with(Lee2008_rdd, ifelse(y<quantile(y, 0.25), 0,1))

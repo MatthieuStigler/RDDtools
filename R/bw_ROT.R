@@ -2,7 +2,7 @@
 #' 
 #' implements dpill
 #' 
-#' @param object object of class rdddata
+#' @param object object of class rdd_data
 #' @references McCrary, Justin. (2008) "Manipulation of the running variable in the regression discontinuity design: A density test," \emph{Journal of Econometrics}. 142(2): 698-714. \url{http://dx.doi.org/10.1016/j.jeconom.2007.05.005}
 #' @export
 #' @examples
@@ -12,7 +12,7 @@
 
 ROT_bw <- function(object){
 
-  if(!inherits(object, "rdddata")) stop("Only works for rdddata objects")
+  if(!inherits(object, "rdd_data")) stop("Only works for rdd_data objects")
   cutpoint <- getCutpoint(object)
   x <- object$x
   y <- object$y
@@ -44,7 +44,7 @@ ROT_bw <- function(object){
 #' Uses the global bandwidth selector of Ruppert, Sheather and Wand (1995) 
 #' either to the whole function, or to the functions below and above the cutpoint. 
 #' 
-#' @param object object of class rdddata created by \code{\link{rdddata}}
+#' @param object object of class rdd_data created by \code{\link{rdd_data}}
 #' @param type Whether to choose a global bandwidth for the whole function (\code{global}) 
 #' or for each side (\code{sided})
 #' @return One (or two for \code{sided}) bandwidth value. 
@@ -54,7 +54,7 @@ ROT_bw <- function(object){
 #' @export
 #' @examples
 #' data(Lee2008)
-#' rd<- rdddata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
+#' rd<- rdd_data(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
 #' RDDbw_RSW(rd)
 
 
@@ -63,7 +63,7 @@ RDDbw_RSW <- function(object, type=c("global", "sided")){
 
   type <- match.arg(type)
 
-  if(!inherits(object, "rdddata")) stop("Only works for rdddata objects")
+  if(!inherits(object, "rdd_data")) stop("Only works for rdd_data objects")
   cutpoint <- getCutpoint(object)
   x <- object$x
   y <- object$y
@@ -88,7 +88,7 @@ RDDbw_RSW <- function(object, type=c("global", "sided")){
 if(FALSE){
 #   lee_dat4 <- read.csv("/home/mat/Dropbox/HEI/rdd/Rcode/IK bandwidth/datasets/imbens_from_MATLAB.csv", header=FALSE)
 #   head(lee_dat4)
-#   a<-rdddata(y=lee_dat4[,2], x=lee_dat4[,1], cutpoint=0)
+#   a<-rdd_data(y=lee_dat4[,2], x=lee_dat4[,1], cutpoint=0)
 # ROT_bw(object=a)
 # RDDbw_RSW(object=a)
 RDDbw_RSW(object=a, type="sided")

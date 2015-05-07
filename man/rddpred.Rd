@@ -53,7 +53,7 @@ as the square of that diagonal matrix, whereas for mean/sum, covariances are tak
 data(Lee2008)
 n_Lee <- nrow(Lee2008)
 z1 <- runif(n_Lee)
-Lee2008_rdd <- rdddata(y=y, x=x, data=Lee2008, covar=z1, cutpoint=0)
+Lee2008_rdd <- rdd_data(y=y, x=x, data=Lee2008, covar=z1, cutpoint=0)
 
 # estimation without covariates: rddpred is the same than rddcoef:
 reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)

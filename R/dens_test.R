@@ -2,7 +2,7 @@
 #' 
 #' Calls the \code{\link[rdd]{DCdensity}} test from package \code{rdd} on a \code{RDDobject}.
 #' 
-#' @param RDDobject object of class rdddata
+#' @param RDDobject object of class rdd_data
 #' @param bin Argument of the \code{\link{DCdensity}} function, the binwidth
 #' @param bw Argument of the \code{\link{DCdensity}} function, the bandwidth
 #' @param plot Whether to return a plot. Logical, default ot TRUE. 
@@ -11,7 +11,7 @@
 #' @import rdd
 #' @examples
 #' data(Lee2008)
-#' Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+#' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 #' dens_test(Lee2008_rdd)
 
 

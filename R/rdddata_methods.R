@@ -2,11 +2,11 @@
 
 ### SUMMARY method
 #' @export
-summary.rdddata <- function(object, ...){
+summary.rdd_data <- function(object, ...){
 
   cutpoint <- getCutpoint(object)
   hasCovar_eng <- ifelse(hasCovar(object), "yes", "no")
-  cat("### rdddata object ###\n")
+  cat("### rdd_data object ###\n")
   cat("\nCutpoint:", cutpoint, "\n")
   cat("Sample size:",
 	"\n\t-Full :", nrow(object), 
@@ -15,11 +15,11 @@ summary.rdddata <- function(object, ...){
   cat("\nCovariates:", hasCovar_eng, "\n")
 }
 
-#' Plot rdddata
+#' Plot rdd_data
 #' 
 #' Binned plot of the forcing and outcome variable
 #' 
-#' @param x Object of class rdddata
+#' @param x Object of class rdd_data
 #' @param h The binwidth parameter (note this differs from the bandwidth parameter!)
 #' @param nbins Alternative to h, the total number of bins in the plot.
 #' @param xlim The range of the x data
@@ -35,7 +35,7 @@ summary.rdddata <- function(object, ...){
 #' @export
 #' @examples
 #' data(Lee2008)
-#' Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+#' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 #' plot(Lee2008_rdd)
 #' 
 #' ## Specify manually the bandwidth:
@@ -52,7 +52,7 @@ summary.rdddata <- function(object, ...){
 
 
 ### PLOT method
-plot.rdddata <- function(x, h, nbins=NULL, xlim=range(object$x, na.rm=TRUE), cex=0.7, nplot=1, device=c("base", "ggplot"),...){
+plot.rdd_data <- function(x, h, nbins=NULL, xlim=range(object$x, na.rm=TRUE), cex=0.7, nplot=1, device=c("base", "ggplot"),...){
 
   object <- x
   cutpoint <- getCutpoint(object)
@@ -118,7 +118,7 @@ plot.rdddata <- function(x, h, nbins=NULL, xlim=range(object$x, na.rm=TRUE), cex
 #' @seealso \code{\link{as.npreg}} which converts \code{RDDreg} objects into \code{npreg} from package \code{np}.
 #' @examples 
 #' data(Lee2008)
-#' Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+#' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 #' reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
 #' reg_para_lm <- as.lm(reg_para)
 #' reg_para_lm
@@ -146,7 +146,7 @@ as.lm.RDDreg <- function(x) as.lm_RDD(x)
 
 
 
-# subset.rdddata <- function(x,...){
+# subset.rdd_data <- function(x,...){
 # 
 #   res <- subset.data.frame(x,...)
 #   attributes(res) <- attributes(x)
@@ -160,9 +160,9 @@ if(FALSE){
 #   data(Lee2008)
 
 
-  environment(plot.rdddata) <- environment(rdddata)
+  environment(plot.rdd_data) <- environment(rdd_data)
 
-  Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+  Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
   plot(Lee2008_rdd)
 
   plot(Lee2008_rdd, h=0.2)

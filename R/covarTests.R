@@ -2,7 +2,7 @@
 #' 
 #' Tests equality of means by a t-test for each covariate, between the two full groups or around the discontinuity threshold 
 #' 
-#' @param object object of class rdddata
+#' @param object object of class rdd_data
 #' @param bw a bandwidth
 #' @param paired Argument of the \code{\link{t.test}} function: logical indicating whether you want paired t-tests.
 #' @param var.equal Argument of the \code{\link{t.test}} function:  logical variable indicating whether to treat the two variances as being equal
@@ -19,7 +19,7 @@
 #' Z <- data.frame(z1 = rnorm(n_Lee, sd=2), 
 #'                 z2 = rnorm(n_Lee, mean = ifelse(Lee2008<0, 5, 8)), 
 #'                 z3 = sample(letters, size = n_Lee, replace = TRUE))
-#' Lee2008_rdd_Z <- rdddata(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
+#' Lee2008_rdd_Z <- rdd_data(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
 #' 
 #' ## test for equality of means around cutoff:
 #' covarTest_mean(Lee2008_rdd_Z, bw=0.3)
@@ -41,7 +41,7 @@ covarTest_mean <- function(object, bw=NULL, paired = FALSE, var.equal = FALSE, p
 
 #' @rdname covarTest_mean
 #' @export
-covarTest_mean.rdddata <- function(object, bw=NULL, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
+covarTest_mean.rdd_data <- function(object, bw=NULL, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
 
   cutpoint <- getCutpoint(object)
   covar <- getCovar(object)
@@ -57,7 +57,7 @@ covarTest_mean.rdddata <- function(object, bw=NULL, paired = FALSE, var.equal = 
 covarTest_mean.RDDreg <- function(object, bw=NULL, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
   
   cutpoint <- getCutpoint(object)
-  dat <- object$RDDslot$rdddata
+  dat <- object$RDDslot$rdd_data
   covar <- getCovar(dat)
   cutvar <- dat$x
   if(is.null(bw)) bw <- getBW(object)
@@ -103,7 +103,7 @@ covarTest_mean_low <- function(covar,cutvar, cutpoint, bw=NULL, paired = FALSE, 
 #' 
 #' Tests equality of distribution with a Kolmogorov-Smirnov for each covariates, between the two full groups or around the discontinuity threshold 
 #' 
-#' @param object object of class rdddata
+#' @param object object of class rdd_data
 #' @param bw a bandwidth
 #' @param exact Argument of the \code{\link{ks.test}} function: NULL or a logical indicating whether an exact p-value should be computed.
 #' @param p.adjust Whether to adjust the p-values for multiple testing. Uses the \code{\link{p.adjust}} function
@@ -120,7 +120,7 @@ covarTest_mean_low <- function(covar,cutvar, cutpoint, bw=NULL, paired = FALSE, 
 #' Z <- data.frame(z1 = rnorm(n_Lee, sd=2), 
 #'                 z2 = rnorm(n_Lee, mean = ifelse(Lee2008<0, 5, 8)), 
 #'                 z3 = sample(letters, size = n_Lee, replace = TRUE))
-#' Lee2008_rdd_Z <- rdddata(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
+#' Lee2008_rdd_Z <- rdd_data(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
 #' 
 #' ## Kolmogorov-Smirnov test of equality in distribution:
 #' covarTest_dis(Lee2008_rdd_Z, bw=0.3)
@@ -137,7 +137,7 @@ covarTest_dis <- function(object, bw,  exact=NULL, p.adjust=c("none", "holm", "B
 
 #' @rdname covarTest_dis
 #' @export
-covarTest_dis.rdddata <- function(object, bw=NULL, exact = FALSE,  p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
+covarTest_dis.rdd_data <- function(object, bw=NULL, exact = FALSE,  p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
 
   cutpoint <- getCutpoint(object)
   covar <- getCovar(object)
@@ -152,7 +152,7 @@ covarTest_dis.rdddata <- function(object, bw=NULL, exact = FALSE,  p.adjust=c("n
 covarTest_dis.RDDreg <- function(object, bw=NULL, exact = FALSE,  p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
   
   cutpoint <- getCutpoint(object)
-  dat <- object$RDDslot$rdddata
+  dat <- object$RDDslot$rdd_data
   covar <- getCovar(dat)
   cutvar <- dat$x
   if(is.null(bw)) bw <- getBW(object)

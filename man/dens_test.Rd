@@ -7,7 +7,7 @@
 dens_test(RDDobject, bin = NULL, bw = NULL, plot = TRUE, ...)
 }
 \arguments{
-\item{RDDobject}{object of class rdddata}
+\item{RDDobject}{object of class rdd_data}
 
 \item{bin}{Argument of the \code{\link{DCdensity}} function, the binwidth}
 
@@ -22,7 +22,7 @@ Calls the \code{\link[rdd]{DCdensity}} test from package \code{rdd} on a \code{R
 }
 \examples{
 data(Lee2008)
-Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 dens_test(Lee2008_rdd)
 }
 
