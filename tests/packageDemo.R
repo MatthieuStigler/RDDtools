@@ -57,7 +57,7 @@ RDDbw_IK(Lee2008_rdd)
 
 ###### Parametric regression ######
 # Simple polynomial of order 1:
-reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
+reg_para <- RDDreg_lm(rdd_object=Lee2008_rdd)
 print(reg_para)
 summary(reg_para)
 plot(reg_para)
@@ -66,21 +66,21 @@ all.equal(unlist(rdd_pred(reg_para)), rdd_coef(reg_para, allInfo=TRUE)[1:2], che
 
 ## Difference in means regression:
 # Simple polynomial of order 0:
-reg_para_0 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=0)
+reg_para_0 <- RDDreg_lm(rdd_object=Lee2008_rdd, order=0)
 print(reg_para_0)
 summary(reg_para_0)
 plot(reg_para_0)
 
 
 ## Simple polynomial of order 4:
-reg_para4 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=4)
+reg_para4 <- RDDreg_lm(rdd_object=Lee2008_rdd, order=4)
 reg_para4
 plot(reg_para4)
 all.equal(unlist(rdd_pred(reg_para4)), rdd_coef(reg_para4, allInfo=TRUE)[1:2], check.attributes=FALSE)
 
 ## Restrict sample to bandwidth area:
 bw_ik <- RDDbw_IK(Lee2008_rdd)
-reg_para_ik <- RDDreg_lm(RDDobject=Lee2008_rdd, bw=bw_ik, order=4)
+reg_para_ik <- RDDreg_lm(rdd_object=Lee2008_rdd, bw=bw_ik, order=4)
 reg_para_ik
 plot(reg_para_ik)
 
@@ -92,42 +92,42 @@ coef(reg_para_fuzz)
 summary(reg_para_fuzz)
 
 ## Covariates:
-reg_para4_cov <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".")
+reg_para4_cov <- RDDreg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates=".")
 reg_para4_cov
 summary(reg_para4_cov)
 
-reg_para4_cov_slSep <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(slope="separate"))
+reg_para4_cov_slSep <- RDDreg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(slope="separate"))
 summary(reg_para4_cov_slSep)
 rdd_pred(reg_para4_cov_slSep)
 rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0, 0.2, 0.2), z2=c(0,20,20), z3b=c(0,1,0), z3c=c(0,0,1)))
 
 
-reg_para4_cov_startR <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(strategy="residual"))
+reg_para4_cov_startR <- RDDreg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(strategy="residual"))
 reg_para4_cov_startR
 summary(reg_para4_cov_startR)
 
 plot(reg_para4_cov)
 
-reg_para4_cov_startR_sl2 <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(strategy="residual", slope="separate"))
+reg_para4_cov_startR_sl2 <- RDDreg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(strategy="residual", slope="separate"))
 summary(reg_para4_cov_startR_sl2)
 
-reg_para4_cov_2 <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates="z3+I(z1^2)")
+reg_para4_cov_2 <- RDDreg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates="z3+I(z1^2)")
 reg_para4_cov_2
 summary(reg_para4_cov_2)
 
 ###### Non-parametric regression ######
-reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
+reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd)
 print(reg_nonpara)
 summary(reg_nonpara)
 plot(x=reg_nonpara)
 
-reg_nonpara_inflm <- RDDreg_np(RDDobject=Lee2008_rdd, inference="lm")
+reg_nonpara_inflm <- RDDreg_np(rdd_object=Lee2008_rdd, inference="lm")
 print(reg_nonpara_inflm)
 summary(reg_nonpara_inflm)
 plot(x=reg_nonpara_inflm)
 
 
-reg_nonpara_sameSl <- RDDreg_np(RDDobject=Lee2008_rdd, slope="same")
+reg_nonpara_sameSl <- RDDreg_np(rdd_object=Lee2008_rdd, slope="same")
 print(reg_nonpara_sameSl)
 summary(reg_nonpara_sameSl)
 
@@ -211,7 +211,7 @@ covarTest_dis(reg_para4_cov)
 
 ## Compare with result obtained with a Gaussian kernel:
   bw_lm <- dnorm(Lee2008_rdd$x, sd=rddtools:::getBW(reg_nonpara))
-  reg_nonpara_gaus <- RDDreg_lm(RDDobject=Lee2008_rdd, w=bw_lm)
+  reg_nonpara_gaus <- RDDreg_lm(rdd_object=Lee2008_rdd, w=bw_lm)
   all.equal(rdd_coef(reg_nonpara_gaus, allCo=TRUE),rdd_coef(reg_nonpara_np, allCo=TRUE), check.attributes=FALSE) 
 
 
