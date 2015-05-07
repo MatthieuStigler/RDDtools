@@ -14,7 +14,7 @@ Lee2008_rdd_z <- rdddata(y=Lee2008$y, x=Lee2008$x, covar=Z,cutpoint=0)
 
 #### REGS
 bw_IK <- RDDbw_IK(Lee2008_rdd_z)
-w_IK <- RDDtools:::Kernel_tri(Lee2008_rdd_z$x, 0, bw_IK)
+w_IK <- rddtools:::Kernel_tri(Lee2008_rdd_z$x, 0, bw_IK)
 reg_para4_cov_slSep <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates="z1", covar.opt=list(slope="separate"))
 reg_para4_cov_slSep_W <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates="z1", covar.opt=list(slope="separate"), weights=w_IK)
 reg_np_cov <- RDDreg_np(RDDobject=Lee2008_rdd_z, covariates="z1", bw=bw_IK, inference="lm")
