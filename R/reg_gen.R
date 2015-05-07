@@ -84,7 +84,7 @@ rdd_gen_reg_old <- function(rdd_object, covariates=".", bw=rdd_bw_ik(rdd_object)
   if(!is.function(fun)) stop("Arg 'fun' should be a function")
   cutpoint <- getCutpoint(rdd_object)
 
-## Construct data
+  ## Construct data
   dat <- as.data.frame(rdd_object)
 
   dat_step1 <- dat[, c("y", "x")]
