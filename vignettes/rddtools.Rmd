@@ -44,7 +44,7 @@ plot(Lee2008_rdd)
 Estimate parametrically, by fitting a 4th order polynomial.
 
 ```{r reg_para}
-reg_para <- RDDreg_lm(rdd_object=Lee2008_rdd, order=4)
+reg_para <- rdd_reg_lm(rdd_object=Lee2008_rdd, order=4)
 reg_para
 
 plot(reg_para)
@@ -57,7 +57,7 @@ Run a simple local regression, using the [Imbens and Kalyanaraman 2012] bandwidt
 
 ```{r RegPlot}
 bw_ik <- RDDbw_IK(Lee2008_rdd)
-reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd, bw=bw_ik)
+reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd, bw=bw_ik)
 print(reg_nonpara)
 plot(x=reg_nonpara)
 ```
