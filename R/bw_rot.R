@@ -58,7 +58,6 @@ rot_bw <- function(object){
 #' rdd_bw_rsw(rd)
 
 
-####
 rdd_bw_rsw <- function(object, type=c("global", "sided")){
 
   type <- match.arg(type)
@@ -68,7 +67,6 @@ rdd_bw_rsw <- function(object, type=c("global", "sided")){
   x <- object$x
   y <- object$y
 
-##
   if(type=="global"){
     bw <- dpill(x=x, y=y)
   } else {
@@ -80,16 +78,6 @@ rdd_bw_rsw <- function(object, type=c("global", "sided")){
     bw <- c(bw_left, bw_right)
   }
 
-## result
+  ## result
   bw
-}
-
-
-if(FALSE){
-#   lee_dat4 <- read.csv("/home/mat/Dropbox/HEI/rdd/Rcode/IK bandwidth/datasets/imbens_from_MATLAB.csv", header=FALSE)
-#   head(lee_dat4)
-#   a<-rdd_data(y=lee_dat4[,2], x=lee_dat4[,1], cutpoint=0)
-# rot_bw(object=a)
-# rdd_bw_rsw(object=a)
-rdd_bw_rsw(object=a, type="sided")
 }
