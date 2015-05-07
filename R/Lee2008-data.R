@@ -10,7 +10,7 @@
 #' \item{y}{Vote at election t}
 #' }
 #' @source Guido Imbens webpage: \url{http://scholar.harvard.edu/imbens/scholar_software/regression-discontinuity}
-#' @references Imbens, Guido and Karthik Kalyanaraman. (2012) "Optimal Bandwidth Choice for the regression discontinuity estimator," 
+#' @references Imbens, Guido and Karthik Kalyanaraman. (2012) 'Optimal Bandwidth Choice for the regression discontinuity estimator,' 
 #' Review of Economic Studies (2012) 79, 933-959
 #' @references   Lee, D. (2008) Randomized experiments from non-random selection in U.S. House elections, 
 #' \emph{Journal of Econometrics}, 142, 675-697
@@ -22,6 +22,5 @@
 
 
 NULL
-# Lee2008 <- read.csv("/home/mat/Dropbox/HEI/rdd/Rcode/IK bandwidth/datasets/imbens_from_MATLAB.csv", header=FALSE)
-# colnames(Lee2008) <- c("x", "y")
-# save(Lee2008, file="/home/mat/Dropbox/HEI/rdd/Rcode/RDDtools/data/Lee2008.rda")
+# Lee2008 <- read.csv('/home/mat/Dropbox/HEI/rdd/Rcode/IK bandwidth/datasets/imbens_from_MATLAB.csv', header=FALSE)
+# colnames(Lee2008) <- c('x', 'y') save(Lee2008, file='/home/mat/Dropbox/HEI/rdd/Rcode/RDDtools/data/Lee2008.rda') 

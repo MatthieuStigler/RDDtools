@@ -28,106 +28,102 @@
 #'  all.equal(rdd_coef(reg_nonpara_gaus),rdd_coef(reg_nonpara_np)) 
 
 
-as.npregbw <- function(x,...){
-  res <- as.npregbw_low(x=x, npreg=FALSE,...)
-  res
+as.npregbw <- function(x, ...) {
+    res <- as.npregbw_low(x = x, npreg = FALSE, ...)
+    res
 }
 
 #' @rdname as.npregbw
 #' @export
-as.npreg <- function(x, ...){
-  res <- as.npregbw_low(x=x, npreg=TRUE,...)
-  res
+as.npreg <- function(x, ...) {
+    res <- as.npregbw_low(x = x, npreg = TRUE, ...)
+    res
 }
 
 
-as.npregbw_low <- function(x, npreg=FALSE, adjustik_bw=TRUE, ...){
-
-  dat <- getOriginalData(x)
-  bw <- getBW(x)
-  cutpoint <- getCutpoint(x)
-
-## Specify inputs to npregbw:
-
-  ## data:
-  x <- dat$x
-  dat_np <- data.frame(y=dat$y, x=x,  D=ifelse(x>=cutpoint,1,0), Dx=ifelse(x>=cutpoint,x,0))
-  dataPoints <- data.frame(x=c(cutpoint,cutpoint), D=c(0,1), Dx=c(0,cutpoint))
-
-  ## bw:
-  range.x <- range(dat$x, na.rm=TRUE, finite=TRUE)
-  if(adjustik_bw ){ ## & names(bw) =="h_opt"
-    bw <- rdd_bw_ik(dat, kernel="Normal")
-  }
-  bw_other <- 9999*diff(range.x)
-  bws <- c(bw, rep(bw_other, 2))
-  
-
-## start npregbw
-  res <- np::npregbw(bws=bws, formula=y~x+D+Dx, data= dat_np,  regtype = "ll",
-			eval=dataPoints, bandwidth.compute=FALSE, gradients=TRUE,...)
-  class(res) <- c("rdd_reg_npregbw", class(res))
-
-## if npreg, return instead model_np <- npreg(bw_np, newdata=dataPoints, gradients=TRUE)
-  if(npreg==TRUE) {
+as.npregbw_low <- function(x, npreg = FALSE, adjustik_bw = TRUE, ...) {
     
-    # check if np is installed
-    if (!requireNamespace("np", quietly = TRUE)) {
-      stop("The package 'np' is needed for this function to work. Please install it.",
-           call. = FALSE)
+    dat <- getOriginalData(x)
+    bw <- getBW(x)
+    cutpoint <- getCutpoint(x)
+    
+    ## Specify inputs to npregbw:
+    
+    ## data:
+    x <- dat$x
+    dat_np <- data.frame(y = dat$y, x = x, D = ifelse(x >= cutpoint, 1, 0), Dx = ifelse(x >= cutpoint, x, 0))
+    dataPoints <- data.frame(x = c(cutpoint, cutpoint), D = c(0, 1), Dx = c(0, cutpoint))
+    
+    ## bw:
+    range.x <- range(dat$x, na.rm = TRUE, finite = TRUE)
+    if (adjustik_bw) {
+        ## & names(bw) =='h_opt'
+        bw <- rdd_bw_ik(dat, kernel = "Normal")
+    }
+    bw_other <- 9999 * diff(range.x)
+    bws <- c(bw, rep(bw_other, 2))
+    
+    
+    ## start npregbw
+    res <- np::npregbw(bws = bws, formula = y ~ x + D + Dx, data = dat_np, regtype = "ll", eval = dataPoints, bandwidth.compute = FALSE, 
+        gradients = TRUE, ...)
+    class(res) <- c("rdd_reg_npregbw", class(res))
+    
+    ## if npreg, return instead model_np <- npreg(bw_np, newdata=dataPoints, gradients=TRUE)
+    if (npreg == TRUE) {
+        
+        # check if np is installed
+        if (!requireNamespace("np", quietly = TRUE)) {
+            stop("The package 'np' is needed for this function to work. Please install it.", call. = FALSE)
+        }
+        
+        # require('np') requireNamespace('np', quietly = TRUE)
+        options(np.messages = TRUE)  ## otherwise got warnings messages... probably because comes only if loaded!
+        res <- np::npreg(res, newdata = dataPoints, gradients = TRUE, ...)
+        class(res) <- c("rdd_reg_npreg", class(res))
     }
     
-    # require("np")
-    # requireNamespace("np", quietly = TRUE)
-    options(np.messages = TRUE) ## otherwise got warnings messages... probably because comes only if loaded!
-    res <- np::npreg(res, newdata=dataPoints, gradients=TRUE, ...)
-    class(res) <- c("rdd_reg_npreg", class(res))
-  }
-  
-  attr(res, "RDDdf") <- dat_np
-  attr(res, "cutpoint") <- cutpoint
-  res
+    attr(res, "RDDdf") <- dat_np
+    attr(res, "cutpoint") <- cutpoint
+    res
 }
 
 
 #' @export
-rdd_coef.rdd_reg_npreg <- function(object, allInfo=FALSE, allCo=FALSE, ...){
-
-  co <- diff(object$mean)
-  if(allInfo) {
-    se <- sum(object$merr)
-    zval <- co/se
-    pval <- 2 * pnorm(abs(zval), lower.tail = FALSE)
-    res <- cbind(co, se, zval, pval)
-    colnames(res) <- c("Estimate", "Std. Error", "z value", "Pr(>|z|)")
-    rownames(res) <- "D"
-  } else {
-    res <- co
-  }
-
-  if(allCo){
-    cos <- c(object$mean[1], object$grad)
-    ses <- c(object$merr[1], object$gerr)
-
-    ## X_right:
-    dataPoints_Xr <- data.frame(x=0, D=0, Dx=c(0,1))
-    Xr <- diff(predict(object, newdata=dataPoints_Xr))
-
-    estimates <- c(cos[1], co, cos[2], Xr)
+rdd_coef.rdd_reg_npreg <- function(object, allInfo = FALSE, allCo = FALSE, ...) {
     
-    if(allInfo){
-      zvals <- cos/ses
-      pvals <- 2 * pnorm(abs(zvals), lower.tail = FALSE)
-      res <- data.frame("Estimate"   = estimates,
-			"Std. Error" = c(ses[1], se, ses[2:3]),
-			"z value"    = c(zvals[1], zval, zvals[2:3]),
-			"Pr(>|z|)"   = c(pvals[1], pval, pvals[2:3]),
-			check.names=FALSE)
-      rownames(res) <- c("(Intercept)", "D", "x_left", "x_right")
+    co <- diff(object$mean)
+    if (allInfo) {
+        se <- sum(object$merr)
+        zval <- co/se
+        pval <- 2 * pnorm(abs(zval), lower.tail = FALSE)
+        res <- cbind(co, se, zval, pval)
+        colnames(res) <- c("Estimate", "Std. Error", "z value", "Pr(>|z|)")
+        rownames(res) <- "D"
     } else {
-      res <- estimates
+        res <- co
     }
-  }
-
-  res 
-}
+    
+    if (allCo) {
+        cos <- c(object$mean[1], object$grad)
+        ses <- c(object$merr[1], object$gerr)
+        
+        ## X_right:
+        dataPoints_Xr <- data.frame(x = 0, D = 0, Dx = c(0, 1))
+        Xr <- diff(predict(object, newdata = dataPoints_Xr))
+        
+        estimates <- c(cos[1], co, cos[2], Xr)
+        
+        if (allInfo) {
+            zvals <- cos/ses
+            pvals <- 2 * pnorm(abs(zvals), lower.tail = FALSE)
+            res <- data.frame(Estimate = estimates, `Std. Error` = c(ses[1], se, ses[2:3]), `z value` = c(zvals[1], zval, zvals[2:3]), 
+                `Pr(>|z|)` = c(pvals[1], pval, pvals[2:3]), check.names = FALSE)
+            rownames(res) <- c("(Intercept)", "D", "x_left", "x_right")
+        } else {
+            res <- estimates
+        }
+    }
+    
+    res
+} 

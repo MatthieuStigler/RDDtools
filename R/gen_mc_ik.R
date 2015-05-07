@@ -20,8 +20,8 @@
 #' plotCu <- function(version=1, xlim=c(-0.1,0.1)){
 #'   res <- gen_mc_ik(sd=0.0000001, n=1000, version=version)
 #'   res <- res[order(res$x),]
-#'   ylim <- range(subset(res, x>=min(xlim) & x<=max(xlim), "y"))
-#'   plot(res, type="l", xlim=xlim, ylim=ylim, main=paste("DGP", version))
+#'   ylim <- range(subset(res, x>=min(xlim) & x<=max(xlim), 'y'))
+#'   plot(res, type='l', xlim=xlim, ylim=ylim, main=paste('DGP', version))
 #'   abline(v=0)
 #'   xCut <- res[which(res$x==min(res$x[res$x>=0]))+c(0,-1),]
 #'   points(xCut, col=2)
@@ -33,127 +33,109 @@
 #' plotCu(version=4)
 #' layout(matrix(1))
 
-gen_mc_ik <- function(n=200, version=1, sd=0.1295, output=c("data.frame", "rdd_data"), size){
- 
-  output <- match.arg(output)
-  if(!version%in% c(1:4) |length(version) !=1) stop("arg 'version' should be between 1 and 4")
-
-  foo <- switch(version, 
-			"1"=gen_mc_ik_1,
-			"2"=gen_mc_ik_2,
-			"3"=gen_mc_ik_3,
-			"4"=gen_mc_ik_4)
-  if(missing(size)) {
-    size <- switch(version, 
-		    "1"=0.04,
-		    "2"=0,
-		    "3"=0.1,
-		    "4"=0.1)
-  }
-  res <- foo(n=n, sd=sd, size=size)
-  if(output=="rdd_data"){
-    res <- rdd_data(x=res$x, y=res$y, cutpoint=0)
-  }
-  res
+gen_mc_ik <- function(n = 200, version = 1, sd = 0.1295, output = c("data.frame", "rdd_data"), size) {
+    
+    output <- match.arg(output)
+    if (!version %in% c(1:4) | length(version) != 1) 
+        stop("arg 'version' should be between 1 and 4")
+    
+    foo <- switch(version, `1` = gen_mc_ik_1, `2` = gen_mc_ik_2, `3` = gen_mc_ik_3, `4` = gen_mc_ik_4)
+    if (missing(size)) {
+        size <- switch(version, `1` = 0.04, `2` = 0, `3` = 0.1, `4` = 0.1)
+    }
+    res <- foo(n = n, sd = sd, size = size)
+    if (output == "rdd_data") {
+        res <- rdd_data(x = res$x, y = res$y, cutpoint = 0)
+    }
+    res
 }
 
 
-####################################
-######### MC 1
-####################################
+#################################### MC 1
 
-gen_mc_ik_1 <- function(n=200,  sd=0.1295, size=0.04){
-
-## Regressor:
-  Z <- rbeta(n, shape1=2, shape2=4, ncp = 0)
-  X <- 2*Z-1
-  error <- rnorm(n, sd=sd)
-
-## Prepare variables:
-  Y <- vector("numeric", length=n)
-  ind_below <- X<0
-  X_low <- X[ind_below]
-  X_up  <- X[!ind_below]
-
-## Compute Y variables:
-  Y[ind_below]  <- 0.48 +  1.27*X_low + 7.18*X_low^2 + 20.21* X_low^3 +21.54*X_low^4 +7.33*X_low^5 + error[ind_below]
-  Y[!ind_below] <- 0.48+size +  0.84*X_up - 3*   X_up^2 +  7.99* X_up^3 - 9.01*X_up^4 +3.56*X_up^5 + error[!ind_below]
-
-## Result:
-  res <- data.frame(x=X, y=Y)
-  return(res)
+gen_mc_ik_1 <- function(n = 200, sd = 0.1295, size = 0.04) {
+    
+    ## Regressor:
+    Z <- rbeta(n, shape1 = 2, shape2 = 4, ncp = 0)
+    X <- 2 * Z - 1
+    error <- rnorm(n, sd = sd)
+    
+    ## Prepare variables:
+    Y <- vector("numeric", length = n)
+    ind_below <- X < 0
+    X_low <- X[ind_below]
+    X_up <- X[!ind_below]
+    
+    ## Compute Y variables:
+    Y[ind_below] <- 0.48 + 1.27 * X_low + 7.18 * X_low^2 + 20.21 * X_low^3 + 21.54 * X_low^4 + 7.33 * X_low^5 + error[ind_below]
+    Y[!ind_below] <- 0.48 + size + 0.84 * X_up - 3 * X_up^2 + 7.99 * X_up^3 - 9.01 * X_up^4 + 3.56 * X_up^5 + error[!ind_below]
+    
+    ## Result:
+    res <- data.frame(x = X, y = Y)
+    return(res)
 }
 
-####################################
-######### MC 2
-####################################
+#################################### MC 2
 
-gen_mc_ik_2 <- function(n=200,  sd=0.1295, size=0){
-
-#   if(!missing(size) && !is.null(size)) warning("Argument 'size' ignored for gen_mc_ik_2")
-## Regressor:
-  Z <- rbeta(n, shape1=2, shape2=4, ncp = 0)
-  X <- 2*Z-1
-  error <- rnorm(n, sd=sd)
-
-## Compute Y variables:
-  Y <- ifelse(X<0, 3*X^2, 4*X^2+size) + error
-
-## Result:
-  res <- data.frame(x=X, y=Y)
-  return(res)
-}
-
-  
-####################################
-######### MC 3
-####################################
-
-gen_mc_ik_3 <- function(n=200,  sd=0.1295, size=0.1){
-
-## Regressor:
-  Z <- rbeta(n, shape1=2, shape2=4, ncp = 0)
-  X <- 2*Z-1
-  error <- rnorm(n, sd=sd)
-
-## Compute Y variables:
-  Y <- 0.42 + ifelse(X<0, 0, size) + 0.84*X - 3*X^2 +7.99 * X^3-9.01*X^4+3.56*X^5 + error
-
-## Result:
-  res <- data.frame(x=X, y=Y)
-  return(res)
-}
-
-####################################
-######### MC 4
-####################################
-
-gen_mc_ik_4 <- function(n=200,  sd=0.1295, size=0.1){
-
-## Regressor:
-  Z <- rbeta(n, shape1=2, shape2=4, ncp = 0)
-  X <- 2*Z-1
-  error <- rnorm(n, sd=sd)
-
-## Compute Y variables:
-  Y <- 0.42 + ifelse(X<0, 0, size) + 0.84*X  +7.99 * X^3-9.01*X^4+3.56*X^5 + error
-
-## Result:
-  res <- data.frame(x=X, y=Y)
-  return(res)
+gen_mc_ik_2 <- function(n = 200, sd = 0.1295, size = 0) {
+    
+    # if(!missing(size) && !is.null(size)) warning('Argument 'size' ignored for gen_mc_ik_2') Regressor:
+    Z <- rbeta(n, shape1 = 2, shape2 = 4, ncp = 0)
+    X <- 2 * Z - 1
+    error <- rnorm(n, sd = sd)
+    
+    ## Compute Y variables:
+    Y <- ifelse(X < 0, 3 * X^2, 4 * X^2 + size) + error
+    
+    ## Result:
+    res <- data.frame(x = X, y = Y)
+    return(res)
 }
 
 
-####################################
-######### MC simple
-####################################
+#################################### MC 3
 
-gen_MC_simple <- function(n=200, LATE=0.3){
-
-## Regressor:
-  x <- rnorm(n)
-  D <- x>= 0
-  y <- 0.8 + LATE*D+ 0.3*x+0.1*x*D+rnorm(n)
-  rdd_data(x=x, y=y, cutpoint=0)
-
+gen_mc_ik_3 <- function(n = 200, sd = 0.1295, size = 0.1) {
+    
+    ## Regressor:
+    Z <- rbeta(n, shape1 = 2, shape2 = 4, ncp = 0)
+    X <- 2 * Z - 1
+    error <- rnorm(n, sd = sd)
+    
+    ## Compute Y variables:
+    Y <- 0.42 + ifelse(X < 0, 0, size) + 0.84 * X - 3 * X^2 + 7.99 * X^3 - 9.01 * X^4 + 3.56 * X^5 + error
+    
+    ## Result:
+    res <- data.frame(x = X, y = Y)
+    return(res)
 }
+
+#################################### MC 4
+
+gen_mc_ik_4 <- function(n = 200, sd = 0.1295, size = 0.1) {
+    
+    ## Regressor:
+    Z <- rbeta(n, shape1 = 2, shape2 = 4, ncp = 0)
+    X <- 2 * Z - 1
+    error <- rnorm(n, sd = sd)
+    
+    ## Compute Y variables:
+    Y <- 0.42 + ifelse(X < 0, 0, size) + 0.84 * X + 7.99 * X^3 - 9.01 * X^4 + 3.56 * X^5 + error
+    
+    ## Result:
+    res <- data.frame(x = X, y = Y)
+    return(res)
+}
+
+
+#################################### MC simple
+
+gen_MC_simple <- function(n = 200, LATE = 0.3) {
+    
+    ## Regressor:
+    x <- rnorm(n)
+    D <- x >= 0
+    y <- 0.8 + LATE * D + 0.3 * x + 0.1 * x * D + rnorm(n)
+    rdd_data(x = x, y = y, cutpoint = 0)
+    
+} 

@@ -33,7 +33,7 @@ The transformed data was obtained using the STATA script krueger.do, obtained fr
 data(STAR_MHE)
 
 # Compute the group means:
-STAR_MHE_means <- aggregate(STAR_MHE[, c("classid", "pscore", "cs")],
+STAR_MHE_means <- aggregate(STAR_MHE[, c('classid', 'pscore', 'cs')],
                             by=list(STAR_MHE$classid), mean)
 
 # Regression of means, with weighted average:
@@ -41,7 +41,7 @@ reg_krug_gls <- lm(pscore~cs, data=STAR_MHE_means, weights=cs)
 coef(summary(reg_krug_gls))[2,2]
 }
 \references{
-Krueger, A. (1999) "Experimental Estimates Of Education Production Functions,"
+Krueger, A. (1999) 'Experimental Estimates Of Education Production Functions,'
 \emph{The Quarterly Journal of Economics}, Vol. 114(2), pages 497-532, May.
 
 Angrist, A. ad  Pischke J-S (2008) \emph{Mostly Harmless Econometrics: An Empiricist's Companion},

@@ -53,7 +53,7 @@ Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 
 ## Estimate a local probit:
 Lee2008_rdd$y <- with(Lee2008_rdd, ifelse(y<quantile(y, 0.25), 0,1))
-reg_bin_glm <- rdd_gen_reg(rdd_object=Lee2008_rdd, fun= glm, family=binomial(link="probit"))
+reg_bin_glm <- rdd_gen_reg(rdd_object=Lee2008_rdd, fun= glm, family=binomial(link='probit'))
 print(reg_bin_glm)
 summary(reg_bin_glm)
 }

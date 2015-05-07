@@ -24,7 +24,7 @@ rd<- rdd_data(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
 rdd_bw_ik(rd)
 }
 \references{
-Imbens, Guido and Karthik Kalyanaraman. (2012) "Optimal Bandwidth Choice for the regression discontinuity estimator,"
+Imbens, Guido and Karthik Kalyanaraman. (2012) 'Optimal Bandwidth Choice for the regression discontinuity estimator,'
 Review of Economic Studies (2012) 79, 933-959
 }
 \seealso{

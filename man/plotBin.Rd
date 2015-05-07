@@ -31,7 +31,7 @@ plotBin(x, y, h = 0.05, nbins = NULL, cutpoint = 0, plot = TRUE,
 Returns silently values
 }
 \description{
-Do a "scatterplot bin smoothing"
+Do a 'scatterplot bin smoothing'
 }
 \references{
 McCrary, Justin.

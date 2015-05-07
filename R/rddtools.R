@@ -11,6 +11,6 @@
 #' @title Regression Discontinuity Design 
 
 if (getRversion() >= "3.1.0") {
-  utils::globalVariables(c("x", "y", "position", "cutpoint", "LATE", "CI_low", "CI_high"))
-  utils::suppressForeignCheck(c("x", "y", "position", "cutpoint", "LATE", "CI_low", "CI_high"))
-}
+    utils::globalVariables(c("x", "y", "position", "cutpoint", "LATE", "CI_low", "CI_high"))
+    utils::suppressForeignCheck(c("x", "y", "position", "cutpoint", "LATE", "CI_low", "CI_high"))
+} 

@@ -36,8 +36,8 @@ reg_nonpara
 plotCu <- function(version=1, xlim=c(-0.1,0.1)){
   res <- gen_mc_ik(sd=0.0000001, n=1000, version=version)
   res <- res[order(res$x),]
-  ylim <- range(subset(res, x>=min(xlim) & x<=max(xlim), "y"))
-  plot(res, type="l", xlim=xlim, ylim=ylim, main=paste("DGP", version))
+  ylim <- range(subset(res, x>=min(xlim) & x<=max(xlim), 'y'))
+  plot(res, type='l', xlim=xlim, ylim=ylim, main=paste('DGP', version))
   abline(v=0)
   xCut <- res[which(res$x==min(res$x[res$x>=0]))+c(0,-1),]
   points(xCut, col=2)

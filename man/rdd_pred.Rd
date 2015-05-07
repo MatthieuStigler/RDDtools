@@ -38,7 +38,7 @@ had argument \emph{slope} = \dQuote{separate}), than the RDD effect is also depe
 \code{rdd_pred} allows to set the value of the covariate(s) at which to evaluate the RDD effect, by providing a data.frame with
 the values for the covariates. Note that the effect can be evaluated at multiple points, if you provide multiple rows of \code{covdata}.
 
-In pressence of covariate-specific RDD effect, one may wish to estimate an average effect. This can be done by setting the argument \code{stat="mean"}.
+In pressence of covariate-specific RDD effect, one may wish to estimate an average effect. This can be done by setting the argument \code{stat='mean'}.
 Weights can additionally be added, with the argument \code{weights}, to obtain a weighted-average of the predictions. Note however that in most cases,
 this will be equivalent to provide covariates at their (weighted) mean value, which will be much faster also!
 
@@ -63,8 +63,8 @@ rdd_coef(reg_para, allInfo=TRUE)
 
 # estimation with covariates:
 reg_para_cov <- rdd_reg_lm(rdd_object=Lee2008_rdd,
-                          covariates="z1",
-                          covar.opt=list(slope="separate") )
+                          covariates='z1',
+                          covar.opt=list(slope='separate') )
 
 # should obtain same result as with RDestimate
 rdd_pred(reg_para_cov, covdata=data.frame(z1=0))

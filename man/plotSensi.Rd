@@ -56,11 +56,11 @@ Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 bw_ik <- rdd_bw_ik(Lee2008_rdd)
 reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd, bw=bw_ik)
 plotSensi(reg_nonpara)
-plotSensi(reg_nonpara, device="base")
+plotSensi(reg_nonpara, device='base')
 
 #Parametric estimate:
 reg_para_ik <- rdd_reg_lm(rdd_object=Lee2008_rdd, order=4, bw=bw_ik)
 plotSensi(reg_para_ik)
-plotSensi(reg_para_ik, type="facet")
+plotSensi(reg_para_ik, type='facet')
 }
 

@@ -51,94 +51,101 @@
 #' plot(reg_para_ik)
 
 
-rdd_reg_lm <- function(rdd_object, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), covar.strat=c("include", "residual"), weights){
-
-  checkIsRDD(rdd_object)
-  cutpoint <- getCutpoint(rdd_object)
-  type <- getType(rdd_object)
-
-  slope <- match.arg(slope)
-
-  if(!missing(covar.strat)) warning("covar.strat is (soon) deprecated arg!")  
-  if(!missing(weights)&!is.null(bw)) stop("Cannot give both 'bw' and 'weights'")
-
-## Subsetting
-  dat <- as.data.frame(rdd_object)
-
-  if(!is.null(bw)){
-    weights <- ifelse(dat$x >= cutpoint -bw & dat$x <= cutpoint +bw, 1, 0)
-  } else if(!missing(weights)){
-    weights <- weights
-  } else {
-    weights <- NULL
-  }
-
-## Construct data
-  if(missing(weights)) weights <- NULL
-  dat_step1 <- model.matrix(rdd_object, covariates=covariates, order=order, bw=bw, 
-			    slope=slope, covar.opt=covar.opt)
-
-## Regression
-  if(type=="Sharp"){
-    reg <- lm(y~., data=dat_step1, weights=weights)
-    class_reg <- "lm"
-  } else {
-    if(!is.null(covariates)) stop("Covariates currently not implemented for Fuzzy case")
-    reg <- ivreg(y~.-ins|.-D, data=dat_step1, weights=weights)
-    class_reg <- "ivreg"
-  }
-  
-
-##Return
-  RDDslot <- list()
-  RDDslot$rdd_data <- rdd_object
-  reg$RDDslot <- RDDslot 
-  class(reg) <- c("rdd_reg_lm", "rdd_reg", class_reg)
-  attr(reg, "PolyOrder") <- order
-  attr(reg, "cutpoint") <- cutpoint
-  attr(reg, "slope") <- slope
-  attr(reg, "RDDcall") <- match.call()
-  attr(reg, "bw") <- bw
-  reg
+rdd_reg_lm <- function(rdd_object, covariates = NULL, order = 1, bw = NULL, slope = c("separate", "same"), covar.opt = list(strategy = c("include", 
+    "residual"), slope = c("same", "separate"), bw = NULL), covar.strat = c("include", "residual"), weights) {
+    
+    checkIsRDD(rdd_object)
+    cutpoint <- getCutpoint(rdd_object)
+    type <- getType(rdd_object)
+    
+    slope <- match.arg(slope)
+    
+    if (!missing(covar.strat)) 
+        warning("covar.strat is (soon) deprecated arg!")
+    if (!missing(weights) & !is.null(bw)) 
+        stop("Cannot give both 'bw' and 'weights'")
+    
+    ## Subsetting
+    dat <- as.data.frame(rdd_object)
+    
+    if (!is.null(bw)) {
+        weights <- ifelse(dat$x >= cutpoint - bw & dat$x <= cutpoint + bw, 1, 0)
+    } else if (!missing(weights)) {
+        weights <- weights
+    } else {
+        weights <- NULL
+    }
+    
+    ## Construct data
+    if (missing(weights)) 
+        weights <- NULL
+    dat_step1 <- model.matrix(rdd_object, covariates = covariates, order = order, bw = bw, slope = slope, covar.opt = covar.opt)
+    
+    ## Regression
+    if (type == "Sharp") {
+        reg <- lm(y ~ ., data = dat_step1, weights = weights)
+        class_reg <- "lm"
+    } else {
+        if (!is.null(covariates)) 
+            stop("Covariates currently not implemented for Fuzzy case")
+        reg <- ivreg(y ~ . - ins | . - D, data = dat_step1, weights = weights)
+        class_reg <- "ivreg"
+    }
+    
+    
+    ## Return
+    RDDslot <- list()
+    RDDslot$rdd_data <- rdd_object
+    reg$RDDslot <- RDDslot
+    class(reg) <- c("rdd_reg_lm", "rdd_reg", class_reg)
+    attr(reg, "PolyOrder") <- order
+    attr(reg, "cutpoint") <- cutpoint
+    attr(reg, "slope") <- slope
+    attr(reg, "RDDcall") <- match.call()
+    attr(reg, "bw") <- bw
+    reg
 }
 
 
 #' @export 
-print.rdd_reg_lm <- function(x,...) {
-
-  order <- getOrder(x)
-  cutpoint <- getCutpoint(x)
-  slope <- getSlope(x)
-  bw <- getBW(x)
-  hasBw <- !is.null(bw)
-  bw2 <- if(hasBw) bw else Inf
-
-  x_var <- getOriginalX(x)
-  n_left  <- sum(x_var >= cutpoint -bw2 & x_var < cutpoint)
-  n_right <- sum(x_var >= cutpoint & x_var <= cutpoint+bw2)
-
-  cat("### RDD regression: parametric ###\n")
-  cat("\tPolynomial order: ", order, "\n")
-  cat("\tSlopes: ", slope, "\n")
-  if(hasBw)   cat("\tBandwidth: ", bw, "\n")
-  cat("\tNumber of obs: ", sum(n_left+n_right), " (left: ", n_left, ", right: ", n_right, ")\n", sep="")
-
-  cat("\n\tCoefficient:\n")
-
-  printCoefmat(coef(summary(x))[2,, drop=FALSE])
-
+print.rdd_reg_lm <- function(x, ...) {
+    
+    order <- getOrder(x)
+    cutpoint <- getCutpoint(x)
+    slope <- getSlope(x)
+    bw <- getBW(x)
+    hasBw <- !is.null(bw)
+    bw2 <- if (hasBw) 
+        bw else Inf
+    
+    x_var <- getOriginalX(x)
+    n_left <- sum(x_var >= cutpoint - bw2 & x_var < cutpoint)
+    n_right <- sum(x_var >= cutpoint & x_var <= cutpoint + bw2)
+    
+    cat("### RDD regression: parametric ###\n")
+    cat("\tPolynomial order: ", order, "\n")
+    cat("\tSlopes: ", slope, "\n")
+    if (hasBw) 
+        cat("\tBandwidth: ", bw, "\n")
+    cat("\tNumber of obs: ", sum(n_left + n_right), " (left: ", n_left, ", right: ", n_right, ")\n", sep = "")
+    
+    cat("\n\tCoefficient:\n")
+    
+    printCoefmat(coef(summary(x))[2, , drop = FALSE])
+    
 }
 
 
 #' @export
-plot.rdd_reg_lm <- function(x,...) {
-
-## data
-  dat <- getOriginalData(x)
-  subw <-   if(!is.null(x$weights)) x$weights>0 else rep(TRUE, nrow(dat))
-  pred <- data.frame(x=dat$x,y=fitted(x))[subw,]
-  
-##plot
-  plotBin(dat$x, dat$y, ...)
-  lines(pred[order(pred$x),])
-}
+plot.rdd_reg_lm <- function(x, ...) {
+    
+    ## data
+    dat <- getOriginalData(x)
+    subw <- if (!is.null(x$weights)) 
+        x$weights > 0 else rep(TRUE, nrow(dat))
+    pred <- data.frame(x = dat$x, y = fitted(x))[subw, ]
+    
+    ## plot
+    plotBin(dat$x, dat$y, ...)
+    lines(pred[order(pred$x), ])
+} 

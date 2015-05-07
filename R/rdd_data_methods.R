@@ -2,17 +2,15 @@
 
 ### SUMMARY method
 #' @export
-summary.rdd_data <- function(object, ...){
-
-  cutpoint <- getCutpoint(object)
-  hasCovar_eng <- ifelse(hasCovar(object), "yes", "no")
-  cat("### rdd_data object ###\n")
-  cat("\nCutpoint:", cutpoint, "\n")
-  cat("Sample size:",
-	"\n\t-Full :", nrow(object), 
-	"\n\t-Left :", sum(object$x<cutpoint), 
-	"\n\t-Right:", sum(object$x>=cutpoint))
-  cat("\nCovariates:", hasCovar_eng, "\n")
+summary.rdd_data <- function(object, ...) {
+    
+    cutpoint <- getCutpoint(object)
+    hasCovar_eng <- ifelse(hasCovar(object), "yes", "no")
+    cat("### rdd_data object ###\n")
+    cat("\nCutpoint:", cutpoint, "\n")
+    cat("Sample size:", "\n\t-Full :", nrow(object), "\n\t-Left :", sum(object$x < cutpoint), "\n\t-Right:", sum(object$x >= 
+        cutpoint))
+    cat("\nCovariates:", hasCovar_eng, "\n")
 }
 
 #' Plot rdd_data
@@ -52,62 +50,65 @@ summary.rdd_data <- function(object, ...){
 
 
 ### PLOT method
-plot.rdd_data <- function(x, h, nbins=NULL, xlim=range(object$x, na.rm=TRUE), cex=0.7, nplot=1, device=c("base", "ggplot"),...){
-
-  object <- x
-  cutpoint <- getCutpoint(object)
-  device <- match.arg(device)
-
-## bandwidth: use Ruppert, Sheather and Wand (KernSmooth:::dpill)
-  if(missing(h) & is.null(nbins)) {
-    if(!all(xlim==range(object$x, na.rm=TRUE))){
-      object <- subset(object, x> min(xlim) & x< max(xlim))
+plot.rdd_data <- function(x, h, nbins = NULL, xlim = range(object$x, na.rm = TRUE), cex = 0.7, nplot = 1, device = c("base", 
+    "ggplot"), ...) {
+    
+    object <- x
+    cutpoint <- getCutpoint(object)
+    device <- match.arg(device)
+    
+    ## bandwidth: use Ruppert, Sheather and Wand (KernSmooth:::dpill)
+    if (missing(h) & is.null(nbins)) {
+        if (!all(xlim == range(object$x, na.rm = TRUE))) {
+            object <- subset(object, x > min(xlim) & x < max(xlim))
+        }
+        h <- rdd_bw_rsw(object)
+        if (is_even(nplot)) {
+            se <- seq(from = 1 - (sum(1:nplot < (nplot/2))) * 0.2, to = 1 + (sum(1:nplot > (nplot/2))) * 0.2, by = 0.2)
+        } else {
+            se <- seq(from = 1 - floor(nplot/2) * 0.2, to = 1 + floor(nplot/2) * 0.2, by = 0.2)
+        }
+        hs <- if (nplot == 1) 
+            h else se * h
+    } else if (!missing(h) & is.null(nbins)) {
+        if (length(h) == 1) {
+            if (is_even(nplot)) {
+                se <- seq(from = 1 - (sum(1:nplot < (nplot/2))) * 0.2, to = 1 + (sum(1:nplot > (nplot/2))) * 0.2, by = 0.2)
+            } else {
+                se <- seq(from = 1 - floor(nplot/2) * 0.2, to = 1 + floor(nplot/2) * 0.2, by = 0.2)
+            }
+            hs <- if (nplot == 1) 
+                h else se * h
+        } else {
+            if (length(h == nplot)) {
+                hs <- h
+            } else {
+                stop("Length of h should be either one or equal to nplot (", nplot, ")")
+            }
+        }
+    } else if (!is.null(nbins)) {
+        hs <- rep(0.05, nplot)
+        if (length(nbins) != nplot) {
+            stop("Length of nbins should be equal to nplot (", nplot, ")")
+        }
     }
-    h <- rdd_bw_rsw(object) 
-    if(is_even(nplot)) {
-      se <- seq(from=1-(sum(1:nplot<(nplot/2)))*0.2, to=1+(sum(1:nplot>(nplot/2)))*0.2, by=.2)
-    } else {
-      se <- seq(from=1-floor(nplot/2)*0.2, to=1+floor(nplot/2)*0.2, by=.2)
+    
+    
+    
+    
+    ## plot
+    
+    par_orig <- par()
+    par(mfrow = c(nplot, 1))
+    for (i in 1:nplot) {
+        plotBin(x = object$x, y = object$y, cutpoint = cutpoint, h = hs[i], nbins = nbins[i], xlim = xlim, cex = cex, ...)
     }
-    hs <- if(nplot==1) h else se *h
-  } else if(!missing(h) & is.null(nbins)){
-    if(length(h)==1){
-      if(is_even(nplot)) {
-	se <- seq(from=1-(sum(1:nplot<(nplot/2)))*0.2, to=1+(sum(1:nplot>(nplot/2)))*0.2, by=.2)
-      } else {
-	se <- seq(from=1-floor(nplot/2)*0.2, to=1+floor(nplot/2)*0.2, by=.2)
-      }
-      hs <- if(nplot==1) h else se *h
-    } else {
-      if(length(h==nplot)){
-	hs <- h
-      } else {
-	stop("Length of h should be either one or equal to nplot (", nplot, ")")
-      }
-    }
-  } else if(!is.null(nbins)){
-    hs <- rep(0.05, nplot)
-    if(length(nbins)!=nplot){
-      stop("Length of nbins should be equal to nplot (", nplot, ")")
-    }
-  }
-
-
-  
-
-## plot
-
-  par_orig <- par()
-  par(mfrow=c(nplot,1))
-  for(i in 1:nplot){
-    plotBin(x=object$x, y=object$y, cutpoint=cutpoint, h=hs[i], nbins=nbins[i], xlim=xlim, cex=cex,...)
-  }
-  par(mfrow=c(1,1))
-
-
-
-## invisible return:
-  invisible(object)
+    par(mfrow = c(1, 1))
+    
+    
+    
+    ## invisible return:
+    invisible(object)
 }
 
 
@@ -124,17 +125,16 @@ plot.rdd_data <- function(x, h, nbins=NULL, xlim=range(object$x, na.rm=TRUE), ce
 #' reg_para_lm
 #' plot(reg_para_lm, which=4)
 #' @export
-as.lm <- function(x)
-  UseMethod("as.lm")
+as.lm <- function(x) UseMethod("as.lm")
 
 
-as.lm_RDD <- function(x){
-
-  at_x <- attributes(x)
-  at_x[names(at_x)!="names"] <- NULL
-  class(x) <- "lm"
-
-  x
+as.lm_RDD <- function(x) {
+    
+    at_x <- attributes(x)
+    at_x[names(at_x) != "names"] <- NULL
+    class(x) <- "lm"
+    
+    x
 }
 
 #' @export
@@ -146,28 +146,23 @@ as.lm.rdd_reg <- function(x) as.lm_RDD(x)
 
 
 
-# subset.rdd_data <- function(x,...){
-# 
-#   res <- subset.data.frame(x,...)
-#   attributes(res) <- attributes(x)
-#   res
-# }
+# subset.rdd_data <- function(x,...){ res <- subset.data.frame(x,...)  attributes(res) <- attributes(x) res }
 
 
 ### EXAMPLE
-if(FALSE){
-  library(RDDtools)
-#   data(Lee2008)
-
-
-  environment(plot.rdd_data) <- environment(rdd_data)
-
-  Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-  plot(Lee2008_rdd)
-
-  plot(Lee2008_rdd, h=0.2)
-  plot(Lee2008_rdd, h=c(0.2,0.3,0.4), nplot=3)
-
-  plot(Lee2008_rdd, nbins=21)
-
-}
+if (FALSE) {
+    library(RDDtools)
+    # data(Lee2008)
+    
+    
+    environment(plot.rdd_data) <- environment(rdd_data)
+    
+    Lee2008_rdd <- rdd_data(y = Lee2008$y, x = Lee2008$x, cutpoint = 0)
+    plot(Lee2008_rdd)
+    
+    plot(Lee2008_rdd, h = 0.2)
+    plot(Lee2008_rdd, h = c(0.2, 0.3, 0.4), nplot = 3)
+    
+    plot(Lee2008_rdd, nbins = 21)
+    
+} 

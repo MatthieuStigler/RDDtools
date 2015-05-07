@@ -25,7 +25,7 @@ summary(RDDlee)
 plot(RDDlee)
 }
 \references{
-Imbens, Guido and Karthik Kalyanaraman. (2012) "Optimal Bandwidth Choice for the regression discontinuity estimator,"
+Imbens, Guido and Karthik Kalyanaraman. (2012) 'Optimal Bandwidth Choice for the regression discontinuity estimator,'
 Review of Economic Studies (2012) 79, 933-959
 
 Lee, D. (2008) Randomized experiments from non-random selection in U.S. House elections,

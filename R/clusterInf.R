@@ -20,54 +20,56 @@
 #' reg_para <- rdd_reg_lm(rdd_object=Lee2008_rdd)
 #' 
 #' # here we just generate randomly a cluster variable:
-#' nlet <- sort(c(outer(letters, letters, paste, sep="")))
+#' nlet <- sort(c(outer(letters, letters, paste, sep='')))
 #' clusRandom <- sample(nlet[1:60], size=nrow(Lee2008_rdd), replace=TRUE)
 #'
 #' # now do post-inference:
 #' clusterInf(reg_para, clusterVar=clusRandom)
-#' clusterInf(reg_para, clusterVar=clusRandom, type="HC")
+#' clusterInf(reg_para, clusterVar=clusRandom, type='HC')
 
 
-clusterInf <- function(object, clusterVar, vcov. = NULL, type=c("df-adj", "HC"), ...){
-  
-  if(is.null(clusterVar)) stop("clusterVar seems to be NULL?")
-  type <- match.arg(type)
-
-  if(type=="df-adj"){
-    nClus <- if(is.factor(clusterVar)) nlevels(clusterVar) else length(unique(clusterVar))
-    res <- coeftest(object, vcov. = vcov., df = nClus, ...)
-  } else {
-    if(!is.null(vcov.)) warning("arg 'vcov.' not used when 'type=HC' (default vcovCluster used)")
-    res <- coeftest(object, vcov. = function(x) vcovCluster(x, clusterVar=clusterVar), ...)
-  }
-
-  return(res)
+clusterInf <- function(object, clusterVar, vcov. = NULL, type = c("df-adj", "HC"), ...) {
+    
+    if (is.null(clusterVar)) 
+        stop("clusterVar seems to be NULL?")
+    type <- match.arg(type)
+    
+    if (type == "df-adj") {
+        nClus <- if (is.factor(clusterVar)) 
+            nlevels(clusterVar) else length(unique(clusterVar))
+        res <- coeftest(object, vcov. = vcov., df = nClus, ...)
+    } else {
+        if (!is.null(vcov.)) 
+            warning("arg 'vcov.' not used when 'type=HC' (default vcovCluster used)")
+        res <- coeftest(object, vcov. = function(x) vcovCluster(x, clusterVar = clusterVar), ...)
+    }
+    
+    return(res)
 }
 
 #' @export
-estfun.rdd_reg_np <- function(x,...){
-  inf_met <- infType(x) ## def in Misc.R
-  if(inf_met=="se") stop("No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference estimators")
-  estfun(x$RDDslot$model)
+estfun.rdd_reg_np <- function(x, ...) {
+    inf_met <- infType(x)  ## def in Misc.R
+    if (inf_met == "se") 
+        stop("No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference estimators")
+    estfun(x$RDDslot$model)
 }
 
 #' @export
-bread.rdd_reg_np <- function(x,...){
-  inf_met <- infType(x) ## def in Misc.R
-  if(inf_met=="se") stop("No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference estimators")
-  bread(x$RDDslot$model)
-} 
+bread.rdd_reg_np <- function(x, ...) {
+    inf_met <- infType(x)  ## def in Misc.R
+    if (inf_met == "se") 
+        stop("No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference estimators")
+    bread(x$RDDslot$model)
+}
 
 
-# sandwich.rdd_reg_np <- function (x, bread. = bread, meat. = meat, ...){
-#   inf_met <- infType(x) ## def in Misc.R
-#   if(inf_met=="se") stop("No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference estimators")
-#   sandwich(x$RDDslot$model, bread.=bread., meat.=meat., ...)
-# }
+# sandwich.rdd_reg_np <- function (x, bread. = bread, meat. = meat, ...){ inf_met <- infType(x) ## def in Misc.R
+# if(inf_met=='se') stop('No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference
+# estimators') sandwich(x$RDDslot$model, bread.=bread., meat.=meat., ...)  }
 
 #' @export
-model.frame.rdd_reg_np <- function (formula, ...) 
-  model.frame(formula$RDDslot$model)
+model.frame.rdd_reg_np <- function(formula, ...) model.frame(formula$RDDslot$model)
 
 #' Cluster Heteroskedasticity-consistent estimation of the covariance matrix. 
 #' 
@@ -91,58 +93,54 @@ model.frame.rdd_reg_np <- function (formula, ...)
 #' reg_krug <- lm(pscore~cs, data=STAR_MHE)
 #' 
 #' # Row 1 of Table 8.2.1, inference with standard vcovHC:
-#' coeftest(reg_krug,vcov.=vcovHC(reg_krug, "HC1"))[2,2]
+#' coeftest(reg_krug,vcov.=vcovHC(reg_krug, 'HC1'))[2,2]
 #' 
 #' # Row 4 of Table 8.2.1, inference with cluster vcovHC:
 #' coeftest(reg_krug,vcov.=vcovCluster(reg_krug, clusterVar=STAR_MHE$classid))[2,2]
 #' }
 
-vcovCluster   <- function(object, clusterVar){
-  M <- length(unique(clusterVar))   
-  N <- length(clusterVar)  	        
-  K <- getModelRank(object)
-  dfc <- (M/(M-1))*((N-1)/(N-K))  
-  uj  <- apply(estfun(object),2, function(x) tapply(x, clusterVar, sum))
-  # require("sandwich")
-  dfc*sandwich::sandwich(object, meat.=crossprod(uj)/N)
+vcovCluster <- function(object, clusterVar) {
+    M <- length(unique(clusterVar))
+    N <- length(clusterVar)
+    K <- getModelRank(object)
+    dfc <- (M/(M - 1)) * ((N - 1)/(N - K))
+    uj <- apply(estfun(object), 2, function(x) tapply(x, clusterVar, sum))
+    # require('sandwich')
+    dfc * sandwich::sandwich(object, meat. = crossprod(uj)/N)
 }
 
 #' @rdname vcovCluster
 #' @param clusterVar1,clusterVar2 The two cluster variables for the 2-cluster case.
 #' @export
-vcovCluster2 <- function(object, clusterVar1, clusterVar2){
-    # R-codes (www.r-project.org) for computing multi-way 
-    # clustered-standard errors. Mahmood Arai, Jan 26, 2008. 
-    # See: Thompson (2006), Cameron, Gelbach and Miller (2006)
-    # and Petersen (2006).
-    # reweighting the var-cov matrix for the within model
-  
-    K   <- getModelRank(object)
+vcovCluster2 <- function(object, clusterVar1, clusterVar2) {
+    # R-codes (www.r-project.org) for computing multi-way clustered-standard errors. Mahmood Arai, Jan 26, 2008.  See: Thompson
+    # (2006), Cameron, Gelbach and Miller (2006) and Petersen (2006).  reweighting the var-cov matrix for the within model
+    
+    K <- getModelRank(object)
     estF <- estfun(object)
     
-    clusterVar12 <- paste(clusterVar1,clusterVar2, sep="")
-    M1  <- length(unique(clusterVar1))
-    M2  <- length(unique(clusterVar2))   
+    clusterVar12 <- paste(clusterVar1, clusterVar2, sep = "")
+    M1 <- length(unique(clusterVar1))
+    M2 <- length(unique(clusterVar2))
     M12 <- length(unique(clusterVar12))
-    N   <- length(clusterVar1)          
+    N <- length(clusterVar1)
     
-    dfc1  <- (M1/(M1-1))*((N-1)/(N-K))  
-    dfc2  <- (M2/(M2-1))*((N-1)/(N-K))  
-    dfc12 <- (M12/(M12-1))*((N-1)/(N-K))  
+    dfc1 <- (M1/(M1 - 1)) * ((N - 1)/(N - K))
+    dfc2 <- (M2/(M2 - 1)) * ((N - 1)/(N - K))
+    dfc12 <- (M12/(M12 - 1)) * ((N - 1)/(N - K))
     
-    u1j   <- apply(estF, 2, function(x) tapply(x, clusterVar1,  sum)) 
-    u2j   <- apply(estF, 2, function(x) tapply(x, clusterVar2,  sum)) 
-    u12j  <- apply(estF, 2, function(x) tapply(x, clusterVar12, sum)) 
-    vc1   <-  dfc1*sandwich(object, meat.=crossprod(u1j)/N )
-    vc2   <-  dfc2*sandwich(object, meat.=crossprod(u2j)/N )
-    vc12  <- dfc12*sandwich(object, meat.=crossprod(u12j)/N)
+    u1j <- apply(estF, 2, function(x) tapply(x, clusterVar1, sum))
+    u2j <- apply(estF, 2, function(x) tapply(x, clusterVar2, sum))
+    u12j <- apply(estF, 2, function(x) tapply(x, clusterVar12, sum))
+    vc1 <- dfc1 * sandwich(object, meat. = crossprod(u1j)/N)
+    vc2 <- dfc2 * sandwich(object, meat. = crossprod(u2j)/N)
+    vc12 <- dfc12 * sandwich(object, meat. = crossprod(u12j)/N)
     vcovMCL <- vc1 + vc2 - vc12
     vcovMCL
 }
 
-getModelRank <- function(object,...)
-  UseMethod("getModelRank")
+getModelRank <- function(object, ...) UseMethod("getModelRank")
 
-getModelRank.default <- function(object,...) object$rank
+getModelRank.default <- function(object, ...) object$rank
 
-getModelRank.rdd_reg_np <- function(object,...) getModelRank.default(object$RDDslot$model)
+getModelRank.rdd_reg_np <- function(object, ...) getModelRank.default(object$RDDslot$model) 
