@@ -16,17 +16,17 @@
 #' @return A data frame containing the bandwidths and corresponding estimates and confidence intervals. 
 #' @import methods
 #' @examples
-#' data(Lee2008)
-#' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+#' data(house)
+#' house_rdd <- rdd_data(y=house$y, x=house$x, cutpoint=0)
 #' 
 #' #Non-parametric estimate 
-#' bw_ik <- rdd_bw_ik(Lee2008_rdd)
-#' reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd, bw=bw_ik)
+#' bw_ik <- rdd_bw_ik(house_rdd)
+#' reg_nonpara <- rdd_reg_np(rdd_object=house_rdd, bw=bw_ik)
 #' plotSensi(reg_nonpara)
 #' plotSensi(reg_nonpara, device='base')
 #'
 #' #Parametric estimate:
-#' reg_para_ik <- rdd_reg_lm(rdd_object=Lee2008_rdd, order=4, bw=bw_ik)
+#' reg_para_ik <- rdd_reg_lm(rdd_object=house_rdd, order=4, bw=bw_ik)
 #' plotSensi(reg_para_ik)
 #' plotSensi(reg_para_ik, type='facet')
 

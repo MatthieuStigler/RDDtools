@@ -31,22 +31,22 @@
 #' @export
 #' @examples
 #' ## Step 0: prepare data
-#' data(Lee2008)
-#' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+#' data(house)
+#' house_rdd <- rdd_data(y=house$y, x=house$x, cutpoint=0)
 #' ## Step 2: regression
 #' # Simple polynomial of order 1:
-#' reg_para <- rdd_reg_lm(rdd_object=Lee2008_rdd)
+#' reg_para <- rdd_reg_lm(rdd_object=house_rdd)
 #' print(reg_para)
 #' plot(reg_para)
 #'
 #' # Simple polynomial of order 4:
-#' reg_para4 <- rdd_reg_lm(rdd_object=Lee2008_rdd, order=4)
+#' reg_para4 <- rdd_reg_lm(rdd_object=house_rdd, order=4)
 #' reg_para4
 #' plot(reg_para4)
 #'
 #' # Restrict sample to bandwidth area:
-#' bw_ik <- rdd_bw_ik(Lee2008_rdd)
-#' reg_para_ik <- rdd_reg_lm(rdd_object=Lee2008_rdd, bw=bw_ik, order=4)
+#' bw_ik <- rdd_bw_ik(house_rdd)
+#' reg_para_ik <- rdd_reg_lm(rdd_object=house_rdd, bw=bw_ik, order=4)
 #' reg_para_ik
 #' plot(reg_para_ik)
 

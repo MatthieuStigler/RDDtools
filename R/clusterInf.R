@@ -15,13 +15,13 @@
 #' @import sandwich
 #' @import lmtest
 #' @examples
-#' data(Lee2008)
-#' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-#' reg_para <- rdd_reg_lm(rdd_object=Lee2008_rdd)
+#' data(house)
+#' house_rdd <- rdd_data(y=house$y, x=house$x, cutpoint=0)
+#' reg_para <- rdd_reg_lm(rdd_object=house_rdd)
 #' 
 #' # here we just generate randomly a cluster variable:
 #' nlet <- sort(c(outer(letters, letters, paste, sep='')))
-#' clusRandom <- sample(nlet[1:60], size=nrow(Lee2008_rdd), replace=TRUE)
+#' clusRandom <- sample(nlet[1:60], size=nrow(house_rdd), replace=TRUE)
 #'
 #' # now do post-inference:
 #' clusterInf(reg_para, clusterVar=clusRandom)

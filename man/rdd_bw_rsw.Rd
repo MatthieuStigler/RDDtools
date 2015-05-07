@@ -20,8 +20,8 @@ Uses the global bandwidth selector of Ruppert, Sheather and Wand (1995)
 either to the whole function, or to the functions below and above the cutpoint.
 }
 \examples{
-data(Lee2008)
-rd<- rdd_data(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
+data(house)
+rd<- rdd_data(x=house$x, y=house$y, cutpoint=0)
 rdd_bw_rsw(rd)
 }
 \references{

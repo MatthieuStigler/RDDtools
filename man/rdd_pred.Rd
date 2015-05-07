@@ -50,19 +50,19 @@ as the square of that diagonal matrix, whereas for mean/sum, covariances are tak
 }
 \examples{
 # Load data, add (artificial) covariates:
-data(Lee2008)
-n_Lee <- nrow(Lee2008)
+data(house)
+n_Lee <- nrow(house)
 z1 <- runif(n_Lee)
-Lee2008_rdd <- rdd_data(y=y, x=x, data=Lee2008, covar=z1, cutpoint=0)
+house_rdd <- rdd_data(y=y, x=x, data=house, covar=z1, cutpoint=0)
 
 # estimation without covariates: rdd_pred is the same than rdd_coef:
-reg_para <- rdd_reg_lm(rdd_object=Lee2008_rdd)
+reg_para <- rdd_reg_lm(rdd_object=house_rdd)
 
 rdd_pred(reg_para)
 rdd_coef(reg_para, allInfo=TRUE)
 
 # estimation with covariates:
-reg_para_cov <- rdd_reg_lm(rdd_object=Lee2008_rdd,
+reg_para_cov <- rdd_reg_lm(rdd_object=house_rdd,
                           covariates='z1',
                           covar.opt=list(slope='separate') )
 

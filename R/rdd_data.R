@@ -13,9 +13,9 @@
 #' @return Object of class \code{rdd_data}, inheriting from \code{data.frame}
 #' @export
 #' @examples
-#' data(Lee2008)
-#' rd<- rdd_data(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
-#' rd2 <- rdd_data(x=x, y=y, data=Lee2008, cutpoint=0)
+#' data(house)
+#' rd<- rdd_data(x=house$x, y=house$y, cutpoint=0)
+#' rd2 <- rdd_data(x=x, y=y, data=house, cutpoint=0)
 #' 
 #' # The print() function is the same as the print.data.frame:
 #' rd

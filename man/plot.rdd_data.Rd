@@ -37,20 +37,20 @@ argument, that gives half of the length of the kernel window.
 When no bandwidth is given, the bandwidth of Ruppert et al is used, see \code{\link{rdd_bw_rsw}}.
 }
 \examples{
-data(Lee2008)
-Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-plot(Lee2008_rdd)
+data(house)
+house_rdd <- rdd_data(y=house$y, x=house$x, cutpoint=0)
+plot(house_rdd)
 
 ## Specify manually the bandwidth:
-plot(Lee2008_rdd, h=0.2)
+plot(house_rdd, h=0.2)
 
 ## Show three plots with different bandwidth:
-plot(Lee2008_rdd, h=c(0.2,0.3,0.4), nplot=3)
+plot(house_rdd, h=c(0.2,0.3,0.4), nplot=3)
 
 ## Specify instead of the bandwidth, the final number of bins:
-plot(Lee2008_rdd, nbins=22)
+plot(house_rdd, nbins=22)
 
 ## If the specified number of bins is odd, the larger number is given to side with largest range
-plot(Lee2008_rdd, nbins=21)
+plot(house_rdd, nbins=21)
 }
 

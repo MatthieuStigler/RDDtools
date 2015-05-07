@@ -32,21 +32,21 @@ summary.rdd_data <- function(object, ...) {
 #' When no bandwidth is given, the bandwidth of Ruppert et al is used, see \code{\link{rdd_bw_rsw}}. 
 #' @export
 #' @examples
-#' data(Lee2008)
-#' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-#' plot(Lee2008_rdd)
+#' data(house)
+#' house_rdd <- rdd_data(y=house$y, x=house$x, cutpoint=0)
+#' plot(house_rdd)
 #' 
 #' ## Specify manually the bandwidth:
-#' plot(Lee2008_rdd, h=0.2)
+#' plot(house_rdd, h=0.2)
 #' 
 #' ## Show three plots with different bandwidth:
-#' plot(Lee2008_rdd, h=c(0.2,0.3,0.4), nplot=3)
+#' plot(house_rdd, h=c(0.2,0.3,0.4), nplot=3)
 #' 
 #' ## Specify instead of the bandwidth, the final number of bins:
-#' plot(Lee2008_rdd, nbins=22)
+#' plot(house_rdd, nbins=22)
 #'
 #' ## If the specified number of bins is odd, the larger number is given to side with largest range
-#' plot(Lee2008_rdd, nbins=21)
+#' plot(house_rdd, nbins=21)
 
 
 ### PLOT method
@@ -118,9 +118,9 @@ plot.rdd_data <- function(x, h, nbins = NULL, xlim = range(object$x, na.rm = TRU
 #' @return An object of class \code{lm}
 #' @seealso \code{\link{as.npreg}} which converts \code{rdd_reg} objects into \code{npreg} from package \code{np}.
 #' @examples 
-#' data(Lee2008)
-#' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-#' reg_para <- rdd_reg_lm(rdd_object=Lee2008_rdd)
+#' data(house)
+#' house_rdd <- rdd_data(y=house$y, x=house$x, cutpoint=0)
+#' reg_para <- rdd_reg_lm(rdd_object=house_rdd)
 #' reg_para_lm <- as.lm(reg_para)
 #' reg_para_lm
 #' plot(reg_para_lm, which=4)
@@ -152,17 +152,17 @@ as.lm.rdd_reg <- function(x) as.lm_RDD(x)
 ### EXAMPLE
 if (FALSE) {
     library(RDDtools)
-    # data(Lee2008)
+    # data(house)
     
     
     environment(plot.rdd_data) <- environment(rdd_data)
     
-    Lee2008_rdd <- rdd_data(y = Lee2008$y, x = Lee2008$x, cutpoint = 0)
-    plot(Lee2008_rdd)
+    house_rdd <- rdd_data(y = house$y, x = house$x, cutpoint = 0)
+    plot(house_rdd)
     
-    plot(Lee2008_rdd, h = 0.2)
-    plot(Lee2008_rdd, h = c(0.2, 0.3, 0.4), nplot = 3)
+    plot(house_rdd, h = 0.2)
+    plot(house_rdd, h = c(0.2, 0.3, 0.4), nplot = 3)
     
-    plot(Lee2008_rdd, nbins = 21)
+    plot(house_rdd, nbins = 21)
     
 } 

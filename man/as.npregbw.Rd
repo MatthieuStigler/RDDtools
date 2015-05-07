@@ -29,9 +29,9 @@ is to set the bandwidth for x and Dx to a large number, so that they converge to
 }
 \examples{
 # Estimate ususal rdd_reg:
- data(Lee2008)
- Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
- reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd)
+ data(house)
+ house_rdd <- rdd_data(y=house$y, x=house$x, cutpoint=0)
+ reg_nonpara <- rdd_reg_np(rdd_object=house_rdd)
 
 ## Convert to npreg:
  reg_nonpara_np <- as.npreg(reg_nonpara)
@@ -39,8 +39,8 @@ is to set the bandwidth for x and Dx to a large number, so that they converge to
  rdd_coef(reg_nonpara_np, allCo=TRUE, allInfo=TRUE)
 
 ## Compare with result obtained with a Gaussian kernel:
- bw_lm <- dnorm(Lee2008_rdd$x, sd=rddtools:::getBW(reg_nonpara))
- reg_nonpara_gaus <- rdd_reg_lm(rdd_object=Lee2008_rdd, w=bw_lm)
+ bw_lm <- dnorm(house_rdd$x, sd=rddtools:::getBW(reg_nonpara))
+ reg_nonpara_gaus <- rdd_reg_lm(rdd_object=house_rdd, w=bw_lm)
  all.equal(rdd_coef(reg_nonpara_gaus),rdd_coef(reg_nonpara_np))
 }
 \seealso{

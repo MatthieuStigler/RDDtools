@@ -19,8 +19,8 @@ Imbens-Kalyanaraman optimal bandwidth
 for local linear regression in Regression discontinuity designs.
 }
 \examples{
-data(Lee2008)
-rd<- rdd_data(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
+data(house)
+rd<- rdd_data(x=house$x, y=house$y, cutpoint=0)
 rdd_bw_ik(rd)
 }
 \references{

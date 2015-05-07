@@ -38,24 +38,24 @@ A data frame with, for each covariate, the mean on each size, the difference, t-
 Tests equality of means by a t-test for each covariate, between the two full groups or around the discontinuity threshold
 }
 \examples{
-data(Lee2008)
+data(house)
 
 ## Add randomly generated covariates
 set.seed(123)
-n_Lee <- nrow(Lee2008)
+n_Lee <- nrow(house)
 Z <- data.frame(z1 = rnorm(n_Lee, sd=2),
-                z2 = rnorm(n_Lee, mean = ifelse(Lee2008<0, 5, 8)),
+                z2 = rnorm(n_Lee, mean = ifelse(house<0, 5, 8)),
                 z3 = sample(letters, size = n_Lee, replace = TRUE))
-Lee2008_rdd_Z <- rdd_data(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
+house_rdd_Z <- rdd_data(y = house$y, x = house$x, covar = Z, cutpoint = 0)
 
 ## test for equality of means around cutoff:
-covarTest_mean(Lee2008_rdd_Z, bw=0.3)
+covarTest_mean(house_rdd_Z, bw=0.3)
 
 ## Can also use function covarTest_dis() for Kolmogorov-Smirnov test:
-covarTest_dis(Lee2008_rdd_Z, bw=0.3)
+covarTest_dis(house_rdd_Z, bw=0.3)
 
 ## covarTest_mean works also on regression outputs (bw will be taken from the model)
-reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd_Z)
+reg_nonpara <- rdd_reg_np(rdd_object=house_rdd_Z)
 covarTest_mean(reg_nonpara)
 }
 \seealso{

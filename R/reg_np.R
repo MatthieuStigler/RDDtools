@@ -14,11 +14,11 @@
 #' @export rdd_reg_np
 #' @examples
 #' ## Step 0: prepare data
-#' data(Lee2008)
-#' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+#' data(house)
+#' house_rdd <- rdd_data(y=house$y, x=house$x, cutpoint=0)
 #' ## Step 2: regression
 #' # Simple polynomial of order 1:
-#' reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd)
+#' reg_nonpara <- rdd_reg_np(rdd_object=house_rdd)
 #' print(reg_nonpara)
 #' plot(reg_nonpara)
 

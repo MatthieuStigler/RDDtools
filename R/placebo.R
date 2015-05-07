@@ -9,13 +9,13 @@
 #' @param output Whether to return (invisibly) the data frame containing the bandwidths and corresponding estimates, or the ggplot object
 #' @return A data frame containing the cutpoints, their corresponding estimates and confidence intervals. 
 #' @examples
-#' data(Lee2008)
-#' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-#' reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd)
+#' data(house)
+#' house_rdd <- rdd_data(y=house$y, x=house$x, cutpoint=0)
+#' reg_nonpara <- rdd_reg_np(rdd_object=house_rdd)
 #' plotPlacebo(reg_nonpara)
 #' 
 #' # Use with another vcov function; cluster case
-#' reg_nonpara_lminf <- rdd_reg_np(rdd_object=Lee2008_rdd, inference='lm')
+#' reg_nonpara_lminf <- rdd_reg_np(rdd_object=house_rdd, inference='lm')
 #' # need to be a function applied to updated object!
 #' vc <- function(x) vcovCluster(x, clusterVar=model.frame(x)$x)
 #' plotPlacebo(reg_nonpara_lminf, vcov. = vc)
