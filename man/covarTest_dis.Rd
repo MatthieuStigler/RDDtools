@@ -2,14 +2,14 @@
 % Please edit documentation in R/covarTests.R
 \name{covarTest_dis}
 \alias{covarTest_dis}
-\alias{covarTest_dis.RDDdata}
 \alias{covarTest_dis.RDDreg}
+\alias{covarTest_dis.rdddata}
 \title{Testing for balanced covariates: equality of distribution}
 \usage{
 covarTest_dis(object, bw, exact = NULL, p.adjust = c("none", "holm", "BH",
   "BY", "hochberg", "hommel", "bonferroni"))
 
-\method{covarTest_dis}{RDDdata}(object, bw = NULL, exact = FALSE,
+\method{covarTest_dis}{rdddata}(object, bw = NULL, exact = FALSE,
   p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel",
   "bonferroni"))
 
@@ -18,7 +18,7 @@ covarTest_dis(object, bw, exact = NULL, p.adjust = c("none", "holm", "BH",
   "bonferroni"))
 }
 \arguments{
-\item{object}{object of class RDDdata}
+\item{object}{object of class rdddata}
 
 \item{bw}{a bandwidth}
 
@@ -43,7 +43,7 @@ n_Lee <- nrow(Lee2008)
 Z <- data.frame(z1 = rnorm(n_Lee, sd=2),
                 z2 = rnorm(n_Lee, mean = ifelse(Lee2008<0, 5, 8)),
                 z3 = sample(letters, size = n_Lee, replace = TRUE))
-Lee2008_rdd_Z <- RDDdata(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
+Lee2008_rdd_Z <- rdddata(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
 
 ## Kolmogorov-Smirnov test of equality in distribution:
 covarTest_dis(Lee2008_rdd_Z, bw=0.3)

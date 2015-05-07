@@ -2,7 +2,7 @@
 #' 
 #' Compute a parametric polynomial regression of the ATE, 
 #' possibly on the range specified by bandwidth
-#' @param RDDobject Object of class RDDdata created by \code{\link{RDDdata}}
+#' @param RDDobject Object of class rdddata created by \code{\link{rdddata}}
 #' @param covariates TODO
 #' @param bw A bandwidth to specify the subset on which the parametric regression is estimated
 #' @param inference Type of inference to conduct: non-parametric one (\code{np}) or standard (\code{lm}). See details. 
@@ -15,7 +15,7 @@
 #' @examples
 #' ## Step 0: prepare data
 #' data(Lee2008)
-#' Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+#' Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 #' ## Step 2: regression
 #' # Simple polynomial of order 1:
 #' reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
@@ -65,7 +65,7 @@ RDDreg_np <- function(RDDobject, covariates=NULL, bw=RDDbw_IK(RDDobject), slope=
 ##Return
   res <- list()
   RDDslot <- list()
-  RDDslot$RDDdata <- RDDobject
+  RDDslot$rdddata <- RDDobject
   RDDslot$model <- reg
   res$coefficients <- coef(reg)["D"]
   res$coefMat <- coefmat 
@@ -98,7 +98,7 @@ print.RDDreg_np <- function(x, signif.stars = getOption("show.signif.stars"), ..
 
   cat("\n\tCoefficient:\n")
 
-  printCoefmat(RDDcoef(x, allInfo=TRUE), signif.stars=signif.stars)
+  printCoefmat(rddcoef(x, allInfo=TRUE), signif.stars=signif.stars)
 
 }
 
@@ -148,7 +148,7 @@ print.summary.RDDreg_np <- function(x, digits = max(3, getOption("digits") - 3),
 
   cat("\n\tCoefficient:\n")
 
-  printCoefmat(RDDcoef(x, allInfo=TRUE), signif.stars=signif.stars)
+  printCoefmat(rddcoef(x, allInfo=TRUE), signif.stars=signif.stars)
 
   cat("\n\tLocal R squared:",  formatC(x$r.squared, digits = digits), "\n")
 

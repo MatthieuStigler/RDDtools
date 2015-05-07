@@ -2,7 +2,7 @@
 #' 
 #' Compute RDD estimate allowing a locally kernel weighted version of any estimation function
 #' possibly on the range specified by bandwidth
-#' @param RDDobject Object of class RDDdata created by \code{\link{RDDdata}}
+#' @param RDDobject Object of class rdddata created by \code{\link{rdddata}}
 #' @param covariates Formula to include covariates
 #' @param order Order of the polynomial regression. 
 #' @param bw A bandwidth to specify the subset on which the kernel weighted regression is estimated
@@ -18,7 +18,7 @@
 #'   \item A \code{weight} argument
 #'   \item A coef(summary(x)) returning a data-frame containing a column Estimate
 #' }
-#' Note that for the last requirement, this can be accomodated by writing a specific \code{\link{RDDcoef}} 
+#' Note that for the last requirement, this can be accomodated by writing a specific \code{\link{rddcoef}} 
 #' function for the class of the object returned by \code{fun}. 
 #' @return An object of class RDDreg_lm and class lm, with specific print and plot methods
 #' @references TODO
@@ -26,7 +26,7 @@
 #' @examples
 #' ## Step 0: prepare data
 #' data(Lee2008)
-#' Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+#' Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 #' 
 #' ## Estimate a local probit:
 #' Lee2008_rdd$y <- with(Lee2008_rdd, ifelse(y<quantile(y, 0.25), 0,1))
@@ -66,7 +66,7 @@ RDDgenreg <- function(RDDobject, fun=glm, covariates=NULL, order=1, bw=NULL, slo
   
   ##Return
   RDDslot <- list()
-  RDDslot$RDDdata <- RDDobject
+  RDDslot$rdddata <- RDDobject
   reg$RDDslot <- RDDslot 
   class(reg) <- c("RDDreg_lm", "RDDreg", class(reg))
   attr(reg, "PolyOrder") <- order

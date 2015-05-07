@@ -4,13 +4,13 @@
 #' @param n The size of sampel to generate
 #' @param version The MC version of Imbens and Kalnayaraman (between 1 and 4).
 #' @param sd The standard deviation of the error term.
-#' @param output Whether to return a data-frame, or already a RDDdata
+#' @param output Whether to return a data-frame, or already a rdddata
 #' @param size The size of the effect, this depends on the specific version, defaults are as in IK: 0.04, NULL, 0.1, 0.1
 #' @return An data frame with x and y variables. 
 #' @export
 #' @examples
 #' MC1_dat <- gen_MC_IK()
-#' MC1_rdd <- RDDdata(y=MC1_dat$y, x=MC1_dat$x, cutpoint=0)
+#' MC1_rdd <- rdddata(y=MC1_dat$y, x=MC1_dat$x, cutpoint=0)
 #' 
 #' ## Use np regression:
 #' reg_nonpara <- RDDreg_np(RDDobject=MC1_rdd)
@@ -33,7 +33,7 @@
 #' plotCu(version=4)
 #' layout(matrix(1))
 
-gen_MC_IK <- function(n=200, version=1, sd=0.1295, output=c("data.frame", "RDDdata"), size){
+gen_MC_IK <- function(n=200, version=1, sd=0.1295, output=c("data.frame", "rdddata"), size){
  
   output <- match.arg(output)
   if(!version%in% c(1:4) |length(version) !=1) stop("arg 'version' should be between 1 and 4")
@@ -51,8 +51,8 @@ gen_MC_IK <- function(n=200, version=1, sd=0.1295, output=c("data.frame", "RDDda
 		    "4"=0.1)
   }
   res <- foo(n=n, sd=sd, size=size)
-  if(output=="RDDdata"){
-    res <- RDDdata(x=res$x, y=res$y, cutpoint=0)
+  if(output=="rdddata"){
+    res <- rdddata(x=res$x, y=res$y, cutpoint=0)
   }
   res
 }
@@ -154,6 +154,6 @@ gen_MC_simple <- function(n=200, LATE=0.3){
   x <- rnorm(n)
   D <- x>= 0
   y <- 0.8 + LATE*D+ 0.3*x+0.1*x*D+rnorm(n)
-  RDDdata(x=x, y=y, cutpoint=0)
+  rdddata(x=x, y=y, cutpoint=0)
 
 }

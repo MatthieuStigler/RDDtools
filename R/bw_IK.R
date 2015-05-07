@@ -3,7 +3,7 @@
 #' Imbens-Kalyanaraman optimal bandwidth
 #' for local linear regression in Regression discontinuity designs.
 #' 
-#' @param RDDobject of class RDDdata created by \code{\link{RDDdata}}
+#' @param RDDobject of class rdddata created by \code{\link{rdddata}}
 #' @param kernel The type of kernel used: either \code{triangular} or \code{uniform}. 
 #' @return The optimal bandwidth
 #' @references Imbens, Guido and Karthik Kalyanaraman. (2012) "Optimal Bandwidth Choice for the regression discontinuity estimator," 
@@ -12,7 +12,7 @@
 #' @export
 #' @examples
 #' data(Lee2008)
-#' rd<- RDDdata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
+#' rd<- rdddata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
 #' RDDbw_IK(rd)
 
 

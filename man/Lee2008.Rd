@@ -20,7 +20,7 @@ U.S. House elections data
 }
 \examples{
 data(Lee2008)
-RDDlee <- RDDdata(x=x, y=y, data=Lee2008, cutpoint=0)
+RDDlee <- rdddata(x=x, y=y, data=Lee2008, cutpoint=0)
 summary(RDDlee)
 plot(RDDlee)
 }

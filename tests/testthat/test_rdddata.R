@@ -7,8 +7,8 @@ library(rddtools)
 data(Lee2008)
 
 # create RDDdata sets
-rd<- RDDdata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
-rd2 <- RDDdata(x=x, y=y, data=Lee2008, cutpoint=0)
+rd<- rdddata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
+rd2 <- rdddata(x=x, y=y, data=Lee2008, cutpoint=0)
 
 # define context
 context("input ambivalence")

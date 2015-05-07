@@ -10,7 +10,7 @@
 
 <meta name="author" content="Matthieu Stigler" />
 
-<meta name="date" content="2015-05-06" />
+<meta name="date" content="2015-05-07" />
 
 <title>rddtools</title>
 
@@ -54,7 +54,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <div id="header">
 <h1 class="title">rddtools</h1>
 <h4 class="author"><em>Matthieu Stigler</em></h4>
-<h4 class="date"><em>2015-05-06</em></h4>
+<h4 class="date"><em>2015-05-07</em></h4>
 </div>
 
 
@@ -65,10 +65,10 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rddtools)
 <span class="kw">data</span>(Lee2008)</code></pre>
 <p>Declare the data to be a <em>RDDdata</em> object:</p>
-<pre class="sourceCode r"><code class="sourceCode r">Lee2008_rdd &lt;-<span class="st"> </span><span class="kw">RDDdata</span>(<span class="dt">y=</span>Lee2008$y, <span class="dt">x=</span>Lee2008$x, <span class="dt">cutpoint=</span><span class="dv">0</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">Lee2008_rdd &lt;-<span class="st"> </span><span class="kw">rdddata</span>(<span class="dt">y=</span>Lee2008$y, <span class="dt">x=</span>Lee2008$x, <span class="dt">cutpoint=</span><span class="dv">0</span>)</code></pre>
 <p>You can now directly summarise and visualise this data:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(Lee2008_rdd)
-<span class="co">#&gt; ### RDDdata object ###</span>
+<span class="co">#&gt; ### rdddata object ###</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Cutpoint: 0 </span>
 <span class="co">#&gt; Sample size: </span>
@@ -156,7 +156,7 @@ n_Lee &lt;-<span class="st"> </span><span class="kw">nrow</span>(Lee2008)
 Z &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">z1 =</span> <span class="kw">rnorm</span>(n_Lee, <span class="dt">sd=</span><span class="dv">2</span>), 
                 <span class="dt">z2 =</span> <span class="kw">rnorm</span>(n_Lee, <span class="dt">mean =</span> <span class="kw">ifelse</span>(Lee2008&lt;<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">8</span>)), 
                 <span class="dt">z3 =</span> <span class="kw">sample</span>(letters, <span class="dt">size =</span> n_Lee, <span class="dt">replace =</span> <span class="ot">TRUE</span>))
-Lee2008_rdd_Z &lt;-<span class="st"> </span><span class="kw">RDDdata</span>(<span class="dt">y =</span> Lee2008$y, <span class="dt">x =</span> Lee2008$x, <span class="dt">covar =</span> Z, <span class="dt">cutpoint =</span> <span class="dv">0</span>)</code></pre>
+Lee2008_rdd_Z &lt;-<span class="st"> </span><span class="kw">rdddata</span>(<span class="dt">y =</span> Lee2008$y, <span class="dt">x =</span> Lee2008$x, <span class="dt">covar =</span> Z, <span class="dt">cutpoint =</span> <span class="dv">0</span>)</code></pre>
 <p>Run the tests:</p>
 <pre class="sourceCode r"><code class="sourceCode r">## test for equality of means around cutoff:
 <span class="kw">covarTest_mean</span>(Lee2008_rdd_Z, <span class="dt">bw=</span><span class="fl">0.3</span>)

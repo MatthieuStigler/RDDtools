@@ -26,13 +26,13 @@ RDDpred(object, covdata, se.fit = TRUE, vcov. = NULL, newdata,
 Returns the predicted value(s), and, if se.fit=TRUE, their standard errors.
 }
 \description{
-Function to predict the RDD coefficient in presence of covariate (without covariates, returns the same than \code{\link{RDDcoef}})
+Function to predict the RDD coefficient in presence of covariate (without covariates, returns the same than \code{\link{rddcoef}})
 }
 \details{
 The function \code{RDDpred} does a simple prediction of the RDD effect
  \deqn{RDDeffect= \mu(x, z, D=1) - \mu(x, z, D=0)}
 When there are no covariates (and z is irrelevant in the equation above), this amounts exactly to the usual RDD coefficient,
-shown in the outputs, or obtained with \code{\link{RDDcoef}}. If there were covariates, and if these covariates were estimated using the
+shown in the outputs, or obtained with \code{\link{rddcoef}}. If there were covariates, and if these covariates were estimated using the
 \dQuote{include} \emph{strategy} and with different coefficients left and right to the cutoff (i.e.
 had argument \emph{slope} = \dQuote{separate}), than the RDD effect is also dependent on the value of the covariate(s).
 \code{RDDpred} allows to set the value of the covariate(s) at which to evaluate the RDD effect, by providing a data.frame with
@@ -53,13 +53,13 @@ as the square of that diagonal matrix, whereas for mean/sum, covariances are tak
 data(Lee2008)
 n_Lee <- nrow(Lee2008)
 z1 <- runif(n_Lee)
-Lee2008_rdd <- RDDdata(y=y, x=x, data=Lee2008, covar=z1, cutpoint=0)
+Lee2008_rdd <- rdddata(y=y, x=x, data=Lee2008, covar=z1, cutpoint=0)
 
-# estimation without covariates: RDDpred is the same than RDDcoef:
+# estimation without covariates: RDDpred is the same than rddcoef:
 reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
 
 RDDpred(reg_para)
-RDDcoef(reg_para, allInfo=TRUE)
+rddcoef(reg_para, allInfo=TRUE)
 
 # estimation with covariates:
 reg_para_cov <- RDDreg_lm(RDDobject=Lee2008_rdd,

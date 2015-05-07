@@ -1,4 +1,4 @@
-#' Construct RDDdata
+#' Construct rdddata
 #' 
 #' Construct the base RDD object, containing x, y and the cutpoint, eventuallay covariates. 
 #' 
@@ -10,22 +10,22 @@
 #' @param data A data-frame for the \code{x} and \code{y} variables. If this is provided, 
 #' the column names can be entered directly for argument \code{x} and \code{y}
 #' @param z Assignment variable for the fuzzy case. 
-#' @return Object of class \code{RDDdata}, inheriting from \code{data.frame}
+#' @return Object of class \code{rdddata}, inheriting from \code{data.frame}
 #' @export
 #' @examples
 #' data(Lee2008)
-#' rd<- RDDdata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
-#' rd2 <- RDDdata(x=x, y=y, data=Lee2008, cutpoint=0)
+#' rd<- rdddata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
+#' rd2 <- rdddata(x=x, y=y, data=Lee2008, cutpoint=0)
 #' 
 #' # The print() function is the same as the print.data.frame:
 #' rd
 #'
-#' # The summary() and plot() function are specific to RDDdata
+#' # The summary() and plot() function are specific to rdddata
 #' summary(rd)
 #' plot(rd)
 
 
-RDDdata <- function(y, x, covar, cutpoint, z, labels, data){
+rdddata <- function(y, x, covar, cutpoint, z, labels, data){
 
   
 ## check args
@@ -86,7 +86,7 @@ RDDdata <- function(y, x, covar, cutpoint, z, labels, data){
   }
 
 ## return
-  class(RDDdat) <- c("RDDdata", "data.frame")
+  class(RDDdat) <- c("rdddata", "data.frame")
   attr(RDDdat, "hasCovar") <- hasCovar
   attr(RDDdat, "labels") <- labels
   attr(RDDdat, "cutpoint") <- cutpoint
@@ -98,12 +98,12 @@ RDDdata <- function(y, x, covar, cutpoint, z, labels, data){
 
 ### Specific subsetting methods
 
-# as.data.frame.RDDdata <- function(x) {
+# as.data.frame.rdddata <- function(x) {
 # subset(x, y>
 # }as.data.frame.default(x)
 
 #' @export
-'[.RDDdata' <- function(x,i,...){
+'[.rdddata' <- function(x,i,...){
   attr_x <- attributes(x)
   r <- NextMethod("[", object=as.data.frame(x))
 
@@ -115,7 +115,7 @@ RDDdata <- function(y, x, covar, cutpoint, z, labels, data){
     attributes(r) <- attributes(r)[match(names(attr_x), names(attributes(r)))]
   }
 #   newCla <- class(r)
-#   if(any(grepl("RDDdata", newCla))) newCla <- newCla[-grepl("RDDdata", newCla)]
+#   if(any(grepl("rdddata", newCla))) newCla <- newCla[-grepl("rdddata", newCla)]
 #   print(names(attributes(newCla)))
 # 
 #   if(!inherits(newCla, "data.frame")) attr(r, "class")[which(attr(r, "class")=="data.frame")] <- newCla
@@ -123,7 +123,7 @@ RDDdata <- function(y, x, covar, cutpoint, z, labels, data){
 }
 
 #' @export
-subset.RDDdata <- function (x, subset, select, drop = FALSE, ...) {
+subset.rdddata <- function (x, subset, select, drop = FALSE, ...) {
   attr_x <- attributes(x)
 
 ### subset code: start
@@ -159,7 +159,7 @@ subset.RDDdata <- function (x, subset, select, drop = FALSE, ...) {
 }
 
 #' @export 
-as.data.frame.RDDdata <- function(x,...){
+as.data.frame.rdddata <- function(x,...){
   class(x) <- "data.frame"
   attr(x, "hasCovar") <- NULL
   attr(x, "labels")   <- NULL 

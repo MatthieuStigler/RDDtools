@@ -1,6 +1,6 @@
 #' @export
 
-model.matrix.RDDdata <- function(object, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), covar.strat=c("include", "residual"), ...){
+model.matrix.rdddata <- function(object, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), covar.strat=c("include", "residual"), ...){
 
   checkIsRDD(object)
   RDDobject <- object

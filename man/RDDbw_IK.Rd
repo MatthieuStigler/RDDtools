@@ -7,7 +7,7 @@
 RDDbw_IK(RDDobject, kernel = c("Triangular", "Uniform", "Normal"))
 }
 \arguments{
-\item{RDDobject}{of class RDDdata created by \code{\link{RDDdata}}}
+\item{RDDobject}{of class rdddata created by \code{\link{rdddata}}}
 
 \item{kernel}{The type of kernel used: either \code{triangular} or \code{uniform}.}
 }
@@ -20,7 +20,7 @@ for local linear regression in Regression discontinuity designs.
 }
 \examples{
 data(Lee2008)
-rd<- RDDdata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
+rd<- rdddata(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
 RDDbw_IK(rd)
 }
 \references{

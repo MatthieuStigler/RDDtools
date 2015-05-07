@@ -30,18 +30,18 @@ is to set the bandwidth for x and Dx to a large number, so that they converge to
 \examples{
 # Estimate ususal RDDreg:
  data(Lee2008)
- Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+ Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
  reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
 
 ## Convert to npreg:
  reg_nonpara_np <- as.npreg(reg_nonpara)
  reg_nonpara_np
- RDDcoef(reg_nonpara_np, allCo=TRUE, allInfo=TRUE)
+ rddcoef(reg_nonpara_np, allCo=TRUE, allInfo=TRUE)
 
 ## Compare with result obtained with a Gaussian kernel:
  bw_lm <- dnorm(Lee2008_rdd$x, sd=rddtools:::getBW(reg_nonpara))
  reg_nonpara_gaus <- RDDreg_lm(RDDobject=Lee2008_rdd, w=bw_lm)
- all.equal(RDDcoef(reg_nonpara_gaus),RDDcoef(reg_nonpara_np))
+ all.equal(rddcoef(reg_nonpara_gaus),rddcoef(reg_nonpara_np))
 }
 \seealso{
 \code{\link{as.lm}} which converts \code{RDDreg} objects into \code{lm}.

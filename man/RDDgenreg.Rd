@@ -9,7 +9,7 @@ RDDgenreg(RDDobject, fun = glm, covariates = NULL, order = 1, bw = NULL,
   "residual"), slope = c("same", "separate"), bw = NULL), weights, ...)
 }
 \arguments{
-\item{RDDobject}{Object of class RDDdata created by \code{\link{RDDdata}}}
+\item{RDDobject}{Object of class rdddata created by \code{\link{rdddata}}}
 
 \item{fun}{The function to estimate the parameters}
 
@@ -42,13 +42,13 @@ It is assumed that the custom funciton has following behaviour:
   \item A \code{weight} argument
   \item A coef(summary(x)) returning a data-frame containing a column Estimate
 }
-Note that for the last requirement, this can be accomodated by writing a specific \code{\link{RDDcoef}}
+Note that for the last requirement, this can be accomodated by writing a specific \code{\link{rddcoef}}
 function for the class of the object returned by \code{fun}.
 }
 \examples{
 ## Step 0: prepare data
 data(Lee2008)
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 
 ## Estimate a local probit:
 Lee2008_rdd$y <- with(Lee2008_rdd, ifelse(y<quantile(y, 0.25), 0,1))

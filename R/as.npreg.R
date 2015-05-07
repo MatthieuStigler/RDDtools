@@ -14,18 +14,18 @@
 #' @examples
 #' # Estimate ususal RDDreg:
 #'  data(Lee2008)
-#'  Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+#'  Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 #'  reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
 #' 
 #' ## Convert to npreg:
 #'  reg_nonpara_np <- as.npreg(reg_nonpara)
 #'  reg_nonpara_np
-#'  RDDcoef(reg_nonpara_np, allCo=TRUE, allInfo=TRUE)
+#'  rddcoef(reg_nonpara_np, allCo=TRUE, allInfo=TRUE)
 #' 
 #' ## Compare with result obtained with a Gaussian kernel:
 #'  bw_lm <- dnorm(Lee2008_rdd$x, sd=rddtools:::getBW(reg_nonpara))
 #'  reg_nonpara_gaus <- RDDreg_lm(RDDobject=Lee2008_rdd, w=bw_lm)
-#'  all.equal(RDDcoef(reg_nonpara_gaus),RDDcoef(reg_nonpara_np)) 
+#'  all.equal(rddcoef(reg_nonpara_gaus),rddcoef(reg_nonpara_np)) 
 
 
 as.npregbw <- function(x,...){
@@ -91,7 +91,7 @@ as.npregbw_low <- function(x, npreg=FALSE, adjustIK_bw=TRUE, ...){
 
 
 #' @export
-RDDcoef.RDDreg_npreg <- function(object, allInfo=FALSE, allCo=FALSE, ...){
+rddcoef.RDDreg_npreg <- function(object, allInfo=FALSE, allCo=FALSE, ...){
 
   co <- diff(object$mean)
   if(allInfo) {

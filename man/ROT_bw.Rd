@@ -7,7 +7,7 @@
 ROT_bw(object)
 }
 \arguments{
-\item{object}{object of class RDDdata}
+\item{object}{object of class rdddata}
 }
 \description{
 implements dpill

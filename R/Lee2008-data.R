@@ -16,7 +16,7 @@
 #' \emph{Journal of Econometrics}, 142, 675-697
 #' @examples 
 #' data(Lee2008)
-#' RDDlee <- RDDdata(x=x, y=y, data=Lee2008, cutpoint=0)
+#' RDDlee <- rdddata(x=x, y=y, data=Lee2008, cutpoint=0)
 #' summary(RDDlee)
 #' plot(RDDlee)
 

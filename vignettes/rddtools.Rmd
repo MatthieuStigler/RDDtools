@@ -27,7 +27,7 @@ data(Lee2008)
 Declare the data to be a *RDDdata* object:
 
 ```{r}
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 ```
 
 
@@ -104,7 +104,7 @@ n_Lee <- nrow(Lee2008)
 Z <- data.frame(z1 = rnorm(n_Lee, sd=2), 
                 z2 = rnorm(n_Lee, mean = ifelse(Lee2008<0, 5, 8)), 
                 z3 = sample(letters, size = n_Lee, replace = TRUE))
-Lee2008_rdd_Z <- RDDdata(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
+Lee2008_rdd_Z <- rdddata(y = Lee2008$y, x = Lee2008$x, covar = Z, cutpoint = 0)
 ```
 
 
@@ -118,4 +118,3 @@ covarTest_dis(Lee2008_rdd_Z, bw=0.3)
 ```
 
 Tests correctly reject equality of the second, and correctly do not reject equality for the first and third. 
-
