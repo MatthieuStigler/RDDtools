@@ -62,7 +62,7 @@ print(reg_para)
 summary(reg_para)
 plot(reg_para)
 
-all.equal(unlist(rddpred(reg_para)), rddcoef(reg_para, allInfo=TRUE)[1:2], check.attributes=FALSE)
+all.equal(unlist(rdd_pred(reg_para)), rddcoef(reg_para, allInfo=TRUE)[1:2], check.attributes=FALSE)
 
 ## Difference in means regression:
 # Simple polynomial of order 0:
@@ -76,7 +76,7 @@ plot(reg_para_0)
 reg_para4 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=4)
 reg_para4
 plot(reg_para4)
-all.equal(unlist(rddpred(reg_para4)), rddcoef(reg_para4, allInfo=TRUE)[1:2], check.attributes=FALSE)
+all.equal(unlist(rdd_pred(reg_para4)), rddcoef(reg_para4, allInfo=TRUE)[1:2], check.attributes=FALSE)
 
 ## Restrict sample to bandwidth area:
 bw_ik <- RDDbw_IK(Lee2008_rdd)
@@ -84,7 +84,7 @@ reg_para_ik <- RDDreg_lm(RDDobject=Lee2008_rdd, bw=bw_ik, order=4)
 reg_para_ik
 plot(reg_para_ik)
 
-all.equal(unlist(rddpred(reg_para_ik)), rddcoef(reg_para_ik, allInfo=TRUE)[1:2], check.attributes=FALSE)
+all.equal(unlist(rdd_pred(reg_para_ik)), rddcoef(reg_para_ik, allInfo=TRUE)[1:2], check.attributes=FALSE)
 
 ## Fuzzy reg
 reg_para_fuzz <- RDDreg_lm(Lee2008_rdd_ins)
@@ -98,8 +98,8 @@ summary(reg_para4_cov)
 
 reg_para4_cov_slSep <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(slope="separate"))
 summary(reg_para4_cov_slSep)
-rddpred(reg_para4_cov_slSep)
-rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0, 0.2, 0.2), z2=c(0,20,20), z3b=c(0,1,0), z3c=c(0,0,1)))
+rdd_pred(reg_para4_cov_slSep)
+rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0, 0.2, 0.2), z2=c(0,20,20), z3b=c(0,1,0), z3c=c(0,0,1)))
 
 
 reg_para4_cov_startR <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(strategy="residual"))
@@ -238,8 +238,8 @@ capply <- function(x){
 
 capply(lapply(regs_all, coef))
 sapply(regs_all, rddcoef)
-rddpred_issue <- c("reg_para_0", "reg_para_fuzz", "reg_nonpara", "reg_nonpara_sameSl")
-sapply(regs_all[!names(regs_all)%in%rddpred_issue], rddpred)
+rdd_pred_issue <- c("reg_para_0", "reg_para_fuzz", "reg_nonpara", "reg_nonpara_sameSl")
+sapply(regs_all[!names(regs_all)%in%rdd_pred_issue], rdd_pred)
 
 sapply(regs_all, rddtools:::getCutpoint)
 lapply(regs_all, plotSensi, plot=FALSE)

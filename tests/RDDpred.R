@@ -37,14 +37,14 @@ checkRDDmean <- function(x, n=5){
   DF_1 <- covDF[1:n,hasD, drop=FALSE]
   DF_2 <- data.frame(t(colMeans(DF_1)))
 
-  pred_1 <- rddpred(x, covdata=DF_1, stat="mean")
-  pred_2 <- rddpred(x, covdata=DF_2)
+  pred_1 <- rdd_pred(x, covdata=DF_1, stat="mean")
+  pred_2 <- rdd_pred(x, covdata=DF_2)
   all.equal(pred_1, pred_2, check.attributes=FALSE)
 }
 
 sapply(reg_li, checkRDDmean)
 
-sapply(reg_li, function(x) all.equal(unlist(rddpred(x)),rddcoef(x, allInfo=TRUE)[1,1:2], check.attributes=FALSE))
+sapply(reg_li, function(x) all.equal(unlist(rdd_pred(x)),rddcoef(x, allInfo=TRUE)[1,1:2], check.attributes=FALSE))
 
 
 # 
@@ -79,20 +79,20 @@ aa <- lm("y ~ D + `x` + `x^2` + `x^3` + `x^4` + `x_right` + `x^2_right` + `x^3_r
 aaa <- lm("y ~ -1+ D + I(1-D)+`x` + `x^2` + `x^3` + `x^4` + `x_right` + `x^2_right` + `x^3_right` + `x^4_right` + z1 + `z1:D`", data=mf_2)
 # 
 # diff(coef(aaa)[2:1])
-# rddpred(reg_para4_cov_slSep)
-# rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=0))
+# rdd_pred(reg_para4_cov_slSep)
+# rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=0))
 # 
 # rddcoef(reg_para4_cov_slSep, allInfo=TRUE)
 
-## compare rddpred and Delta at 1:
-rdd_p_1 <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=1))
+## compare rdd_pred and Delta at 1:
+rdd_p_1 <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=1))
 delta_1 <- deltaMethod(aaa, "a1 - a2 + a12", parameterNames=paste("a", 1:12, sep=""))
 rdd_p_1
 delta_1
 all.equal(unlist(rdd_p_1), drop(as.matrix(delta_1[1:2])), check.attributes=FALSE)
 
-## compare rddpred and Delta at 0:
-rdd_p_0 <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=0))
+## compare rdd_pred and Delta at 0:
+rdd_p_0 <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=0))
 rdd_c_0 <- rddcoef(reg_para4_cov_slSep, allInfo=TRUE)
 delta_0 <- deltaMethod(aaa, "a1 - a2 ", parameterNames=paste("a", 1:12, sep=""))
 rdd_p_0
@@ -101,11 +101,11 @@ delta_0
 all.equal(unlist(rdd_p_0), drop(as.matrix(delta_0[1:2])), check.attributes=FALSE)
 all.equal(unlist(rdd_p_0), drop(as.matrix(rdd_c_0[1:2])), check.attributes=FALSE)
 
-## compare rddpred and Delta at 2 points:
-rdd_p_01_AGG <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0.5)))
-rdd_p_01_all <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0, 1)))
-rdd_p_01_S <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0, 1)), stat="sum")
-rdd_p_01_M <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0, 1)), stat="mean")
+## compare rdd_pred and Delta at 2 points:
+rdd_p_01_AGG <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0.5)))
+rdd_p_01_all <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0, 1)))
+rdd_p_01_S <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0, 1)), stat="sum")
+rdd_p_01_M <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0, 1)), stat="mean")
 
 delta_01_S <- deltaMethod(aaa, "2*(a1 - a2) +1*a12", parameterNames=paste("a", 1:12, sep=""))
 delta_01_M <- deltaMethod(aaa, "(2*(a1 - a2) +1*a12)/2", parameterNames=paste("a", 1:12, sep=""))
@@ -128,17 +128,17 @@ all.equal(rdd_p_01_M$fit, rdd_p_01_S$fit/2)
 all.equal(rdd_p_01_M$fit, rdd_p_01_AGG$fit, check.attributes=FALSE)
 all.equal(rdd_p_01_M$se.fit, rdd_p_01_AGG$se.fit, check.attributes=FALSE)
 
-## compare rddpred and Delta at 5 first points:
+## compare rdd_pred and Delta at 5 first points:
 ind_z_pos <- head(which(Lee2008_rdd_z$z1>0),5)
 
-rdd_p_01_5z_S <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=Lee2008_rdd_z$z1[1:5]), stat="sum")
-rdd_p_01_5z_Sb <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=sum(Lee2008_rdd_z$z1[1:5])), stat="sum")
-rdd_p_01_5zPos_S <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=Lee2008_rdd_z$z1[ind_z_pos]), stat="sum")
-rdd_p_01_5zPos_Sb <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=sum(Lee2008_rdd_z$z1[ind_z_pos])), stat="sum")
-rdd_p_01_5z_M <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=Lee2008_rdd_z$z1[1:5]), stat="mean")
-rdd_p_01_5z_Mb <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=mean(Lee2008_rdd_z$z1[1:5])), stat="mean")
-rdd_p_01_ALLz_M <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=Lee2008_rdd_z$z1), stat="mean")
-rdd_p_01_ALLz_Mb <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=mean(Lee2008_rdd_z$z1)), stat="mean")
+rdd_p_01_5z_S <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=Lee2008_rdd_z$z1[1:5]), stat="sum")
+rdd_p_01_5z_Sb <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=sum(Lee2008_rdd_z$z1[1:5])), stat="sum")
+rdd_p_01_5zPos_S <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=Lee2008_rdd_z$z1[ind_z_pos]), stat="sum")
+rdd_p_01_5zPos_Sb <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=sum(Lee2008_rdd_z$z1[ind_z_pos])), stat="sum")
+rdd_p_01_5z_M <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=Lee2008_rdd_z$z1[1:5]), stat="mean")
+rdd_p_01_5z_Mb <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=mean(Lee2008_rdd_z$z1[1:5])), stat="mean")
+rdd_p_01_ALLz_M <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=Lee2008_rdd_z$z1), stat="mean")
+rdd_p_01_ALLz_Mb <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=mean(Lee2008_rdd_z$z1)), stat="mean")
 
 del <- function(x, mean=FALSE) {
   n <- length(x)
@@ -165,7 +165,7 @@ all.equal(unlist(rdd_p_01_5z_Mb), drop(as.matrix(delta_01_5z_M[1:2])), check.att
 #### Weighted mean!!
 w_5 <- c(0.1, 0.2, 0.4, 0.2, 0.1)
 w <- c(0.4, 0.6)
-rdd_p_01_Sid <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0.2,1)), stat="identity")
+rdd_p_01_Sid <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0.2,1)), stat="identity")
 wm <- weighted.mean(rdd_p_01_Sid$fit , w=w)
 
 delta_2z_w <- deltaMethod(aaa, "0.4*(a1 - a2) + 0.4*0.2*a12+0.6*(a1 - a2) + 0.6*a12", parameterNames=paste("a", 1:12, sep=""))
@@ -175,8 +175,8 @@ all(delta_2z_w==delta_2z_w2)
 all.equal(delta_2z_w, delta_2z_w3, check.attributes=FALSE)
 all.equal(delta_2z_w[1,1],wm)
 
-rdd_p_01_W_S <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0.2,1)), stat="sum", weights=w)
-rdd_p_01_W_M <- rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0.2,1)), stat="mean", weights=w)
+rdd_p_01_W_S <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0.2,1)), stat="sum", weights=w)
+rdd_p_01_W_M <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0.2,1)), stat="mean", weights=w)
 all.equal(rdd_p_01_W_M$fit,wm)
 
 all.equal(unlist(rdd_p_01_W_S), drop(as.matrix(delta_2z_w2[1:2])), check.attributes=FALSE)
@@ -188,12 +188,12 @@ df_2Z_5z <- Lee2008_rdd_z[1:5, c("z1", "z2")]
 df_2Z_5z_M <- data.frame(t(colMeans(df_2Z_5z)))
 df_2Z_5z_Mw <- data.frame(t(apply(df_2Z_5z, 2, weighted.mean, w=w_5)))
 
-rdd_p_sZ_5z_S <- rddpred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z, stat="sum")
-rdd_p_sZ_5z_M <- rddpred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z, stat="mean")
-rdd_p_sZ_5z_Mb <- rddpred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z_M, stat="sum")
+rdd_p_sZ_5z_S <- rdd_pred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z, stat="sum")
+rdd_p_sZ_5z_M <- rdd_pred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z, stat="mean")
+rdd_p_sZ_5z_Mb <- rdd_pred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z_M, stat="sum")
 
-rdd_p_sZ_5z_MW <- rddpred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z, stat="mean", weights=w_5)
-rdd_p_sZ_5z_MWb <- rddpred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z_Mw, stat="sum")
+rdd_p_sZ_5z_MW <- rdd_pred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z, stat="mean", weights=w_5)
+rdd_p_sZ_5z_MWb <- rdd_pred(reg_para4_cov_slSep_2Z, covdata=df_2Z_5z_Mw, stat="sum")
 
 all.equal(rdd_p_sZ_5z_M, rdd_p_sZ_5z_Mb, check.attributes=FALSE)
 all.equal(rdd_p_sZ_5z_MW, rdd_p_sZ_5z_MWb, check.attributes=FALSE)
