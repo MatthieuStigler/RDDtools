@@ -36,12 +36,12 @@ is to set the bandwidth for x and Dx to a large number, so that they converge to
 ## Convert to npreg:
  reg_nonpara_np <- as.npreg(reg_nonpara)
  reg_nonpara_np
- rddcoef(reg_nonpara_np, allCo=TRUE, allInfo=TRUE)
+ rdd_coef(reg_nonpara_np, allCo=TRUE, allInfo=TRUE)
 
 ## Compare with result obtained with a Gaussian kernel:
  bw_lm <- dnorm(Lee2008_rdd$x, sd=rddtools:::getBW(reg_nonpara))
  reg_nonpara_gaus <- RDDreg_lm(RDDobject=Lee2008_rdd, w=bw_lm)
- all.equal(rddcoef(reg_nonpara_gaus),rddcoef(reg_nonpara_np))
+ all.equal(rdd_coef(reg_nonpara_gaus),rdd_coef(reg_nonpara_np))
 }
 \seealso{
 \code{\link{as.lm}} which converts \code{RDDreg} objects into \code{lm}.
