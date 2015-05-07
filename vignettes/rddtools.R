@@ -19,7 +19,7 @@ reg_para
 plot(reg_para)
 
 ## ----RegPlot-------------------------------------------------------------
-bw_ik <- RDDbw_IK(Lee2008_rdd)
+bw_ik <- rdd_bw_ik(Lee2008_rdd)
 reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd, bw=bw_ik)
 print(reg_nonpara)
 plot(x=reg_nonpara)

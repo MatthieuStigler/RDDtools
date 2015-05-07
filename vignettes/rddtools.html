@@ -101,7 +101,7 @@ reg_para
 <div id="non-parametric-estimation" class="section level1">
 <h1>Non-parametric Estimation</h1>
 <p>Run a simple local regression, using the [Imbens and Kalyanaraman 2012] bandwidth.</p>
-<pre class="sourceCode r"><code class="sourceCode r">bw_ik &lt;-<span class="st"> </span><span class="kw">RDDbw_IK</span>(Lee2008_rdd)
+<pre class="sourceCode r"><code class="sourceCode r">bw_ik &lt;-<span class="st"> </span><span class="kw">rdd_bw_ik</span>(Lee2008_rdd)
 reg_nonpara &lt;-<span class="st"> </span><span class="kw">rdd_reg_np</span>(<span class="dt">rdd_object=</span>Lee2008_rdd, <span class="dt">bw=</span>bw_ik)
 <span class="kw">print</span>(reg_nonpara)
 <span class="co">#&gt; ### RDD regression: nonparametric local linear###</span>
