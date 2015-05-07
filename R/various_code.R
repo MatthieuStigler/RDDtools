@@ -1,5 +1,5 @@
 ### MISC
-is.even <- function (a) {
+is_even <- function (a) {
   a%%2 == 0
 }
 
