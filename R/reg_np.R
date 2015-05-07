@@ -8,22 +8,22 @@
 #' @param inference Type of inference to conduct: non-parametric one (\code{np}) or standard (\code{lm}). See details. 
 #' @param slope Whether slopes should be different on left or right (separate), or the same.
 #' @param covar.opt Options for the inclusion of covariates. Way to include covariates, either in the main regression (\code{include}) or as regressors of y in a first step (\code{residual}). 
-#' @return An object of class RDDreg_np and class lm, with specific print and plot methods
+#' @return An object of class rdd_reg_np and class lm, with specific print and plot methods
 #' @seealso \code{\link{RDDbw_IK}} Bandwidth selection using the plug-in bandwidth of Imbens and Kalyanaraman (2012)
 #' @references TODO
-#' @export RDDreg_np
+#' @export rdd_reg_np
 #' @examples
 #' ## Step 0: prepare data
 #' data(Lee2008)
 #' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 #' ## Step 2: regression
 #' # Simple polynomial of order 1:
-#' reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd)
+#' reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd)
 #' print(reg_nonpara)
 #' plot(reg_nonpara)
 
 
-RDDreg_np <- function(rdd_object, covariates=NULL, bw=RDDbw_IK(rdd_object), slope=c("separate", "same"), inference=c("np", "lm"), covar.opt=list(slope=c("same", "separate"), bw=NULL)){
+rdd_reg_np <- function(rdd_object, covariates=NULL, bw=RDDbw_IK(rdd_object), slope=c("separate", "same"), inference=c("np", "lm"), covar.opt=list(slope=c("same", "separate"), bw=NULL)){
 
   slope <- match.arg(slope)
   inference <- match.arg(inference)
@@ -73,7 +73,7 @@ RDDreg_np <- function(rdd_object, covariates=NULL, bw=RDDbw_IK(rdd_object), slop
   res$fitted <- fitted(reg)
   res$RDDslot <- RDDslot
 
-  class(res) <- c("RDDreg_np", "RDDreg", "lm")
+  class(res) <- c("rdd_reg_np", "rdd_reg", "lm")
   attr(res, "RDDcall") <- match.call()
   attr(res, "cutpoint") <- cutpoint
   attr(res, "bw") <- bw
@@ -82,7 +82,7 @@ RDDreg_np <- function(rdd_object, covariates=NULL, bw=RDDbw_IK(rdd_object), slop
 
 
 #' @export 
-print.RDDreg_np <- function(x, signif.stars = getOption("show.signif.stars"), ...) {
+print.rdd_reg_np <- function(x, signif.stars = getOption("show.signif.stars"), ...) {
 
   RDDcall <- attr(x, "RDDcall")
   bw <- getBW(x)
@@ -104,7 +104,7 @@ print.RDDreg_np <- function(x, signif.stars = getOption("show.signif.stars"), ..
 
 
 #' @export
-summary.RDDreg_np <- function(object, digits = max(3, getOption("digits") - 3), signif.stars = getOption("show.signif.stars"), ...) {
+summary.rdd_reg_np <- function(object, digits = max(3, getOption("digits") - 3), signif.stars = getOption("show.signif.stars"), ...) {
 
   x <- object
   bw <- getBW(x)
@@ -122,19 +122,19 @@ summary.RDDreg_np <- function(object, digits = max(3, getOption("digits") - 3), 
 ## compute R^2
   r.squared <- summary(x$RDDslot$model)$r.squared
 
-## Extend the RDDreg_no output with new computaations:
+## Extend the rdd_reg_no output with new computaations:
 
   object$r.squared <- r.squared
   object$res_quant <- res_quant
   object$n_obs <- list(n_left=n_left, n_right=n_right, total=n_left+n_right)
 
-  class(object) <- c("summary.RDDreg_np", class(object))
+  class(object) <- c("summary.rdd_reg_np", class(object))
   object
 }
 
 
 #' @export
-print.summary.RDDreg_np <- function(x, digits = max(3, getOption("digits") - 3), signif.stars = getOption("show.signif.stars"), ...) {
+print.summary.rdd_reg_np <- function(x, digits = max(3, getOption("digits") - 3), signif.stars = getOption("show.signif.stars"), ...) {
 
   bw <- getBW(x)
 
@@ -156,7 +156,7 @@ print.summary.RDDreg_np <- function(x, digits = max(3, getOption("digits") - 3),
 
 
 #' @export
-plot.RDDreg_np <- function(x,binwidth,chart=c("locpoly", "np"), ...) {
+plot.rdd_reg_np <- function(x,binwidth,chart=c("locpoly", "np"), ...) {
 
   chart <- match.arg(chart)
   cutpoint <- getCutpoint(x)
@@ -203,11 +203,11 @@ plot.RDDreg_np <- function(x,binwidth,chart=c("locpoly", "np"), ...) {
 }
 
 #' @export 
-vcov.RDDreg_np <- function(object, ...){
+vcov.rdd_reg_np <- function(object, ...){
 
   infType <- infType(object)
   if(infType=="np") {
-    warning("No vcov() available when RDDreg_np() was called with infType='np'")
+    warning("No vcov() available when rdd_reg_np() was called with infType='np'")
     res <- NULL
   } else {
     res <- vcov(object$RDDslot$model)

@@ -2,13 +2,13 @@
 #' 
 #' Draw a plot showing the LATE estimates depending on multiple bandwidths
 #' 
-#' @param RDDregobject object of a RDD regression, from either \code{\link{RDDreg_lm}} or \code{\link{RDDreg_np}}
+#' @param rdd_regobject object of a RDD regression, from either \code{\link{rdd_reg_lm}} or \code{\link{rdd_reg_np}}
 #' @param from First bandwidth point. Default value is max(1e-3, bw-0.1)
 #' @param to Last bandwidth point. Default value is bw+0.1
 #' @param by Increments in the \code{from} \code{to} sequence
 #' @param level Level of the confidence interval
-#' @param order For parametric models (from \code{\link{RDDreg_lm}}), the order of the polynomial.
-#' @param type For parametric models (from \code{\link{RDDreg_lm}}) whether different orders are represented as different colour or as different facets.
+#' @param order For parametric models (from \code{\link{rdd_reg_lm}}), the order of the polynomial.
+#' @param type For parametric models (from \code{\link{rdd_reg_lm}}) whether different orders are represented as different colour or as different facets.
 #' @param device Whether to draw a base or a ggplot graph.
 #' @param output Whether to return (invisibly) the data frame containing the bandwidths and corresponding estimates, or the ggplot object
 #' @param plot Whether to actually plot the data. 
@@ -21,12 +21,12 @@
 #' 
 #' #Non-parametric estimate 
 #' bw_ik <- RDDbw_IK(Lee2008_rdd)
-#' reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd, bw=bw_ik)
+#' reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd, bw=bw_ik)
 #' plotSensi(reg_nonpara)
 #' plotSensi(reg_nonpara, device="base")
 #'
 #' #Parametric estimate:
-#' reg_para_ik <- RDDreg_lm(rdd_object=Lee2008_rdd, order=4, bw=bw_ik)
+#' reg_para_ik <- rdd_reg_lm(rdd_object=Lee2008_rdd, order=4, bw=bw_ik)
 #' plotSensi(reg_para_ik)
 #' plotSensi(reg_para_ik, type="facet")
 
@@ -37,20 +37,20 @@
 ###################################
 
 #' @export
-plotSensi <- function(RDDregobject, from, to, by=0.01, level=0.95, output=c("data", "ggplot"), plot=TRUE, ...)
+plotSensi <- function(rdd_regobject, from, to, by=0.01, level=0.95, output=c("data", "ggplot"), plot=TRUE, ...)
   UseMethod("plotSensi")
 
 #' @rdname plotSensi
 #' @export
 #' @param vcov. Specific covariance function to pass to coeftest. See help of package \code{\link[sandwich]{sandwich}}
-plotSensi.RDDreg_np <- function(RDDregobject, from, to, by=0.05, level=0.95, output=c("data", "ggplot"), plot=TRUE, device=c("ggplot", "base"), vcov.=NULL, ...){
+plotSensi.rdd_reg_np <- function(rdd_regobject, from, to, by=0.05, level=0.95, output=c("data", "ggplot"), plot=TRUE, device=c("ggplot", "base"), vcov.=NULL, ...){
 
   device <- match.arg(device)
   output <- match.arg(output)
   if(!is.null(vcov.)&& !is.function(vcov.)) stop("'arg' vcov. should be a function (so can be updated at each step, not a matrix")
   if(device=="base"&&output=="ggplot") stop("Arg 'output=ggplot' only relevant for 'device=ggplot'")
 
-  object <- RDDregobject
+  object <- rdd_regobject
   bw <- getBW(object)
   est <- rdd_coef(object)
 
@@ -118,11 +118,11 @@ plotSensi.RDDreg_np <- function(RDDregobject, from, to, by=0.05, level=0.95, out
 
 #' @rdname plotSensi
 #' @export
-plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, output=c("data", "ggplot"), plot=TRUE, order, type=c("colour", "facet"),  ...){
+plotSensi.rdd_reg_lm <- function(rdd_regobject, from, to, by=0.05, level=0.95, output=c("data", "ggplot"), plot=TRUE, order, type=c("colour", "facet"),  ...){
 
   type <- match.arg(type)
   output <- match.arg(output)
-  object <- RDDregobject
+  object <- rdd_regobject
   est <- rdd_coef(object)
   bw <- getBW(object)
   origOrder <- getOrder(object)
@@ -142,7 +142,7 @@ plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, out
     seq_bw <- NULL
   }
 
-  if(missing(order)) order <- 0:(getOrder(RDDregobject)+2)
+  if(missing(order)) order <- 0:(getOrder(rdd_regobject)+2)
   seq_ord <- order
   n_seq_ord <- length(seq_ord)
 

@@ -2,7 +2,7 @@
 #' 
 #' Correct standard-errors to account for clustered data, doing either a degrees of freedom correction or using a heteroskedasticidty-cluster robust covariance matrix
 #' possibly on the range specified by bandwidth
-#' @param object Object of class lm, from which RDDreg also inherits.
+#' @param object Object of class lm, from which rdd_reg also inherits.
 #' @param clusterVar The variable containing the cluster attributions. 
 #' @param vcov. Specific covariance function to pass to coeftest. See help of sandwich
 #' @param type The type of cluster correction to use: either the degrees of freedom, or a HC matrix. 
@@ -17,7 +17,7 @@
 #' @examples
 #' data(Lee2008)
 #' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-#' reg_para <- RDDreg_lm(rdd_object=Lee2008_rdd)
+#' reg_para <- rdd_reg_lm(rdd_object=Lee2008_rdd)
 #' 
 #' # here we just generate randomly a cluster variable:
 #' nlet <- sort(c(outer(letters, letters, paste, sep="")))
@@ -45,34 +45,34 @@ clusterInf <- function(object, clusterVar, vcov. = NULL, type=c("df-adj", "HC"),
 }
 
 #' @export
-estfun.RDDreg_np <- function(x,...){
+estfun.rdd_reg_np <- function(x,...){
   inf_met <- infType(x) ## def in Misc.R
   if(inf_met=="se") stop("No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference estimators")
   estfun(x$RDDslot$model)
 }
 
 #' @export
-bread.RDDreg_np <- function(x,...){
+bread.rdd_reg_np <- function(x,...){
   inf_met <- infType(x) ## def in Misc.R
   if(inf_met=="se") stop("No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference estimators")
   bread(x$RDDslot$model)
 } 
 
 
-# sandwich.RDDreg_np <- function (x, bread. = bread, meat. = meat, ...){
+# sandwich.rdd_reg_np <- function (x, bread. = bread, meat. = meat, ...){
 #   inf_met <- infType(x) ## def in Misc.R
 #   if(inf_met=="se") stop("No 'vcovHC', 'vcovCluster', 'estfun' etc can be applied to RDDrg_np with non-parametric inference estimators")
 #   sandwich(x$RDDslot$model, bread.=bread., meat.=meat., ...)
 # }
 
 #' @export
-model.frame.RDDreg_np <- function (formula, ...) 
+model.frame.rdd_reg_np <- function (formula, ...) 
   model.frame(formula$RDDslot$model)
 
 #' Cluster Heteroskedasticity-consistent estimation of the covariance matrix. 
 #' 
 #' Offer a cluster variant of the usual Heteroskedasticity-consistent 
-#' @param object Object of class lm, from which RDDreg also inherits.
+#' @param object Object of class lm, from which rdd_reg also inherits.
 #' @param clusterVar The variable containing the cluster attributions. 
 #' @return A matrix containing the covariance matrix estimate.
 #' @author Mahmood Arai, see \url{http://people.su.se/~ma/econometrics.html}
@@ -145,4 +145,4 @@ getModelRank <- function(object,...)
 
 getModelRank.default <- function(object,...) object$rank
 
-getModelRank.RDDreg_np <- function(object,...) getModelRank.default(object$RDDslot$model)
+getModelRank.rdd_reg_np <- function(object,...) getModelRank.default(object$RDDslot$model)

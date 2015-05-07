@@ -10,7 +10,7 @@
 #' @param covar.opt Options for the inclusion of covariates. Way to include covariates, either in the main regression (\code{include}) or as regressors of y in a first step (\code{residual}). 
 #' @param weights Optional weights to pass to the lm function. Note this cannot be entered together with \code{bw}
 #' @param slope Whether slopes should be different on left or right (separate), or the same.
-#' @return An object of class RDDreg_lm and class lm, with specific print and plot methods
+#' @return An object of class rdd_reg_lm and class lm, with specific print and plot methods
 #' @details This function estimates the standard \emph{discontinuity regression}:
 #' \deqn{Y=\alpha+\tau D+\beta_{1}(X-c)+\beta_{2}D(X-c)+\epsilon}
 #' with \eqn{\tau} the main parameter of interest. Several versions of the regression can be estimated, either restricting the slopes to be the same, 
@@ -21,7 +21,7 @@
 #' \item{include}{Covariates are simply added as supplementary regressors in the RD equation}
 #' \item{residual}{The dependent variable is first regressed on the covariates only, then the RDD equation is applied on the residuals from this first step}}
 #' The regression can also be estimated in a neighborhood of the cutpoint with the argument \code{bw}. This make the parametric regression resemble 
-#' the non-parametric local kernel \code{\link{RDDreg_np}}. Similarly, weights can also be provided (but not simultaneously to \code{bw}). 
+#' the non-parametric local kernel \code{\link{rdd_reg_np}}. Similarly, weights can also be provided (but not simultaneously to \code{bw}). 
 #'
 #' The returned object is a classical \code{lm} object, augmented with a \code{RDDslot}, so usual methods can be applied. As is done in general in R, 
 #' heteroskeadsticity-robust inference can be done later on with the usual function from package \pkg{sandwich}. For the case of clustered observations
@@ -35,23 +35,23 @@
 #' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 #' ## Step 2: regression
 #' # Simple polynomial of order 1:
-#' reg_para <- RDDreg_lm(rdd_object=Lee2008_rdd)
+#' reg_para <- rdd_reg_lm(rdd_object=Lee2008_rdd)
 #' print(reg_para)
 #' plot(reg_para)
 #'
 #' # Simple polynomial of order 4:
-#' reg_para4 <- RDDreg_lm(rdd_object=Lee2008_rdd, order=4)
+#' reg_para4 <- rdd_reg_lm(rdd_object=Lee2008_rdd, order=4)
 #' reg_para4
 #' plot(reg_para4)
 #'
 #' # Restrict sample to bandwidth area:
 #' bw_ik <- RDDbw_IK(Lee2008_rdd)
-#' reg_para_ik <- RDDreg_lm(rdd_object=Lee2008_rdd, bw=bw_ik, order=4)
+#' reg_para_ik <- rdd_reg_lm(rdd_object=Lee2008_rdd, bw=bw_ik, order=4)
 #' reg_para_ik
 #' plot(reg_para_ik)
 
 
-RDDreg_lm <- function(rdd_object, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), covar.strat=c("include", "residual"), weights){
+rdd_reg_lm <- function(rdd_object, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), covar.strat=c("include", "residual"), weights){
 
   checkIsRDD(rdd_object)
   cutpoint <- getCutpoint(rdd_object)
@@ -93,7 +93,7 @@ RDDreg_lm <- function(rdd_object, covariates=NULL, order=1, bw=NULL, slope=c("se
   RDDslot <- list()
   RDDslot$rdd_data <- rdd_object
   reg$RDDslot <- RDDslot 
-  class(reg) <- c("RDDreg_lm", "RDDreg", class_reg)
+  class(reg) <- c("rdd_reg_lm", "rdd_reg", class_reg)
   attr(reg, "PolyOrder") <- order
   attr(reg, "cutpoint") <- cutpoint
   attr(reg, "slope") <- slope
@@ -104,7 +104,7 @@ RDDreg_lm <- function(rdd_object, covariates=NULL, order=1, bw=NULL, slope=c("se
 
 
 #' @export 
-print.RDDreg_lm <- function(x,...) {
+print.rdd_reg_lm <- function(x,...) {
 
   order <- getOrder(x)
   cutpoint <- getCutpoint(x)
@@ -131,7 +131,7 @@ print.RDDreg_lm <- function(x,...) {
 
 
 #' @export
-plot.RDDreg_lm <- function(x,...) {
+plot.rdd_reg_lm <- function(x,...) {
 
 ## data
   dat <- getOriginalData(x)

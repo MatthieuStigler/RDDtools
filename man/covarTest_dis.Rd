@@ -2,8 +2,8 @@
 % Please edit documentation in R/covarTests.R
 \name{covarTest_dis}
 \alias{covarTest_dis}
-\alias{covarTest_dis.RDDreg}
 \alias{covarTest_dis.rdd_data}
+\alias{covarTest_dis.rdd_reg}
 \title{Testing for balanced covariates: equality of distribution}
 \usage{
 covarTest_dis(object, bw, exact = NULL, p.adjust = c("none", "holm", "BH",
@@ -13,7 +13,7 @@ covarTest_dis(object, bw, exact = NULL, p.adjust = c("none", "holm", "BH",
   p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel",
   "bonferroni"))
 
-\method{covarTest_dis}{RDDreg}(object, bw = NULL, exact = FALSE,
+\method{covarTest_dis}{rdd_reg}(object, bw = NULL, exact = FALSE,
   p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel",
   "bonferroni"))
 }
@@ -51,7 +51,7 @@ covarTest_dis(Lee2008_rdd_Z, bw=0.3)
 ## Can also use function covarTest_dis() for a t-test for equality of means around cutoff:
 covarTest_mean(Lee2008_rdd_Z, bw=0.3)
 ## covarTest_dis works also on regression outputs (bw will be taken from the model)
-reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd_Z)
+reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd_Z)
 covarTest_dis(reg_nonpara)
 }
 \author{

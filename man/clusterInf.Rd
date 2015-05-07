@@ -7,7 +7,7 @@
 clusterInf(object, clusterVar, vcov. = NULL, type = c("df-adj", "HC"), ...)
 }
 \arguments{
-\item{object}{Object of class lm, from which RDDreg also inherits.}
+\item{object}{Object of class lm, from which rdd_reg also inherits.}
 
 \item{clusterVar}{The variable containing the cluster attributions.}
 
@@ -27,7 +27,7 @@ possibly on the range specified by bandwidth
 \examples{
 data(Lee2008)
 Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-reg_para <- RDDreg_lm(rdd_object=Lee2008_rdd)
+reg_para <- rdd_reg_lm(rdd_object=Lee2008_rdd)
 
 # here we just generate randomly a cluster variable:
 nlet <- sort(c(outer(letters, letters, paste, sep="")))

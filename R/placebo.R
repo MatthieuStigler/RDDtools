@@ -11,11 +11,11 @@
 #' @examples
 #' data(Lee2008)
 #' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-#' reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd)
+#' reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd)
 #' plotPlacebo(reg_nonpara)
 #' 
 #' # Use with another vcov function; cluster case
-#' reg_nonpara_lminf <- RDDreg_np(rdd_object=Lee2008_rdd, inference="lm")
+#' reg_nonpara_lminf <- rdd_reg_np(rdd_object=Lee2008_rdd, inference="lm")
 #' # need to be a function applied to updated object!
 #' vc <- function(x) vcovCluster(x, clusterVar=model.frame(x)$x)
 #' plotPlacebo(reg_nonpara_lminf, vcov. = vc)
@@ -32,7 +32,7 @@ plotPlacebo <- function(object, device=c("ggplot", "base"), ...)
 #' @param by Increments of the from-to sequence
 #' @param level Level of the confidence interval shown
 #' @param same_bw Whether to re-estimate the bandwidth at each point
-plotPlacebo.RDDreg <- function(object, device=c("ggplot", "base"), from=0.25, to=0.75, by=0.1, level=0.95, same_bw=FALSE, vcov.=NULL, plot=TRUE, output=c("data", "ggplot"), ...){
+plotPlacebo.rdd_reg <- function(object, device=c("ggplot", "base"), from=0.25, to=0.75, by=0.1, level=0.95, same_bw=FALSE, vcov.=NULL, plot=TRUE, output=c("data", "ggplot"), ...){
 
   device <- match.arg(device)
   output <- match.arg(output)
@@ -122,7 +122,7 @@ plotPlaceboDens <- function(object, device=c("ggplot", "base"), ...)
 
 #' @rdname plotPlacebo
 #' @export
-plotPlaceboDens.RDDreg <- function(object, device=c("ggplot", "base"), from=0.25, to=0.75, by=0.1, level=0.95, same_bw=FALSE, vcov.=NULL, ...){
+plotPlaceboDens.rdd_reg <- function(object, device=c("ggplot", "base"), from=0.25, to=0.75, by=0.1, level=0.95, same_bw=FALSE, vcov.=NULL, ...){
 
   device <- match.arg(device)
 
@@ -230,7 +230,7 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
     if(hasBw) object_call$bw <- if(!same_bw) RDDbw_IK(dat_sides) else bw
     
     ## Re-estimate model with new cutpoint/bw
-    object_new <- eval(object_call) # RDDreg_np(dat_sides, bw=bw_reg)
+    object_new <- eval(object_call) # rdd_reg_np(dat_sides, bw=bw_reg)
 
     ## assign results (LATE and se)
     if(!inherits(object_new, "try-error")){

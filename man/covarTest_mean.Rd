@@ -2,8 +2,8 @@
 % Please edit documentation in R/covarTests.R
 \name{covarTest_mean}
 \alias{covarTest_mean}
-\alias{covarTest_mean.RDDreg}
 \alias{covarTest_mean.rdd_data}
+\alias{covarTest_mean.rdd_reg}
 \title{Testing for balanced covariates: equality of means with t-test}
 \usage{
 covarTest_mean(object, bw = NULL, paired = FALSE, var.equal = FALSE,
@@ -14,7 +14,7 @@ covarTest_mean(object, bw = NULL, paired = FALSE, var.equal = FALSE,
   var.equal = FALSE, p.adjust = c("none", "holm", "BH", "BY", "hochberg",
   "hommel", "bonferroni"))
 
-\method{covarTest_mean}{RDDreg}(object, bw = NULL, paired = FALSE,
+\method{covarTest_mean}{rdd_reg}(object, bw = NULL, paired = FALSE,
   var.equal = FALSE, p.adjust = c("none", "holm", "BH", "BY", "hochberg",
   "hommel", "bonferroni"))
 }
@@ -55,7 +55,7 @@ covarTest_mean(Lee2008_rdd_Z, bw=0.3)
 covarTest_dis(Lee2008_rdd_Z, bw=0.3)
 
 ## covarTest_mean works also on regression outputs (bw will be taken from the model)
-reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd_Z)
+reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd_Z)
 covarTest_mean(reg_nonpara)
 }
 \seealso{

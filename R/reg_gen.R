@@ -20,7 +20,7 @@
 #' }
 #' Note that for the last requirement, this can be accomodated by writing a specific \code{\link{rdd_coef}} 
 #' function for the class of the object returned by \code{fun}. 
-#' @return An object of class RDDreg_lm and class lm, with specific print and plot methods
+#' @return An object of class rdd_reg_lm and class lm, with specific print and plot methods
 #' @references TODO
 #' @export rdd_gen_reg 
 #' @examples
@@ -68,7 +68,7 @@ rdd_gen_reg <- function(rdd_object, fun=glm, covariates=NULL, order=1, bw=NULL, 
   RDDslot <- list()
   RDDslot$rdd_data <- rdd_object
   reg$RDDslot <- RDDslot 
-  class(reg) <- c("RDDreg_lm", "RDDreg", class(reg))
+  class(reg) <- c("rdd_reg_lm", "rdd_reg", class(reg))
   attr(reg, "PolyOrder") <- order
   attr(reg, "cutpoint") <- cutpoint
   attr(reg, "slope") <- slope
@@ -101,7 +101,7 @@ rdd_gen_reg_old <- function(rdd_object, covariates=".", bw=RDDbw_IK(rdd_object),
   reg <- fun(y~., data=dat_step1, weights=kernel_w,...)
 
 ##Return
-  class(reg) <- c("RDDreg_gen", "RDDreg", class(reg))
+  class(reg) <- c("rdd_reg_gen", "rdd_reg", class(reg))
   attr(reg, "RDDcall") <- match.call()
   attr(reg, "cutpoint") <- cutpoint
   attr(reg, "bw") <- bw

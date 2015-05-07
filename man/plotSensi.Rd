@@ -2,23 +2,23 @@
 % Please edit documentation in R/plotSensi.R
 \name{plotSensi}
 \alias{plotSensi}
-\alias{plotSensi.RDDreg_lm}
-\alias{plotSensi.RDDreg_np}
+\alias{plotSensi.rdd_reg_lm}
+\alias{plotSensi.rdd_reg_np}
 \title{Plot the sensitivity to the bandwidth}
 \usage{
-plotSensi(RDDregobject, from, to, by = 0.01, level = 0.95,
+plotSensi(rdd_regobject, from, to, by = 0.01, level = 0.95,
   output = c("data", "ggplot"), plot = TRUE, ...)
 
-\method{plotSensi}{RDDreg_np}(RDDregobject, from, to, by = 0.05,
+\method{plotSensi}{rdd_reg_np}(rdd_regobject, from, to, by = 0.05,
   level = 0.95, output = c("data", "ggplot"), plot = TRUE,
   device = c("ggplot", "base"), vcov. = NULL, ...)
 
-\method{plotSensi}{RDDreg_lm}(RDDregobject, from, to, by = 0.05,
+\method{plotSensi}{rdd_reg_lm}(rdd_regobject, from, to, by = 0.05,
   level = 0.95, output = c("data", "ggplot"), plot = TRUE, order,
   type = c("colour", "facet"), ...)
 }
 \arguments{
-\item{RDDregobject}{object of a RDD regression, from either \code{\link{RDDreg_lm}} or \code{\link{RDDreg_np}}}
+\item{rdd_regobject}{object of a RDD regression, from either \code{\link{rdd_reg_lm}} or \code{\link{rdd_reg_np}}}
 
 \item{from}{First bandwidth point. Default value is max(1e-3, bw-0.1)}
 
@@ -36,9 +36,9 @@ plotSensi(RDDregobject, from, to, by = 0.01, level = 0.95,
 
 \item{vcov.}{Specific covariance function to pass to coeftest. See help of package \code{\link[sandwich]{sandwich}}}
 
-\item{order}{For parametric models (from \code{\link{RDDreg_lm}}), the order of the polynomial.}
+\item{order}{For parametric models (from \code{\link{rdd_reg_lm}}), the order of the polynomial.}
 
-\item{type}{For parametric models (from \code{\link{RDDreg_lm}}) whether different orders are represented as different colour or as different facets.}
+\item{type}{For parametric models (from \code{\link{rdd_reg_lm}}) whether different orders are represented as different colour or as different facets.}
 
 \item{\ldots}{Further arguments passed to specific methods}
 }
@@ -54,12 +54,12 @@ Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 
 #Non-parametric estimate
 bw_ik <- RDDbw_IK(Lee2008_rdd)
-reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd, bw=bw_ik)
+reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd, bw=bw_ik)
 plotSensi(reg_nonpara)
 plotSensi(reg_nonpara, device="base")
 
 #Parametric estimate:
-reg_para_ik <- RDDreg_lm(rdd_object=Lee2008_rdd, order=4, bw=bw_ik)
+reg_para_ik <- rdd_reg_lm(rdd_object=Lee2008_rdd, order=4, bw=bw_ik)
 plotSensi(reg_para_ik)
 plotSensi(reg_para_ik, type="facet")
 }

@@ -29,7 +29,7 @@ MC1_dat <- gen_MC_IK()
 MC1_rdd <- rdd_data(y=MC1_dat$y, x=MC1_dat$x, cutpoint=0)
 
 ## Use np regression:
-reg_nonpara <- RDDreg_np(rdd_object=MC1_rdd)
+reg_nonpara <- rdd_reg_np(rdd_object=MC1_rdd)
 reg_nonpara
 
 # Represent the curves:

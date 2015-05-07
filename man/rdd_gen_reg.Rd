@@ -29,7 +29,7 @@ rdd_gen_reg(rdd_object, fun = glm, covariates = NULL, order = 1,
 \item{\ldots}{Further arguments passed to fun. See the example.}
 }
 \value{
-An object of class RDDreg_lm and class lm, with specific print and plot methods
+An object of class rdd_reg_lm and class lm, with specific print and plot methods
 }
 \description{
 Compute RDD estimate allowing a locally kernel weighted version of any estimation function

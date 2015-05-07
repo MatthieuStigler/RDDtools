@@ -2,15 +2,15 @@
 % Please edit documentation in R/rdd_coef.R
 \name{rdd_coef}
 \alias{rdd_coef}
-\alias{rdd_coef.RDDreg_np}
 \alias{rdd_coef.default}
+\alias{rdd_coef.rdd_reg_np}
 \title{RDD coefficient}
 \usage{
 rdd_coef(object, allInfo = FALSE, allCo = FALSE, ...)
 
 \method{rdd_coef}{default}(object, allInfo = FALSE, allCo = FALSE, ...)
 
-\method{rdd_coef}{RDDreg_np}(object, allInfo = FALSE, allCo = FALSE, ...)
+\method{rdd_coef}{rdd_reg_np}(object, allInfo = FALSE, allCo = FALSE, ...)
 }
 \arguments{
 \item{object}{A RDD regression object}

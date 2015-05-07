@@ -28,7 +28,7 @@
 #' covarTest_dis(Lee2008_rdd_Z, bw=0.3)
 #' 
 #' ## covarTest_mean works also on regression outputs (bw will be taken from the model)
-#' reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd_Z)
+#' reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd_Z)
 #' covarTest_mean(reg_nonpara)
 
 
@@ -54,7 +54,7 @@ covarTest_mean.rdd_data <- function(object, bw=NULL, paired = FALSE, var.equal =
 
 #' @rdname covarTest_mean
 #' @export
-covarTest_mean.RDDreg <- function(object, bw=NULL, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
+covarTest_mean.rdd_reg <- function(object, bw=NULL, paired = FALSE, var.equal = FALSE, p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
   
   cutpoint <- getCutpoint(object)
   dat <- object$RDDslot$rdd_data
@@ -128,7 +128,7 @@ covarTest_mean_low <- function(covar,cutvar, cutpoint, bw=NULL, paired = FALSE, 
 #' ## Can also use function covarTest_dis() for a t-test for equality of means around cutoff:
 #' covarTest_mean(Lee2008_rdd_Z, bw=0.3)
 #' ## covarTest_dis works also on regression outputs (bw will be taken from the model)
-#' reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd_Z)
+#' reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd_Z)
 #' covarTest_dis(reg_nonpara)
 
 #' @export
@@ -149,7 +149,7 @@ covarTest_dis.rdd_data <- function(object, bw=NULL, exact = FALSE,  p.adjust=c("
 
 #' @rdname covarTest_dis
 #' @export
-covarTest_dis.RDDreg <- function(object, bw=NULL, exact = FALSE,  p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
+covarTest_dis.rdd_reg <- function(object, bw=NULL, exact = FALSE,  p.adjust=c("none", "holm", "BH", "BY","hochberg", "hommel", "bonferroni")) {
   
   cutpoint <- getCutpoint(object)
   dat <- object$RDDslot$rdd_data

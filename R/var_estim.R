@@ -161,7 +161,7 @@ all_var_low <- function(x,y, point, bw, eachSide=TRUE, return=c("se", "all")){
 
 all_var <- function(...) all_var_low(...)
 
-all_var.RDDreg.np <- function(x){
+all_var.rdd_reg.np <- function(x){
 
   bw <- getBW(x)
   dat <- getOriginalData(x)

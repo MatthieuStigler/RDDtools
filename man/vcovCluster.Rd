@@ -10,7 +10,7 @@ vcovCluster(object, clusterVar)
 vcovCluster2(object, clusterVar1, clusterVar2)
 }
 \arguments{
-\item{object}{Object of class lm, from which RDDreg also inherits.}
+\item{object}{Object of class lm, from which rdd_reg also inherits.}
 
 \item{clusterVar}{The variable containing the cluster attributions.}
 

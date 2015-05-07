@@ -3,20 +3,20 @@
 \name{plotPlacebo}
 \alias{computePlacebo}
 \alias{plotPlacebo}
-\alias{plotPlacebo.RDDreg}
+\alias{plotPlacebo.rdd_reg}
 \alias{plotPlaceboDens}
-\alias{plotPlaceboDens.RDDreg}
+\alias{plotPlaceboDens.rdd_reg}
 \title{Draw a (density) plot of placebo tests}
 \usage{
 plotPlacebo(object, device = c("ggplot", "base"), ...)
 
-\method{plotPlacebo}{RDDreg}(object, device = c("ggplot", "base"),
+\method{plotPlacebo}{rdd_reg}(object, device = c("ggplot", "base"),
   from = 0.25, to = 0.75, by = 0.1, level = 0.95, same_bw = FALSE,
   vcov. = NULL, plot = TRUE, output = c("data", "ggplot"), ...)
 
 plotPlaceboDens(object, device = c("ggplot", "base"), ...)
 
-\method{plotPlaceboDens}{RDDreg}(object, device = c("ggplot", "base"),
+\method{plotPlaceboDens}{rdd_reg}(object, device = c("ggplot", "base"),
   from = 0.25, to = 0.75, by = 0.1, level = 0.95, same_bw = FALSE,
   vcov. = NULL, ...)
 
@@ -55,11 +55,11 @@ Draw a plot of placebo tests, estimating the impact on fake cutpoints
 \examples{
 data(Lee2008)
 Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd)
+reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd)
 plotPlacebo(reg_nonpara)
 
 # Use with another vcov function; cluster case
-reg_nonpara_lminf <- RDDreg_np(rdd_object=Lee2008_rdd, inference="lm")
+reg_nonpara_lminf <- rdd_reg_np(rdd_object=Lee2008_rdd, inference="lm")
 # need to be a function applied to updated object!
 vc <- function(x) vcovCluster(x, clusterVar=model.frame(x)$x)
 plotPlacebo(reg_nonpara_lminf, vcov. = vc)

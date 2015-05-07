@@ -19,12 +19,12 @@ plot(input_mc)
 
 RDD_bw <- RDDbw_IK(input_mc)
 
-RDD_np_sep <- RDDreg_np(input_mc, bw=RDD_bw)
-RDD_np_same <- RDDreg_np(input_mc, slope="same", bw=RDD_bw)
-RDD_np_sep_inflm <- RDDreg_np(input_mc, bw=RDD_bw, inf="lm")
-RDD_np_same_inflm <- RDDreg_np(input_mc, slope="same", bw=RDD_bw, inf="lm")
-RDD_lm_sep <- RDDreg_lm(input_mc, bw=RDD_bw)
-RDD_lm_same <- RDDreg_lm(input_mc, slope="same", bw=RDD_bw)
+RDD_np_sep <- rdd_reg_np(input_mc, bw=RDD_bw)
+RDD_np_same <- rdd_reg_np(input_mc, slope="same", bw=RDD_bw)
+RDD_np_sep_inflm <- rdd_reg_np(input_mc, bw=RDD_bw, inf="lm")
+RDD_np_same_inflm <- rdd_reg_np(input_mc, slope="same", bw=RDD_bw, inf="lm")
+RDD_lm_sep <- rdd_reg_lm(input_mc, bw=RDD_bw)
+RDD_lm_same <- rdd_reg_lm(input_mc, slope="same", bw=RDD_bw)
 rdd_RDe <- RDestimate(y~x, data=input_mc, cutpoint=20, model=TRUE, bw=RDD_bw)
 
 

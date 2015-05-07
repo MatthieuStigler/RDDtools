@@ -37,13 +37,13 @@
 #' Lee2008_rdd <- rdd_data(y=y, x=x, data=Lee2008, covar=z1, cutpoint=0)
 #' 
 #' # estimation without covariates: rdd_pred is the same than rdd_coef:
-#' reg_para <- RDDreg_lm(rdd_object=Lee2008_rdd)
+#' reg_para <- rdd_reg_lm(rdd_object=Lee2008_rdd)
 #' 
 #' rdd_pred(reg_para)
 #' rdd_coef(reg_para, allInfo=TRUE)
 #' 
 #' # estimation with covariates: 
-#' reg_para_cov <- RDDreg_lm(rdd_object=Lee2008_rdd,
+#' reg_para_cov <- rdd_reg_lm(rdd_object=Lee2008_rdd,
 #'                           covariates="z1",
 #'                           covar.opt=list(slope="separate") )
 #'

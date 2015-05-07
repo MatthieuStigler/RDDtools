@@ -15,14 +15,14 @@ Lee2008_rdd_z <- rdd_data(y=Lee2008$y, x=Lee2008$x, covar=Z,cutpoint=0)
 #### REGS
 bw_IK <- RDDbw_IK(Lee2008_rdd_z)
 w_IK <- rddtools:::Kernel_tri(Lee2008_rdd_z$x, 0, bw_IK)
-reg_para4_cov_slSep <- RDDreg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates="z1", covar.opt=list(slope="separate"))
-reg_para4_cov_slSep_W <- RDDreg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates="z1", covar.opt=list(slope="separate"), weights=w_IK)
-reg_np_cov <- RDDreg_np(rdd_object=Lee2008_rdd_z, covariates="z1", bw=bw_IK, inference="lm")
+reg_para4_cov_slSep <- rdd_reg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates="z1", covar.opt=list(slope="separate"))
+reg_para4_cov_slSep_W <- rdd_reg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates="z1", covar.opt=list(slope="separate"), weights=w_IK)
+reg_np_cov <- rdd_reg_np(rdd_object=Lee2008_rdd_z, covariates="z1", bw=bw_IK, inference="lm")
 
 
 
 
-reg_para4_cov_slSep_2Z <- RDDreg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates="z1+z2", covar.opt=list(slope="separate"))
+reg_para4_cov_slSep_2Z <- rdd_reg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates="z1+z2", covar.opt=list(slope="separate"))
 
 reg_li <- list( reg_para4_cov_slSep=reg_para4_cov_slSep, 
 		reg_para4_cov_slSep_W=reg_para4_cov_slSep_W,
@@ -48,7 +48,7 @@ sapply(reg_li, function(x) all.equal(unlist(rdd_pred(x)),rdd_coef(x, allInfo=TRU
 
 
 # 
-# reg_para <- RDDreg_lm(rdd_object=Lee2008_rdd)
+# reg_para <- rdd_reg_lm(rdd_object=Lee2008_rdd)
 # print(reg_para)
 # summary(reg_para)
 # plot(reg_para)
@@ -70,7 +70,7 @@ sapply(reg_li, function(x) all.equal(unlist(rdd_pred(x)),rdd_coef(x, allInfo=TRU
 # deltaMethod(a, "a1 - a2", parameterNames=paste("a", 1:4, sep=""))
 # coef(summary(reg_para))[2,]
 # 
-# reg_para4_cov_slSep <- RDDreg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates="z1", covar.opt=list(slope="separate"))
+# reg_para4_cov_slSep <- rdd_reg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates="z1", covar.opt=list(slope="separate"))
 # 
 mf_2 <- model.frame(reg_para4_cov_slSep)
 # formula(reg_para4_cov_slSep)

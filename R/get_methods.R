@@ -1,11 +1,11 @@
 
 
 # checkIsRDD <- function(object)  if(!inherits(object, "rdd_data")) stop("Only works for rdd_data objects")
-# checkIsAnyRDD <- function(object)  if(!inherits(object, c("rdd_data", "RDDreg_np"))) stop("Only works for rdd_data objects")
+# checkIsAnyRDD <- function(object)  if(!inherits(object, c("rdd_data", "rdd_reg_np"))) stop("Only works for rdd_data objects")
 
 # function(object)  if(!inherits(object, "rdd_data")) stop("Only works for rdd_data objects")
 checkIsAnyRDD <- checkIsRDD <- function(object)  {
-  classesOk <- c("rdd_data", "RDDreg_np", "RDDreg_lm")
+  classesOk <- c("rdd_data", "rdd_reg_np", "rdd_reg_lm")
   if(!inherits(object, classesOk)) stop("Only works for rdd_data objects")
 }
 
@@ -47,7 +47,7 @@ getBW <- function(object, force.na=FALSE){
 
 
 
-## return the type of inference used by RDDreg_np
+## return the type of inference used by rdd_reg_np
 infType <- function(x) {
   if(is.null(getCall(x)$inference)) "se" else getCall(x)$inference
 }
@@ -58,7 +58,7 @@ hasCovar <- function(object)
 
 hasCovar.rdd_data <- function(object)  attr(object, "hasCovar")
 
-hasCovar.RDDreg <- function(object) { 
+hasCovar.rdd_reg <- function(object) { 
   call <- getCall(object)
   !is.null(call$covariates)
 }
@@ -92,7 +92,7 @@ getOriginalX <- function(object)
   UseMethod("getOriginalX")
 
 
-getOriginalX.RDDreg <- function(object){
+getOriginalX.rdd_reg <- function(object){
   object$RDDslot$rdd_data[, "x"]
 }
 
@@ -100,7 +100,7 @@ getOriginalX.rdd_data <- function(object){
   object[, "x"]
 }
 
-# getOriginalX.RDDreg_np <- function(object){
+# getOriginalX.rdd_reg_np <- function(object){
 # 
 #   cutpoint <- getCutpoint(object)
 #   Xnam <- getXname(object) 
@@ -113,7 +113,7 @@ getOriginalX.rdd_data <- function(object){
 getOriginalData <- function(object, na.rm=TRUE, classRDD=TRUE)
   UseMethod("getOriginalData")
 
-# getOriginalData.RDDreg_np <- function(object, na.rm=TRUE){
+# getOriginalData.rdd_reg_np <- function(object, na.rm=TRUE){
 # 
 #   cutpoint <- getCutpoint(object)
 #   Xnam <- getXname(object) 
@@ -125,7 +125,7 @@ getOriginalData <- function(object, na.rm=TRUE, classRDD=TRUE)
 
 
 
-getOriginalData.RDDreg <- function(object, na.rm=TRUE, classRDD=TRUE){
+getOriginalData.rdd_reg <- function(object, na.rm=TRUE, classRDD=TRUE){
   res <- object$RDDslot$rdd_data
   if(na.rm) res <- res[apply(res, 1, function(x) all(!is.na(x))),] # remove na rows
   if(!classRDD) res <- as.data.frame(res)
@@ -136,7 +136,7 @@ getOriginalData.RDDreg <- function(object, na.rm=TRUE, classRDD=TRUE){
 
 #' @importFrom stats getCall
 #' @export
-getCall.RDDreg <- function(x,...) attr(x, "RDDcall")
+getCall.rdd_reg <- function(x,...) attr(x, "RDDcall")
 
 
 #format(Sys.Date(), "%A %Y-%m-%d")

@@ -65,11 +65,11 @@ format.perc <- function (probs, digits)
   paste(format(100 * probs, trim = TRUE, scientific = FALSE, digits = digits), 
         "%")
 
-waldci.RDDreg_np <- function(x, level = 0.95, vcov. = NULL, df = Inf, ...){
+waldci.rdd_reg_np <- function(x, level = 0.95, vcov. = NULL, df = Inf, ...){
 
   inf_met <- infType(x) ## def in Misc.R
   if(inf_met=="se"){
-    if(!is.null(vcov.)|!is.infinite(df)) {warning("Arg 'vcov.' and 'df' only work for RDDreg with inf='lm'")
+    if(!is.null(vcov.)|!is.infinite(df)) {warning("Arg 'vcov.' and 'df' only work for rdd_reg with inf='lm'")
     }
     ## code recycled from stats::confint.default
     co <- rdd_coef(x, allInfo=TRUE)
