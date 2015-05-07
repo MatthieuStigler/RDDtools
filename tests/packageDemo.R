@@ -9,7 +9,7 @@ library(rddtools)
 data(Lee2008)
 head(Lee2008)
 
-Lee2008_rdd <- RDDdata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
+Lee2008_rdd <- rdddata(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 
 head(Lee2008_rdd)
 
@@ -21,7 +21,7 @@ n_Lee <- nrow(Lee2008)
 
 set.seed(123)
 Z<- data.frame(z1=rnorm(n_Lee), z2=rnorm(n_Lee, mean=20, sd=2), z3=sample(letters[1:3], size=n_Lee, replace=TRUE))
-Lee2008_rdd_z <- RDDdata(y=Lee2008$y, x=Lee2008$x, covar=Z,cutpoint=0)
+Lee2008_rdd_z <- rdddata(y=Lee2008$y, x=Lee2008$x, covar=Z,cutpoint=0)
 
 head(Lee2008_rdd_z )
 summary(Lee2008_rdd_z )
@@ -29,7 +29,7 @@ summary(Lee2008_rdd_z )
 ### Fuzzy
 set.seed(123)
 ins <- rbinom(n_Lee, 1, prob=ifelse(Lee2008$x<0, 0.1, 0.9))
-Lee2008_rdd_ins <- RDDdata(y=Lee2008$y, x=Lee2008$x, z=ins,cutpoint=0)
+Lee2008_rdd_ins <- rdddata(y=Lee2008$y, x=Lee2008$x, z=ins,cutpoint=0)
 table(Lee2008$x<0, ins==0)
 
 ############################################
@@ -62,7 +62,7 @@ print(reg_para)
 summary(reg_para)
 plot(reg_para)
 
-all.equal(unlist(RDDpred(reg_para)), RDDcoef(reg_para, allInfo=TRUE)[1:2], check.attributes=FALSE)
+all.equal(unlist(rddpred(reg_para)), rddcoef(reg_para, allInfo=TRUE)[1:2], check.attributes=FALSE)
 
 ## Difference in means regression:
 # Simple polynomial of order 0:
@@ -76,7 +76,7 @@ plot(reg_para_0)
 reg_para4 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=4)
 reg_para4
 plot(reg_para4)
-all.equal(unlist(RDDpred(reg_para4)), RDDcoef(reg_para4, allInfo=TRUE)[1:2], check.attributes=FALSE)
+all.equal(unlist(rddpred(reg_para4)), rddcoef(reg_para4, allInfo=TRUE)[1:2], check.attributes=FALSE)
 
 ## Restrict sample to bandwidth area:
 bw_ik <- RDDbw_IK(Lee2008_rdd)
@@ -84,7 +84,7 @@ reg_para_ik <- RDDreg_lm(RDDobject=Lee2008_rdd, bw=bw_ik, order=4)
 reg_para_ik
 plot(reg_para_ik)
 
-all.equal(unlist(RDDpred(reg_para_ik)), RDDcoef(reg_para_ik, allInfo=TRUE)[1:2], check.attributes=FALSE)
+all.equal(unlist(rddpred(reg_para_ik)), rddcoef(reg_para_ik, allInfo=TRUE)[1:2], check.attributes=FALSE)
 
 ## Fuzzy reg
 reg_para_fuzz <- RDDreg_lm(Lee2008_rdd_ins)
@@ -98,8 +98,8 @@ summary(reg_para4_cov)
 
 reg_para4_cov_slSep <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(slope="separate"))
 summary(reg_para4_cov_slSep)
-RDDpred(reg_para4_cov_slSep)
-RDDpred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0, 0.2, 0.2), z2=c(0,20,20), z3b=c(0,1,0), z3c=c(0,0,1)))
+rddpred(reg_para4_cov_slSep)
+rddpred(reg_para4_cov_slSep, covdata=data.frame(z1=c(0, 0.2, 0.2), z2=c(0,20,20), z3b=c(0,1,0), z3c=c(0,0,1)))
 
 
 reg_para4_cov_startR <- RDDreg_lm(RDDobject=Lee2008_rdd_z, order=4, covariates=".", covar.opt=list(strategy="residual"))
@@ -204,15 +204,15 @@ covarTest_dis(reg_para4_cov)
 #### as npreg
   reg_nonpara_np <- as.npreg(reg_nonpara, adjustIK_bw=FALSE)
   reg_nonpara_np
-  RDDcoef(reg_nonpara_np)
-  RDDcoef(reg_nonpara_np, allCo=TRUE)
-  RDDcoef(reg_nonpara_np, allInfo=TRUE)
-  RDDcoef(reg_nonpara_np, allInfo=TRUE, allCo=TRUE)
+  rddcoef(reg_nonpara_np)
+  rddcoef(reg_nonpara_np, allCo=TRUE)
+  rddcoef(reg_nonpara_np, allInfo=TRUE)
+  rddcoef(reg_nonpara_np, allInfo=TRUE, allCo=TRUE)
 
 ## Compare with result obtained with a Gaussian kernel:
   bw_lm <- dnorm(Lee2008_rdd$x, sd=rddtools:::getBW(reg_nonpara))
   reg_nonpara_gaus <- RDDreg_lm(RDDobject=Lee2008_rdd, w=bw_lm)
-  all.equal(RDDcoef(reg_nonpara_gaus, allCo=TRUE),RDDcoef(reg_nonpara_np, allCo=TRUE), check.attributes=FALSE) 
+  all.equal(rddcoef(reg_nonpara_gaus, allCo=TRUE),rddcoef(reg_nonpara_np, allCo=TRUE), check.attributes=FALSE) 
 
 
 
@@ -237,11 +237,11 @@ capply <- function(x){
 }
 
 capply(lapply(regs_all, coef))
-sapply(regs_all, RDDcoef)
-RDDpred_issue <- c("reg_para_0", "reg_para_fuzz", "reg_nonpara", "reg_nonpara_sameSl")
-sapply(regs_all[!names(regs_all)%in%RDDpred_issue], RDDpred)
+sapply(regs_all, rddcoef)
+rddpred_issue <- c("reg_para_0", "reg_para_fuzz", "reg_nonpara", "reg_nonpara_sameSl")
+sapply(regs_all[!names(regs_all)%in%rddpred_issue], rddpred)
 
-sapply(regs_all, RDDtools:::getCutpoint)
+sapply(regs_all, rddtools:::getCutpoint)
 lapply(regs_all, plotSensi, plot=FALSE)
 
 sapply(regs_all, function(x) dens_test(x, plot=FALSE)[c("p.value", "statistic", "estimate")])
