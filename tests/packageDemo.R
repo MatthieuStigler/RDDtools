@@ -51,7 +51,7 @@ plot(Lee2008_rdd, xlim=c(-0.5, 0.5))
 ############################################
 
 ## few bandwidths:
-RDDbw_RSW(Lee2008_rdd)
+rdd_bw_rsw(Lee2008_rdd)
 rdd_bw_ik(Lee2008_rdd)
 
 
