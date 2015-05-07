@@ -10,7 +10,7 @@
 
 ### Crary bw
 
-ROT_bw <- function(object){
+rot_bw <- function(object){
 
   if(!inherits(object, "rdd_data")) stop("Only works for rdd_data objects")
   cutpoint <- getCutpoint(object)
@@ -89,7 +89,7 @@ if(FALSE){
 #   lee_dat4 <- read.csv("/home/mat/Dropbox/HEI/rdd/Rcode/IK bandwidth/datasets/imbens_from_MATLAB.csv", header=FALSE)
 #   head(lee_dat4)
 #   a<-rdd_data(y=lee_dat4[,2], x=lee_dat4[,1], cutpoint=0)
-# ROT_bw(object=a)
+# rot_bw(object=a)
 # RDDbw_RSW(object=a)
 RDDbw_RSW(object=a, type="sided")
 }
