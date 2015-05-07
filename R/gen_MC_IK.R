@@ -5,12 +5,12 @@
 #' @param version The MC version of Imbens and Kalnayaraman (between 1 and 4).
 #' @param sd The standard deviation of the error term.
 #' @param output Whether to return a data-frame, or already a rdd_data
-#' @param size The size of the effect, this depends on the specific version, defaults are as in IK: 0.04, NULL, 0.1, 0.1
+#' @param size The size of the effect, this depends on the specific version, defaults are as in ik: 0.04, NULL, 0.1, 0.1
 #' @return An data frame with x and y variables. 
 #' @export
 #' @examples
-#' MC1_dat <- gen_MC_IK()
-#' MC1_rdd <- rdd_data(y=MC1_dat$y, x=MC1_dat$x, cutpoint=0)
+#' mc1_dat <- gen_mc_ik()
+#' MC1_rdd <- rdd_data(y=mc1_dat$y, x=mc1_dat$x, cutpoint=0)
 #' 
 #' ## Use np regression:
 #' reg_nonpara <- rdd_reg_np(rdd_object=MC1_rdd)
@@ -18,7 +18,7 @@
 #' 
 #' # Represent the curves:
 #' plotCu <- function(version=1, xlim=c(-0.1,0.1)){
-#'   res <- gen_MC_IK(sd=0.0000001, n=1000, version=version)
+#'   res <- gen_mc_ik(sd=0.0000001, n=1000, version=version)
 #'   res <- res[order(res$x),]
 #'   ylim <- range(subset(res, x>=min(xlim) & x<=max(xlim), "y"))
 #'   plot(res, type="l", xlim=xlim, ylim=ylim, main=paste("DGP", version))
@@ -33,16 +33,16 @@
 #' plotCu(version=4)
 #' layout(matrix(1))
 
-gen_MC_IK <- function(n=200, version=1, sd=0.1295, output=c("data.frame", "rdd_data"), size){
+gen_mc_ik <- function(n=200, version=1, sd=0.1295, output=c("data.frame", "rdd_data"), size){
  
   output <- match.arg(output)
   if(!version%in% c(1:4) |length(version) !=1) stop("arg 'version' should be between 1 and 4")
 
   foo <- switch(version, 
-			"1"=gen_MC_IK_1,
-			"2"=gen_MC_IK_2,
-			"3"=gen_MC_IK_3,
-			"4"=gen_MC_IK_4)
+			"1"=gen_mc_ik_1,
+			"2"=gen_mc_ik_2,
+			"3"=gen_mc_ik_3,
+			"4"=gen_mc_ik_4)
   if(missing(size)) {
     size <- switch(version, 
 		    "1"=0.04,
@@ -62,7 +62,7 @@ gen_MC_IK <- function(n=200, version=1, sd=0.1295, output=c("data.frame", "rdd_d
 ######### MC 1
 ####################################
 
-gen_MC_IK_1 <- function(n=200,  sd=0.1295, size=0.04){
+gen_mc_ik_1 <- function(n=200,  sd=0.1295, size=0.04){
 
 ## Regressor:
   Z <- rbeta(n, shape1=2, shape2=4, ncp = 0)
@@ -88,9 +88,9 @@ gen_MC_IK_1 <- function(n=200,  sd=0.1295, size=0.04){
 ######### MC 2
 ####################################
 
-gen_MC_IK_2 <- function(n=200,  sd=0.1295, size=0){
+gen_mc_ik_2 <- function(n=200,  sd=0.1295, size=0){
 
-#   if(!missing(size) && !is.null(size)) warning("Argument 'size' ignored for gen_MC_IK_2")
+#   if(!missing(size) && !is.null(size)) warning("Argument 'size' ignored for gen_mc_ik_2")
 ## Regressor:
   Z <- rbeta(n, shape1=2, shape2=4, ncp = 0)
   X <- 2*Z-1
@@ -109,7 +109,7 @@ gen_MC_IK_2 <- function(n=200,  sd=0.1295, size=0){
 ######### MC 3
 ####################################
 
-gen_MC_IK_3 <- function(n=200,  sd=0.1295, size=0.1){
+gen_mc_ik_3 <- function(n=200,  sd=0.1295, size=0.1){
 
 ## Regressor:
   Z <- rbeta(n, shape1=2, shape2=4, ncp = 0)
@@ -128,7 +128,7 @@ gen_MC_IK_3 <- function(n=200,  sd=0.1295, size=0.1){
 ######### MC 4
 ####################################
 
-gen_MC_IK_4 <- function(n=200,  sd=0.1295, size=0.1){
+gen_mc_ik_4 <- function(n=200,  sd=0.1295, size=0.1){
 
 ## Regressor:
   Z <- rbeta(n, shape1=2, shape2=4, ncp = 0)

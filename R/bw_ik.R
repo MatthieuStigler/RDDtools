@@ -27,7 +27,7 @@ rdd_bw_ik <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal")) {
 
 }
 
-IK_bias <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw) {
+ik_bias <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw) {
 
   kernel <- match.arg(kernel)
   checkIsRDD(rdd_object)
@@ -35,11 +35,11 @@ IK_bias <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw) 
 
   resB <- rdd_bw_ik_low(X=rdd_object$x,Y=rdd_object$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=TRUE, kernel=kernel)
 
-## compute C1: see IK equ 5, and Fan Jijbels (1996, 3.23)
+## compute C1: see ik equ 5, and Fan Jijbels (1996, 3.23)
 # is done in R with locpol, computeMu(i=2, equivKernel(TrianK, nu=0, deg=1, lower=0, upper=Inf), lower=0, upper=Inf)
   C1 <- switch(kernel, "Triangular"= -0.1, "Uniform"= -0.1666667, "Normal"= -0.7519384) ## from: 
 
-## Compute bias as in IK equ:5, 
+## Compute bias as in ik equ:5, 
 # note here 1/4 is outside C1
   if(missing(bw))  bw <- resB$h_opt
   res<-  C1 * 1/2 * bw^2 *(resB$m2_right-resB$m2_left)
@@ -47,7 +47,7 @@ IK_bias <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw) 
 
 }
 
-IK_var <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw) {
+ik_var <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw) {
 
   kernel <- match.arg(kernel)
   checkIsRDD(rdd_object)
@@ -55,11 +55,11 @@ IK_var <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw) {
 
   resB <- rdd_bw_ik_low(X=rdd_object$x,Y=rdd_object$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=TRUE, kernel=kernel)
 
-## compute C2: see IK equ 5, and Fan Jijbels (1996, 3.23)
+## compute C2: see ik equ 5, and Fan Jijbels (1996, 3.23)
 # is done in R with locpol, computeRK(equivKernel(TrianK, nu=0, deg=1, lower=0, upper=Inf), lower=0, upper=Inf)
   C2 <- switch(kernel, "Triangular"= 4.8, "Uniform"= 4, "Normal"=1.785961) ## from: 
 
-## Compute var as in IK equ:5, 
+## Compute var as in ik equ:5, 
   if(missing(bw))  bw <- resB$h_op
   elem1 <- (resB$var_inh_left+resB$var_inh_right)/resB$f_cu
   elem2 <- C2/(nrow(rdd_object)*bw)
@@ -67,10 +67,10 @@ IK_var <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw) {
   res
 }
 
-IK_amse <- function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw) {
+ik_amse <- function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw) {
 
-  var <- IK_var(rdd_object=rdd_object, kernel=kernel, bw=bw)
-  bias <- IK_bias(rdd_object=rdd_object, kernel=kernel, bw=bw)
+  var <- ik_var(rdd_object=rdd_object, kernel=kernel, bw=bw)
+  bias <- ik_bias(rdd_object=rdd_object, kernel=kernel, bw=bw)
   res <- bias^2+var
   res
 }
@@ -170,7 +170,7 @@ rdd_bw_ik_low <-function (X,Y,threshold=0,verbose=FALSE, type=c("RES", "RES_imp"
 
   if(verbose)   cat("\n-Reg left:", r_left, "\n-Reg right:", r_right)
 
-## Compute kernel dependent constant: (see file ~/Dropbox/HEI/rdd/Rcode/IK bandwidth/bandwidth_comput.R)
+## Compute kernel dependent constant: (see file ~/Dropbox/HEI/rdd/Rcode/ik bandwidth/bandwidth_comput.R)
   Ck <- switch(kernel, "Triangular"=3.4375, "Uniform"=2.70192, "Normal"=1.25864) # is not 5.4 as in paper since our kernel is on I(|x|<1), not <1/2
 
 ## Final bandwidth: Equ (17) 

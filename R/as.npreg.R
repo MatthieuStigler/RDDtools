@@ -41,7 +41,7 @@ as.npreg <- function(x, ...){
 }
 
 
-as.npregbw_low <- function(x, npreg=FALSE, adjustIK_bw=TRUE, ...){
+as.npregbw_low <- function(x, npreg=FALSE, adjustik_bw=TRUE, ...){
 
   dat <- getOriginalData(x)
   bw <- getBW(x)
@@ -56,7 +56,7 @@ as.npregbw_low <- function(x, npreg=FALSE, adjustIK_bw=TRUE, ...){
 
   ## bw:
   range.x <- range(dat$x, na.rm=TRUE, finite=TRUE)
-  if(adjustIK_bw ){ ## & names(bw) =="h_opt"
+  if(adjustik_bw ){ ## & names(bw) =="h_opt"
     bw <- rdd_bw_ik(dat, kernel="Normal")
   }
   bw_other <- 9999*diff(range.x)

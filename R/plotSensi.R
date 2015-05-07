@@ -153,8 +153,8 @@ plotSensi.rdd_reg_lm <- function(rdd_regobject, from, to, by=0.05, level=0.95, o
 ## get call:
   object_call <- attr(object, "RDDcall")
 
-## guess if obtained with IKbandwidth? (trick: call$bw would be empty)
-#   is_IKband <- is.null(object_call$bw)
+## guess if obtained with ikbandwidth? (trick: call$bw would be empty)
+#   is_ikband <- is.null(object_call$bw)
 
 ## run each time:
   for(j in 1:length(seq_ord)){
