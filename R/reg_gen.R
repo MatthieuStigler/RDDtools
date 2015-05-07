@@ -22,7 +22,7 @@
 #' function for the class of the object returned by \code{fun}. 
 #' @return An object of class RDDreg_lm and class lm, with specific print and plot methods
 #' @references TODO
-#' @export RDDgenreg 
+#' @export rdd_gen_reg 
 #' @examples
 #' ## Step 0: prepare data
 #' data(Lee2008)
@@ -30,12 +30,12 @@
 #' 
 #' ## Estimate a local probit:
 #' Lee2008_rdd$y <- with(Lee2008_rdd, ifelse(y<quantile(y, 0.25), 0,1))
-#' reg_bin_glm <- RDDgenreg(rdd_object=Lee2008_rdd, fun= glm, family=binomial(link="probit"))
+#' reg_bin_glm <- rdd_gen_reg(rdd_object=Lee2008_rdd, fun= glm, family=binomial(link="probit"))
 #' print(reg_bin_glm)
 #' summary(reg_bin_glm)
 #'
 
-RDDgenreg <- function(rdd_object, fun=glm, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), weights, ...){
+rdd_gen_reg <- function(rdd_object, fun=glm, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), weights, ...){
 
   checkIsRDD(rdd_object)
   cutpoint <- getCutpoint(rdd_object)
@@ -77,7 +77,7 @@ RDDgenreg <- function(rdd_object, fun=glm, covariates=NULL, order=1, bw=NULL, sl
   reg
 }
 
-RDDgenreg_old <- function(rdd_object, covariates=".", bw=RDDbw_IK(rdd_object), slope=c("separate", "same"), fun=glm, ...){
+rdd_gen_reg_old <- function(rdd_object, covariates=".", bw=RDDbw_IK(rdd_object), slope=c("separate", "same"), fun=glm, ...){
 
   slope <- match.arg(slope)
   checkIsRDD(rdd_object)
