@@ -13,16 +13,16 @@
 #' @examples
 #' data(Lee2008)
 #' rd<- rdd_data(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
-#' RDDbw_IK(rd)
+#' rdd_bw_ik(rd)
 
 
-RDDbw_IK <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal")) {
+rdd_bw_ik <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal")) {
 
   kernel <- match.arg(kernel)
   checkIsRDD(rdd_object)
   cutpoint <- getCutpoint(rdd_object)
 
-  res <- RDDbw_IK_low(X=rdd_object$x,Y=rdd_object$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=FALSE, kernel=kernel)
+  res <- rdd_bw_ik_low(X=rdd_object$x,Y=rdd_object$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=FALSE, kernel=kernel)
   return(res)
 
 }
@@ -33,7 +33,7 @@ IK_bias <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw) 
   checkIsRDD(rdd_object)
   cutpoint <- getCutpoint(rdd_object)
 
-  resB <- RDDbw_IK_low(X=rdd_object$x,Y=rdd_object$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=TRUE, kernel=kernel)
+  resB <- rdd_bw_ik_low(X=rdd_object$x,Y=rdd_object$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=TRUE, kernel=kernel)
 
 ## compute C1: see IK equ 5, and Fan Jijbels (1996, 3.23)
 # is done in R with locpol, computeMu(i=2, equivKernel(TrianK, nu=0, deg=1, lower=0, upper=Inf), lower=0, upper=Inf)
@@ -53,7 +53,7 @@ IK_var <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw) {
   checkIsRDD(rdd_object)
   cutpoint <- getCutpoint(rdd_object)
 
-  resB <- RDDbw_IK_low(X=rdd_object$x,Y=rdd_object$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=TRUE, kernel=kernel)
+  resB <- rdd_bw_ik_low(X=rdd_object$x,Y=rdd_object$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=TRUE, kernel=kernel)
 
 ## compute C2: see IK equ 5, and Fan Jijbels (1996, 3.23)
 # is done in R with locpol, computeRK(equivKernel(TrianK, nu=0, deg=1, lower=0, upper=Inf), lower=0, upper=Inf)
@@ -76,7 +76,7 @@ IK_amse <- function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw)
 }
 
 
-RDDbw_IK_low <-function (X,Y,threshold=0,verbose=FALSE, type=c("RES", "RES_imp","WP"), returnBig=FALSE, kernel=c("Triangular", "Uniform", "Normal")) {
+rdd_bw_ik_low <-function (X,Y,threshold=0,verbose=FALSE, type=c("RES", "RES_imp","WP"), returnBig=FALSE, kernel=c("Triangular", "Uniform", "Normal")) {
   
   type <- match.arg(type)
   kernel <- match.arg(kernel)

@@ -4,7 +4,7 @@
 \alias{rdd_reg_np}
 \title{Parametric polynomial estimator of the regression discontinuity}
 \usage{
-rdd_reg_np(rdd_object, covariates = NULL, bw = RDDbw_IK(rdd_object),
+rdd_reg_np(rdd_object, covariates = NULL, bw = rdd_bw_ik(rdd_object),
   slope = c("separate", "same"), inference = c("np", "lm"),
   covar.opt = list(slope = c("same", "separate"), bw = NULL))
 }
@@ -42,6 +42,6 @@ plot(reg_nonpara)
 TODO
 }
 \seealso{
-\code{\link{RDDbw_IK}} Bandwidth selection using the plug-in bandwidth of Imbens and Kalyanaraman (2012)
+\code{\link{rdd_bw_ik}} Bandwidth selection using the plug-in bandwidth of Imbens and Kalyanaraman (2012)
 }
 

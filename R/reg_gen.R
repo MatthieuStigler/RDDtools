@@ -77,7 +77,7 @@ rdd_gen_reg <- function(rdd_object, fun=glm, covariates=NULL, order=1, bw=NULL, 
   reg
 }
 
-rdd_gen_reg_old <- function(rdd_object, covariates=".", bw=RDDbw_IK(rdd_object), slope=c("separate", "same"), fun=glm, ...){
+rdd_gen_reg_old <- function(rdd_object, covariates=".", bw=rdd_bw_ik(rdd_object), slope=c("separate", "same"), fun=glm, ...){
 
   slope <- match.arg(slope)
   checkIsRDD(rdd_object)

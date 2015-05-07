@@ -227,7 +227,7 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
     object_call$rdd_object <- dat_sides
 
     ## Change bw if(same_bw=FALSE)
-    if(hasBw) object_call$bw <- if(!same_bw) RDDbw_IK(dat_sides) else bw
+    if(hasBw) object_call$bw <- if(!same_bw) rdd_bw_ik(dat_sides) else bw
     
     ## Re-estimate model with new cutpoint/bw
     object_new <- eval(object_call) # rdd_reg_np(dat_sides, bw=bw_reg)

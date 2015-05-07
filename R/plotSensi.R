@@ -20,7 +20,7 @@
 #' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 #' 
 #' #Non-parametric estimate 
-#' bw_ik <- RDDbw_IK(Lee2008_rdd)
+#' bw_ik <- rdd_bw_ik(Lee2008_rdd)
 #' reg_nonpara <- rdd_reg_np(rdd_object=Lee2008_rdd, bw=bw_ik)
 #' plotSensi(reg_nonpara)
 #' plotSensi(reg_nonpara, device="base")

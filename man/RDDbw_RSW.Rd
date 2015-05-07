@@ -28,6 +28,6 @@ RDDbw_RSW(rd)
 See \code{\link[KernSmooth]{dpill}}
 }
 \seealso{
-\code{\link{RDDbw_IK}} Local RDD bandwidth selector using the plug-in method of Imbens and Kalyanaraman (2012)
+\code{\link{rdd_bw_ik}} Local RDD bandwidth selector using the plug-in method of Imbens and Kalyanaraman (2012)
 }
 

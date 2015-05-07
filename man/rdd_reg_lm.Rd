@@ -66,7 +66,7 @@ reg_para4
 plot(reg_para4)
 
 # Restrict sample to bandwidth area:
-bw_ik <- RDDbw_IK(Lee2008_rdd)
+bw_ik <- rdd_bw_ik(Lee2008_rdd)
 reg_para_ik <- rdd_reg_lm(rdd_object=Lee2008_rdd, bw=bw_ik, order=4)
 reg_para_ik
 plot(reg_para_ik)

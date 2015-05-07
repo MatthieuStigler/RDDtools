@@ -57,7 +57,7 @@ as.npregbw_low <- function(x, npreg=FALSE, adjustIK_bw=TRUE, ...){
   ## bw:
   range.x <- range(dat$x, na.rm=TRUE, finite=TRUE)
   if(adjustIK_bw ){ ## & names(bw) =="h_opt"
-    bw <- RDDbw_IK(dat, kernel="Normal")
+    bw <- rdd_bw_ik(dat, kernel="Normal")
   }
   bw_other <- 9999*diff(range.x)
   bws <- c(bw, rep(bw_other, 2))
