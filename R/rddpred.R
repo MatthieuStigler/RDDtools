@@ -8,13 +8,13 @@
 #' @param newdata Another data on which to evaluate the x/D variables. Useful in very few cases. 
 #' @param stat The statistic to use if there are multiple predictions, 'identity' just returns the single values, 'mean' averages them 
 #' @param weights Eventual weights for the averaging of the predicted values. 
-#' @details The function \code{RDDpred} does a simple prediction of the RDD effect
+#' @details The function \code{rddpred} does a simple prediction of the RDD effect
 #'  \deqn{RDDeffect= \mu(x, z, D=1) - \mu(x, z, D=0)}
 #' When there are no covariates (and z is irrelevant in the equation above), this amounts exactly to the usual RDD coefficient, 
 #' shown in the outputs, or obtained with \code{\link{rddcoef}}. If there were covariates, and if these covariates were estimated using the 
 #' \dQuote{include} \emph{strategy} and with different coefficients left and right to the cutoff (i.e.
 #' had argument \emph{slope} = \dQuote{separate}), than the RDD effect is also dependent on the value of the covariate(s). 
-#' \code{RDDpred} allows to set the value of the covariate(s) at which to evaluate the RDD effect, by providing a data.frame with
+#' \code{rddpred} allows to set the value of the covariate(s) at which to evaluate the RDD effect, by providing a data.frame with
 #' the values for the covariates. Note that the effect can be evaluated at multiple points, if you provide multiple rows of \code{covdata}. 
 #'
 #' In pressence of covariate-specific RDD effect, one may wish to estimate an average effect. This can be done by setting the argument \code{stat="mean"}. 
@@ -36,10 +36,10 @@
 #' z1 <- runif(n_Lee)
 #' Lee2008_rdd <- rdddata(y=y, x=x, data=Lee2008, covar=z1, cutpoint=0)
 #' 
-#' # estimation without covariates: RDDpred is the same than rddcoef:
+#' # estimation without covariates: rddpred is the same than rddcoef:
 #' reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
 #' 
-#' RDDpred(reg_para)
+#' rddpred(reg_para)
 #' rddcoef(reg_para, allInfo=TRUE)
 #' 
 #' # estimation with covariates: 
@@ -48,12 +48,12 @@
 #'                           covar.opt=list(slope="separate") )
 #'
 #' # should obtain same result as with RDestimate                             
-#' RDDpred(reg_para_cov, covdata=data.frame(z1=0)) 
+#' rddpred(reg_para_cov, covdata=data.frame(z1=0)) 
 #'   
 #' # evaluate at mean of z1 (as comes from uniform)
-#' RDDpred(reg_para_cov, covdata=data.frame(z1=0.5))
+#' rddpred(reg_para_cov, covdata=data.frame(z1=0.5))
 
-RDDpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c("identity", "sum", "mean"), weights){
+rddpred <- function(object, covdata, se.fit=TRUE, vcov. = NULL, newdata, stat=c("identity", "sum", "mean"), weights){
 
   stat <- match.arg(stat)
 
