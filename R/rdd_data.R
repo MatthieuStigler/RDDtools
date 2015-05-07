@@ -75,24 +75,24 @@ rdd_data <- function(y, x, covar, cutpoint, z, labels, data){
 #   if(hasCova && is.null(labels$covar)) labels$covar <- if(NCOL(covar)==1) names(deparse(substitute(y))
 
 ## Assemble data
-  RDDdat <- data.frame(x=x, y=y)
+  rdd_dat <- data.frame(x=x, y=y)
   if(hasCovar) {
-    RDDdat <- cbind(RDDdat,covar)
-    if(NCOL(covar)==1 && is.null(colnames(covar))) colnames(RDDdat)[3] <- covar_nam
+    rdd_dat <- cbind(rdd_dat,covar)
+    if(NCOL(covar)==1 && is.null(colnames(covar))) colnames(rdd_dat)[3] <- covar_nam
   } 
 
   if(type=="Fuzzy"){
-    RDDdat <- cbind(RDDdat,z)
+    rdd_dat <- cbind(rdd_dat,z)
   }
 
 ## return
-  class(RDDdat) <- c("rdd_data", "data.frame")
-  attr(RDDdat, "hasCovar") <- hasCovar
-  attr(RDDdat, "labels") <- labels
-  attr(RDDdat, "cutpoint") <- cutpoint
-  attr(RDDdat, "type") <- type
+  class(rdd_dat) <- c("rdd_data", "data.frame")
+  attr(rdd_dat, "hasCovar") <- hasCovar
+  attr(rdd_dat, "labels") <- labels
+  attr(rdd_dat, "cutpoint") <- cutpoint
+  attr(rdd_dat, "type") <- type
 
-  RDDdat
+  rdd_dat
 }
 
 

@@ -1,17 +1,17 @@
 
 if(FALSE){
-RDDdat_choice <- RDDdata(y=choice_pg, x=xx, cutpoint=30)
-RDDdat_risk <- RDDdata(y=risky_option, x=xx, cutpoint=30)
+rdd_dat_choice <- rdd_data(y=choice_pg, x=xx, cutpoint=30)
+rdd_dat_risk <- rdd_data(y=risky_option, x=xx, cutpoint=30)
 
-RDbw_choice <- RDDbw_IK(RDDdat_choice)
-RDbw_risk <- RDDbw_IK(RDDdat_risk)
+RDbw_choice <- RDDbw_IK(rdd_dat_choice)
+RDbw_risk <- RDDbw_IK(rdd_dat_risk)
 
-rd_choice <- RDDreg_np(RDDdat_choice)
-rd_choice_sam <- RDDreg_np(RDDdat_choice, slope="same")
-rd_choice_lm <- RDDreg_lm(RDDdat_choice)
+rd_choice <- RDDreg_np(rdd_dat_choice)
+rd_choice_sam <- RDDreg_np(rdd_dat_choice, slope="same")
+rd_choice_lm <- RDDreg_lm(rdd_dat_choice)
 
-rd_risk <- RDDreg_np(RDDdat_risk)
-rd_risk_sam <- RDDreg_np(RDDdat_risk, slope="same")
+rd_risk <- RDDreg_np(rdd_dat_risk)
+rd_risk_sam <- RDDreg_np(rdd_dat_risk, slope="same")
 
 
 rd_choice
