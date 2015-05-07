@@ -18,7 +18,7 @@ as.npreg(x, ...)
 An object of class \code{npreg} or \code{npregbw}
 }
 \description{
-Convert an RDDobject to a non-parametric regression \code{npreg} from package \code{np}
+Convert an rdd_object to a non-parametric regression \code{npreg} from package \code{np}
 }
 \details{
 This function converts an RDDreg object into an \code{npreg} object from package \code{np}
@@ -31,7 +31,7 @@ is to set the bandwidth for x and Dx to a large number, so that they converge to
 # Estimate ususal RDDreg:
  data(Lee2008)
  Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
- reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
+ reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd)
 
 ## Convert to npreg:
  reg_nonpara_np <- as.npreg(reg_nonpara)
@@ -40,7 +40,7 @@ is to set the bandwidth for x and Dx to a large number, so that they converge to
 
 ## Compare with result obtained with a Gaussian kernel:
  bw_lm <- dnorm(Lee2008_rdd$x, sd=rddtools:::getBW(reg_nonpara))
- reg_nonpara_gaus <- RDDreg_lm(RDDobject=Lee2008_rdd, w=bw_lm)
+ reg_nonpara_gaus <- RDDreg_lm(rdd_object=Lee2008_rdd, w=bw_lm)
  all.equal(rdd_coef(reg_nonpara_gaus),rdd_coef(reg_nonpara_np))
 }
 \seealso{

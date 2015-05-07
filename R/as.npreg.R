@@ -1,6 +1,6 @@
 #' Convert an RDDreg object to a  \code{npreg} object
 #' 
-#' Convert an RDDobject to a non-parametric regression \code{npreg} from package \code{np}
+#' Convert an rdd_object to a non-parametric regression \code{npreg} from package \code{np}
 #' @param x Object of class \code{RDDreg} created by \code{\link{RDDreg_np}} or \code{\link{RDDreg_lm}}
 #' @param \ldots Further arguments passed to the \code{\link{npregbw}} or \code{\link{npreg}}
 #' @details This function converts an RDDreg object into an \code{npreg} object from package \code{np}
@@ -15,7 +15,7 @@
 #' # Estimate ususal RDDreg:
 #'  data(Lee2008)
 #'  Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-#'  reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
+#'  reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd)
 #' 
 #' ## Convert to npreg:
 #'  reg_nonpara_np <- as.npreg(reg_nonpara)
@@ -24,7 +24,7 @@
 #' 
 #' ## Compare with result obtained with a Gaussian kernel:
 #'  bw_lm <- dnorm(Lee2008_rdd$x, sd=rddtools:::getBW(reg_nonpara))
-#'  reg_nonpara_gaus <- RDDreg_lm(RDDobject=Lee2008_rdd, w=bw_lm)
+#'  reg_nonpara_gaus <- RDDreg_lm(rdd_object=Lee2008_rdd, w=bw_lm)
 #'  all.equal(rdd_coef(reg_nonpara_gaus),rdd_coef(reg_nonpara_np)) 
 
 

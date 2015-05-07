@@ -3,7 +3,7 @@
 #' Imbens-Kalyanaraman optimal bandwidth
 #' for local linear regression in Regression discontinuity designs.
 #' 
-#' @param RDDobject of class rdd_data created by \code{\link{rdd_data}}
+#' @param rdd_object of class rdd_data created by \code{\link{rdd_data}}
 #' @param kernel The type of kernel used: either \code{triangular} or \code{uniform}. 
 #' @return The optimal bandwidth
 #' @references Imbens, Guido and Karthik Kalyanaraman. (2012) "Optimal Bandwidth Choice for the regression discontinuity estimator," 
@@ -16,24 +16,24 @@
 #' RDDbw_IK(rd)
 
 
-RDDbw_IK <-function(RDDobject, kernel=c("Triangular", "Uniform", "Normal")) {
+RDDbw_IK <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal")) {
 
   kernel <- match.arg(kernel)
-  checkIsRDD(RDDobject)
-  cutpoint <- getCutpoint(RDDobject)
+  checkIsRDD(rdd_object)
+  cutpoint <- getCutpoint(rdd_object)
 
-  res <- RDDbw_IK_low(X=RDDobject$x,Y=RDDobject$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=FALSE, kernel=kernel)
+  res <- RDDbw_IK_low(X=rdd_object$x,Y=rdd_object$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=FALSE, kernel=kernel)
   return(res)
 
 }
 
-IK_bias <-function(RDDobject, kernel=c("Triangular", "Uniform", "Normal"), bw) {
+IK_bias <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw) {
 
   kernel <- match.arg(kernel)
-  checkIsRDD(RDDobject)
-  cutpoint <- getCutpoint(RDDobject)
+  checkIsRDD(rdd_object)
+  cutpoint <- getCutpoint(rdd_object)
 
-  resB <- RDDbw_IK_low(X=RDDobject$x,Y=RDDobject$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=TRUE, kernel=kernel)
+  resB <- RDDbw_IK_low(X=rdd_object$x,Y=rdd_object$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=TRUE, kernel=kernel)
 
 ## compute C1: see IK equ 5, and Fan Jijbels (1996, 3.23)
 # is done in R with locpol, computeMu(i=2, equivKernel(TrianK, nu=0, deg=1, lower=0, upper=Inf), lower=0, upper=Inf)
@@ -47,13 +47,13 @@ IK_bias <-function(RDDobject, kernel=c("Triangular", "Uniform", "Normal"), bw) {
 
 }
 
-IK_var <-function(RDDobject, kernel=c("Triangular", "Uniform", "Normal"), bw) {
+IK_var <-function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw) {
 
   kernel <- match.arg(kernel)
-  checkIsRDD(RDDobject)
-  cutpoint <- getCutpoint(RDDobject)
+  checkIsRDD(rdd_object)
+  cutpoint <- getCutpoint(rdd_object)
 
-  resB <- RDDbw_IK_low(X=RDDobject$x,Y=RDDobject$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=TRUE, kernel=kernel)
+  resB <- RDDbw_IK_low(X=rdd_object$x,Y=rdd_object$y,threshold=cutpoint,verbose=FALSE, type="RES", returnBig=TRUE, kernel=kernel)
 
 ## compute C2: see IK equ 5, and Fan Jijbels (1996, 3.23)
 # is done in R with locpol, computeRK(equivKernel(TrianK, nu=0, deg=1, lower=0, upper=Inf), lower=0, upper=Inf)
@@ -62,15 +62,15 @@ IK_var <-function(RDDobject, kernel=c("Triangular", "Uniform", "Normal"), bw) {
 ## Compute var as in IK equ:5, 
   if(missing(bw))  bw <- resB$h_op
   elem1 <- (resB$var_inh_left+resB$var_inh_right)/resB$f_cu
-  elem2 <- C2/(nrow(RDDobject)*bw)
+  elem2 <- C2/(nrow(rdd_object)*bw)
   res <- elem1*elem2
   res
 }
 
-IK_amse <- function(RDDobject, kernel=c("Triangular", "Uniform", "Normal"), bw) {
+IK_amse <- function(rdd_object, kernel=c("Triangular", "Uniform", "Normal"), bw) {
 
-  var <- IK_var(RDDobject=RDDobject, kernel=kernel, bw=bw)
-  bias <- IK_bias(RDDobject=RDDobject, kernel=kernel, bw=bw)
+  var <- IK_var(rdd_object=rdd_object, kernel=kernel, bw=bw)
+  bias <- IK_bias(rdd_object=rdd_object, kernel=kernel, bw=bw)
   res <- bias^2+var
   res
 }

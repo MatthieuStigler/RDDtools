@@ -11,11 +11,11 @@
 #' @examples
 #' data(Lee2008)
 #' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-#' reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
+#' reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd)
 #' plotPlacebo(reg_nonpara)
 #' 
 #' # Use with another vcov function; cluster case
-#' reg_nonpara_lminf <- RDDreg_np(RDDobject=Lee2008_rdd, inference="lm")
+#' reg_nonpara_lminf <- RDDreg_np(rdd_object=Lee2008_rdd, inference="lm")
 #' # need to be a function applied to updated object!
 #' vc <- function(x) vcovCluster(x, clusterVar=model.frame(x)$x)
 #' plotPlacebo(reg_nonpara_lminf, vcov. = vc)
@@ -208,7 +208,7 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
   object_call <- getCall(object)
 
 ## original dataset:
-  dat_orig <- eval(object_call$RDDobject)
+  dat_orig <- eval(object_call$rdd_object)
   hasCov <- hasCovar(dat_orig)
 
 ## run each time:
@@ -224,7 +224,7 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
     
     ## change the cutpoint, reattribute new data:
     attr(dat_sides, "cutpoint") <- seqi[i]
-    object_call$RDDobject <- dat_sides
+    object_call$rdd_object <- dat_sides
 
     ## Change bw if(same_bw=FALSE)
     if(hasBw) object_call$bw <- if(!same_bw) RDDbw_IK(dat_sides) else bw

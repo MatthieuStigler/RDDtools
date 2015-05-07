@@ -3,7 +3,7 @@
 model.matrix.rdd_data <- function(object, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), covar.strat=c("include", "residual"), ...){
 
   checkIsRDD(object)
-  RDDobject <- object
+  rdd_object <- object
   type <- getType(object)
 
   if(!missing(covar.strat)) warning("covar.strat is (soon) deprecated arg!")
@@ -12,11 +12,11 @@ model.matrix.rdd_data <- function(object, covariates=NULL, order=1, bw=NULL, slo
   covar.strat <- match.arg(covar.opt$strategy, choices=c("include", "residual"))
   covar.slope <- match.arg(covar.opt$slope, choices=c("same", "separate"))
   
-  cutpoint <- getCutpoint(RDDobject)
-  if(!is.null(covariates) & !hasCovar(RDDobject))  stop("Arg 'covariates' was specified, but no covariates found in 'RDDobject'.")
+  cutpoint <- getCutpoint(rdd_object)
+  if(!is.null(covariates) & !hasCovar(rdd_object))  stop("Arg 'covariates' was specified, but no covariates found in 'rdd_object'.")
 
 ## Construct data
-  dat <- as.data.frame(RDDobject)
+  dat <- as.data.frame(rdd_object)
 
   dat_step1 <- dat[, c("y", "x")]
   dat_step1$x <- dat_step1$x -cutpoint
@@ -39,7 +39,7 @@ model.matrix.rdd_data <- function(object, covariates=NULL, order=1, bw=NULL, slo
 
 ## Covariates
   if(!is.null(covariates)){
-    covar <- getCovar(RDDobject)
+    covar <- getCovar(rdd_object)
     formu.cova <- covariates
 
     if(grepl("\\.", formu.cova)) formu.cova <- paste(colnames(covar), collapse=" + ")

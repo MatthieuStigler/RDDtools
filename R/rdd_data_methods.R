@@ -119,7 +119,7 @@ plot.rdd_data <- function(x, h, nbins=NULL, xlim=range(object$x, na.rm=TRUE), ce
 #' @examples 
 #' data(Lee2008)
 #' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-#' reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
+#' reg_para <- RDDreg_lm(rdd_object=Lee2008_rdd)
 #' reg_para_lm <- as.lm(reg_para)
 #' reg_para_lm
 #' plot(reg_para_lm, which=4)

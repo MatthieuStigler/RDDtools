@@ -4,10 +4,10 @@
 \alias{dens_test}
 \title{Run the McCracy test for manipulation of the forcing variable}
 \usage{
-dens_test(RDDobject, bin = NULL, bw = NULL, plot = TRUE, ...)
+dens_test(rdd_object, bin = NULL, bw = NULL, plot = TRUE, ...)
 }
 \arguments{
-\item{RDDobject}{object of class rdd_data}
+\item{rdd_object}{object of class rdd_data}
 
 \item{bin}{Argument of the \code{\link{DCdensity}} function, the binwidth}
 
@@ -18,7 +18,7 @@ dens_test(RDDobject, bin = NULL, bw = NULL, plot = TRUE, ...)
 \item{\ldots}{Further arguments passed to \code{\link[rdd]{DCdensity}}.}
 }
 \description{
-Calls the \code{\link[rdd]{DCdensity}} test from package \code{rdd} on a \code{RDDobject}.
+Calls the \code{\link[rdd]{DCdensity}} test from package \code{rdd} on a \code{rdd_object}.
 }
 \examples{
 data(Lee2008)

@@ -4,12 +4,13 @@
 \alias{RDDgenreg}
 \title{General polynomial estimator of the regression discontinuity}
 \usage{
-RDDgenreg(RDDobject, fun = glm, covariates = NULL, order = 1, bw = NULL,
-  slope = c("separate", "same"), covar.opt = list(strategy = c("include",
-  "residual"), slope = c("same", "separate"), bw = NULL), weights, ...)
+RDDgenreg(rdd_object, fun = glm, covariates = NULL, order = 1,
+  bw = NULL, slope = c("separate", "same"), covar.opt = list(strategy =
+  c("include", "residual"), slope = c("same", "separate"), bw = NULL), weights,
+  ...)
 }
 \arguments{
-\item{RDDobject}{Object of class rdd_data created by \code{\link{rdd_data}}}
+\item{rdd_object}{Object of class rdd_data created by \code{\link{rdd_data}}}
 
 \item{fun}{The function to estimate the parameters}
 
@@ -52,7 +53,7 @@ Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 
 ## Estimate a local probit:
 Lee2008_rdd$y <- with(Lee2008_rdd, ifelse(y<quantile(y, 0.25), 0,1))
-reg_bin_glm <- RDDgenreg(RDDobject=Lee2008_rdd, fun= glm, family=binomial(link="probit"))
+reg_bin_glm <- RDDgenreg(rdd_object=Lee2008_rdd, fun= glm, family=binomial(link="probit"))
 print(reg_bin_glm)
 summary(reg_bin_glm)
 }

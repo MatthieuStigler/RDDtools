@@ -55,11 +55,11 @@ Draw a plot of placebo tests, estimating the impact on fake cutpoints
 \examples{
 data(Lee2008)
 Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
-reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
+reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd)
 plotPlacebo(reg_nonpara)
 
 # Use with another vcov function; cluster case
-reg_nonpara_lminf <- RDDreg_np(RDDobject=Lee2008_rdd, inference="lm")
+reg_nonpara_lminf <- RDDreg_np(rdd_object=Lee2008_rdd, inference="lm")
 # need to be a function applied to updated object!
 vc <- function(x) vcovCluster(x, clusterVar=model.frame(x)$x)
 plotPlacebo(reg_nonpara_lminf, vcov. = vc)

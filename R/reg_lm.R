@@ -2,7 +2,7 @@
 #' 
 #' Compute a parametric polynomial regression of the ATE, 
 #' possibly on the range specified by bandwidth
-#' @param RDDobject Object of class rdd_data created by \code{\link{rdd_data}}
+#' @param rdd_object Object of class rdd_data created by \code{\link{rdd_data}}
 #' @param covariates Formula to include covariates
 #' @param order Order of the polynomial regression. 
 #' @param bw A bandwidth to specify the subset on which the parametric regression is estimated
@@ -35,27 +35,27 @@
 #' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 #' ## Step 2: regression
 #' # Simple polynomial of order 1:
-#' reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
+#' reg_para <- RDDreg_lm(rdd_object=Lee2008_rdd)
 #' print(reg_para)
 #' plot(reg_para)
 #'
 #' # Simple polynomial of order 4:
-#' reg_para4 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=4)
+#' reg_para4 <- RDDreg_lm(rdd_object=Lee2008_rdd, order=4)
 #' reg_para4
 #' plot(reg_para4)
 #'
 #' # Restrict sample to bandwidth area:
 #' bw_ik <- RDDbw_IK(Lee2008_rdd)
-#' reg_para_ik <- RDDreg_lm(RDDobject=Lee2008_rdd, bw=bw_ik, order=4)
+#' reg_para_ik <- RDDreg_lm(rdd_object=Lee2008_rdd, bw=bw_ik, order=4)
 #' reg_para_ik
 #' plot(reg_para_ik)
 
 
-RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), covar.strat=c("include", "residual"), weights){
+RDDreg_lm <- function(rdd_object, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), covar.strat=c("include", "residual"), weights){
 
-  checkIsRDD(RDDobject)
-  cutpoint <- getCutpoint(RDDobject)
-  type <- getType(RDDobject)
+  checkIsRDD(rdd_object)
+  cutpoint <- getCutpoint(rdd_object)
+  type <- getType(rdd_object)
 
   slope <- match.arg(slope)
 
@@ -63,7 +63,7 @@ RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
   if(!missing(weights)&!is.null(bw)) stop("Cannot give both 'bw' and 'weights'")
 
 ## Subsetting
-  dat <- as.data.frame(RDDobject)
+  dat <- as.data.frame(rdd_object)
 
   if(!is.null(bw)){
     weights <- ifelse(dat$x >= cutpoint -bw & dat$x <= cutpoint +bw, 1, 0)
@@ -75,7 +75,7 @@ RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
 
 ## Construct data
   if(missing(weights)) weights <- NULL
-  dat_step1 <- model.matrix(RDDobject, covariates=covariates, order=order, bw=bw, 
+  dat_step1 <- model.matrix(rdd_object, covariates=covariates, order=order, bw=bw, 
 			    slope=slope, covar.opt=covar.opt)
 
 ## Regression
@@ -91,7 +91,7 @@ RDDreg_lm <- function(RDDobject, covariates=NULL, order=1, bw=NULL, slope=c("sep
 
 ##Return
   RDDslot <- list()
-  RDDslot$rdd_data <- RDDobject
+  RDDslot$rdd_data <- rdd_object
   reg$RDDslot <- RDDslot 
   class(reg) <- c("RDDreg_lm", "RDDreg", class_reg)
   attr(reg, "PolyOrder") <- order

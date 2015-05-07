@@ -4,13 +4,13 @@
 \alias{RDDreg_lm}
 \title{Parametric polynomial estimator of the regression discontinuity}
 \usage{
-RDDreg_lm(RDDobject, covariates = NULL, order = 1, bw = NULL,
+RDDreg_lm(rdd_object, covariates = NULL, order = 1, bw = NULL,
   slope = c("separate", "same"), covar.opt = list(strategy = c("include",
   "residual"), slope = c("same", "separate"), bw = NULL),
   covar.strat = c("include", "residual"), weights)
 }
 \arguments{
-\item{RDDobject}{Object of class rdd_data created by \code{\link{rdd_data}}}
+\item{rdd_object}{Object of class rdd_data created by \code{\link{rdd_data}}}
 
 \item{covariates}{Formula to include covariates}
 
@@ -56,18 +56,18 @@ data(Lee2008)
 Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 ## Step 2: regression
 # Simple polynomial of order 1:
-reg_para <- RDDreg_lm(RDDobject=Lee2008_rdd)
+reg_para <- RDDreg_lm(rdd_object=Lee2008_rdd)
 print(reg_para)
 plot(reg_para)
 
 # Simple polynomial of order 4:
-reg_para4 <- RDDreg_lm(RDDobject=Lee2008_rdd, order=4)
+reg_para4 <- RDDreg_lm(rdd_object=Lee2008_rdd, order=4)
 reg_para4
 plot(reg_para4)
 
 # Restrict sample to bandwidth area:
 bw_ik <- RDDbw_IK(Lee2008_rdd)
-reg_para_ik <- RDDreg_lm(RDDobject=Lee2008_rdd, bw=bw_ik, order=4)
+reg_para_ik <- RDDreg_lm(rdd_object=Lee2008_rdd, bw=bw_ik, order=4)
 reg_para_ik
 plot(reg_para_ik)
 }

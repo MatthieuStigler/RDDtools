@@ -55,7 +55,7 @@ covarTest_mean(Lee2008_rdd_Z, bw=0.3)
 covarTest_dis(Lee2008_rdd_Z, bw=0.3)
 
 ## covarTest_mean works also on regression outputs (bw will be taken from the model)
-reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd_Z)
+reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd_Z)
 covarTest_mean(reg_nonpara)
 }
 \seealso{

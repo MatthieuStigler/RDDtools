@@ -2,7 +2,7 @@
 #' 
 #' Compute RDD estimate allowing a locally kernel weighted version of any estimation function
 #' possibly on the range specified by bandwidth
-#' @param RDDobject Object of class rdd_data created by \code{\link{rdd_data}}
+#' @param rdd_object Object of class rdd_data created by \code{\link{rdd_data}}
 #' @param covariates Formula to include covariates
 #' @param order Order of the polynomial regression. 
 #' @param bw A bandwidth to specify the subset on which the kernel weighted regression is estimated
@@ -30,15 +30,15 @@
 #' 
 #' ## Estimate a local probit:
 #' Lee2008_rdd$y <- with(Lee2008_rdd, ifelse(y<quantile(y, 0.25), 0,1))
-#' reg_bin_glm <- RDDgenreg(RDDobject=Lee2008_rdd, fun= glm, family=binomial(link="probit"))
+#' reg_bin_glm <- RDDgenreg(rdd_object=Lee2008_rdd, fun= glm, family=binomial(link="probit"))
 #' print(reg_bin_glm)
 #' summary(reg_bin_glm)
 #'
 
-RDDgenreg <- function(RDDobject, fun=glm, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), weights, ...){
+RDDgenreg <- function(rdd_object, fun=glm, covariates=NULL, order=1, bw=NULL, slope=c("separate", "same"), covar.opt=list(strategy=c("include", "residual"), slope=c("same", "separate"), bw=NULL), weights, ...){
 
-  checkIsRDD(RDDobject)
-  cutpoint <- getCutpoint(RDDobject)
+  checkIsRDD(rdd_object)
+  cutpoint <- getCutpoint(rdd_object)
 
   slope <- match.arg(slope)
 
@@ -46,7 +46,7 @@ RDDgenreg <- function(RDDobject, fun=glm, covariates=NULL, order=1, bw=NULL, slo
 
 
   ## Subsetting
-  dat <- as.data.frame(RDDobject)
+  dat <- as.data.frame(rdd_object)
 
   if(!is.null(bw)){
     weights <- ifelse(dat$x >= cutpoint -bw & dat$x <= cutpoint +bw, 1, 0)
@@ -58,7 +58,7 @@ RDDgenreg <- function(RDDobject, fun=glm, covariates=NULL, order=1, bw=NULL, slo
 
 ## Construct data
   if(missing(weights)) weights <- NULL
-  dat_step1 <- model.matrix(RDDobject, covariates=covariates, order=order, bw=bw, 
+  dat_step1 <- model.matrix(rdd_object, covariates=covariates, order=order, bw=bw, 
 			    slope=slope, covar.opt=covar.opt)
 
 ## Regression
@@ -66,7 +66,7 @@ RDDgenreg <- function(RDDobject, fun=glm, covariates=NULL, order=1, bw=NULL, slo
   
   ##Return
   RDDslot <- list()
-  RDDslot$rdd_data <- RDDobject
+  RDDslot$rdd_data <- rdd_object
   reg$RDDslot <- RDDslot 
   class(reg) <- c("RDDreg_lm", "RDDreg", class(reg))
   attr(reg, "PolyOrder") <- order
@@ -77,15 +77,15 @@ RDDgenreg <- function(RDDobject, fun=glm, covariates=NULL, order=1, bw=NULL, slo
   reg
 }
 
-RDDgenreg_old <- function(RDDobject, covariates=".", bw=RDDbw_IK(RDDobject), slope=c("separate", "same"), fun=glm, ...){
+RDDgenreg_old <- function(rdd_object, covariates=".", bw=RDDbw_IK(rdd_object), slope=c("separate", "same"), fun=glm, ...){
 
   slope <- match.arg(slope)
-  checkIsRDD(RDDobject)
+  checkIsRDD(rdd_object)
   if(!is.function(fun)) stop("Arg 'fun' should be a function")
-  cutpoint <- getCutpoint(RDDobject)
+  cutpoint <- getCutpoint(rdd_object)
 
 ## Construct data
-  dat <- as.data.frame(RDDobject)
+  dat <- as.data.frame(rdd_object)
 
   dat_step1 <- dat[, c("y", "x")]
   dat_step1$x <- dat_step1$x -cutpoint

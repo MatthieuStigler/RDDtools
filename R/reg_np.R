@@ -2,7 +2,7 @@
 #' 
 #' Compute a parametric polynomial regression of the ATE, 
 #' possibly on the range specified by bandwidth
-#' @param RDDobject Object of class rdd_data created by \code{\link{rdd_data}}
+#' @param rdd_object Object of class rdd_data created by \code{\link{rdd_data}}
 #' @param covariates TODO
 #' @param bw A bandwidth to specify the subset on which the parametric regression is estimated
 #' @param inference Type of inference to conduct: non-parametric one (\code{np}) or standard (\code{lm}). See details. 
@@ -18,25 +18,25 @@
 #' Lee2008_rdd <- rdd_data(y=Lee2008$y, x=Lee2008$x, cutpoint=0)
 #' ## Step 2: regression
 #' # Simple polynomial of order 1:
-#' reg_nonpara <- RDDreg_np(RDDobject=Lee2008_rdd)
+#' reg_nonpara <- RDDreg_np(rdd_object=Lee2008_rdd)
 #' print(reg_nonpara)
 #' plot(reg_nonpara)
 
 
-RDDreg_np <- function(RDDobject, covariates=NULL, bw=RDDbw_IK(RDDobject), slope=c("separate", "same"), inference=c("np", "lm"), covar.opt=list(slope=c("same", "separate"), bw=NULL)){
+RDDreg_np <- function(rdd_object, covariates=NULL, bw=RDDbw_IK(rdd_object), slope=c("separate", "same"), inference=c("np", "lm"), covar.opt=list(slope=c("same", "separate"), bw=NULL)){
 
   slope <- match.arg(slope)
   inference <- match.arg(inference)
-  checkIsRDD(RDDobject)
-  cutpoint <- getCutpoint(RDDobject)
+  checkIsRDD(rdd_object)
+  cutpoint <- getCutpoint(rdd_object)
 
   if(!is.null(covariates)) warning("covariates not fully implemented for non-para reg")
 
 ## Construct data
   if("strategy"%in%names(covar.opt)) warning("Arg 'strategy' should not be used for ")
   covar.opt$strategy <- "include"
-  dat <- as.data.frame(RDDobject)
-  dat_step1 <- model.matrix(RDDobject, covariates=covariates, order=1, bw=bw, 
+  dat <- as.data.frame(rdd_object)
+  dat_step1 <- model.matrix(rdd_object, covariates=covariates, order=1, bw=bw, 
 			    slope=slope, covar.opt=covar.opt)
 
 
@@ -65,7 +65,7 @@ RDDreg_np <- function(RDDobject, covariates=NULL, bw=RDDbw_IK(RDDobject), slope=
 ##Return
   res <- list()
   RDDslot <- list()
-  RDDslot$rdd_data <- RDDobject
+  RDDslot$rdd_data <- rdd_object
   RDDslot$model <- reg
   res$coefficients <- coef(reg)["D"]
   res$coefMat <- coefmat 
