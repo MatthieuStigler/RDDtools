@@ -8,7 +8,4 @@
 \description{
 Regression Discontinuity Design
 }
-\details{
-Provides function to do a comprehensive regression discontinuity analysis.
-}
 
