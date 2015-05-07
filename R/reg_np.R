@@ -98,7 +98,7 @@ print.RDDreg_np <- function(x, signif.stars = getOption("show.signif.stars"), ..
 
   cat("\n\tCoefficient:\n")
 
-  printCoefmat(rddcoef(x, allInfo=TRUE), signif.stars=signif.stars)
+  printCoefmat(rdd_coef(x, allInfo=TRUE), signif.stars=signif.stars)
 
 }
 
@@ -148,7 +148,7 @@ print.summary.RDDreg_np <- function(x, digits = max(3, getOption("digits") - 3),
 
   cat("\n\tCoefficient:\n")
 
-  printCoefmat(rddcoef(x, allInfo=TRUE), signif.stars=signif.stars)
+  printCoefmat(rdd_coef(x, allInfo=TRUE), signif.stars=signif.stars)
 
   cat("\n\tLocal R squared:",  formatC(x$r.squared, digits = digits), "\n")
 

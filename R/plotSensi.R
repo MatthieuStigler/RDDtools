@@ -52,7 +52,7 @@ plotSensi.RDDreg_np <- function(RDDregobject, from, to, by=0.05, level=0.95, out
 
   object <- RDDregobject
   bw <- getBW(object)
-  est <- rddcoef(object)
+  est <- rdd_coef(object)
 
 ## set grid:
   if(missing(from))  from <- max(1e-3, bw-0.1)
@@ -74,11 +74,11 @@ plotSensi.RDDreg_np <- function(RDDregobject, from, to, by=0.05, level=0.95, out
     object_call$bw <- seq_bw[i]
     object_new <- try(eval(object_call), silent=TRUE)
     if(!inherits(object_new, "try-error")){
-      seq_vals[i,"LATE"] <- rddcoef(object_new)
+      seq_vals[i,"LATE"] <- rdd_coef(object_new)
       if(!is.null(vcov.)) {
 	co <- coeftest(object_new, vcov.=vcov.)["D",, drop=FALSE]
       } else {
-	co <- rddcoef(object_new, allInfo=TRUE)
+	co <- rdd_coef(object_new, allInfo=TRUE)
       }
       seq_vals[i,"se"] <- co[,"Std. Error"]
       seq_vals[i,"p_value"] <- co[,4]
@@ -123,7 +123,7 @@ plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, out
   type <- match.arg(type)
   output <- match.arg(output)
   object <- RDDregobject
-  est <- rddcoef(object)
+  est <- rdd_coef(object)
   bw <- getBW(object)
   origOrder <- getOrder(object)
   hasBw <- !is.null(bw)
@@ -170,7 +170,7 @@ plotSensi.RDDreg_lm <- function(RDDregobject, from, to, by=0.05, level=0.95, out
 
       # put output estim/se into matrix:
       if(!inherits(object_new, "try-error")){
-        co <- rddcoef(object_new, allInfo=TRUE)
+        co <- rdd_coef(object_new, allInfo=TRUE)
         seq_vals[i+(j-1)*n_seq_bw,"LATE"] <- co[,1]
         seq_vals[i+(j-1)*n_seq_bw,"se"] <- co[,2]
       } else {

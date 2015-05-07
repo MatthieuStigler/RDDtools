@@ -44,7 +44,7 @@ checkRDDmean <- function(x, n=5){
 
 sapply(reg_li, checkRDDmean)
 
-sapply(reg_li, function(x) all.equal(unlist(rdd_pred(x)),rddcoef(x, allInfo=TRUE)[1,1:2], check.attributes=FALSE))
+sapply(reg_li, function(x) all.equal(unlist(rdd_pred(x)),rdd_coef(x, allInfo=TRUE)[1,1:2], check.attributes=FALSE))
 
 
 # 
@@ -82,7 +82,7 @@ aaa <- lm("y ~ -1+ D + I(1-D)+`x` + `x^2` + `x^3` + `x^4` + `x_right` + `x^2_rig
 # rdd_pred(reg_para4_cov_slSep)
 # rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=0))
 # 
-# rddcoef(reg_para4_cov_slSep, allInfo=TRUE)
+# rdd_coef(reg_para4_cov_slSep, allInfo=TRUE)
 
 ## compare rdd_pred and Delta at 1:
 rdd_p_1 <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=1))
@@ -93,7 +93,7 @@ all.equal(unlist(rdd_p_1), drop(as.matrix(delta_1[1:2])), check.attributes=FALSE
 
 ## compare rdd_pred and Delta at 0:
 rdd_p_0 <- rdd_pred(reg_para4_cov_slSep, covdata=data.frame(z1=0))
-rdd_c_0 <- rddcoef(reg_para4_cov_slSep, allInfo=TRUE)
+rdd_c_0 <- rdd_coef(reg_para4_cov_slSep, allInfo=TRUE)
 delta_0 <- deltaMethod(aaa, "a1 - a2 ", parameterNames=paste("a", 1:12, sep=""))
 rdd_p_0
 rdd_c_0

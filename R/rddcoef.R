@@ -10,21 +10,21 @@
 #' @export
 
 
-rddcoef <- function(object, allInfo=FALSE, allCo=FALSE, ...)
-  UseMethod("rddcoef")
+rdd_coef <- function(object, allInfo=FALSE, allCo=FALSE, ...)
+  UseMethod("rdd_coef")
 
-#' @rdname rddcoef
+#' @rdname rdd_coef
 #' @export
-rddcoef.default <- function(object, allInfo=FALSE, allCo=FALSE, ...){
+rdd_coef.default <- function(object, allInfo=FALSE, allCo=FALSE, ...){
   res <- coef(summary(object))
   if(!allCo) res <- res["D",, drop=FALSE]
   if(!allInfo) res <- res[,"Estimate"]
   res
 }
 
-#' @rdname rddcoef
+#' @rdname rdd_coef
 #' @export
-rddcoef.RDDreg_np <- function(object, allInfo=FALSE, allCo=FALSE, ...){
+rdd_coef.RDDreg_np <- function(object, allInfo=FALSE, allCo=FALSE, ...){
   res<- object$coefMat
   if(!allCo) res <- res["D",, drop=FALSE]
   if(!allInfo) res <- res[,"Estimate"]

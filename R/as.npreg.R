@@ -20,12 +20,12 @@
 #' ## Convert to npreg:
 #'  reg_nonpara_np <- as.npreg(reg_nonpara)
 #'  reg_nonpara_np
-#'  rddcoef(reg_nonpara_np, allCo=TRUE, allInfo=TRUE)
+#'  rdd_coef(reg_nonpara_np, allCo=TRUE, allInfo=TRUE)
 #' 
 #' ## Compare with result obtained with a Gaussian kernel:
 #'  bw_lm <- dnorm(Lee2008_rdd$x, sd=rddtools:::getBW(reg_nonpara))
 #'  reg_nonpara_gaus <- RDDreg_lm(RDDobject=Lee2008_rdd, w=bw_lm)
-#'  all.equal(rddcoef(reg_nonpara_gaus),rddcoef(reg_nonpara_np)) 
+#'  all.equal(rdd_coef(reg_nonpara_gaus),rdd_coef(reg_nonpara_np)) 
 
 
 as.npregbw <- function(x,...){
@@ -91,7 +91,7 @@ as.npregbw_low <- function(x, npreg=FALSE, adjustIK_bw=TRUE, ...){
 
 
 #' @export
-rddcoef.RDDreg_npreg <- function(object, allInfo=FALSE, allCo=FALSE, ...){
+rdd_coef.RDDreg_npreg <- function(object, allInfo=FALSE, allCo=FALSE, ...){
 
   co <- diff(object$mean)
   if(allInfo) {

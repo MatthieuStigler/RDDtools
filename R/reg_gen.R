@@ -18,7 +18,7 @@
 #'   \item A \code{weight} argument
 #'   \item A coef(summary(x)) returning a data-frame containing a column Estimate
 #' }
-#' Note that for the last requirement, this can be accomodated by writing a specific \code{\link{rddcoef}} 
+#' Note that for the last requirement, this can be accomodated by writing a specific \code{\link{rdd_coef}} 
 #' function for the class of the object returned by \code{fun}. 
 #' @return An object of class RDDreg_lm and class lm, with specific print and plot methods
 #' @references TODO

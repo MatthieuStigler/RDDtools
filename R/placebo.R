@@ -244,11 +244,11 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
       # load the lmtest package
       # require("lmtest")
 
-      seq_vals[i,"LATE"] <- rddcoef(object_new)
+      seq_vals[i,"LATE"] <- rdd_coef(object_new)
       if(!is.null(vcov.)) {
         co <- lmtest::coeftest(object_new, vcov.=vcov.)["D",, drop=FALSE]
       } else {
-        co <- rddcoef(object_new, allInfo=TRUE)
+        co <- rdd_coef(object_new, allInfo=TRUE)
       }
       seq_vals[i,"se"] <- co[,"Std. Error"]
       seq_vals[i,"p_value"] <- co[,4]
@@ -262,10 +262,10 @@ computePlacebo <- function(object, from=0.25, to=0.75, by=0.1, level=0.95, same_
   if(!is.null(vcov.)) {
     true_co <- coeftest(object, vcov.=vcov.)["D",, drop=FALSE]
   } else {
-    true_co <- rddcoef(object, allInfo=TRUE)
+    true_co <- rdd_coef(object, allInfo=TRUE)
   }
   true_confint <- as.numeric(waldci(object, level=level, vcov.=vcov.)["D",])
-  true <- data.frame(cutpoint=cutpoint, position="True", LATE=rddcoef(object), 
+  true <- data.frame(cutpoint=cutpoint, position="True", LATE=rdd_coef(object), 
 		      se=true_co["D","Std. Error"], p_value=true_co["D",4], 
 		      CI_low=true_confint[1], CI_high=true_confint[2], bw=bw)
 
