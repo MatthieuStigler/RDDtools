@@ -9,7 +9,7 @@ gplot <- function(x,  h, xlim=range(object$x, na.rm=TRUE), cex=0.7, nplot=3,type
     if(!all(xlim==range(object$x, na.rm=TRUE))){
       object <- subset(object, object$x> min(xlim) & object$x< max(xlim))
     }
-    h <- RDDbw_RSW(object) 
+    h <- rdd_bw_rsw(object) 
     if(is_even(nplot)) {
       se <- seq(from=1-(sum(1:nplot<(nplot/2)))*0.2, to=1+(sum(1:nplot>(nplot/2)))*0.2, by=.2)
     } else {

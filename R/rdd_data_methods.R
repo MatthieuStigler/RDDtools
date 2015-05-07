@@ -31,7 +31,7 @@ summary.rdd_data <- function(object, ...){
 #' @details Produces a simple binned plot averaging values within each interval. The length of the intervals
 #' is specified with the argument \code{h}, specifying the whole binwidth (contrary to the usual bandwidth
 #' argument, that gives half of the length of the kernel window. 
-#' When no bandwidth is given, the bandwidth of Ruppert et al is used, see \code{\link{RDDbw_RSW}}. 
+#' When no bandwidth is given, the bandwidth of Ruppert et al is used, see \code{\link{rdd_bw_rsw}}. 
 #' @export
 #' @examples
 #' data(Lee2008)
@@ -63,7 +63,7 @@ plot.rdd_data <- function(x, h, nbins=NULL, xlim=range(object$x, na.rm=TRUE), ce
     if(!all(xlim==range(object$x, na.rm=TRUE))){
       object <- subset(object, x> min(xlim) & x< max(xlim))
     }
-    h <- RDDbw_RSW(object) 
+    h <- rdd_bw_rsw(object) 
     if(is_even(nplot)) {
       se <- seq(from=1-(sum(1:nplot<(nplot/2)))*0.2, to=1+(sum(1:nplot>(nplot/2)))*0.2, by=.2)
     } else {

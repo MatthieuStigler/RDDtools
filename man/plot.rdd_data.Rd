@@ -34,7 +34,7 @@ Binned plot of the forcing and outcome variable
 Produces a simple binned plot averaging values within each interval. The length of the intervals
 is specified with the argument \code{h}, specifying the whole binwidth (contrary to the usual bandwidth
 argument, that gives half of the length of the kernel window.
-When no bandwidth is given, the bandwidth of Ruppert et al is used, see \code{\link{RDDbw_RSW}}.
+When no bandwidth is given, the bandwidth of Ruppert et al is used, see \code{\link{rdd_bw_rsw}}.
 }
 \examples{
 data(Lee2008)
