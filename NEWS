@@ -3,6 +3,10 @@ RDDtools 0.3.0.9000
 
 * development taken over by Bastiaan
 
+* rename package to rddtools (from RDDtools)
+
+* rename functions to lower case
+
 * move package from subdir to repo root directory
 
 * change S3class method to export for roxygen
