@@ -55,11 +55,11 @@ rot_bw <- function(object){
 #' @examples
 #' data(Lee2008)
 #' rd<- rdd_data(x=Lee2008$x, y=Lee2008$y, cutpoint=0)
-#' RDDbw_RSW(rd)
+#' rdd_bw_rsw(rd)
 
 
 ####
-RDDbw_RSW <- function(object, type=c("global", "sided")){
+rdd_bw_rsw <- function(object, type=c("global", "sided")){
 
   type <- match.arg(type)
 
@@ -90,6 +90,6 @@ if(FALSE){
 #   head(lee_dat4)
 #   a<-rdd_data(y=lee_dat4[,2], x=lee_dat4[,1], cutpoint=0)
 # rot_bw(object=a)
-# RDDbw_RSW(object=a)
-RDDbw_RSW(object=a, type="sided")
+# rdd_bw_rsw(object=a)
+rdd_bw_rsw(object=a, type="sided")
 }
