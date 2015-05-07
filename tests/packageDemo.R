@@ -52,7 +52,7 @@ plot(Lee2008_rdd, xlim=c(-0.5, 0.5))
 
 ## few bandwidths:
 RDDbw_RSW(Lee2008_rdd)
-RDDbw_IK(Lee2008_rdd)
+rdd_bw_ik(Lee2008_rdd)
 
 
 ###### Parametric regression ######
@@ -79,7 +79,7 @@ plot(reg_para4)
 all.equal(unlist(rdd_pred(reg_para4)), rdd_coef(reg_para4, allInfo=TRUE)[1:2], check.attributes=FALSE)
 
 ## Restrict sample to bandwidth area:
-bw_ik <- RDDbw_IK(Lee2008_rdd)
+bw_ik <- rdd_bw_ik(Lee2008_rdd)
 reg_para_ik <- rdd_reg_lm(rdd_object=Lee2008_rdd, bw=bw_ik, order=4)
 reg_para_ik
 plot(reg_para_ik)
@@ -202,7 +202,7 @@ covarTest_dis(Lee2008_rdd_z, bw=0.1)
 covarTest_mean(reg_para4_cov)
 covarTest_dis(reg_para4_cov)
 #### as npreg
-  reg_nonpara_np <- as.npreg(reg_nonpara, adjustIK_bw=FALSE)
+  reg_nonpara_np <- as.npreg(reg_nonpara, adjustik_bw=FALSE)
   reg_nonpara_np
   rdd_coef(reg_nonpara_np)
   rdd_coef(reg_nonpara_np, allCo=TRUE)

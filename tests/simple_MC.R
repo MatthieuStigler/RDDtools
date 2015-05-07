@@ -17,7 +17,7 @@ MC_simple <- function(n=200, CATE=0.3, HATE=0.1){
 input_mc <- MC_simple(n=1000, CATE=0.4)
 plot(input_mc)
 
-RDD_bw <- RDDbw_IK(input_mc)
+RDD_bw <- rdd_bw_ik(input_mc)
 
 RDD_np_sep <- rdd_reg_np(input_mc, bw=RDD_bw)
 RDD_np_same <- rdd_reg_np(input_mc, slope="same", bw=RDD_bw)
@@ -50,16 +50,16 @@ plotPlacebo(RDD_lm_same)
 
 #### Other MCs:
 set.seed(123)
-head(gen_MC_IK())
+head(gen_mc_ik())
 
 set.seed(123)
-head(gen_MC_IK(output="rdd_data"))
+head(gen_mc_ik(output="rdd_data"))
 
 set.seed(123)
-head(gen_MC_IK(version=2))
+head(gen_mc_ik(version=2))
 
 set.seed(123)
-head(gen_MC_IK(version=3))
+head(gen_mc_ik(version=3))
 
 set.seed(123)
-head(gen_MC_IK(version=4))
+head(gen_mc_ik(version=4))

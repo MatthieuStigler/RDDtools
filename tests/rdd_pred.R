@@ -13,11 +13,11 @@ Z<- data.frame(z1=rnorm(n_Lee), z2=rnorm(n_Lee, mean=20, sd=2), z3=sample(letter
 Lee2008_rdd_z <- rdd_data(y=Lee2008$y, x=Lee2008$x, covar=Z,cutpoint=0)
 
 #### REGS
-bw_IK <- RDDbw_IK(Lee2008_rdd_z)
-w_IK <- rddtools:::Kernel_tri(Lee2008_rdd_z$x, 0, bw_IK)
+bw_ik <- rdd_bw_ik(Lee2008_rdd_z)
+w_ik <- rddtools:::Kernel_tri(Lee2008_rdd_z$x, 0, bw_ik)
 reg_para4_cov_slSep <- rdd_reg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates="z1", covar.opt=list(slope="separate"))
-reg_para4_cov_slSep_W <- rdd_reg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates="z1", covar.opt=list(slope="separate"), weights=w_IK)
-reg_np_cov <- rdd_reg_np(rdd_object=Lee2008_rdd_z, covariates="z1", bw=bw_IK, inference="lm")
+reg_para4_cov_slSep_W <- rdd_reg_lm(rdd_object=Lee2008_rdd_z, order=4, covariates="z1", covar.opt=list(slope="separate"), weights=w_ik)
+reg_np_cov <- rdd_reg_np(rdd_object=Lee2008_rdd_z, covariates="z1", bw=bw_ik, inference="lm")
 
 
 
