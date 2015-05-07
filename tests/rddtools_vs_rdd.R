@@ -10,7 +10,7 @@ y<-3+2*x+3*cov+10*(x>=0)+rnorm(1000)
 RD <- rdd_data(x=x, y=y, cutpoint=0, covar=cov)
 
 ### Simple estimation:
-bw <- ikbandwidth(X=x, Y=y, cutpoint=0)
+bw <- IKbandwidth(X=x, Y=y, cutpoint=0)
 bw
 rdd_mod <- RDestimate(y~x, bw=bw, se.type="const", model=TRUE)$model[[1]]
 RDDtools_mod <- rdd_reg_np(RD, bw=bw, inference="lm")
