@@ -11,6 +11,7 @@
 #' the column names can be entered directly for argument \code{x} and \code{y}
 #' @param z Assignment variable for the fuzzy case. 
 #' @return Object of class \code{rdd_data}, inheriting from \code{data.frame}
+#' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 #' @export
 #' @examples
 #' data(house)
