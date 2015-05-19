@@ -8,6 +8,7 @@
 #' @param plot Whether to actually plot the data. 
 #' @param output Whether to return (invisibly) the data frame containing the bandwidths and corresponding estimates, or the ggplot object
 #' @return A data frame containing the cutpoints, their corresponding estimates and confidence intervals. 
+#' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 #' @examples
 #' data(house)
 #' house_rdd <- rdd_data(y=house$y, x=house$x, cutpoint=0)
