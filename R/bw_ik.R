@@ -8,7 +8,8 @@
 #' @return The optimal bandwidth
 #' @references Imbens, Guido and Karthik Kalyanaraman. (2012) 'Optimal Bandwidth Choice for the regression discontinuity estimator,' 
 #' Review of Economic Studies (2012) 79, 933-959
-#' @seealso \code{\link{rdd_bw_rsw}} Global bandwidth selector of Ruppert, Sheather and Wand (1995) 
+#' @seealso \code{\link{rdd_bw_rsw}} Global bandwidth selector of Ruppert, Sheather and Wand (1995)
+#' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 #' @export
 #' @examples
 #' data(house)
