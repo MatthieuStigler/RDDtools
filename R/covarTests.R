@@ -9,6 +9,7 @@
 #' @param p.adjust Whether to adjust the p-values for multiple testing. Uses the \code{\link{p.adjust}} function
 #' @param \ldots currently not used
 #' @return A data frame with, for each covariate, the mean on each size, the difference, t-stat and ts p-value. 
+#' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 #' @seealso \code{\link{covarTest_dis}} for the Kolmogorov-Smirnov test of equality of distribution
 #' @examples
 #' data(house)
