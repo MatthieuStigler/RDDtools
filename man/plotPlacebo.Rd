@@ -64,4 +64,7 @@ reg_nonpara_lminf <- rdd_reg_np(rdd_object=house_rdd, inference='lm')
 vc <- function(x) vcovCluster(x, clusterVar=model.frame(x)$x)
 plotPlacebo(reg_nonpara_lminf, vcov. = vc)
 }
+\author{
+Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
+}
 

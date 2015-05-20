@@ -53,4 +53,7 @@ plot(house_rdd, nbins=22)
 ## If the specified number of bins is odd, the larger number is given to side with largest range
 plot(house_rdd, nbins=21)
 }
+\author{
+Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
+}
 
