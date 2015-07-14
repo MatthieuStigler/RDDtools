@@ -7,9 +7,29 @@
 
 if (getRversion() >= "3.1.0") {
     utils::globalVariables(c("x", "y", "position", "cutpoint", "LATE", "CI_low", "CI_high"))
-    utils::suppressForeignCheck(c("x", "y", "position", "cutpoint", "LATE", "CI_low", "CI_high"))
 } 
 
+#' @name indh
+#' @docType data
+#' @title INDH data set
+#' @description Data from the Initiative Nationale du Development Humaine, collected as the part of the SNSF project "Development Aid and Social Dynamics"
+#' @format A data frame with three variables with 740 observations each
+#' @source Development Aid and social Dyanmics website: \url{http://qua.st/Development-Aid-Social-Dynamics}
+#' @references Arcand, Reiger, Nguyen (2015) 'Development Aid and Social Dyanmics Data Set'
+#' @examples 
+#' # load the data
+#' data(indh)
+#' 
+#' # construct rdd_data frame
+#' rdd_dat_indh <- rdd_data(y=choice_pg, x=poverty, data=indh, cutpoint=30)
+#' 
+#' # inspect data frame
+#' summary(rdd_dat_indh)
+#' 
+#' # perform non-parametric regression
+#' (reg_np_indh <- rdd_reg_np(rdd_dat_indh)
+#' plot(rdd_np_indh)
+NULL
 #' @name house
 #' @docType data
 #' @title Dataset used in Lee (2008)
