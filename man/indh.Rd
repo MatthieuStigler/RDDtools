@@ -22,10 +22,10 @@ rdd_dat_indh <- rdd_data(y=choice_pg, x=poverty, data=indh, cutpoint=30)
 summary(rdd_dat_indh)
 
 # perform non-parametric regression
-(reg_np_indh <- rdd_reg_np(rdd_dat_indh)
-plot(rdd_np_indh)
+( reg_np_indh <- rdd_reg_np(rdd_dat_indh) )
+plot(reg_np_indh)
 }
 \references{
-Arcand, Reiger, Nguyen (2015) 'Development Aid and Social Dyanmics Data Set'
+Arcand, Rieger, and Nguyen (2015) 'Development Aid and Social Dyanmics Data Set'
 }
 
