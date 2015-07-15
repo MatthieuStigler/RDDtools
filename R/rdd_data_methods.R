@@ -143,27 +143,3 @@ as.lm.rdd_reg_np <- function(x) as.lm_RDD(x)
 
 #' @export
 as.lm.rdd_reg <- function(x) as.lm_RDD(x)
-
-
-
-
-# subset.rdd_data <- function(x,...){ res <- subset.data.frame(x,...)  attributes(res) <- attributes(x) res }
-
-
-### EXAMPLE
-if (FALSE) {
-    library(RDDtools)
-    # data(house)
-    
-    
-    environment(plot.rdd_data) <- environment(rdd_data)
-    
-    house_rdd <- rdd_data(y = house$y, x = house$x, cutpoint = 0)
-    plot(house_rdd)
-    
-    plot(house_rdd, h = 0.2)
-    plot(house_rdd, h = c(0.2, 0.3, 0.4), nplot = 3)
-    
-    plot(house_rdd, nbins = 21)
-    
-} 
