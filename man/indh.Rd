@@ -4,7 +4,7 @@
 \name{indh}
 \alias{indh}
 \title{INDH data set}
-\format{A data frame with three variables with 740 observations each}
+\format{A data frame with three variables with 729 observations each}
 \source{
 Development Aid and social Dyanmics website: \url{http://qua.st/Development-Aid-Social-Dynamics}
 }
