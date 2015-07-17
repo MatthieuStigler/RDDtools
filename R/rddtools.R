@@ -13,7 +13,7 @@ if (getRversion() >= "3.1.0") {
 #' @docType data
 #' @title INDH data set
 #' @description Data from the Initiative Nationale du Development Humaine, collected as the part of the SNSF project "Development Aid and Social Dynamics"
-#' @format A data frame with three variables with 729 observations each
+#' @format A data frame with two variables with 720 observations each
 #' @source Development Aid and social Dyanmics website: \url{http://qua.st/Development-Aid-Social-Dynamics}
 #' @references Arcand, Rieger, and Nguyen (2015) 'Development Aid and Social Dyanmics Data Set'
 #' @examples 

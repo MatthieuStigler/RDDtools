@@ -30,14 +30,13 @@ Now that we have loading the data we can briefly inspect the structure of the da
 str(indh)
 ```
 
-The `indh` object is a `data.frame` containing 729 observations (representing individuals) of three variables:
+The `indh` object is a `data.frame` containing 720 observations (representing individuals) of two variables:
 
 - `choice_pg` 
-- `commune`
 - `poverty`
 
 The variable of interest is `choice_pg`, which represent the decision to contibute to a public good or not.
-The observations are individuals choosing to contribute or not, these individuals are clustered by the variable `commune` which is the municiple structure at which funding was distributed as part of the INDH project.
+The observations are individuals choosing to contribute or not, these individuals are clustered by the variable `poverty` which is the municiple structure at which funding was distributed as part of the INDH project.
 The forcing variable is `poverty` which represents the number of households in a commune living below the poverty threshold.
 As part of the INDH, commune with a proportion of household below the poverty threshhold greater than 30% were allowed to distribute the funding using a **Community Driven Development** scheme.
 The cutoff point for our analysis is therefore `30`.
