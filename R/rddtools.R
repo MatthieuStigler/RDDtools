@@ -6,7 +6,7 @@
 #' @title Regression Discontinuity Design 
 
 if (getRversion() >= "3.1.0") {
-    utils::globalVariables(c("x", "y", "position", "cutpoint", "LATE", "CI_low", "CI_high", "sd"))
+    utils::globalVariables(c("x", "y", "position", "cutpoint", "LATE", "CI_low", "CI_high", "sd", "quantile", "ks.test", "t.test"))
 } 
 
 #' @name indh

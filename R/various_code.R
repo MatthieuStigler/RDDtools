@@ -11,5 +11,3 @@ Kernel_tri <- function(X, center, bw) {
 Kernel_uni <- function(X, center, bw) {
     ifelse(abs(X - center) > bw, 0, 1)
 }
-
-.onAttach <- function(libname, pkgname) packageStartupMessage("IMPORTANT, this is an ALPHA VERSION\n                        many changes to the API will follow") 
