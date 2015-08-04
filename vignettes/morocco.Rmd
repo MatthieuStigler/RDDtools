@@ -1,5 +1,5 @@
 ---
-title: "Vignette Title"
+title: "Morocco"
 author: "Bastiaan Quast"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
