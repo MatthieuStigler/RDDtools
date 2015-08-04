@@ -5,9 +5,11 @@
 #' @import ggplot2
 #' @title Regression Discontinuity Design 
 
-if (getRversion() >= "3.1.0") {
-    utils::globalVariables(c("x", "y", "position", "cutpoint", "LATE", "CI_low", "CI_high", "sd", "quantile", "ks.test", "t.test"))
-} 
+
+utils::globalVariables(c("x", "y", "position", "cutpoint", "LATE", "CI_low", "CI_high", "sd", "quantile", "ks.test", "t.test", "coef", "density"))
+utils::globalVariables(c("abline", "as.formula", "coef density", "df.residual", "fitted", "glm", "hist", "ksmooth",
+"lines", "lm", "model.frame", "model.matrix", "na.pass", "par", "pnorm", "points", "poly",
+"predict", "printCoefmat", "qnorm", "qt", "rbeta", "residuals", "rnorm", "segments", "title", "var", "vcov"))
 
 #' @name indh
 #' @docType data

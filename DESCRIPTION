@@ -26,6 +26,6 @@ Suggests:
     knitr,
     testthat
 License: GPL (>= 2)
-URL: https://github.com/bquast/RDDtools
-BugReports: https://github.com/bquast/RDDtools/issues
+URL: https://github.com/bquast/rddtools
+BugReports: https://github.com/bquast/rddtools/issues
 VignetteBuilder: knitr
