@@ -1,5 +1,7 @@
 rddtools
 ========================================================
+[![CRAN Version](http://www.r-pkg.org/badges/version/rddtools)](http://cran.r-project.org/package=rddtools)
+[![RStudio Cloud Downloads](http://cranlogs.r-pkg.org/badges/rddtools?color=brightgreen)](http://cran.rstudio.com/package=rddtools)
 [![Travis-CI Build Status](https://travis-ci.org/bquast/rddtools.png?branch=master)](https://travis-ci.org/bquast/rddtools)
 [![Coverage Status](https://coveralls.io/repos/bquast/rddtools/badge.svg)](https://coveralls.io/r/bquast/rddtools)
 
