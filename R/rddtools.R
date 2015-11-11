@@ -1,10 +1,8 @@
 #' @name rddtools
 #' @docType package
-#' @import KernSmooth
-#' @import np
-#' @import ggplot2
 #' @title Regression Discontinuity Design 
-
+#' @import np ggplot2 KernSmooth
+#' @description Set of functions for Regression Discontinuity Design ('RDD'), for data visualisation, estimation and testing.
 
 utils::globalVariables(c("x", "y", "position", "cutpoint", "LATE", "CI_low", "CI_high", "sd", "quantile", "ks.test", "t.test", "coef", "density"))
 utils::globalVariables(c("abline", "as.formula", "coef density", "df.residual", "fitted", "glm", "hist", "ksmooth",
