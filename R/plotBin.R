@@ -61,7 +61,7 @@ plotBin <- function(x, y, h = 0.05, nbins = NULL, cutpoint = 0, plot = TRUE, typ
     ## plot
     if (plot) {
         plot(mid_points_bk, as.numeric(y2), pch = 19, cex = cex, xlab = x_name, ylab = y_name, xlim = xlim, ...)
-        title(main = main, sub = paste("h=", round(h, 4), ",\\tn bins=", n_non0_intervs, sep = ""))
+        title(main = main, sub = paste("h=", round(h, 4), ",\tn bins=", n_non0_intervs, sep = ""))
         abline(v = cutpoint, lty = 2)
     }
     
