@@ -1,0 +1,16 @@
+bibentry(bibtype      = "Article",
+         title        = "rddtools: A toolbox for regression discontinuity in R",
+         author       = c(person("Matthieu", "Stigler"),
+                          person("Bastiaan", "Quast") ),
+         organization = "The Graduate Institute",
+		     address      = "Maison de la paix, Geneva, Switzerland",
+         year         = "2016",
+         url          = "http://qua.st/rddtools",
+         textVersion  = "Stigler, M. and B. Quast, B (2015). rddtools: A toolbox for regression discontinuity in R. ",
+		 
+		 
+		mheader       = "To cite rddtools in publications please use:",
+
+		mfooter       = "We have invested a lot of time and effort in creating rddtools, please cite it when using it for data analysis. See also 'citation()' for citing R."
+		
+)
