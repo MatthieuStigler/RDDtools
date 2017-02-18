@@ -50,4 +50,3 @@ Princeton University press
 \seealso{
 \code{\link[AER]{STAR}} for the original dataset.
 }
-

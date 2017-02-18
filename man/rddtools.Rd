@@ -8,4 +8,3 @@
 \description{
 Set of functions for Regression Discontinuity Design ('RDD'), for data visualisation, estimation and testing.
 }
-

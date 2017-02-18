@@ -22,4 +22,3 @@ waldci(x, parm = NULL, level = 0.95, vcov. = NULL, df = NULL, ...)
 \description{
 Version of vcov allowing for confint
 }
-

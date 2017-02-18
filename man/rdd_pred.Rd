@@ -75,4 +75,3 @@ rdd_pred(reg_para_cov, covdata=data.frame(z1=0.5))
 \references{
 Froehlich (2007) Regression discontinuity design with covariates, IZA discussion paper 3024
 }
-

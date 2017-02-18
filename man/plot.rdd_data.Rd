@@ -4,8 +4,8 @@
 \alias{plot.rdd_data}
 \title{Plot rdd_data}
 \usage{
-\method{plot}{rdd_data}(x, h, nbins = NULL, xlim = range(object$x, na.rm =
-  TRUE), cex = 0.7, nplot = 1, device = c("base", "ggplot"), ...)
+\method{plot}{rdd_data}(x, h = NULL, nbins = NULL, xlim = range(object$x,
+  na.rm = TRUE), cex = 0.7, nplot = 1, device = c("base", "ggplot"), ...)
 }
 \arguments{
 \item{x}{Object of class rdd_data}
@@ -56,4 +56,3 @@ plot(house_rdd, nbins=21)
 \author{
 Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
 }
-

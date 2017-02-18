@@ -71,4 +71,3 @@ reg_para_ik <- rdd_reg_lm(rdd_object=house_rdd, bw=bw_ik, order=4)
 reg_para_ik
 plot(reg_para_ik)
 }
-

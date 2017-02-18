@@ -2,8 +2,8 @@
 % Please edit documentation in R/plotSensi.R
 \name{plotSensi}
 \alias{plotSensi}
-\alias{plotSensi.rdd_reg_lm}
 \alias{plotSensi.rdd_reg_np}
+\alias{plotSensi.rdd_reg_lm}
 \title{Plot the sensitivity to the bandwidth}
 \usage{
 plotSensi(rdd_regobject, from, to, by = 0.01, level = 0.95,
@@ -66,4 +66,3 @@ plotSensi(reg_para_ik, type='facet')
 \author{
 Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
 }
-

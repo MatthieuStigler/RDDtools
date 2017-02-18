@@ -44,4 +44,3 @@ Wooldridge (2003) Cluster-sample methods in applied econometrics.
 \seealso{
 \code{\link{vcovCluster}}, which implements the cluster-robust covariance matrix estimator used by \code{cluserInf}
 }
-

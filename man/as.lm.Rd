@@ -26,4 +26,3 @@ plot(reg_para_lm, which=4)
 \seealso{
 \code{\link{as.npreg}} which converts \code{rdd_reg} objects into \code{npreg} from package \code{np}.
 }
-

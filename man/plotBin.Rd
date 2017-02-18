@@ -4,7 +4,7 @@
 \alias{plotBin}
 \title{Bin plotting}
 \usage{
-plotBin(x, y, h = 0.05, nbins = NULL, cutpoint = 0, plot = TRUE,
+plotBin(x, y, h = NULL, nbins = NULL, cutpoint = 0, plot = TRUE,
   type = c("value", "number"), xlim = range(x, na.rm = TRUE), cex = 0.9,
   main = NULL, xlab, ylab, ...)
 }
@@ -36,4 +36,3 @@ Do a 'scatterplot bin smoothing'
 \references{
 McCrary, Justin.
 }
-

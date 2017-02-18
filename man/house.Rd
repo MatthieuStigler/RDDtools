@@ -30,4 +30,3 @@ Review of Economic Studies (2012) 79, 933-959
 Lee, D. (2008) Randomized experiments from non-random selection in U.S. House elections, 
 \emph{Journal of Econometrics}, 142, 675-697
 }
-

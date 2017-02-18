@@ -58,10 +58,9 @@ covarTest_dis(house_rdd_Z, bw=0.3)
 reg_nonpara <- rdd_reg_np(rdd_object=house_rdd_Z)
 covarTest_mean(reg_nonpara)
 }
-\author{
-Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
-}
 \seealso{
 \code{\link{covarTest_dis}} for the Kolmogorov-Smirnov test of equality of distribution
 }
-
+\author{
+Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
+}

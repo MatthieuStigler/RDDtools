@@ -25,4 +25,3 @@ data(house)
 house_rdd <- rdd_data(y=house$y, x=house$x, cutpoint=0)
 dens_test(house_rdd)
 }
-

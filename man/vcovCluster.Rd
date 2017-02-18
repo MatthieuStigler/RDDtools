@@ -36,9 +36,6 @@ coeftest(reg_krug,vcov.=vcovHC(reg_krug, 'HC1'))[2,2]
 coeftest(reg_krug,vcov.=vcovCluster(reg_krug, clusterVar=STAR_MHE$classid))[2,2]
 }
 }
-\author{
-Mahmood Arai, see \url{http://people.su.se/~ma/econometrics.html}
-}
 \references{
 Cameron, C.,  Gelbach, J. and Miller, D. (2011) Robust Inference With Multiway Clustering,
 \emph{Journal of Business and Economic Statistics},  vol. 29(2), pages 238-249.
@@ -50,4 +47,6 @@ Arai, M. (2011) Cluster-robust standard errors using R, Note available \url{http
 \seealso{
 \code{\link{clusterInf}} for a direct function, allowing also alternative cluster inference methods.
 }
-
+\author{
+Mahmood Arai, see \url{http://people.su.se/~ma/econometrics.html}
+}

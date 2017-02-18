@@ -44,4 +44,3 @@ TODO
 \seealso{
 \code{\link{rdd_bw_ik}} Bandwidth selection using the plug-in bandwidth of Imbens and Kalyanaraman (2012)
 }
-

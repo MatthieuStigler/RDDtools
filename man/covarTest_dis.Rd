@@ -54,10 +54,9 @@ covarTest_mean(house_rdd_Z, bw=0.3)
 reg_nonpara <- rdd_reg_np(rdd_object=house_rdd_Z)
 covarTest_dis(reg_nonpara)
 }
-\author{
-Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
-}
 \seealso{
 \code{\link{covarTest_mean}} for the t-test of equality of means
 }
-
+\author{
+Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
+}

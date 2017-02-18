@@ -28,4 +28,3 @@ its standard value, t test and p-value and
 \description{
 Function to access the RDD coefficient in the various regressions
 }
-

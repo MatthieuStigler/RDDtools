@@ -30,4 +30,3 @@ See \code{\link[KernSmooth]{dpill}}
 \seealso{
 \code{\link{rdd_bw_ik}} Local RDD bandwidth selector using the plug-in method of Imbens and Kalyanaraman (2012)
 }
-

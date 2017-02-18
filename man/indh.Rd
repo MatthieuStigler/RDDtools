@@ -28,4 +28,3 @@ plot(reg_np_indh)
 \references{
 Arcand, Rieger, and Nguyen (2015) 'Development Aid and Social Dyanmics Data Set'
 }
-
