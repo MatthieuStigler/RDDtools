@@ -192,7 +192,7 @@ plot.rdd_reg_np <- function(x, binwidth, chart = c("locpoly", "np"), ...) {
         pred_right <- predict(np_reg_right, newdata = newDat_right, se.fit = TRUE)
     }
     ## plot
-    plotBin(dat$x, dat$y, h = binwidth, ...)
+    plotBin(dat$x, dat$y, h = binwidth, cutpoint=cutpoint, ...)
     if (chart == "locpoly") {
         lines(llp_left$x, llp_left$y)
         lines(llp_right$x, llp_right$y)
