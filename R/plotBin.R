@@ -32,9 +32,12 @@ plotBin <- function(x, y, h = 0.05, nbins = NULL, cutpoint = 0, plot = TRUE, typ
     if (!is.null(nbins)) 
         h <- diff(xlim)/nbins
     
-    K0 <- ceiling((cutpoint - min_x)/h)  # Number of cells on left
-    K1 <- ceiling((cutpoint + max_x)/h)  # Number of cells on right
+    ## Number of bins
+    K0 <- ceiling((cutpoint - min_x)/h)  # Number of bins on left
+    K1 <- ceiling((cutpoint + max_x)/h)  # Number of bins on right
     K <- K0 + K1
+    
+    ## correction in case we had nbins
     if (!is.null(nbins) && K != nbins) {
         ranges <- c(cutpoint - min_x, cutpoint + max_x)
         if (which.min(ranges) == 1) {
@@ -45,6 +48,7 @@ plotBin <- function(x, y, h = 0.05, nbins = NULL, cutpoint = 0, plot = TRUE, typ
         K <- K0 + K1
     }
     
+    ## get bins midpoints, breaks
     b_k <- cutpoint - (K0 - c(1:K) + 1) * h  # Lee and Lemieux (2010) p. 308
     mid_points_bk <- b_k + h/2
     n_bins <- length(mid_points_bk)
@@ -55,7 +59,8 @@ plotBin <- function(x, y, h = 0.05, nbins = NULL, cutpoint = 0, plot = TRUE, typ
     table_intervs <- table(intervs)
     n_non0_intervs <- sum(table_intervs != 0)
     
-    y2 <- switch(type, value = tapply(y, intervs, mean, na.rm = TRUE), number = table_intervs)
+    y2 <- switch(type, value = tapply(y, intervs, mean, na.rm = TRUE), 
+                 number = table_intervs)
     
     
     ## plot
