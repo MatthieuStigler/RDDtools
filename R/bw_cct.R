@@ -1,6 +1,7 @@
-#' Imbens-Kalyanaraman Optimal Bandwidth Calculation
+#' Bandwidth selection for Regression Discontinuity estimators, CTT 2014
 #' 
-#' Simple wrapper for the Calonico-Cattaneo-Titiunik bandwidth function \code{\link[rdrobust]{rdbwselect}}.
+#' Simple wrapper of the Calonico-Cattaneo-Titiunik (2014) bandwidth selection procedures 
+#' for RDD estimators \code{\link[rdrobust]{rdbwselect}}.
 #' 
 #' @param rdd_object of class rdd_data created by \code{\link{rdd_data}}
 #' @param kernel The type of kernel used: either \code{Triangular}, \code{Uniform} or \code{Epanechnikov}. 
@@ -16,21 +17,21 @@
 #' @examples
 #' data(house)
 #' rd<- rdd_data(x=house$x, y=house$y, cutpoint=0)
-#' rdd_bw_cct(rd)
+#' rdd_bw_cct_estim(rd)
 #' 
 
 
 
-rdd_bw_cct <- function(rdd_object,
+rdd_bw_cct_estim <- function(rdd_object,
                        method=c("mserd", "msetwo", "msesum", "msecomb1", "msecomb2", "cerrd", "certwo", "cersum", "cercomb1"),
-                       kernel = c("Triangular", "Uniform", "Epanechnikov"),...) {
+                       kernel = c("Triangular", "Uniform", "Epanechnikov"), ...) {
 
   kernel <- tolower(match.arg(kernel))
   method <- match.arg(method)
 
   checkIsRDD(rdd_object)
 
-  res <- rdbwselect(y=rdd_object$y, x=rdd_object$x, 
+  res <- rdrobust::rdbwselect(y=rdd_object$y, x=rdd_object$x, 
              c = getCutpoint(rdd_object), 
              kernel = "tri", 
              bwselect = method,
