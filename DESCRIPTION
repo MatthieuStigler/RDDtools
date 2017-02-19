@@ -16,7 +16,8 @@ Imports:
     lmtest,
     Formula,
     locpol,
-    methods
+    methods,
+    rdrobust
 Depends:
     AER,
     np
