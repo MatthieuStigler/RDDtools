@@ -152,6 +152,6 @@ plot.rdd_reg_lm <- function(x, binwidth=NULL, ...) {
     pred <- data.frame(x = dat$x, y = fitted(x))[subw, ]
     
     ## plot
-    plotBin(dat$x, dat$y, h=0.05, cutpoint=getCutpoint(x), binwidth=binwidth, ...)
+    plotBin(dat$x, dat$y, h=binwidth, cutpoint=getCutpoint(x), ...)
     lines(pred[order(pred$x), ])
 } 
