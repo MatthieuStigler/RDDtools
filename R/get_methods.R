@@ -130,6 +130,15 @@ getOriginalData.rdd_reg <- function(object, na.rm = TRUE, classRDD = TRUE) {
     res
 }
 
+getOriginalData.rdd_data <- function(object, na.rm = TRUE, classRDD = TRUE) {
+  res <- object
+  if (na.rm) 
+    res <- res[apply(res, 1, function(x) all(!is.na(x))), ]  # remove na rows
+  if (!classRDD) 
+    res <- as.data.frame(res)
+  res
+}
+
 
 
 #' @importFrom stats getCall
