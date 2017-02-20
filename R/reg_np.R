@@ -160,13 +160,17 @@ print.summary.rdd_reg_np <- function(x, digits = max(3, getOption("digits") - 3)
 
 
 #' @export
-plot.rdd_reg_np <- function(x, binwidth, chart = c("locpoly", "np"), ...) {
+plot.rdd_reg_np <- function(x, binwidth=NULL, chart = c("locpoly", "np"), ...) {
     
     chart <- match.arg(chart)
     cutpoint <- getCutpoint(x)
     bw <- getBW(x)
-    if (missing(binwidth)) 
-        binwidth <- bw/5  # binwidth!=bandwidth
+    
+    ## set default binwitdh
+    if(is.null(binwidth)) {
+      bw_plot <- rdd_bw_cct_plot(x)
+      binwidth <- bw_plot$results["Bin Length",, drop=TRUE]
+    }
     
     ## data
     dat <- getOriginalData(x, classRDD = FALSE)
