@@ -23,7 +23,9 @@ rdd_bw_ik <- function(rdd_object, kernel = c("Triangular", "Uniform", "Normal"))
     checkIsRDD(rdd_object)
     cutpoint <- getCutpoint(rdd_object)
     
-    res <- rdd_bw_ik_low(X = rdd_object$x, Y = rdd_object$y, threshold = cutpoint, verbose = FALSE, type = "RES", returnBig = FALSE, 
+    rdd_data <- getOriginalData(rdd_object)
+    res <- rdd_bw_ik_low(X = rdd_data$x, Y = rdd_data$y, threshold = cutpoint, 
+                         verbose = FALSE, type = "RES", returnBig = FALSE, 
         kernel = kernel)
     return(res)
     
