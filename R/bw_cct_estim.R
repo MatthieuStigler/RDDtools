@@ -31,7 +31,9 @@ rdd_bw_cct_estim <- function(rdd_object,
 
   checkIsRDD(rdd_object)
 
-  res <- rdrobust::rdbwselect(y=rdd_object$y, x=rdd_object$x, 
+  rdd_data <- getOriginalData(rdd_object)
+  
+  res <- rdrobust::rdbwselect(y=rdd_data$y, x=rdd_data$x, 
              c = getCutpoint(rdd_object), 
              kernel = "tri", 
              bwselect = method,

@@ -25,7 +25,8 @@ rdd_bw_cct_plot <- function(rdd_object, method=c("esmv", "es", "espr", "esmvpr",
   method <- match.arg(method)
   checkIsRDD(rdd_object)
   
-  rdp <- rdrobust::rdplot(y=rdd_object$y, x=rdd_object$x, 
+  rdd_data <- getOriginalData(rdd_object)
+  rdp <- rdrobust::rdplot(y=rdd_data$y, x=rdd_data$x, 
                            c = getCutpoint(rdd_object), hide=TRUE, 
                            ...)
   rdp
@@ -36,6 +37,8 @@ if(FALSE){
   # data(house)
   rd <- rdd_data(x=x, y=y, data=house, cutpoint=0)
   
-  rdd_bw_cct_plot(rd, plot=FALSE)
+  rdd_bw_cct_plot(rdd_object=rd)
   
+  reg_np <- rdd_reg_np(rd)
+  rdd_bw_cct_plot(reg_np)
 }
