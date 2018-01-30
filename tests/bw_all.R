@@ -28,8 +28,8 @@ mapply(function(arg1, arg2) rdd_bw_cct_estim(rd_dat, method=arg1, kernel=arg2)$b
 ## CCT plot
 rdd_bw_cct_plot_ARG_1 <-  c("esmv", "es", "espr", "esmvpr", 
                              "qs", "qspr", "qsmv", "qsmvpr")
-mapply(function(arg1) rdd_bw_cct_plot(rd_dat, method=arg1)$results, 
-       arg1 = rdd_bw_cct_plot_ARG_1)
+mapply(function(arg1) rdd_bw_cct_plot(rd_dat, method=arg1), 
+       arg1 = rdd_bw_cct_plot_ARG_1, SIMPLIFY=FALSE)
 
 ## rsw 
 rdd_bw_rsw_ARG_1 <- c("global", "sided")
