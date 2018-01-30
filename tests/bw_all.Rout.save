@@ -17,8 +17,6 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-[Previously saved workspace restored]
-
 > library(rddtools)
 Loading required package: AER
 Loading required package: car
@@ -34,8 +32,10 @@ The following objects are masked from ‘package:base’:
 Loading required package: sandwich
 Loading required package: survival
 Loading required package: np
-Nonparametric Kernel Methods for Mixed Datatypes (version 0.60-2)
+Nonparametric Kernel Methods for Mixed Datatypes (version 0.60-6)
 [vignette("np_faq",package="np") provides answers to frequently asked questions]
+[vignette("np",package="np") an overview]
+[vignette("entropy_np",package="np") an overview of entropy-based methods]
 > 
 > # load the example data set
 > data(house)
@@ -86,50 +86,112 @@ Triangular.h_opt    Uniform.h_opt     Normal.h_opt
 > ## CCT plot
 > rdd_bw_cct_plot_ARG_1 <-  c("esmv", "es", "espr", "esmvpr", 
 +                              "qs", "qspr", "qsmv", "qsmvpr")
-> mapply(function(arg1) rdd_bw_cct_plot(rd_dat, method=arg1)$results, 
-+        arg1 = rdd_bw_cct_plot_ARG_1)
-              esmv           es         espr       esmvpr           qs
- [1,] 2.740000e+03 2.740000e+03 2.740000e+03 2.740000e+03 2.740000e+03
- [2,] 4.000000e+00 4.000000e+00 4.000000e+00 4.000000e+00 4.000000e+00
- [3,] 4.200000e+00 4.200000e+00 4.200000e+00 4.200000e+00 4.200000e+00
- [4,] 8.400000e+01 8.400000e+01 8.400000e+01 8.400000e+01 8.400000e+01
- [5,] 1.190476e-02 1.190476e-02 1.190476e-02 1.190476e-02 1.190476e-02
- [6,] 2.000000e+01 2.000000e+01 2.000000e+01 2.000000e+01 2.000000e+01
- [7,] 8.400000e+01 8.400000e+01 8.400000e+01 8.400000e+01 8.400000e+01
- [8,] 4.200000e+00 4.200000e+00 4.200000e+00 4.200000e+00 4.200000e+00
- [9,] 1.331771e-02 1.331771e-02 1.331771e-02 1.331771e-02 1.331771e-02
-[10,] 9.866823e-01 9.866823e-01 9.866823e-01 9.866823e-01 9.866823e-01
-[11,] 3.818000e+03 3.818000e+03 3.818000e+03 3.818000e+03 3.818000e+03
-[12,] 4.000000e+00 4.000000e+00 4.000000e+00 4.000000e+00 4.000000e+00
-[13,] 7.647059e+00 7.647059e+00 7.647059e+00 7.647059e+00 7.647059e+00
-[14,] 1.300000e+02 1.300000e+02 1.300000e+02 1.300000e+02 1.300000e+02
-[15,] 7.692308e-03 7.692308e-03 7.692308e-03 7.692308e-03 7.692308e-03
-[16,] 1.700000e+01 1.700000e+01 1.700000e+01 1.700000e+01 1.700000e+01
-[17,] 1.300000e+02 1.300000e+02 1.300000e+02 1.300000e+02 1.300000e+02
-[18,] 7.647059e+00 7.647059e+00 7.647059e+00 7.647059e+00 7.647059e+00
-[19,] 2.231242e-03 2.231242e-03 2.231242e-03 2.231242e-03 2.231242e-03
-[20,] 9.977688e-01 9.977688e-01 9.977688e-01 9.977688e-01 9.977688e-01
-              qspr         qsmv       qsmvpr
- [1,] 2.740000e+03 2.740000e+03 2.740000e+03
- [2,] 4.000000e+00 4.000000e+00 4.000000e+00
- [3,] 4.200000e+00 4.200000e+00 4.200000e+00
- [4,] 8.400000e+01 8.400000e+01 8.400000e+01
- [5,] 1.190476e-02 1.190476e-02 1.190476e-02
- [6,] 2.000000e+01 2.000000e+01 2.000000e+01
- [7,] 8.400000e+01 8.400000e+01 8.400000e+01
- [8,] 4.200000e+00 4.200000e+00 4.200000e+00
- [9,] 1.331771e-02 1.331771e-02 1.331771e-02
-[10,] 9.866823e-01 9.866823e-01 9.866823e-01
-[11,] 3.818000e+03 3.818000e+03 3.818000e+03
-[12,] 4.000000e+00 4.000000e+00 4.000000e+00
-[13,] 7.647059e+00 7.647059e+00 7.647059e+00
-[14,] 1.300000e+02 1.300000e+02 1.300000e+02
-[15,] 7.692308e-03 7.692308e-03 7.692308e-03
-[16,] 1.700000e+01 1.700000e+01 1.700000e+01
-[17,] 1.300000e+02 1.300000e+02 1.300000e+02
-[18,] 7.647059e+00 7.647059e+00 7.647059e+00
-[19,] 2.231242e-03 2.231242e-03 2.231242e-03
-[20,] 9.977688e-01 9.977688e-01 9.977688e-01
+> mapply(function(arg1) rdd_bw_cct_plot(rd_dat, method=arg1), 
++        arg1 = rdd_bw_cct_plot_ARG_1, SIMPLIFY=FALSE)
+$esmv
+Call: rdplot
+
+Number of Obs.                 6558
+Kernel                      Uniform
+
+Number of Obs.                2740           3818
+Eff. Number of Obs.           2740           3818
+Order poly. fit (p)              4              4
+BW poly. fit (h)             1.000          1.000
+Number of bins scale             1              1
+
+
+$es
+Call: rdplot
+
+Number of Obs.                 6558
+Kernel                      Uniform
+
+Number of Obs.                2740           3818
+Eff. Number of Obs.           2740           3818
+Order poly. fit (p)              4              4
+BW poly. fit (h)             1.000          1.000
+Number of bins scale             1              1
+
+
+$espr
+Call: rdplot
+
+Number of Obs.                 6558
+Kernel                      Uniform
+
+Number of Obs.                2740           3818
+Eff. Number of Obs.           2740           3818
+Order poly. fit (p)              4              4
+BW poly. fit (h)             1.000          1.000
+Number of bins scale             1              1
+
+
+$esmvpr
+Call: rdplot
+
+Number of Obs.                 6558
+Kernel                      Uniform
+
+Number of Obs.                2740           3818
+Eff. Number of Obs.           2740           3818
+Order poly. fit (p)              4              4
+BW poly. fit (h)             1.000          1.000
+Number of bins scale             1              1
+
+
+$qs
+Call: rdplot
+
+Number of Obs.                 6558
+Kernel                      Uniform
+
+Number of Obs.                2740           3818
+Eff. Number of Obs.           2740           3818
+Order poly. fit (p)              4              4
+BW poly. fit (h)             1.000          1.000
+Number of bins scale             1              1
+
+
+$qspr
+Call: rdplot
+
+Number of Obs.                 6558
+Kernel                      Uniform
+
+Number of Obs.                2740           3818
+Eff. Number of Obs.           2740           3818
+Order poly. fit (p)              4              4
+BW poly. fit (h)             1.000          1.000
+Number of bins scale             1              1
+
+
+$qsmv
+Call: rdplot
+
+Number of Obs.                 6558
+Kernel                      Uniform
+
+Number of Obs.                2740           3818
+Eff. Number of Obs.           2740           3818
+Order poly. fit (p)              4              4
+BW poly. fit (h)             1.000          1.000
+Number of bins scale             1              1
+
+
+$qsmvpr
+Call: rdplot
+
+Number of Obs.                 6558
+Kernel                      Uniform
+
+Number of Obs.                2740           3818
+Eff. Number of Obs.           2740           3818
+Order poly. fit (p)              4              4
+BW poly. fit (h)             1.000          1.000
+Number of bins scale             1              1
+
+
 > 
 > ## rsw 
 > rdd_bw_rsw_ARG_1 <- c("global", "sided")
