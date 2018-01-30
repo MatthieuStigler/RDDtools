@@ -142,7 +142,8 @@ plot.rdd_reg_lm <- function(x, binwidth=NULL, ...) {
   ## set default binwitdh
   if(is.null(binwidth)) {
     bw_plot <- rdd_bw_cct_plot(x)
-    binwidth <- bw_plot$results["Bin Length",, drop=TRUE]
+    # binwidth <- bw_plot$results["Bin Length",, drop=TRUE] old version
+    binwidth <- bw_plot$h[1]
   }
   
     ## data
