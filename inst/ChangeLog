@@ -1,0 +1,6 @@
+Version 0.5.0: Matthieu Stigler (2018-01-29)
+ -new: plotBin allows for separate bin on each side
+ -new: wrapper for CCT plots
+ -fix issues with new output from rdtable
+ -add test file
+ -bw_ik work on regression output objects
