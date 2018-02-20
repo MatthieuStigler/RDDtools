@@ -41,10 +41,251 @@ Nonparametric Kernel Methods for Mixed Datatypes (version 0.60-6)
 > data(house)
 > 
 > # create rdd_data sets
+> set.seed(123)
+> cov_df <- data.frame(cov=rnorm(nrow(house)))
+> set.seed(123)
+> z_fake <- ifelse(house$x>0+rnorm(nrow(house), sd=0.05),1,0)
 > rd_dat <- rdd_data(x=x, y=y, data=house, cutpoint=0)
+> rd_dat_fakefuzzy <- rdd_data(x=house$x, y=house$y, z=ifelse(house$x>0,1,0), cutpoint=0)
+> rd_dat_fuzzy <- rdd_data(x=house$x, y=house$y, z=z_fake, 
++                          cutpoint=0, covar=cov_df)
+> rd_dat_covar <- rdd_data(x=house$x, y=house$y, covar=cov_df, cutpoint=0)
+> 
+> summary(rd_dat)
+### rdd_data object ###
+
+Cutpoint: 0
+Type: Sharp 
+Sample size: 
+	-Full : 6558 
+	-Left : 2740 
+	-Right: 3818
+Covariates: no 
+> summary(rd_dat_fakefuzzy)
+### rdd_data object ###
+
+Cutpoint: 0
+Type: Fuzzy 
+Sample size: 
+	-Full : 6558 
+	-Left : 2740 , untreated: 2740 
+	-Right: 3818 , treated: 3818
+Covariates: no 
+> summary(rd_dat_fuzzy)
+### rdd_data object ###
+
+Cutpoint: 0
+Type: Fuzzy 
+Sample size: 
+	-Full : 6558 
+	-Left : 2740 , untreated: 2767 
+	-Right: 3818 , treated: 3791
+Covariates: yes 
+> summary(rd_dat_covar)
+### rdd_data object ###
+
+Cutpoint: 0
+Type: Sharp 
+Sample size: 
+	-Full : 6558 
+	-Left : 2740 
+	-Right: 3818
+Covariates: yes 
+> 
 > reg_lm <- rdd_reg_lm(rd_dat)
+> reg_lm_covar <- rdd_reg_lm(rd_dat_covar, covariates="cov")
+> reg_lm_fak_fuz <- rdd_reg_lm(rd_dat_fakefuzzy)
+> reg_lm_fuz <- rdd_reg_lm(rd_dat_fuzzy)
+> # reg_lm_fuz_cov <- rdd_reg_lm(rd_dat_fuzzy, covariates="cov")
 > reg_np <- rdd_reg_np(rd_dat)
-> reg_dat <- list(rd=rd_dat, reg_np=reg_np)
+> 
+> reg_dat <- list(reg_lm=reg_lm, reg_np=reg_np,
++                 reg_lm_fak_fuz=reg_lm_fak_fuz, reg_lm_fuz=reg_lm_fuz,
++                 reg_lm_covar=reg_lm_covar)
+> 
+> 
+> res <- lapply(reg_dat, print)
+### RDD regression: parametric ###
+	Polynomial order:  1 
+	Slopes:  separate 
+	Number of obs: 6558 (left: 2740, right: 3818)
+
+	Coefficient:
+   Estimate Std. Error t value  Pr(>|t|)    
+D 0.1182314  0.0056799  20.816 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+### RDD regression: nonparametric local linear###
+	Bandwidth:  0.2938561 
+	Number of obs: 3200 (left: 1594, right: 1606)
+
+	Coefficient:
+  Estimate Std. Error z value  Pr(>|z|)    
+D 0.079924   0.009465  8.4443 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+### RDD regression: parametric ###
+	Polynomial order:  1 
+	Slopes:  separate 
+	Number of obs: 6558 (left: 2740, right: 3818)
+
+	Coefficient:
+   Estimate Std. Error t value  Pr(>|t|)    
+D 0.1182314  0.0056799  20.816 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+### RDD regression: parametric ###
+	Polynomial order:  1 
+	Slopes:  separate 
+	Number of obs: 6558 (left: 2740, right: 3818)
+
+	Coefficient:
+   Estimate Std. Error t value  Pr(>|t|)    
+D 0.1449633  0.0070384  20.596 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+### RDD regression: parametric ###
+	Polynomial order:  1 
+	Slopes:  separate 
+	Number of obs: 6558 (left: 2740, right: 3818)
+
+	Coefficient:
+   Estimate Std. Error t value  Pr(>|t|)    
+D 0.1182307  0.0056803  20.814 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+> lapply(reg_dat, summary)
+$reg_lm
+
+Call:
+lm(formula = y ~ ., data = dat_step1, weights = weights)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.89406 -0.06189  0.00231  0.07129  0.86396 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.432948   0.004276 101.254  < 2e-16 ***
+D           0.118231   0.005680  20.816  < 2e-16 ***
+x           0.296906   0.011546  25.714  < 2e-16 ***
+x_right     0.045978   0.013501   3.405 0.000665 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1384 on 6554 degrees of freedom
+Multiple R-squared:  0.6707,	Adjusted R-squared:  0.6706 
+F-statistic:  4450 on 3 and 6554 DF,  p-value: < 2.2e-16
+
+
+$reg_np
+### RDD regression: nonparametric local linear###
+	Bandwidth:  0.2938561 
+	Number of obs: 3200 (left: 1594, right: 1606)
+
+	Weighted Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.97755 -0.06721 -0.00497  0.04504  0.93761 
+
+	Coefficient:
+  Estimate Std. Error z value  Pr(>|z|)    
+D 0.079924   0.009465  8.4443 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+	Local R squared: 0.3563 
+
+$reg_lm_fak_fuz
+
+Call:
+ivreg(formula = y ~ . - ins | . - D, data = dat_step1, weights = weights)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.894063 -0.061892  0.002313  0.071286  0.863959 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.432948   0.004276 101.254  < 2e-16 ***
+D           0.118231   0.005680  20.816  < 2e-16 ***
+x           0.296906   0.011546  25.714  < 2e-16 ***
+x_right     0.045978   0.013501   3.405 0.000665 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1384 on 6554 degrees of freedom
+Multiple R-Squared: 0.6707,	Adjusted R-squared: 0.6706 
+Wald test:  4450 on 3 and 6554 DF,  p-value: < 2.2e-16 
+
+
+$reg_lm_fuz
+
+Call:
+ivreg(formula = y ~ . - ins | . - D, data = dat_step1, weights = weights)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.887954 -0.065471  0.003594  0.075692  0.850055 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.419478   0.004833  86.794  < 2e-16 ***
+D           0.144963   0.007038  20.596  < 2e-16 ***
+x           0.269533   0.012502  21.559  < 2e-16 ***
+x_right     0.053981   0.013741   3.928 8.64e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1398 on 6554 degrees of freedom
+Multiple R-Squared: 0.6636,	Adjusted R-squared: 0.6635 
+Wald test:  4356 on 3 and 6554 DF,  p-value: < 2.2e-16 
+
+
+$reg_lm_covar
+
+Call:
+lm(formula = y ~ ., data = dat_step1, weights = weights)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.89425 -0.06205  0.00225  0.07119  0.86410 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.4329494  0.0042761 101.248  < 2e-16 ***
+D            0.1182307  0.0056803  20.814  < 2e-16 ***
+x            0.2969090  0.0115472  25.713  < 2e-16 ***
+x_right      0.0459813  0.0135024   3.405 0.000665 ***
+cov         -0.0005211  0.0017143  -0.304 0.761150    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1384 on 6553 degrees of freedom
+Multiple R-squared:  0.6707,	Adjusted R-squared:  0.6705 
+F-statistic:  3337 on 4 and 6553 DF,  p-value: < 2.2e-16
+
+
+> lapply(reg_dat, coef)
+$reg_lm
+(Intercept)           D           x     x_right 
+ 0.43294793  0.11823144  0.29690647  0.04597763 
+
+$reg_np
+         D 
+0.07992454 
+
+$reg_lm_fak_fuz
+(Intercept)           D           x     x_right 
+ 0.43294793  0.11823144  0.29690647  0.04597763 
+
+$reg_lm_fuz
+(Intercept)           D           x     x_right 
+ 0.41947751  0.14496332  0.26953272  0.05398077 
+
+$reg_lm_covar
+  (Intercept)             D             x       x_right           cov 
+ 0.4329494035  0.1182306693  0.2969090017  0.0459812895 -0.0005211234 
+
 > 
 > ## plots
 > plot(rd_dat)
@@ -208,4 +449,4 @@ $sided
 > 
 > proc.time()
    user  system elapsed 
-  7.800   0.088   7.881 
+  6.533   0.108   6.628 

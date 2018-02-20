@@ -4,10 +4,36 @@ library(rddtools)
 data(house)
 
 # create rdd_data sets
+set.seed(123)
+cov_df <- data.frame(cov=rnorm(nrow(house)))
+set.seed(123)
+z_fake <- ifelse(house$x>0+rnorm(nrow(house), sd=0.05),1,0)
 rd_dat <- rdd_data(x=x, y=y, data=house, cutpoint=0)
+rd_dat_fakefuzzy <- rdd_data(x=house$x, y=house$y, z=ifelse(house$x>0,1,0), cutpoint=0)
+rd_dat_fuzzy <- rdd_data(x=house$x, y=house$y, z=z_fake, 
+                         cutpoint=0, covar=cov_df)
+rd_dat_covar <- rdd_data(x=house$x, y=house$y, covar=cov_df, cutpoint=0)
+
+summary(rd_dat)
+summary(rd_dat_fakefuzzy)
+summary(rd_dat_fuzzy)
+summary(rd_dat_covar)
+
 reg_lm <- rdd_reg_lm(rd_dat)
+reg_lm_covar <- rdd_reg_lm(rd_dat_covar, covariates="cov")
+reg_lm_fak_fuz <- rdd_reg_lm(rd_dat_fakefuzzy)
+reg_lm_fuz <- rdd_reg_lm(rd_dat_fuzzy)
+# reg_lm_fuz_cov <- rdd_reg_lm(rd_dat_fuzzy, covariates="cov")
 reg_np <- rdd_reg_np(rd_dat)
-reg_dat <- list(rd=rd_dat, reg_np=reg_np)
+
+reg_dat <- list(reg_lm=reg_lm, reg_np=reg_np,
+                reg_lm_fak_fuz=reg_lm_fak_fuz, reg_lm_fuz=reg_lm_fuz,
+                reg_lm_covar=reg_lm_covar)
+
+
+res <- lapply(reg_dat, print)
+lapply(reg_dat, summary)
+lapply(reg_dat, coef)
 
 ## plots
 plot(rd_dat)
