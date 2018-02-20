@@ -15,7 +15,7 @@ rdd_data(y, x, covar, cutpoint, z, labels, data)
 
 \item{cutpoint}{Cutpoint}
 
-\item{z}{Assignment variable for the fuzzy case.}
+\item{z}{Assignment variable for the fuzzy case. Should be 0/1 or TRUE/FALSE variable.}
 
 \item{labels}{Additional labels to provide as list (with entries \code{x}, \code{y}, and eventually vector \code{covar}). Unused currently.}
 
@@ -39,6 +39,12 @@ rd
 # The summary() and plot() function are specific to rdd_data
 summary(rd)
 plot(rd)
+
+# for the fuzzy case, you need to specify the assignment variable z:
+rd_dat_fakefuzzy <- rdd_data(x=house$x, y=house$y, 
+                             z=ifelse(house$x>0+rnorm(nrow(house), sd=0.05),1,0), 
+                             cutpoint=0)
+summary(rd_dat_fakefuzzy)
 }
 \author{
 Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
