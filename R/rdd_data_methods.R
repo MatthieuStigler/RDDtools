@@ -7,9 +7,16 @@ summary.rdd_data <- function(object, ...) {
     cutpoint <- getCutpoint(object)
     hasCovar_eng <- ifelse(hasCovar(object), "yes", "no")
     cat("### rdd_data object ###\n")
-    cat("\nCutpoint:", cutpoint, "\n")
-    cat("Sample size:", "\n\t-Full :", nrow(object), "\n\t-Left :", sum(object$x < cutpoint), "\n\t-Right:", sum(object$x >= 
-        cutpoint))
+    cat("\nCutpoint:", cutpoint)
+    cat("\nType:", getType(object), "\n")
+    if(isFuzzy(object)) {
+      n_treat <- sum(object$z)
+      untr <- paste(", untreated:", nrow(object)-n_treat)
+      tr <- paste(", treated:", n_treat)
+    }
+    cat("Sample size:", "\n\t-Full :", nrow(object), 
+        "\n\t-Left :", sum(object$x < cutpoint), if(isFuzzy(object)) untr else NULL,
+        "\n\t-Right:", sum(object$x >= cutpoint), if(isFuzzy(object)) tr else NULL)
     cat("\nCovariates:", hasCovar_eng, "\n")
 }
 
