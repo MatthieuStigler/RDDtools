@@ -6,7 +6,7 @@ bibentry(bibtype      = "TechReport",
          address      = "Maison de la paix, Geneva, Switzerland",
          year         = "2016",
          url          = "http://qua.st/rddtools",
-         textVersion  = "Stigler, M. and B. Quast, B (2015). rddtools: A toolbox for regression discontinuity in R. ",
+         textVersion  = "Stigler, M. and B. Quast, B (2016). rddtools: A toolbox for regression discontinuity in R. ",
 		 
 		 
 		mheader       = "To cite rddtools in publications please use:",
