@@ -2,7 +2,7 @@ rddtools
 ========================================================
 [![License](http://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
 [![CRAN Version](http://www.r-pkg.org/badges/version/rddtools)](https://cran.r-project.org/package=rddtools)
-[![Total RStudio Cloud Downloads](http://cranlogs.r-pkg.org/badges/grand-total/rddtools?color=brightgreen)](https://cran.rstudio.com/web/packages/rddtools/index.html)
+[![Total RStudio Cloud Downloads](http://cranlogs.r-pkg.org/badges/grand-total/rddtools?color=brightgreen)](https://cran.r-project.org/package=rddtools)
 [![RStudio Cloud Downloads](http://cranlogs.r-pkg.org/badges/rddtools?color=brightgreen)](https://cran.r-project.org/package=rddtools)
 [![Travis-CI Build Status](https://travis-ci.org/bquast/rddtools.png?branch=master)](https://travis-ci.org/bquast/rddtools)
 [![Coverage Status](https://coveralls.io/repos/bquast/rddtools/badge.svg)](https://coveralls.io/r/bquast/rddtools)
@@ -20,7 +20,7 @@ if (!require('devtools')) install.packages('devtools')
 devtools::install_github( "bquast/rddtools" )
 ```
 
-Note however the latest version of rddtools only works with R 3.0, and that you might need to install  [Rtools](http://stat.ethz.ch/CRAN/bin/windows/Rtools/) if on Windows. 
+Note however the latest version of rddtools only works with R 3.0, and that you might need to install  [Rtools](https://cran.r-project.org/bin/windows/Rtools/) if on Windows. 
 
 
 Documentation
