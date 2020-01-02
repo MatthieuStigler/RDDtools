@@ -1,10 +1,20 @@
-RDDtools 0.5.0
+rddtools 1.0.0
+=====================
+
+* stable release
+
+* various mainenance updates
+
+* documentation updates 
+
+
+rddtools 0.5.0
 =====================
 
 * cleanup documentation
 
 
-RDDtools 0.3.0
+rddtools 0.3.0
 =====================
 
 * development taken over by Bastiaan
@@ -31,7 +41,8 @@ RDDtools 0.3.0
 
 * fix empty package dependency bug
 
-RDDtools 0.22
+
+rddtools 0.22
 ===========
 Updated on 21/5/14
 
@@ -44,7 +55,7 @@ Updated on 21/5/14
 * Correct import, suggests, calls to :::
 
 
-RDDtools 0.21
+rddtools 0.21
 ===========
 Updated on 25/7/13
 
@@ -60,7 +71,8 @@ Updated on 25/7/13
 
 * Many small fixes
 
-RDDtools 0.2
+
+rddtools 0.2
 ===========
 Updated on 16/7/13
 
@@ -72,7 +84,8 @@ Updated on 16/7/13
 
 * Many fixes...
 
-RDDtools 0.1
+
+rddtools 0.1
 ===========
 Initial commit on 29/04/2013
 
