@@ -5,9 +5,9 @@
 \title{General polynomial estimator of the regression discontinuity}
 \usage{
 rdd_gen_reg(rdd_object, fun = glm, covariates = NULL, order = 1,
-  bw = NULL, slope = c("separate", "same"), covar.opt = list(strategy =
-  c("include", "residual"), slope = c("same", "separate"), bw = NULL), weights,
-  ...)
+  bw = NULL, slope = c("separate", "same"), covar.opt = list(strategy
+  = c("include", "residual"), slope = c("same", "separate"), bw = NULL),
+  weights, ...)
 }
 \arguments{
 \item{rdd_object}{Object of class rdd_data created by \code{\link{rdd_data}}}

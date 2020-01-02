@@ -4,7 +4,8 @@
 \alias{clusterInf}
 \title{Post-inference for clustered data}
 \usage{
-clusterInf(object, clusterVar, vcov. = NULL, type = c("df-adj", "HC"), ...)
+clusterInf(object, clusterVar, vcov. = NULL, type = c("df-adj", "HC"),
+  ...)
 }
 \arguments{
 \item{object}{Object of class lm, from which rdd_reg also inherits.}

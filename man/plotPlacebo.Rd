@@ -11,17 +11,18 @@
 plotPlacebo(object, device = c("ggplot", "base"), ...)
 
 \method{plotPlacebo}{rdd_reg}(object, device = c("ggplot", "base"),
-  from = 0.25, to = 0.75, by = 0.1, level = 0.95, same_bw = FALSE,
-  vcov. = NULL, plot = TRUE, output = c("data", "ggplot"), ...)
+  from = 0.25, to = 0.75, by = 0.1, level = 0.95,
+  same_bw = FALSE, vcov. = NULL, plot = TRUE, output = c("data",
+  "ggplot"), ...)
 
 plotPlaceboDens(object, device = c("ggplot", "base"), ...)
 
 \method{plotPlaceboDens}{rdd_reg}(object, device = c("ggplot", "base"),
-  from = 0.25, to = 0.75, by = 0.1, level = 0.95, same_bw = FALSE,
-  vcov. = NULL, ...)
+  from = 0.25, to = 0.75, by = 0.1, level = 0.95,
+  same_bw = FALSE, vcov. = NULL, ...)
 
-computePlacebo(object, from = 0.25, to = 0.75, by = 0.1, level = 0.95,
-  same_bw = FALSE, vcov. = NULL)
+computePlacebo(object, from = 0.25, to = 0.75, by = 0.1,
+  level = 0.95, same_bw = FALSE, vcov. = NULL)
 }
 \arguments{
 \item{object}{the output of an RDD regression}

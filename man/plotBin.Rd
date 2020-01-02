@@ -5,8 +5,8 @@
 \title{Bin plotting}
 \usage{
 plotBin(x, y, h = NULL, nbins = NULL, cutpoint = 0, plot = TRUE,
-  type = c("value", "number"), xlim = range(x, na.rm = TRUE), cex = 0.9,
-  main = NULL, xlab, ylab, ...)
+  type = c("value", "number"), xlim = range(x, na.rm = TRUE),
+  cex = 0.9, main = NULL, xlab, ylab, ...)
 }
 \arguments{
 \item{x}{Forcing variable}

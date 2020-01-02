@@ -10,7 +10,8 @@ rdd_coef(object, allInfo = FALSE, allCo = FALSE, ...)
 
 \method{rdd_coef}{default}(object, allInfo = FALSE, allCo = FALSE, ...)
 
-\method{rdd_coef}{rdd_reg_np}(object, allInfo = FALSE, allCo = FALSE, ...)
+\method{rdd_coef}{rdd_reg_np}(object, allInfo = FALSE, allCo = FALSE,
+  ...)
 }
 \arguments{
 \item{object}{A RDD regression object}

@@ -11,12 +11,12 @@ covarTest_mean(object, bw = NULL, paired = FALSE, var.equal = FALSE,
   "bonferroni"))
 
 \method{covarTest_mean}{rdd_data}(object, bw = NULL, paired = FALSE,
-  var.equal = FALSE, p.adjust = c("none", "holm", "BH", "BY", "hochberg",
-  "hommel", "bonferroni"))
+  var.equal = FALSE, p.adjust = c("none", "holm", "BH", "BY",
+  "hochberg", "hommel", "bonferroni"))
 
 \method{covarTest_mean}{rdd_reg}(object, bw = NULL, paired = FALSE,
-  var.equal = FALSE, p.adjust = c("none", "holm", "BH", "BY", "hochberg",
-  "hommel", "bonferroni"))
+  var.equal = FALSE, p.adjust = c("none", "holm", "BH", "BY",
+  "hochberg", "hommel", "bonferroni"))
 }
 \arguments{
 \item{object}{object of class rdd_data}
