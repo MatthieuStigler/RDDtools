@@ -4,8 +4,15 @@
 \alias{rdd_pred}
 \title{RDD coefficient prediction}
 \usage{
-rdd_pred(object, covdata, se.fit = TRUE, vcov. = NULL, newdata,
-  stat = c("identity", "sum", "mean"), weights)
+rdd_pred(
+  object,
+  covdata,
+  se.fit = TRUE,
+  vcov. = NULL,
+  newdata,
+  stat = c("identity", "sum", "mean"),
+  weights
+)
 }
 \arguments{
 \item{object}{A RDD regression object}

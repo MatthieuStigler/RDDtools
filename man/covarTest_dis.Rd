@@ -6,16 +6,26 @@
 \alias{covarTest_dis.rdd_reg}
 \title{Testing for balanced covariates: equality of distribution}
 \usage{
-covarTest_dis(object, bw, exact = NULL, p.adjust = c("none", "holm",
-  "BH", "BY", "hochberg", "hommel", "bonferroni"))
+covarTest_dis(
+  object,
+  bw,
+  exact = NULL,
+  p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel", "bonferroni")
+)
 
-\method{covarTest_dis}{rdd_data}(object, bw = NULL, exact = FALSE,
-  p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel",
-  "bonferroni"))
+\method{covarTest_dis}{rdd_data}(
+  object,
+  bw = NULL,
+  exact = FALSE,
+  p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel", "bonferroni")
+)
 
-\method{covarTest_dis}{rdd_reg}(object, bw = NULL, exact = FALSE,
-  p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel",
-  "bonferroni"))
+\method{covarTest_dis}{rdd_reg}(
+  object,
+  bw = NULL,
+  exact = FALSE,
+  p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel", "bonferroni")
+)
 }
 \arguments{
 \item{object}{object of class rdd_data}

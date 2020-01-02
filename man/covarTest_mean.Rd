@@ -6,17 +6,29 @@
 \alias{covarTest_mean.rdd_reg}
 \title{Testing for balanced covariates: equality of means with t-test}
 \usage{
-covarTest_mean(object, bw = NULL, paired = FALSE, var.equal = FALSE,
-  p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel",
-  "bonferroni"))
+covarTest_mean(
+  object,
+  bw = NULL,
+  paired = FALSE,
+  var.equal = FALSE,
+  p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel", "bonferroni")
+)
 
-\method{covarTest_mean}{rdd_data}(object, bw = NULL, paired = FALSE,
-  var.equal = FALSE, p.adjust = c("none", "holm", "BH", "BY",
-  "hochberg", "hommel", "bonferroni"))
+\method{covarTest_mean}{rdd_data}(
+  object,
+  bw = NULL,
+  paired = FALSE,
+  var.equal = FALSE,
+  p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel", "bonferroni")
+)
 
-\method{covarTest_mean}{rdd_reg}(object, bw = NULL, paired = FALSE,
-  var.equal = FALSE, p.adjust = c("none", "holm", "BH", "BY",
-  "hochberg", "hommel", "bonferroni"))
+\method{covarTest_mean}{rdd_reg}(
+  object,
+  bw = NULL,
+  paired = FALSE,
+  var.equal = FALSE,
+  p.adjust = c("none", "holm", "BH", "BY", "hochberg", "hommel", "bonferroni")
+)
 }
 \arguments{
 \item{object}{object of class rdd_data}

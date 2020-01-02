@@ -4,9 +4,13 @@
 \alias{rdd_bw_cct_estim}
 \title{Bandwidth selection for Regression Discontinuity estimators, CTT 2014}
 \usage{
-rdd_bw_cct_estim(rdd_object, method = c("mserd", "msetwo", "msesum",
-  "msecomb1", "msecomb2", "cerrd", "certwo", "cersum", "cercomb1"),
-  kernel = c("Triangular", "Uniform", "Epanechnikov"), ...)
+rdd_bw_cct_estim(
+  rdd_object,
+  method = c("mserd", "msetwo", "msesum", "msecomb1", "msecomb2", "cerrd", "certwo",
+    "cersum", "cercomb1"),
+  kernel = c("Triangular", "Uniform", "Epanechnikov"),
+  ...
+)
 }
 \arguments{
 \item{rdd_object}{of class rdd_data created by \code{\link{rdd_data}}}

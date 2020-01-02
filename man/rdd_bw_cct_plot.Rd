@@ -4,8 +4,11 @@
 \alias{rdd_bw_cct_plot}
 \title{Bandwidth selection for Regression Discontinuity visualisation, CTT 2015}
 \usage{
-rdd_bw_cct_plot(rdd_object, method = c("esmv", "es", "espr", "esmvpr",
-  "qs", "qspr", "qsmv", "qsmvpr"), ...)
+rdd_bw_cct_plot(
+  rdd_object,
+  method = c("esmv", "es", "espr", "esmvpr", "qs", "qspr", "qsmv", "qsmvpr"),
+  ...
+)
 }
 \arguments{
 \item{rdd_object}{of class rdd_data created by \code{\link{rdd_data}}}

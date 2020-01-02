@@ -4,8 +4,13 @@
 \alias{gen_mc_ik}
 \title{Generate Monte Carlo simulations of Imbens and Kalyanaraman}
 \usage{
-gen_mc_ik(n = 200, version = 1, sd = 0.1295,
-  output = c("data.frame", "rdd_data"), size)
+gen_mc_ik(
+  n = 200,
+  version = 1,
+  sd = 0.1295,
+  output = c("data.frame", "rdd_data"),
+  size
+)
 }
 \arguments{
 \item{n}{The size of sampel to generate}

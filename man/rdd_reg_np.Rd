@@ -4,9 +4,14 @@
 \alias{rdd_reg_np}
 \title{Parametric polynomial estimator of the regression discontinuity}
 \usage{
-rdd_reg_np(rdd_object, covariates = NULL, bw = rdd_bw_ik(rdd_object),
-  slope = c("separate", "same"), inference = c("np", "lm"),
-  covar.opt = list(slope = c("same", "separate"), bw = NULL))
+rdd_reg_np(
+  rdd_object,
+  covariates = NULL,
+  bw = rdd_bw_ik(rdd_object),
+  slope = c("separate", "same"),
+  inference = c("np", "lm"),
+  covar.opt = list(slope = c("same", "separate"), bw = NULL)
+)
 }
 \arguments{
 \item{rdd_object}{Object of class rdd_data created by \code{\link{rdd_data}}}

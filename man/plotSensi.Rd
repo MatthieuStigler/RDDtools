@@ -6,16 +6,42 @@
 \alias{plotSensi.rdd_reg_lm}
 \title{Plot the sensitivity to the bandwidth}
 \usage{
-plotSensi(rdd_regobject, from, to, by = 0.01, level = 0.95,
-  output = c("data", "ggplot"), plot = TRUE, ...)
+plotSensi(
+  rdd_regobject,
+  from,
+  to,
+  by = 0.01,
+  level = 0.95,
+  output = c("data", "ggplot"),
+  plot = TRUE,
+  ...
+)
 
-\method{plotSensi}{rdd_reg_np}(rdd_regobject, from, to, by = 0.05,
-  level = 0.95, output = c("data", "ggplot"), plot = TRUE,
-  device = c("ggplot", "base"), vcov. = NULL, ...)
+\method{plotSensi}{rdd_reg_np}(
+  rdd_regobject,
+  from,
+  to,
+  by = 0.05,
+  level = 0.95,
+  output = c("data", "ggplot"),
+  plot = TRUE,
+  device = c("ggplot", "base"),
+  vcov. = NULL,
+  ...
+)
 
-\method{plotSensi}{rdd_reg_lm}(rdd_regobject, from, to, by = 0.05,
-  level = 0.95, output = c("data", "ggplot"), plot = TRUE, order,
-  type = c("colour", "facet"), ...)
+\method{plotSensi}{rdd_reg_lm}(
+  rdd_regobject,
+  from,
+  to,
+  by = 0.05,
+  level = 0.95,
+  output = c("data", "ggplot"),
+  plot = TRUE,
+  order,
+  type = c("colour", "facet"),
+  ...
+)
 }
 \arguments{
 \item{rdd_regobject}{object of a RDD regression, from either \code{\link{rdd_reg_lm}} or \code{\link{rdd_reg_np}}}

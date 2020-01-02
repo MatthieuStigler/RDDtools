@@ -3,7 +3,6 @@
 \docType{package}
 \name{rddtools}
 \alias{rddtools}
-\alias{rddtools-package}
 \title{Regression Discontinuity Design}
 \description{
 Set of functions for Regression Discontinuity Design ('RDD'), for data visualisation, estimation and testing.
