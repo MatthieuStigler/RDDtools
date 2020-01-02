@@ -1,9 +1,12 @@
 ## Test environments
 
-- local Windows 7 install, R 3.2.1 Rtools 3.3.0
-- local Linux (Arch) install, R 3.2.0
-- ubuntu 12.04 (on travis-ci), R 3.2.1
-- win-builder (devel and R 3.2.1)
+- local Windows 7 install, R 3.6.2
+- local Linux (Arch) install, R 3.6.2
+- win-builder (devel)
 
-## R CMD check results
-There were no ERRORs or WARNINGs or notes
+── R CMD check results ───────────────────────────────────── rddtools 1.0.0 ────
+Duration: 1m 15.1s
+
+0 errors ✓ | 0 warnings ✓ | 0 notes ✓
+
+R CMD check succeeded
