@@ -33,7 +33,7 @@ rdd_bw_cct_plot(rd)
 }
 \references{
 Calonico, S., M. D. Cattaneo, and R. Titiunik. 2015a. Optimal Data-Driven Regression Discontinuity Plots. Journal of the American Statistical Association 110(512): 1753-1769.
-\url{http://www-personal.umich.edu/~cattaneo/papers/Calonico-Cattaneo-Titiunik_2015_JASA.pdf}.
+\url{https://www.tandfonline.com/doi/abs/10.1080/01621459.2015.1017578}.
 }
 \seealso{
 \code{\link{rdd_bw_ik}} Local RDD bandwidth selector using the plug-in method of Imbens and Kalyanaraman (2012)
