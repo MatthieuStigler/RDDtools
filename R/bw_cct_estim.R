@@ -9,7 +9,7 @@
 #' @param \ldots further arguments passed to \code{\link[rdrobust]{rdbwselect}}. 
 #' @return See documentation of \code{\link[rdrobust]{rdbwselect}}
 #' @references Calonico, S., M. D. Cattaneo, and R. Titiunik. 2014a. Robust Nonparametric Confidence Intervals for Regression-Discontinuity Designs. Econometrica 82(6): 2295-2326.
-#' \url{http://www-personal.umich.edu/~cattaneo/papers/Calonico-Cattaneo-Titiunik_2014_ECMA.pdf}.
+#' \url{https://www.tandfonline.com/doi/abs/10.1080/01621459.2015.1017578}.
 #' @seealso \code{\link{rdd_bw_ik}} Local RDD bandwidth selector using the plug-in method of Imbens and Kalyanaraman (2012)
 #' @author Original code written by Calonico, Cattaneo, Farrell and Titiuni, see \code{\link[rdrobust]{rdbwselect}}
 #' @importFrom rdrobust rdbwselect
