@@ -4,3 +4,5 @@ misc
 ^\.travis\.yml$
 ^cran-comments.md$
 ^NEWS\.md$
+^doc$
+^Meta$
