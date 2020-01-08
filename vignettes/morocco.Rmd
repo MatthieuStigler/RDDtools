@@ -9,18 +9,17 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+```
+
 we use the data from the Initiative Nationale du Development Humaine (INDH) a development project in Morocco.
 The data is included with the `rddtools` package under the name `indh`.
 
-We start by loading the package.
+We start by loading the package and the dataset.
 
-```{r}
+```{r, message=FALSE}
 library(rddtools)
-```
-
-We can now load the included data set.
-
-```{r}
 data("indh")
 ```
 
