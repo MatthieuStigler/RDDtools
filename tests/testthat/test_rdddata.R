@@ -1,6 +1,4 @@
-# test_e2r.R
-
-# load the decompr package
+# load the rddtools package
 library(rddtools)
 
 # load the example data set
