@@ -32,3 +32,4 @@ URL: http://qua.st/rddtools
 BugReports: https://github.com/bquast/rddtools/issues
 VignetteBuilder: knitr
 RoxygenNote: 7.0.2
+Encoding: UTF-8
