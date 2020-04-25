@@ -4,7 +4,8 @@
 \name{STAR_MHE}
 \alias{STAR_MHE}
 \title{Transformation of the STAR dataset as used in Angrist and Pischke (2008)}
-\format{A data frame containing 5743 observations and 6 variables. The first variable is from the original dataset, 
+\format{
+A data frame containing 5743 observations and 6 variables. The first variable is from the original dataset, 
 all other are created by Angrist and Pischke STAT code.
 \describe{
 \item{schidkn}{School ID in kindergarden (original variable, schoolidk in \code{\link[AER]{STAR}})}
@@ -12,7 +13,8 @@ all other are created by Angrist and Pischke STAT code.
 \item{classid}{The id of the class (computed by A & P)}
 \item{cs}{Class size (computed by A & P)}
 \item{female, nwhite}{Various covariates (computed by A & P)}
-}}
+}
+}
 \source{
 Data obtained using the script krueger.do on data webstar.rda, found on J. Angrist website 
 \url{http://economics.mit.edu/faculty/angrist/data1/mhe/krueger}, retrieved on 26 November 2012.

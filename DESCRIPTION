@@ -30,5 +30,5 @@ License: GPL (>= 2)
 URL: http://qua.st/rddtools
 BugReports: https://github.com/bquast/rddtools/issues
 VignetteBuilder: knitr
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Encoding: UTF-8

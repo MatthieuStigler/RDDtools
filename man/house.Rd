@@ -4,11 +4,13 @@
 \name{house}
 \alias{house}
 \title{Dataset used in Lee (2008)}
-\format{A data frame with 6558 observations and two variables:
+\format{
+A data frame with 6558 observations and two variables:
 \describe{
 \item{x}{Vote at election t-1}
 \item{y}{Vote at election t}
-}}
+}
+}
 \source{
 Guido Imbens webpage: \url{http://scholar.harvard.edu/imbens/scholar_software/regression-discontinuity}
 }
