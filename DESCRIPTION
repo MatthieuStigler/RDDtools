@@ -1,5 +1,5 @@
 Package: rddtools
-Version: 1.0.0
+Version: 1.2.0
 Title: Toolbox for Regression Discontinuity Design ('RDD')
 Description: Set of functions for Regression Discontinuity Design ('RDD'), for
     data visualisation, estimation and testing.
