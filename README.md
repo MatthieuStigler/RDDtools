@@ -1,11 +1,13 @@
 rddtools
-========================================================
+========
+
+
 [![License](http://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
 [![CRAN Version](http://www.r-pkg.org/badges/version/rddtools)](https://cran.r-project.org/package=rddtools)
+[![R build status](https://github.com/bquast/rddtools/workflows/R-CMD-check/badge.svg)](https://github.com/bquast/rddtools/actions?workflow=R-CMD-check)
+[![Coverage Status](https://img.shields.io/codecov/c/github/bquast/rddtools/master.svg)](https://codecov.io/bquast/rddtools/rddtools?branch=master)
 [![Total RStudio Cloud Downloads](http://cranlogs.r-pkg.org/badges/grand-total/rddtools?color=brightgreen)](https://cran.r-project.org/package=rddtools)
 [![RStudio Cloud Downloads](http://cranlogs.r-pkg.org/badges/rddtools?color=brightgreen)](https://cran.r-project.org/package=rddtools)
-[![Travis-CI Build Status](https://travis-ci.org/bquast/rddtools.png?branch=master)](https://travis-ci.org/bquast/rddtools)
-[![Coverage Status](https://coveralls.io/repos/bquast/rddtools/badge.svg)](https://coveralls.io/r/bquast/rddtools)
 
 **rddtools** is an R package designed to offer a set of tools to run all the steps required for a Regression Discontinuity Design (RDD) Analysis, from primary data visualisation to discontinuity estimation, sensitivity and placebo testing. 
 
@@ -16,8 +18,8 @@ Installing **rddtools**
 This github website hosts the source code. One of the easiest ways to install the package from github is by using the R package **devtools**:
 
 ```r
-if (!require('devtools')) install.packages('devtools')
-devtools::install_github( "bquast/rddtools" )
+if (!require('remotes')) install.packages('remotes')
+remotes::install_github( "bquast/rddtools" )
 ```
 
 Note however the latest version of rddtools only works with R 3.0, and that you might need to install  [Rtools](https://cran.r-project.org/bin/windows/Rtools/) if on Windows. 
@@ -28,7 +30,7 @@ Documentation
 The (preliminary) documentation is available in the help files directly, as well as in the *vignettes*. The vignettes can be accessed from R.
 
 ```r
-vignette("rddtools")
+vignette('rddtools')
 ```
 
 rddtools: main features
