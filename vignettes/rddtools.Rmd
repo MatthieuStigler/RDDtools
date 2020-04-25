@@ -107,14 +107,4 @@ Z <- data.frame(z1 = rnorm(n_Lee, sd=2),
 house_rdd_Z <- rdd_data(y = house$y, x = house$x, covar = Z, cutpoint = 0)
 ```
 
-
-Run the tests:
-```{r}
-## test for equality of means around cutoff:
-covarTest_mean(house_rdd_Z, bw=0.3)
-
-## Can also use function covarTest_dis() for Kolmogorov-Smirnov test:
-covarTest_dis(house_rdd_Z, bw=0.3)
-```
-
 Tests correctly reject equality of the second, and correctly do not reject equality for the first and third. 
