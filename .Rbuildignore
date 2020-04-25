@@ -1,7 +1,7 @@
 misc
 ^.*\.Rproj$
+^.*\.github$
 ^\.Rproj\.user$
-^\.travis\.yml$
 ^cran-comments.md$
 ^NEWS\.md$
 ^doc$
