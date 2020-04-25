@@ -40,8 +40,6 @@ covarTest_mean(
 \item{var.equal}{Argument of the \code{\link{t.test}} function:  logical variable indicating whether to treat the two variances as being equal}
 
 \item{p.adjust}{Whether to adjust the p-values for multiple testing. Uses the \code{\link{p.adjust}} function}
-
-\item{\ldots}{currently not used}
 }
 \value{
 A data frame with, for each covariate, the mean on each size, the difference, t-stat and ts p-value.

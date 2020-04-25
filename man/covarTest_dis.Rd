@@ -35,8 +35,6 @@ covarTest_dis(
 \item{exact}{Argument of the \code{\link{ks.test}} function: NULL or a logical indicating whether an exact p-value should be computed.}
 
 \item{p.adjust}{Whether to adjust the p-values for multiple testing. Uses the \code{\link{p.adjust}} function}
-
-\item{\ldots}{currently not used}
 }
 \value{
 A data frame  with, for each covariate, the K-S statistic and its p-value.

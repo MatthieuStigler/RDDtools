@@ -7,7 +7,6 @@
 #' @param paired Argument of the \code{\link{t.test}} function: logical indicating whether you want paired t-tests.
 #' @param var.equal Argument of the \code{\link{t.test}} function:  logical variable indicating whether to treat the two variances as being equal
 #' @param p.adjust Whether to adjust the p-values for multiple testing. Uses the \code{\link{p.adjust}} function
-#' @param \ldots currently not used
 #' @return A data frame with, for each covariate, the mean on each size, the difference, t-stat and ts p-value. 
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 #' @seealso \code{\link{covarTest_dis}} for the Kolmogorov-Smirnov test of equality of distribution
@@ -115,7 +114,6 @@ covarTest_mean_low <- function(covar, cutvar, cutpoint, bw = NULL, paired = FALS
 #' @param bw a bandwidth
 #' @param exact Argument of the \code{\link{ks.test}} function: NULL or a logical indicating whether an exact p-value should be computed.
 #' @param p.adjust Whether to adjust the p-values for multiple testing. Uses the \code{\link{p.adjust}} function
-#' @param \ldots currently not used
 #' @return A data frame  with, for each covariate, the K-S statistic and its p-value. 
 #' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
 #' @seealso \code{\link{covarTest_mean}} for the t-test of equality of means
