@@ -1,3 +1,17 @@
+rddtools 1.2.0
+=====================
+
+* fix CRAN error
+
+* documentation cleanup
+
+* swtich to GitHub Actions
+
+* switch to codecov
+
+* test using R 4.0.0
+
+
 rddtools 1.0.0
 =====================
 
