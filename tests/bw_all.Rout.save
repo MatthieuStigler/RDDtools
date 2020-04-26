@@ -32,7 +32,7 @@ The following objects are masked from ‘package:base’:
 Loading required package: sandwich
 Loading required package: survival
 Loading required package: np
-Nonparametric Kernel Methods for Mixed Datatypes (version 0.60-6)
+Nonparametric Kernel Methods for Mixed Datatypes (version 0.60-10)
 [vignette("np_faq",package="np") provides answers to frequently asked questions]
 [vignette("np",package="np") an overview]
 [vignette("entropy_np",package="np") an overview of entropy-based methods]
@@ -313,16 +313,25 @@ Triangular.h_opt    Uniform.h_opt     Normal.h_opt
 > mapply(function(arg1, arg2) rdd_bw_cct_estim(rd_dat, method=arg1, kernel=arg2)$bws, 
 +        arg1 = rdd_bw_cct_estim_ARG_1,
 +        arg2 = rdd_bw_cct_estim_ARG_2)
-         mserd    msetwo    msesum  msecomb1  msecomb2     cerrd     certwo
-[1,] 0.1335798 0.1268747 0.1549915 0.1335798 0.1335798 0.0860800 0.08175915
-[2,] 0.1335798 0.1908366 0.1549915 0.1335798 0.1549915 0.0860800 0.12297680
-[3,] 0.2379239 0.2149461 0.2354573 0.2354573 0.2354573 0.2379239 0.21494611
-[4,] 0.2379239 0.3081993 0.2354573 0.2354573 0.2379239 0.2379239 0.30819933
-        cersum  cercomb1
-[1,] 0.0998779 0.0860800
-[2,] 0.0998779 0.0860800
-[3,] 0.2354573 0.2354573
-[4,] 0.2354573 0.2354573
+[1] "Mass points detected in the running variable."
+[1] "Mass points detected in the running variable."
+[1] "Mass points detected in the running variable."
+[1] "Mass points detected in the running variable."
+[1] "Mass points detected in the running variable."
+[1] "Mass points detected in the running variable."
+[1] "Mass points detected in the running variable."
+[1] "Mass points detected in the running variable."
+[1] "Mass points detected in the running variable."
+         mserd    msetwo    msesum  msecomb1  msecomb2      cerrd     certwo
+[1,] 0.1356263 0.1284715 0.1570765 0.1356263 0.1356263 0.08739878 0.08278814
+[2,] 0.1356263 0.1934515 0.1570765 0.1356263 0.1570765 0.08739878 0.12466184
+[3,] 0.2401720 0.2165579 0.2376643 0.2376643 0.2376643 0.24017201 0.21655788
+[4,] 0.2401720 0.3107726 0.2376643 0.2376643 0.2401720 0.24017201 0.31077256
+        cersum   cercomb1
+[1,] 0.1012215 0.08739878
+[2,] 0.1012215 0.08739878
+[3,] 0.2376643 0.23766427
+[4,] 0.2376643 0.23766427
 > 
 > ## CCT plot
 > rdd_bw_cct_plot_ARG_1 <-  c("esmv", "es", "espr", "esmvpr", 
@@ -336,7 +345,7 @@ Number of Obs.                 6558
 Kernel                      Uniform
 
 Number of Obs.                2740           3818
-Eff. Number of Obs.           2740           3818
+Eff. Number of Obs.           2740          3818
 Order poly. fit (p)              4              4
 BW poly. fit (h)             1.000          1.000
 Number of bins scale             1              1
@@ -349,7 +358,7 @@ Number of Obs.                 6558
 Kernel                      Uniform
 
 Number of Obs.                2740           3818
-Eff. Number of Obs.           2740           3818
+Eff. Number of Obs.           2740          3818
 Order poly. fit (p)              4              4
 BW poly. fit (h)             1.000          1.000
 Number of bins scale             1              1
@@ -362,7 +371,7 @@ Number of Obs.                 6558
 Kernel                      Uniform
 
 Number of Obs.                2740           3818
-Eff. Number of Obs.           2740           3818
+Eff. Number of Obs.           2740          3818
 Order poly. fit (p)              4              4
 BW poly. fit (h)             1.000          1.000
 Number of bins scale             1              1
@@ -375,7 +384,7 @@ Number of Obs.                 6558
 Kernel                      Uniform
 
 Number of Obs.                2740           3818
-Eff. Number of Obs.           2740           3818
+Eff. Number of Obs.           2740          3818
 Order poly. fit (p)              4              4
 BW poly. fit (h)             1.000          1.000
 Number of bins scale             1              1
@@ -388,7 +397,7 @@ Number of Obs.                 6558
 Kernel                      Uniform
 
 Number of Obs.                2740           3818
-Eff. Number of Obs.           2740           3818
+Eff. Number of Obs.           2740          3818
 Order poly. fit (p)              4              4
 BW poly. fit (h)             1.000          1.000
 Number of bins scale             1              1
@@ -401,7 +410,7 @@ Number of Obs.                 6558
 Kernel                      Uniform
 
 Number of Obs.                2740           3818
-Eff. Number of Obs.           2740           3818
+Eff. Number of Obs.           2740          3818
 Order poly. fit (p)              4              4
 BW poly. fit (h)             1.000          1.000
 Number of bins scale             1              1
@@ -414,7 +423,7 @@ Number of Obs.                 6558
 Kernel                      Uniform
 
 Number of Obs.                2740           3818
-Eff. Number of Obs.           2740           3818
+Eff. Number of Obs.           2740          3818
 Order poly. fit (p)              4              4
 BW poly. fit (h)             1.000          1.000
 Number of bins scale             1              1
@@ -427,7 +436,7 @@ Number of Obs.                 6558
 Kernel                      Uniform
 
 Number of Obs.                2740           3818
-Eff. Number of Obs.           2740           3818
+Eff. Number of Obs.           2740          3818
 Order poly. fit (p)              4              4
 BW poly. fit (h)             1.000          1.000
 Number of bins scale             1              1
