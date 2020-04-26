@@ -12,7 +12,7 @@ A data frame with 6558 observations and two variables:
 }
 }
 \source{
-Guido Imbens webpage: \url{http://scholar.harvard.edu/imbens/scholar_software/regression-discontinuity}
+Guido Imbens webpage: \url{https://scholar.harvard.edu/imbens/scholar_software/regression-discontinuity}
 }
 \description{
 Randomized experiments from non-random selection in U.S. House elections

@@ -17,7 +17,7 @@ all other are created by Angrist and Pischke STAT code.
 }
 \source{
 Data obtained using the script krueger.do on data webstar.rda, found on J. Angrist website 
-\url{http://economics.mit.edu/faculty/angrist/data1/mhe/krueger}, retrieved on 26 November 2012.
+\url{https://economics.mit.edu/faculty/angrist/data1/mhe/krueger}, retrieved on 26 November 2012.
 }
 \usage{
 STAR_MHE
@@ -29,7 +29,7 @@ Transformation of the STAR dataset as used in Table 8.2.1 of Angrist and Pischke
 ). This is a transformation of the dataset from the project STAR (Student/Teacher Achievement Ratio. 
 The full dataset is described and available in package AER, \code{\link[AER]{STAR}}. 
 The transformed data was obtained using the STATA script krueger.do, obtained from Joshua Angrist website 
-(\url{http://economics.mit.edu/faculty/angrist/data1/mhe/krueger}), on the webstar.dta.
+(\url{https://economics.mit.edu/faculty/angrist/data1/mhe/krueger}), on the webstar.dta.
 }
 \examples{
 data(STAR_MHE)
