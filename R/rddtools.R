@@ -51,11 +51,12 @@ NULL
 #' summary(rdd_house)
 #' plot(rdd_house)
 NULL
+
+
 #' @name STAR_MHE
 #' @docType data
 #' @title Transformation of the STAR dataset as used in Angrist and Pischke (2008)
 #' @description Transformation of the STAR dataset as used in Table 8.2.1 of Angrist and Pischke (2008) 
-#' @usage STAR_MHE
 #' @seealso \code{\link[AER]{STAR}} for the original dataset.
 #' @format A data frame containing 5743 observations and 6 variables. The first variable is from the original dataset, 
 #' all other are created by Angrist and Pischke STAT code.
