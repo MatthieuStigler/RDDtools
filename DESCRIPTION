@@ -17,7 +17,8 @@ Imports:
     Formula,
     locpol,
     methods,
-    rdrobust
+    rdrobust,
+    rmarkdown
 Depends:
     AER,
     np
