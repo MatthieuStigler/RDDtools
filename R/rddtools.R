@@ -28,7 +28,6 @@ utils::globalVariables(c("abline", "as.formula", "coef density", "df.residual", 
 #' 
 #' # perform non-parametric regression
 #' ( reg_np_indh <- rdd_reg_np(rdd_dat_indh) )
-#' plot(reg_np_indh)
 NULL
 #' @name house
 #' @docType data

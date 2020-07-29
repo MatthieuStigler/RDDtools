@@ -25,7 +25,6 @@ summary(rdd_dat_indh)
 
 # perform non-parametric regression
 ( reg_np_indh <- rdd_reg_np(rdd_dat_indh) )
-plot(reg_np_indh)
 }
 \references{
 Arcand, Rieger, and Nguyen (2015) 'Development Aid and Social Dyanmics Data Set'
