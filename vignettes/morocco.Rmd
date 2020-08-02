@@ -73,12 +73,6 @@ We can now continue with a standard Regression Discontinuity Design (RDD) estima
 (reg_para <- rdd_reg_lm(rdd_dat_indh, order=4))
 ```
 
-and visualising this estimation.
-
-```{r}
-plot(reg_para)
-```
-
 In addition to the parametric estimation, we can also perform a non-parametric estimation.
 
 ```{r}
