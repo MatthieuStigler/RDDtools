@@ -20,4 +20,4 @@ STAR_MHE is documentation of a dataset, not a function
 
 This is a rerelease of a package previously on CRAN under the same name, also maintained by me, following the changes to stringAsFactors default change.
 
-There is a note about a possibly invalid URL, it is mistaken, the URL works.
+There is a note about a possibly invalid URL, the URL works (JSTOR stable).
