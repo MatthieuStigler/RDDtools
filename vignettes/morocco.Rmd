@@ -80,12 +80,6 @@ bw_ik <- rdd_bw_ik(rdd_dat_indh)
 (reg_nonpara <- rdd_reg_np(rdd_object=rdd_dat_indh, bw=bw_ik))
 ```
 
-and visualising the non-parametric estimation.
-
-```{r}
-plot(reg_nonpara)
-```
-
 Sensitity tests.
 
 ```{r}
