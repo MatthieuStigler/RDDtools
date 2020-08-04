@@ -59,7 +59,6 @@ Run a simple local regression, using the [Imbens and Kalyanaraman 2012] bandwidt
 bw_ik <- rdd_bw_ik(house_rdd)
 reg_nonpara <- rdd_reg_np(rdd_object=house_rdd, bw=bw_ik)
 print(reg_nonpara)
-plot(x=reg_nonpara)
 ```
 
 # Regression Sensitivity tests:
