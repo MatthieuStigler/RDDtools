@@ -5,7 +5,7 @@ rddtools 1.2.0
 
 * documentation cleanup
 
-* swtich to GitHub Actions
+* switch to GitHub Actions
 
 * switch to codecov
 
@@ -17,7 +17,7 @@ rddtools 1.0.0
 
 * stable release
 
-* various mainenance updates
+* various maintenance updates
 
 * documentation updates 
 
