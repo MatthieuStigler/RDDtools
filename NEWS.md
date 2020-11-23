@@ -1,5 +1,13 @@
+rddtools 1.4.0
+=====================
+Published on 2020-08-07
+
+* fix CRAN error
+
+
 rddtools 1.2.0
 =====================
+Published on 2020-07-22
 
 * fix CRAN error
 
