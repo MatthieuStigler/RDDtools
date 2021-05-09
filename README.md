@@ -18,7 +18,7 @@ This github website hosts the source code. One of the easiest ways to install th
 
 ```r
 if (!require('remotes')) install.packages('remotes')
-remotes::install_github( "bquast/rddtools" )
+remotes::install_github('bquast/rddtools')
 ```
 
 Note however the latest version of rddtools only works with R 3.0, and that you might need to install  [Rtools](https://cran.r-project.org/bin/windows/Rtools/) if on Windows. 
