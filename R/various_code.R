@@ -13,8 +13,8 @@ Kernel_uni <- function(X, center, bw) {
 }
 
 .onAttach <- function(...) {
-  packageStartupMessage('
+  packageStartupMessage("
 Please consider citing R and rddtools,
 citation()
-citation("rddtools")
-')}
+citation('rddtools')
+")}
