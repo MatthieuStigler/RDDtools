@@ -4,9 +4,9 @@ Title: Toolbox for Regression Discontinuity Design ('RDD')
 Description: Set of functions for Regression Discontinuity Design ('RDD'), for
     data visualisation, estimation and testing.
 Authors@R: c(
-    person("Matthieu", "Stigler", role = "aut", comment =c(ORCID="0000-0002-6802-4290"),
+    person("Matthieu", "Stigler", role = "aut", comment=c(ORCID="0000-0002-6802-4290"),
             email="Matthieu.Stigler@gmail.com"),
-    person("Bastiaan", "Quast", email = "bquast@gmail.com", role = c("aut", "cre") )
+    person("Bastiaan", "Quast", email = "bquast@gmail.com", role=c("aut", "cre"), comment=c(ORCID="0000-0002-2951-3577") )
     )
 Maintainer: Bastiaan Quast <bquast@gmail.com>
 Imports:
