@@ -1,3 +1,7 @@
+rddtools 1.6.0
+=====================
+* documentation update
+
 rddtools 1.4.0
 =====================
 Published on 2020-08-07
