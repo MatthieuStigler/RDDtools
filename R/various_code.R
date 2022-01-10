@@ -11,3 +11,10 @@ Kernel_tri <- function(X, center, bw) {
 Kernel_uni <- function(X, center, bw) {
     ifelse(abs(X - center) > bw, 0, 1)
 }
+
+.onAttach <- function(...) {
+  packageStartupMessage('
+Please consider citing R and rddtools,
+citation()
+citation("rddtools")
+')}
