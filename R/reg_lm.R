@@ -51,8 +51,12 @@
 #' plot(reg_para_ik)
 
 
-rdd_reg_lm <- function(rdd_object, covariates = NULL, order = 1, bw = NULL, slope = c("separate", "same"), covar.opt = list(strategy = c("include", 
-    "residual"), slope = c("same", "separate"), bw = NULL), covar.strat = c("include", "residual"), weights) {
+rdd_reg_lm <- function(rdd_object, covariates = NULL, order = 1, bw = NULL,
+                       slope = c("separate", "same"),
+                       covar.opt = list(strategy = c("include", "residual"),
+                                        slope = c("same", "separate"),
+                                        bw = NULL),
+                       covar.strat = c("include", "residual"), weights) {
     
     checkIsRDD(rdd_object)
     cutpoint <- getCutpoint(rdd_object)
