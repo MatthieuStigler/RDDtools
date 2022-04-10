@@ -65,7 +65,7 @@ rdd_reg_lm <- function(rdd_object, covariates = NULL, order = 1, bw = NULL,
     slope <- match.arg(slope)
     
     if (!missing(covar.strat)) 
-        warning("covar.strat is (soon) deprecated arg!")
+      stop("covar.strat is deprecated, use covar.opt = list(strategy=...) instead")
     if (!missing(weights) & !is.null(bw)) 
         stop("Cannot give both 'bw' and 'weights'")
     

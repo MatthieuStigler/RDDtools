@@ -15,9 +15,10 @@ model.matrix.rdd_data <- function(object,
     type <- getType(object)
     
     if (!missing(covar.strat)) 
-        warning("covar.strat is (soon) deprecated arg!")
+        stop("covar.strat is deprecated, use covar.opt = list(strategy=...) instead")
     
     slope <- match.arg(slope)
+    if(!is.list(covar.opt)) stop("Argument 'covar.opt' should be a list")
     covar.strat <- match.arg(covar.opt$strategy, choices = c("include", "residual"))
     covar.slope <- match.arg(covar.opt$slope, choices = c("same", "separate"))
     
