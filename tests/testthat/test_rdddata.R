@@ -31,3 +31,24 @@ test_that("rd: output values match", {
   expect_equal( rd[6558,1], -0.1982 )
   expect_equal( rd[6558,2],  0.802  )
 })
+
+### use of covariates
+r_cov_char <- rdd_data(y=mpg, x=wt, covar="drat", cutpoint=2, data=mtcars) 
+r_cov_quote <- rdd_data(y=mpg, x=wt, covar=drat, cutpoint=2, data=mtcars) 
+
+r_cov2_char <- rdd_data(y=mpg, x=wt, covar=c('drat', 'hp'), cutpoint=2, data=mtcars)
+r_cov2_quote <- rdd_data(y=mpg, x=wt, covar=c(drat, hp), cutpoint=2, data=mtcars)
+r_cov2_df <- rdd_data(y=mpg, x=wt, covar= mtcars[,c('drat', 'hp')], cutpoint=2, data=mtcars)
+
+context("rd data: use of covariates")
+
+test_that("rd with covars: can use char or quote", {
+  expect_equal(r_cov_char, r_cov_quote)
+})
+test_that("rd with 2 covars: can use char or quote", {
+  expect_equal(r_cov2_char, r_cov2_quote)
+})
+test_that("rd with 2 covars: can use char or df", {
+  expect_equal(r_cov2_char, r_cov2_df)
+})
+
