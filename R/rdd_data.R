@@ -8,14 +8,18 @@
 #' @param cutpoint Cutpoint
 #' @param labels Additional labels to provide as list (with entries \code{x}, \code{y}, and eventually vector \code{covar}). Unused currently. 
 #' @param data A data-frame for the \code{x} and \code{y} variables. If this is provided, 
-#' the column names can be entered directly for argument \code{x} and \code{y}
+#' the column names can be entered directly for argument \code{x}, \code{y} and \code{covar}. 
+#' For \code{covar}, should be a character vector. 
 #' @param z Assignment variable for the fuzzy case. Should be 0/1 or TRUE/FALSE variable. 
+#' @details Arguments \code{x}, \code{y} (and eventually \code{covar}) can be either given as:
+#'  * vectors (eventually data-frame for \code{covar})
+#'  * quote/character when \code{data} is also provided. For multiple \code{covar}, use a vector of characters 
 #' @return Object of class \code{rdd_data}, inheriting from \code{data.frame}
-#' @author Matthieu Stigler <\email{Matthieu.Stigler@@gmail.com}>
+#' @author Matthieu Stigler \email{Matthieu.Stigler@@gmail.com}
 #' @export
 #' @examples
 #' data(house)
-#' rd<- rdd_data(x=house$x, y=house$y, cutpoint=0)
+#' rd <- rdd_data(x=house$x, y=house$y, cutpoint=0)
 #' rd2 <- rdd_data(x=x, y=y, data=house, cutpoint=0)
 #' 
 #' # The print() function is the same as the print.data.frame:
@@ -30,7 +34,7 @@
 #'                              z=ifelse(house$x>0+rnorm(nrow(house), sd=0.05),1,0), 
 #'                              cutpoint=0)
 #' summary(rd_dat_fakefuzzy)
-
+#' @md
 
 rdd_data <- function(y, x, covar, cutpoint, z, labels, data) {
     

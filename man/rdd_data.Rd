@@ -19,8 +19,9 @@ rdd_data(y, x, covar, cutpoint, z, labels, data)
 
 \item{labels}{Additional labels to provide as list (with entries \code{x}, \code{y}, and eventually vector \code{covar}). Unused currently.}
 
-\item{data}{A data-frame for the \code{x} and \code{y} variables. If this is provided, 
-the column names can be entered directly for argument \code{x} and \code{y}}
+\item{data}{A data-frame for the \code{x} and \code{y} variables. If this is provided,
+the column names can be entered directly for argument \code{x}, \code{y} and \code{covar}.
+For \code{covar}, should be a character vector.}
 }
 \value{
 Object of class \code{rdd_data}, inheriting from \code{data.frame}
@@ -28,9 +29,16 @@ Object of class \code{rdd_data}, inheriting from \code{data.frame}
 \description{
 Construct the base RDD object, containing x, y and the cutpoint, eventuallay covariates.
 }
+\details{
+Arguments \code{x}, \code{y} (and eventually \code{covar}) can be either given as:
+\itemize{
+\item vectors (eventually data-frame for \code{covar})
+\item quote/character when \code{data} is also provided. For multiple \code{covar}, use a vector of characters
+}
+}
 \examples{
 data(house)
-rd<- rdd_data(x=house$x, y=house$y, cutpoint=0)
+rd <- rdd_data(x=house$x, y=house$y, cutpoint=0)
 rd2 <- rdd_data(x=x, y=y, data=house, cutpoint=0)
 
 # The print() function is the same as the print.data.frame:
@@ -47,5 +55,5 @@ rd_dat_fakefuzzy <- rdd_data(x=house$x, y=house$y,
 summary(rd_dat_fakefuzzy)
 }
 \author{
-Matthieu Stigler <\email{Matthieu.Stigler@gmail.com}>
+Matthieu Stigler \email{Matthieu.Stigler@gmail.com}
 }
