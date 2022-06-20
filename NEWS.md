@@ -1,3 +1,8 @@
+rddtools 1.8.0
+=====================
+* redo documentation
+
+
 rddtools 1.6.1
 =====================
 * Fix bug #12 (https://github.com/bquast/rddtools/issues/12) reported by @PhilipSpechler 
