@@ -6,3 +6,4 @@ misc
 ^doc$
 ^Meta$
 ^CRAN-RELEASE$
+^CRAN-SUBMISSION$
