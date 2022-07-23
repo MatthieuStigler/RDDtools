@@ -11,8 +11,8 @@ rdd_gen_reg(
   order = 1,
   bw = NULL,
   slope = c("separate", "same"),
-  covar.opt = list(strategy = c("include", "residual"), slope = c("same", "separate"),
-    bw = NULL),
+  covar.opt = list(strategy = c("include", "residual"), slope = c("same", "separate"), bw
+    = NULL),
   weights,
   ...
 )
