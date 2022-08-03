@@ -10,7 +10,7 @@ RDDdata(y, x, covar, cutpoint, z, labels, data)
 
 \item{y}{Output}
 
-\item{covar}{Exogeneous variables}
+\item{covar}{Exogeneous variables as a subset of the data-frame used in \code{data} with each column for the \code{covar} to be included.}
 
 \item{cutpoint}{Cutpoint}
 

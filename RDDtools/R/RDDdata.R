@@ -4,7 +4,7 @@
 #' 
 #' @param x Forcing variable
 #' @param y Output
-#' @param covar Exogeneous variables
+#' @param covar Exogeneous variables as a subset of the data-frame used in \code{data} with each column for the \code{covar} to be included.
 #' @param cutpoint Cutpoint
 #' @param labels Additional labels to provide as list (with entries \code{x}, \code{y}, and eventually vector \code{covar}). Unused currently. 
 #' @param data A data-frame for the \code{x} and \code{y} variables. If this is provided, 
