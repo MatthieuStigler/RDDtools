@@ -16,8 +16,7 @@ all other are created by Angrist and Pischke STAT code.
 }
 }
 \source{
-Data obtained using the script krueger.do on data webstar.rda, found on J. Angrist website 
-\url{https://economics.mit.edu/faculty/angrist/data1/mhe/krueger}, retrieved on 26 November 2012.
+Data obtained using the script krueger.do on data webstar.rda, found on J. Angrist website
 }
 \description{
 Transformation of the STAR dataset as used in Table 8.2.1 of Angrist and Pischke (2008)

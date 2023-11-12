@@ -73,7 +73,6 @@ NULL
 #' @references Angrist, A. ad  Pischke J-S (2008) \emph{Mostly Harmless Econometrics: An Empiricist's Companion}, 
 #' Princeton University press
 #' @source Data obtained using the script krueger.do on data webstar.rda, found on J. Angrist website 
-#' \url{https://economics.mit.edu/faculty/angrist/data1/mhe/krueger}, retrieved on 26 November 2012.
 #' @examples 
 #' data(STAR_MHE)
 #' 
