@@ -7,9 +7,6 @@
 \format{
 A data frame with two variables with 720 observations each
 }
-\source{
-Development Aid and social Dyanmics website: \url{https://qua.st/Development-Aid-Social-Dynamics/}
-}
 \description{
 Data from the Initiative Nationale du Development Humaine, collected as the part of the SNSF project "Development Aid and Social Dynamics"
 }

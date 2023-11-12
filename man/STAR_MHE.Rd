@@ -25,8 +25,7 @@ Transformation of the STAR dataset as used in Table 8.2.1 of Angrist and Pischke
 \details{
 ). This is a transformation of the dataset from the project STAR (Student/Teacher Achievement Ratio. 
 The full dataset is described and available in package AER, \code{\link[AER]{STAR}}. 
-The transformed data was obtained using the STATA script krueger.do, obtained from Joshua Angrist website 
-(\url{https://economics.mit.edu/faculty/angrist/data1/mhe/krueger}), on the webstar.dta.
+The transformed data was obtained using the STATA script krueger.do, obtained from Joshua Angrist website, on the webstar.dta.
 }
 \examples{
 data(STAR_MHE)

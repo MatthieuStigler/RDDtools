@@ -1,7 +1,6 @@
 rddtools
 ========
 
-
 [![License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![CRAN Version](https://www.r-pkg.org/badges/version/rddtools)](https://cran.r-project.org/package=rddtools)
 [![R build status](https://github.com/bquast/rddtools/workflows/R-CMD-check/badge.svg)](https://github.com/bquast/rddtools/actions?workflow=R-CMD-check)

@@ -29,7 +29,7 @@ Suggests:
     knitr,
     testthat
 License: GPL (>= 2)
-URL: https://qua.st/rddtools/
+URL: https://github.com/bquast/rddtools
 BugReports: https://github.com/bquast/rddtools/issues
 VignetteBuilder: knitr
 RoxygenNote: 7.2.3
